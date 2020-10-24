@@ -1,0 +1,10 @@
+{
+  "name": "wgpu-d",
+	"description": "D bindings to wgpu-native",
+	"authors": [
+		"Chance Snow"
+  ],
+  "license": "MIT",
+  "copyright": "Copyright © 2020, Chance Snow",
+  "targetType": "sourceLibrary"
+}
