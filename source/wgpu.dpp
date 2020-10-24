@@ -1,0 +1,31 @@
+#include "wgpu.h"
+
+// Remove WGPU prefixes from generated enums
+mixin dpp.EnumD!("AddressMode", WGPUAddressMode, "WGPUAddressMode_");
+mixin dpp.EnumD!("Backend", WGPUBackend, "WGPUBackend_");
+mixin dpp.EnumD!("BindingType", WGPUBindingType, "WGPUBindingType_");
+mixin dpp.EnumD!("BlendFactor", WGPUBlendFactor, "WGPUBlendFactor_");
+mixin dpp.EnumD!("BlendOperation", WGPUBlendOperation, "WGPUBlendOperation_");
+mixin dpp.EnumD!("BufferMapAsyncStatus", WGPUBufferMapAsyncStatus, "WGPUBufferMapAsyncStatus_");
+mixin dpp.EnumD!("CDeviceType", WGPUCDeviceType, "WGPUCDeviceType_");
+mixin dpp.EnumD!("CompareFunction", WGPUCompareFunction, "WGPUCompareFunction_");
+mixin dpp.EnumD!("CullMode", WGPUCullMode, "WGPUCullMode_");
+mixin dpp.EnumD!("FilterMode", WGPUFilterMode, "WGPUFilterMode_");
+mixin dpp.EnumD!("FrontFace", WGPUFrontFace, "WGPUFrontFace_");
+mixin dpp.EnumD!("IndexFormat", WGPUIndexFormat, "WGPUIndexFormat_");
+mixin dpp.EnumD!("InputStepMode", WGPUInputStepMode, "WGPUInputStepMode_");
+mixin dpp.EnumD!("LoadOp", WGPULoadOp, "WGPULoadOp_");
+mixin dpp.EnumD!("LogLevel", WGPULogLevel, "WGPULogLevel_");
+mixin dpp.EnumD!("PowerPreference", WGPUPowerPreference, "WGPUPowerPreference_");
+mixin dpp.EnumD!("PresentMode", WGPUPresentMode, "WGPUPresentMode_");
+mixin dpp.EnumD!("PrimitiveTopology", WGPUPrimitiveTopology, "WGPUPrimitiveTopology_");
+mixin dpp.EnumD!("SType", WGPUSType, "WGPUSType_");
+mixin dpp.EnumD!("StencilOperation", WGPUStencilOperation, "WGPUStencilOperation_");
+mixin dpp.EnumD!("StoreOp", WGPUStoreOp, "WGPUStoreOp_");
+mixin dpp.EnumD!("SwapChainStatus", WGPUSwapChainStatus, "WGPUSwapChainStatus_");
+mixin dpp.EnumD!("TextureAspect", WGPUTextureAspect, "WGPUTextureAspect_");
+mixin dpp.EnumD!("TextureComponentType", WGPUTextureComponentType, "WGPUTextureComponentType_");
+mixin dpp.EnumD!("TextureDimension", WGPUTextureDimension, "WGPUTextureDimension_");
+mixin dpp.EnumD!("TextureFormat", WGPUTextureFormat, "WGPUTextureFormat_");
+mixin dpp.EnumD!("TextureViewDimension", WGPUTextureViewDimension, "WGPUTextureViewDimension_");
+mixin dpp.EnumD!("VertexFormat", WGPUVertexFormat, "WGPUVertexFormat_");
