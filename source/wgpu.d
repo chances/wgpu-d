@@ -724,7 +724,9 @@ extern(C)
     enum WGPUVertexFormat_Int3 = WGPUVertexFormat.WGPUVertexFormat_Int3;
     enum WGPUVertexFormat_Int4 = WGPUVertexFormat.WGPUVertexFormat_Int4;
     struct WGPUComputePass;
-    struct WGPUOption_BufferSize;
+    // https://docs.piston.rs/conrod/wgpu_types/type.BufferSize.html
+    /// Integral type used for buffer slice sizes.
+    alias WGPUOption_BufferSize = uint64_t;
     struct WGPURenderBundleEncoder;
     struct WGPURenderPass;
     alias WGPUId_Adapter_Dummy = ulong;
