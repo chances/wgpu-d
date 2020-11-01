@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8"/>
-		<title>Function Queue.submit - wgpu-d</title>
+		<title>Queue.submit - multiple declarations - wgpu-d</title>
 		<link rel="stylesheet" type="text/css" href="../../styles/ddox.css"/>
 		<link rel="stylesheet" href="../../prettify/prettify.css" type="text/css"/>
 		<script type="text/javascript" src="../../scripts/jquery.js">/**/</script><script type="text/javascript" src="../../scripts/ddox.js">/**/</script>
@@ -23,7 +23,7 @@
 </style>
 <nav id="main-nav">
   <h1>
-    <img id="logo" src="/images/logo.png" alt="wgpu Logo">
+    <img id="logo" src="https://chances.github.io/wgpu-d/images/logo.png" alt="wgpu Logo">
     <span>D Bindings</span>
   </h1>
   <ul style="list-style: none; padding: 0;">
@@ -63,7 +63,21 @@ $('#symbolSearchPane').show();</script>
 			</ul>
 		</nav>
 		<div id="main-contents">
-			<h1>Function Queue.submit</h1><p>Submits a series of finished command buffers for execution.
+			<h1>Queue.submit - multiple declarations</h1>
+			<nav class="page-nav">
+				<ul>
+					<li>
+						<a href="#0">
+							Function <code>Queue.submit</code>
+						</a>
+					</li>
+					<li>
+						<a href="#1">
+							Function <code>Queue.submit</code>
+						</a>
+					</li>
+				</ul>
+			</nav><h2 id="0">Function Queue.submit</h2><p>Submits a finished command buffer for execution.
 </p>
 			<div class="prototype">
 				<code class="lang-d">
@@ -71,7 +85,22 @@ $('#symbolSearchPane').show();</script>
 			<span class="typ">void</span> <span class="pln">submit</span>
 			<span class="pun">(</span>
 			<br/>
-			&nbsp;&nbsp;<a href="../../wgpu/api/CommandBuffer.html"><span class="typ">CommandBuffer</span></a><span class="pun">[]</span> <span class="pln">commands</span>
+			&nbsp;&nbsp;<a href="../../wgpu/api/CommandBuffer.html"><span class="typ">CommandBuffer</span></a> <span class="pln">commands</span>
+			<br/>
+			<span class="pun">)</span><span class="pun">;</span>
+					</div>
+				</code>
+			</div>
+			
+			<h2 id="1">Function Queue.submit</h2><p>Submits a series of finished command buffers for execution.
+</p>
+			<div class="prototype">
+				<code class="lang-d">
+					<div class="single-prototype">
+			<span class="typ">void</span> <span class="pln">submit</span>
+			<span class="pun">(</span>
+			<br/>
+			&nbsp;&nbsp;<a href="../../wgpu/api/CommandBuffer.html"><span class="typ">CommandBuffer</span></a><span class="pun">[]</span> <span class="pln">commandBuffers</span>
 			<br/>
 			<span class="pun">)</span><span class="pun">;</span>
 					</div>

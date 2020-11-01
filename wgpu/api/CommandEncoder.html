@@ -23,7 +23,7 @@
 </style>
 <nav id="main-nav">
   <h1>
-    <img id="logo" src="/images/logo.png" alt="wgpu Logo">
+    <img id="logo" src="https://chances.github.io/wgpu-d/images/logo.png" alt="wgpu Logo">
     <span>D Bindings</span>
   </h1>
   <ul style="list-style: none; padding: 0;">
@@ -93,6 +93,13 @@ $('#symbolSearchPane').show();</script>
 						<td class="typecol"><code class="prettyprint lang-d"><span class="kwd">const</span><span class="pun">(</span><span class="pln">wgpu<wbr/></span><span class="pun">.</span><span class="pln">bindings<wbr/></span><span class="pun">.</span><span class="typ">WGPUCommandBufferDescriptor</span><span class="pun">)</span></code></td><td>Describes a <code class="lang-d"><a href="../../wgpu/api/CommandBuffer.html"><span class="typ">CommandBuffer</span></a></code>.
 </td>
 					</tr>
+					<tr>
+						<td>
+							<a href="../../wgpu/api/CommandEncoder.id.html" class="public"><code>id</code></a>
+						</td>
+						<td class="typecol"><code class="prettyprint lang-d"><span class="typ">ulong</span></code></td><td>Handle identifier.
+</td>
+					</tr>
 				</table>
 			</section>
 			<section><h2>Methods</h2>
@@ -119,6 +126,16 @@ $('#symbolSearchPane').show();</script>
 							<span class="tableEntryAnnotation">(descriptor)</span>
 						</td>
 						<td>Begins recording of a render pass.
+</td>
+					</tr>
+					<tr>
+						<td>
+							<a href="../../wgpu/api/CommandEncoder.copyTextureToBuffer.html" class="public">
+								<code>copyTextureToBuffer</code>
+							</a>
+							<span class="tableEntryAnnotation">(source, destination, copySize)</span>
+						</td>
+						<td>Copy data from a texture to a buffer.
 </td>
 					</tr>
 					<tr>

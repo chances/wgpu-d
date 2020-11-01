@@ -23,7 +23,7 @@
 </style>
 <nav id="main-nav">
   <h1>
-    <img id="logo" src="/images/logo.png" alt="wgpu Logo">
+    <img id="logo" src="https://chances.github.io/wgpu-d/images/logo.png" alt="wgpu Logo">
     <span>D Bindings</span>
   </h1>
   <ul style="list-style: none; padding: 0;">
@@ -82,9 +82,71 @@ $('#symbolSearchPane').show();</script>
 					</tr>
 					<tr>
 						<td>
-							<a href="../../wgpu/api/Buffer.size.html" class="public"><code>size</code></a>
+							<a href="../../wgpu/api/Buffer.descriptor.html" class="public"><code>descriptor</code></a>
 						</td>
-						<td class="typecol"><code class="prettyprint lang-d"><span class="typ">ulong</span></code></td><td>Size of this Buffer, in bytes.
+						<td class="typecol"><code class="prettyprint lang-d"><span class="pln">wgpu<wbr/></span><span class="pun">.</span><span class="pln">bindings<wbr/></span><span class="pun">.</span><span class="typ">WGPUBufferDescriptor</span></code></td><td>Describes a <code class="lang-d"><a href="../../wgpu/api/Buffer.html"><span class="typ">Buffer</span></a></code>.
+</td>
+					</tr>
+					<tr>
+						<td>
+							<a href="../../wgpu/api/Buffer.id.html" class="public"><code>id</code></a>
+						</td>
+						<td class="typecol"><code class="prettyprint lang-d"><span class="typ">ulong</span></code></td><td>Handle identifier.
+</td>
+					</tr>
+					<tr>
+						<td>
+							<a href="../../wgpu/api/Buffer.status.html" class="public"><code>status</code></a>
+						</td>
+						<td class="typecol"><code class="prettyprint lang-d"><a href="../../wgpu/api/BufferMapAsyncStatus.html"><span class="typ">BufferMapAsyncStatus</span></a></code></td><td>Result of a call to <code class="lang-d"><a href="../../wgpu/api/Buffer.mapReadAsync.html"><span class="typ">Buffer<wbr/></span><span class="pun">.</span><span class="pln">mapReadAsync</span></a></code> or <code class="lang-d"><a href="../../wgpu/api/Buffer.mapWriteAsync.html"><span class="typ">Buffer<wbr/></span><span class="pun">.</span><span class="pln">mapWriteAsync</span></a></code>.
+</td>
+					</tr>
+				</table>
+			</section>
+			<section><h2>Methods</h2>
+				<table>
+					<col class="caption"/>
+					<tr>
+						<th>Name</th><th>Description</th>
+					</tr>
+					<tr>
+						<td>
+							<a href="../../wgpu/api/Buffer.getMappedRange.html" class="public">
+								<code>getMappedRange</code>
+							</a>
+							<span class="tableEntryAnnotation">(start, size)</span>
+						</td>
+						<td>Get the sliced <code class="lang-d"><a href="../../wgpu/api/Buffer.html"><span class="typ">Buffer</span></a></code> data requested by either <code class="lang-d"><a href="../../wgpu/api/Buffer.mapReadAsync.html"><span class="typ">Buffer<wbr/></span><span class="pun">.</span><span class="pln">mapReadAsync</span></a></code> or <code class="lang-d"><a href="../../wgpu/api/Buffer.mapWriteAsync.html"><span class="typ">Buffer<wbr/></span><span class="pun">.</span><span class="pln">mapWriteAsync</span></a></code>.
+</td>
+					</tr>
+					<tr>
+						<td>
+							<a href="../../wgpu/api/Buffer.mapReadAsync.html" class="public">
+								<code>mapReadAsync</code>
+							</a>
+							<span class="tableEntryAnnotation">(start, size)</span>
+						</td>
+						<td>Map the buffer for reading asynchronously.
+</td>
+					</tr>
+					<tr>
+						<td>
+							<a href="../../wgpu/api/Buffer.mapWriteAsync.html" class="public">
+								<code>mapWriteAsync</code>
+							</a>
+							<span class="tableEntryAnnotation">(start, size)</span>
+						</td>
+						<td>Map the buffer for writing asynchronously.
+</td>
+					</tr>
+					<tr>
+						<td>
+							<a href="../../wgpu/api/Buffer.unmap.html" class="public">
+								<code>unmap</code>
+							</a>
+							<span class="tableEntryAnnotation">()</span>
+						</td>
+						<td>Flushes any pending write operations and unmaps the buffer from host memory.
 </td>
 					</tr>
 				</table>

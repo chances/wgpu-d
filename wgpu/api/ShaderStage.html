@@ -23,7 +23,7 @@
 </style>
 <nav id="main-nav">
   <h1>
-    <img id="logo" src="/images/logo.png" alt="wgpu Logo">
+    <img id="logo" src="https://chances.github.io/wgpu-d/images/logo.png" alt="wgpu Logo">
     <span>D Bindings</span>
   </h1>
   <ul style="list-style: none; padding: 0;">
@@ -63,7 +63,8 @@ $('#symbolSearchPane').show();</script>
 			</ul>
 		</nav>
 		<div id="main-contents">
-			<h1>Enum ShaderStage</h1><p></p>
+			<h1>Enum ShaderStage</h1><p>Describes the shader stages that a binding will be visible from.
+</p>
 			<div class="prototype">
 				<code class="lang-d">
 					<div class="single-prototype">
@@ -72,12 +73,49 @@ $('#symbolSearchPane').show();</script>
 					</div>
 				</code>
 			</div>
-			
+			<section><p>These can be combined in a bitwise combination.
+</p>
+
+<p>For example, something that is visible from both vertex and fragment shaders can be defined as:
+</p>
+
+<p><code class="lang-d"><a href="../../wgpu/api/ShaderStage.html#vertex"><span class="typ">ShaderStage<wbr/></span><span class="pun">.</span><span class="pln">vertex</span></a><span class="pln"> </span><span class="pun">| <a href="../../wgpu/api/ShaderStage.html#fragment"></span><span class="typ">ShaderStage<wbr/></span><span class="pun">.</span><span class="pln">fragment</span></a></code>
+</p>
+</section>
+
 			<section><h2>Enum members</h2>
 				<table>
 					<col class="caption"/>
 					<tr>
 						<th>Name</th><th>Description</th>
+					</tr>
+					<tr>
+						<td id="compute">
+							<code>compute</code>
+						</td>
+						<td>Binding is visible from the compute shader of a compute pipeline.
+</td>
+					</tr>
+					<tr>
+						<td id="fragment">
+							<code>fragment</code>
+						</td>
+						<td>Binding is visible from the fragment shader of a render pipeline.
+</td>
+					</tr>
+					<tr>
+						<td id="none">
+							<code>none</code>
+						</td>
+						<td>Binding is not visible from any shader stage.
+</td>
+					</tr>
+					<tr>
+						<td id="vertex">
+							<code>vertex</code>
+						</td>
+						<td>Binding is visible from the vertex shader of a render pipeline.
+</td>
 					</tr>
 				</table>
 			</section>

@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8"/>
-		<title>Variable Device.limits - wgpu-d</title>
+		<title>Function Device.limits - wgpu-d</title>
 		<link rel="stylesheet" type="text/css" href="../../styles/ddox.css"/>
 		<link rel="stylesheet" href="../../prettify/prettify.css" type="text/css"/>
 		<script type="text/javascript" src="../../scripts/jquery.js">/**/</script><script type="text/javascript" src="../../scripts/ddox.js">/**/</script>
@@ -23,7 +23,7 @@
 </style>
 <nav id="main-nav">
   <h1>
-    <img id="logo" src="/images/logo.png" alt="wgpu Logo">
+    <img id="logo" src="https://chances.github.io/wgpu-d/images/logo.png" alt="wgpu Logo">
     <span>D Bindings</span>
   </h1>
   <ul style="list-style: none; padding: 0;">
@@ -63,29 +63,19 @@ $('#symbolSearchPane').show();</script>
 			</ul>
 		</nav>
 		<div id="main-contents">
-			<h1>Variable Device.limits</h1><p>Limits on this Device
+			<h1>Function Device.limits</h1><p>List all limits that were requested of this device.
 </p>
 			<div class="prototype">
 				<code class="lang-d">
 					<div class="single-prototype">
-			<span class="kwd">struct</span> <a href="../../wgpu/api/Device.html"><span class="typ">Device</span></a>
-			<br/>
-			<span class="pun">
-				{
-				<br/>
-			</span>
-			&nbsp;&nbsp;<span class="com">// ...</span>
-			<br/>
-			&nbsp;&nbsp;<span class="pln">wgpu<wbr/></span><span class="pun">.</span><span class="pln">bindings<wbr/></span><span class="pun">.</span><span class="typ">WGPUCLimits</span> <span class="pln">limits</span>
-			<span class="pun">;</span>
-			<br/>
-			&nbsp;&nbsp;<span class="com">// ...</span>
-			<br/>
-			<span class="pun">}</span>
+			<span class="pln">wgpu<wbr/></span><span class="pun">.</span><span class="pln">bindings<wbr/></span><span class="pun">.</span><span class="typ">WGPUCLimits</span> <span class="pln">limits</span><span class="pun">(</span><span class="pun">)</span><span class="pln"> </span><span class="kwd">@property const</span><span class="pun">;</span>
 					</div>
 				</code>
 			</div>
-			
+			<section><p>If any of these limits are exceeded, functions may panic.
+</p>
+</section>
+
 			
 			<footer>
 				<table class="license-info">
