@@ -218,6 +218,13 @@ struct Device {
     return Queue(wgpu_device_get_default_queue(id));
   }
 
+  /// Check for resource cleanups and mapping callbacks.
+  /// Params:
+  /// forceWait = Whether or not the call should block.
+  void poll(bool forceWait = false) {
+    wgpu_device_poll(id, forceWait);
+  }
+
   /// Creates a shader module from SPIR-V source code.
   ShaderModule createShaderModule(const ubyte[] spv) {
     import std.algorithm.iteration : map;
