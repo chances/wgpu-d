@@ -10,7 +10,7 @@
       "name": "Debug Headless Example",
       "program": "${workspaceFolder}/bin/headless",
       "args": [],
-      "cwd": "${workspaceFolder}/bin",
+      "cwd": "${workspaceFolder}",
       "env": {
         "LD_LIBRARY_PATH": "wgpu-64-debug",
         "RUST_BACKTRACE": "1"

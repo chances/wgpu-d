@@ -109,9 +109,9 @@ alias ComputePassDescriptor = WGPUComputePassDescriptor;
 /// Describes a `CommandBuffer`.
 alias CommandBufferDescriptor = WGPUCommandBufferDescriptor;
 
-public import wgpu.bindings: AddressMode, Backend, BindingType, BlendFactor, BlendOperation, BufferMapAsyncStatus,
-  CDeviceType, CompareFunction, CullMode, FilterMode, FrontFace, IndexFormat, InputStepMode, LoadOp, LogLevel,
-  PowerPreference, PresentMode, PrimitiveTopology, SType, StencilOperation, StoreOp, SwapChainStatus, TextureAspect,
+public import wgpu.bindings: AddressMode, Backend, BindingType, BlendFactor, BlendOperation, CDeviceType,
+  CompareFunction, CullMode, FilterMode, FrontFace, IndexFormat, InputStepMode, LoadOp, LogLevel, PowerPreference,
+  PresentMode, PrimitiveTopology, SType, StencilOperation, StoreOp, SwapChainStatus, TextureAspect,
   TextureComponentType, TextureDimension, TextureFormat, TextureViewDimension, VertexFormat;
 
 /// Describes the shader stages that a binding will be visible from.
@@ -304,7 +304,7 @@ struct Device {
 
   /// Creates a new buffer.
   Buffer createBuffer(const BufferDescriptor descriptor) {
-    return Buffer(wgpu_device_create_buffer(id, &descriptor));
+    return Buffer(wgpu_device_create_buffer(id, &descriptor), descriptor);
   }
 
   /// Creates a new `Texture`.
@@ -391,16 +391,54 @@ const struct SwapChainOutput {
   SwapChainError error = SwapChainError.None;
 }
 
+/// Result of a call to `Buffer.mapReadAsync` or `Buffer.mapWriteAsync`.
+enum BufferMapAsyncStatus {
+  success = 0,
+  error = 1,
+  unknown = 2,
+  contextLost = 3
+}
+
+extern (C) private void wgpu_buffer_map_callback(WGPUBufferMapAsyncStatus status, ubyte* data) {
+  assert(data !is null);
+  auto buffer = cast(Buffer*) data;
+  assert(buffer.id);
+
+  buffer.status = status.to!int.to!BufferMapAsyncStatus;
+}
+
 /// A handle to a GPU-accessible buffer.
 /// See_Also: <a href="https://docs.rs/wgpu/0.6.0/wgpu/struct.Buffer.html">wgpu::Buffer</a>
 struct Buffer {
   /// Handle identifier.
   WgpuId id;
-  /// Size of this Buffer, in bytes.
-  size_t size;
+  /// Describes a `Buffer`.
+  BufferDescriptor descriptor;
+  /// Result of a call to `Buffer.mapReadAsync` or `Buffer.mapWriteAsync`.
+  BufferMapAsyncStatus status = BufferMapAsyncStatus.unknown;
 
   ~this() {
     wgpu_buffer_destroy(id);
+  }
+
+  /// Get the sliced `Buffer` data requested by either `Buffer.mapReadAsync` or `Buffer.mapWriteAsync`.
+  ubyte[] getMappedRange(BufferAddress start, BufferAddress size) {
+    assert(status == BufferMapAsyncStatus.success);
+
+    auto data = wgpu_buffer_get_mapped_range(id, start, size);
+    return data[0 .. size];
+  }
+
+  /// Read this `Buffer`'s asynchronously.
+  /// See_Also: <a href="https://docs.rs/wgpu/0.6.0/wgpu/struct.BufferSlice.html#method.map_async">wgpu::BufferSlice::map_async</a>
+  void mapReadAsync(BufferAddress start, BufferAddress size) {
+    wgpu_buffer_map_read_async(id, start, size, &wgpu_buffer_map_callback, cast(ubyte*) &this);
+  }
+
+  /// Write to this `Buffer` asynchronously.
+  /// See_Also: <a href="https://docs.rs/wgpu/0.6.0/wgpu/struct.BufferSlice.html#method.map_async">wgpu::BufferSlice::map_async</a>
+  void mapWriteAsync(BufferAddress start, BufferAddress size) {
+    wgpu_buffer_map_write_async(id, start, size, &wgpu_buffer_map_callback, cast(ubyte*) &this);
   }
 
   /// Flushes any pending write operations and unmaps the buffer from host memory.
@@ -605,7 +643,7 @@ struct RenderPass {
   ///
   /// Subsequent calls to `drawIndexed` on this `RenderPass` will use buffer as the source index buffer.
   void setIndexBuffer(const Buffer buffer, const BufferAddress offset) {
-    wgpu_render_pass_set_index_buffer(instance, buffer.id, offset, buffer.size);
+    wgpu_render_pass_set_index_buffer(instance, buffer.id, offset, buffer.descriptor.size);
   }
 
   /// Sets the active vertex buffers, starting from `startSlot`.
@@ -616,7 +654,7 @@ struct RenderPass {
     foreach (bufferPair; bufferPairs) {
       auto buffer = bufferPair[0];
       auto bufferAddress = bufferPair[1];
-      wgpu_render_pass_set_vertex_buffer(instance, startSlot, buffer.id, bufferAddress, buffer.size);
+      wgpu_render_pass_set_vertex_buffer(instance, startSlot, buffer.id, bufferAddress, buffer.descriptor.size);
     }
   }
 

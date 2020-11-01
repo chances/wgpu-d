@@ -16,8 +16,8 @@ void main()
   auto device = adapter.requestDevice(Limits());
   writefln("Device limits: %s", device.limits);
 
-  const width = 300;
-  const height = 400;
+  const width = 400;
+  const height = 300;
 
   // https://github.com/rukai/wgpu-rs/blob/f6123e4fe89f74754093c07b476099623b76dd08/examples/capture/main.rs#L53
   const bytesPerPixel = uint.sizeof;
@@ -59,7 +59,6 @@ void main()
       false // Is *not* read only
     )
   );
-
   encoder.beginRenderPass(RenderPassDescriptor(
     &colorAttachment,
     1,
@@ -82,12 +81,25 @@ void main()
     ),
     textureExtent
   );
+
   auto commandBuffer = encoder.finish();
   device.queue.submit(commandBuffer);
 
-  device.poll(true); // Force wait for a frame to render
+  // Request a slice of the buffer
+  outputBuffer.mapReadAsync(0, outputBuffer.descriptor.size);
 
-  // TODO: Write a bmp or png of the output
+  device.poll(true); // Force wait for a frame to render and pump callbacks
+
+  auto paddedBuffer = outputBuffer.getMappedRange(0, outputBuffer.descriptor.size);
+
+  import std.algorithm.iteration : map, joiner;
+  import std.array : array;
+  import std.range : chunks;
+  auto data = paddedBuffer.chunks(paddedBytesPerRow)
+    .map!(paddedRow => paddedRow[0 .. unpaddedBytesPerRow]).joiner.array;
+
+  import imageformats : ColFmt, write_image;
+  write_image("bin/headless.png", width, height, data, ColFmt.RGBA);
 
   outputBuffer.unmap();
 }

@@ -1,0 +1,7 @@
+{
+	"fileVersion": 1,
+	"versions": {
+		"imageformats": "7.0.2",
+		"wgpu-d": {"path":"../.."}
+	}
+}
