@@ -34,7 +34,7 @@ test: library-sanity-check
 .PHONY: test
 
 cover: $(SOURCES) library-sanity-check
-	dub test --parallel --coverage
+	env LD_LIBRARY_PATH=$(LIBS_PATH) dub test --parallel --coverage
 
 docs/sitemap.xml: $(SOURCES)
 	dub build -b ddox
