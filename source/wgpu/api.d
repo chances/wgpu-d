@@ -1,4 +1,4 @@
-/// An idiomatic D wrapper for wgpu-native.
+/// An idiomatic D wrapper for <a href="https://github.com/gfx-rs/wgpu-native">wgpu-native</a>.
 ///
 /// Authors: Chance Snow
 /// Copyright: Copyright © 2020 Chance Snow. All rights reserved.
@@ -12,7 +12,8 @@ import std.traits : fullyQualifiedName;
 
 import wgpu.bindings;
 
-/// Version of wgpu-native this library binds.
+/// Version of <a href="https://github.com/gfx-rs/wgpu-native">wgpu-native</a> this library binds.
+/// See_Also: <a href="https://github.com/gfx-rs/wgpu-native/releases/tag/v0.6.0">github.com/gfx-rs/wgpu-native/releases/tag/v0.6.0</a>
 static const VERSION = "0.6.0";
 /// Buffer-Texture copies must have bytes_per_row aligned to this number.
 ///
@@ -104,14 +105,30 @@ public import wgpu.bindings: AddressMode, Backend, BindingType, BlendFactor, Ble
   PowerPreference, PresentMode, PrimitiveTopology, SType, StencilOperation, StoreOp, SwapChainStatus, TextureAspect,
   TextureComponentType, TextureDimension, TextureFormat, TextureViewDimension, VertexFormat;
 
+/// Describes the shader stages that a binding will be visible from.
+///
+/// These can be combined in a bitwise combination.
+///
+/// For example, something that is visible from both vertex and fragment shaders can be defined as:
+///
+/// `ShaderStage.vertex | ShaderStage.fragment`
 /// See_Also: <a href="https://docs.rs/wgpu/0.6.0/wgpu/struct.ShaderStage.html">wgpu::ShaderStage</a>
 enum ShaderStage : WGPUShaderStage {
+  /// Binding is not visible from any shader stage.
   none = 0,
+  /// Binding is visible from the vertex shader of a render pipeline.
   vertex = 1,
+  /// Binding is visible from the fragment shader of a render pipeline.
   fragment = 2,
+  /// Binding is visible from the compute shader of a compute pipeline.
   compute = 4
 }
 
+/// Different ways that you can use a buffer.
+///
+/// The usages determine what kind of memory the buffer is allocated from and what actions the buffer can partake in.
+///
+/// These can be combined in a bitwise combination.
 /// See_Also: <a href="https://docs.rs/wgpu/0.6.0/wgpu/struct.BufferUsage.html">wgpu::BufferUsage</a>
 enum BufferUsage : WGPUBufferUsage {
   mapRead = 1,
@@ -125,6 +142,11 @@ enum BufferUsage : WGPUBufferUsage {
   indirect = 256
 }
 
+/// Different ways that you can use a texture.
+///
+/// The usages determine what kind of memory the texture is allocated from and what actions the texture can partake in.
+///
+/// These can be combined in a bitwise combination.
 /// See_Also: <a href="https://docs.rs/wgpu/0.6.0/wgpu/struct.TextureUsage.html">wgpu::TextureUsage</a>
 enum TextureUsage : WGPUTextureUsage {
   copySrc = 1,
