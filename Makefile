@@ -1,5 +1,6 @@
 SOURCES := $(shell find source -name '*.d')
 TARGET_OS := $(shell uname -s)
+LIBS_PATH := lib/wgpu-64-debug
 
 .DEFAULT_GOAL := docs
 all: docs
@@ -7,7 +8,7 @@ all: docs
 EXAMPLES := bin/headless
 examples: $(EXAMPLES)
 	@echo "Sanity check for Linking to wgpu-native:"
-	ld -Llib/wgpu-64-debug -l wgpu_native
+	ld -L$(LIBS_PATH) -l wgpu_native
 	@rm -f a.out
 	@echo "👍️"
 .PHONY: examples
@@ -19,6 +20,10 @@ endif
 
 bin/headless: $(SOURCES) $(HEADLESS_SOURCES)
 	cd examples/headless && dub build
+
+headless: bin/headless
+	env LD_LIBRARY_PATH=$(LIBS_PATH) bin/headless
+.PHONY: headless
 
 test:
 	dub test --parallel
