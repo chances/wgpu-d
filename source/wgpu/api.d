@@ -42,6 +42,7 @@ alias SamplerDescriptor = WGPUSamplerDescriptor;
 alias SwapChainDescriptor = WGPUSwapChainDescriptor;
 alias SwapChainOutput = WGPUSwapChainOutput;
 
+/// Integral type used for buffer offsets.
 alias BufferAddress = WGPUBufferAddress;
 alias BufferDescriptor = WGPUBufferDescriptor;
 alias CommandEncoderDescriptor = WGPUCommandEncoderDescriptor;
@@ -56,7 +57,7 @@ alias ComputePassDescriptor = WGPUComputePassDescriptor;
 alias CommandBufferDescriptor = WGPUCommandBufferDescriptor;
 
 
-/// See_Also: <a href="https://docs.rs/wgpu/0.3.0/wgpu/struct.ShaderStage.html">wgpu::ShaderStage</a>
+/// See_Also: <a href="https://docs.rs/wgpu/0.6.0/wgpu/struct.ShaderStage.html">wgpu::ShaderStage</a>
 enum ShaderStage : WGPUShaderStage {
   none = 0,
   vertex = 1,
@@ -64,7 +65,7 @@ enum ShaderStage : WGPUShaderStage {
   compute = 4
 }
 
-/// See_Also: <a href="https://docs.rs/wgpu/0.3.0/wgpu/struct.BufferUsage.html">wgpu::BufferUsage</a>
+/// See_Also: <a href="https://docs.rs/wgpu/0.6.0/wgpu/struct.BufferUsage.html">wgpu::BufferUsage</a>
 enum BufferUsage : WGPUBufferUsage {
   mapRead = 1,
   mapWrite = 2,
@@ -77,7 +78,7 @@ enum BufferUsage : WGPUBufferUsage {
   indirect = 256
 }
 
-/// See_Also: <a href="https://docs.rs/wgpu/0.3.0/wgpu/struct.TextureUsage.html">wgpu::TextureUsage</a>
+/// See_Also: <a href="https://docs.rs/wgpu/0.6.0/wgpu/struct.TextureUsage.html">wgpu::TextureUsage</a>
 enum TextureUsage : WGPUTextureUsage {
   copySrc = 1,
   copyDst = 2,
@@ -95,7 +96,7 @@ extern (C) private void wgpu_request_adapter_callback(ulong id, void* data) {
 
 /// A handle to a physical graphics and/or compute device.
 ///
-/// See_Also: <a href="https://docs.rs/wgpu/0.3.0/wgpu/struct.Adapter.html">wgpu::Adapter</a>
+/// See_Also: <a href="https://docs.rs/wgpu/0.6.0/wgpu/struct.Adapter.html">wgpu::Adapter</a>
 struct Adapter {
   package WgpuId id;
 
@@ -140,7 +141,7 @@ struct Adapter {
 /// An open connection to a graphics and/or compute device.
 ///
 /// The `Device` is the responsible for the creation of most rendering and compute resources, as well as exposing `Queue` objects.
-/// See_Also: <a href="https://docs.rs/wgpu/0.3.0/wgpu/struct.Device.html">wgpu::Device</a>
+/// See_Also: <a href="https://docs.rs/wgpu/0.6.0/wgpu/struct.Device.html">wgpu::Device</a>
 struct Device {
   package WgpuId id;
   /// Limits on this Device
@@ -226,7 +227,7 @@ struct Device {
 ///
 /// A Surface represents a platform-specific surface (e.g. a window) to which rendered images may be presented.
 /// A Surface may be created with `Surface.create`.
-/// See_Also: <a href="https://docs.rs/wgpu/0.3.0/wgpu/struct.Surface.html">wgpu::Surface</a>
+/// See_Also: <a href="https://docs.rs/wgpu/0.6.0/wgpu/struct.Surface.html">wgpu::Surface</a>
 struct Surface {
   package WgpuId id;
 }
@@ -235,7 +236,7 @@ struct Surface {
 ///
 /// A `SwapChain` represents the image or series of images that will be presented to a `Surface`.
 /// A `SwapChain` may be created with `Device.createSwapChain`.
-/// See_Also: <a href="https://docs.rs/wgpu/0.3.0/wgpu/struct.SwapChain.html">wgpu::SwapChain</a>
+/// See_Also: <a href="https://docs.rs/wgpu/0.6.0/wgpu/struct.SwapChain.html">wgpu::SwapChain</a>
 struct SwapChain {
   package WgpuId id;
 
@@ -245,13 +246,15 @@ struct SwapChain {
 }
 
 /// A handle to a GPU-accessible buffer.
-/// See_Also: <a href="https://docs.rs/wgpu/0.3.0/wgpu/struct.Buffer.html">wgpu::Buffer</a>
+/// See_Also: <a href="https://docs.rs/wgpu/0.6.0/wgpu/struct.Buffer.html">wgpu::Buffer</a>
 struct Buffer {
   package WgpuId id;
+  /// Size of this Buffer, in bytes.
+  size_t size;
 }
 
 /// A handle to a texture on the GPU.
-/// See_Also: <a href="https://docs.rs/wgpu/0.3.0/wgpu/struct.Texture.html">wgpu::Texture</a>
+/// See_Also: <a href="https://docs.rs/wgpu/0.6.0/wgpu/struct.Texture.html">wgpu::Texture</a>
 struct Texture {
   package WgpuId id;
 
@@ -269,7 +272,7 @@ struct Texture {
 /// A handle to a texture view.
 ///
 /// A `TextureView` object describes a texture and associated metadata needed by a `RenderPipeline` or `BindGroup`.
-/// See_Also: <a href="https://docs.rs/wgpu/0.3.0/wgpu/struct.TextureView.html">wgpu::TextureView</a>
+/// See_Also: <a href="https://docs.rs/wgpu/0.6.0/wgpu/struct.TextureView.html">wgpu::TextureView</a>
 struct TextureView {
   package WgpuId id;
 }
@@ -280,13 +283,13 @@ struct TextureView {
 /// filters (including anisotropy) and address (wrapping) modes, among other things.
 ///
 /// See the documentation for `SamplerDescriptor` for more information.
-/// See_Also: <a href="https://docs.rs/wgpu/0.3.0/wgpu/struct.Sampler.html">wgpu::Sampler</a>
+/// See_Also: <a href="https://docs.rs/wgpu/0.6.0/wgpu/struct.Sampler.html">wgpu::Sampler</a>
 struct Sampler {
   package WgpuId id;
 }
 
 /// A Queue executes finished C`ommandBuffer` objects.
-/// See_Also: <a href="https://docs.rs/wgpu/0.3.0/wgpu/struct.Queue.html">wgpu::Queue</a>
+/// See_Also: <a href="https://docs.rs/wgpu/0.6.0/wgpu/struct.Queue.html">wgpu::Queue</a>
 struct Queue {
   package WgpuId id;
 
@@ -304,7 +307,7 @@ struct Queue {
 ///
 /// A `CommandBuffer` represents a complete sequence of commands that may be submitted to a command queue with `Queue.submit`.
 /// A `CommandBuffer` is obtained by recording a series of commands to a `CommandEncoder` and then calling `CommandEncoder.finish`.
-/// See_Also: <a href="https://docs.rs/wgpu/0.3.0/wgpu/struct.CommandBuffer.html">wgpu::CommandBuffer</a>
+/// See_Also: <a href="https://docs.rs/wgpu/0.6.0/wgpu/struct.CommandBuffer.html">wgpu::CommandBuffer</a>
 struct CommandBuffer {
   package WgpuId id;
 }
@@ -313,7 +316,7 @@ struct CommandBuffer {
 ///
 /// A `ShaderModule` represents a compiled shader module on the GPU. It can be created by passing valid SPIR-V source code to `Device.createShaderModule`.
 /// Shader modules are used to define programmable stages of a pipeline.
-/// See_Also: <a href="https://docs.rs/wgpu/0.3.0/wgpu/struct.ShaderModule.html">wgpu::ShaderModule</a>
+/// See_Also: <a href="https://docs.rs/wgpu/0.6.0/wgpu/struct.ShaderModule.html">wgpu::ShaderModule</a>
 struct ShaderModule {
   package WgpuId id;
 }
@@ -323,7 +326,7 @@ struct ShaderModule {
 /// A `CommandEncoder` can record `RenderPass`es, `ComputePass`es, and transfer operations between driver-managed resources like `Buffer`s and `Texture`s.
 ///
 /// When finished recording, call `CommandEncoder.finish` to obtain a `CommandBuffer` which may be submitted for execution.
-/// See_Also: <a href="https://docs.rs/wgpu/0.3.0/wgpu/struct.CommandEncoder.html">wgpu::CommandEncoder</a>
+/// See_Also: <a href="https://docs.rs/wgpu/0.6.0/wgpu/struct.CommandEncoder.html">wgpu::CommandEncoder</a>
 struct CommandEncoder {
   package WgpuId id;
   /// Describes a `CommandBuffer`.
@@ -354,7 +357,7 @@ struct CommandEncoder {
 /// A `BindGroup` represents the set of resources bound to the bindings described by a `BindGroupLayout`.
 /// It can be created with `Device.createBindGroup`. A `BindGroup` can be bound to a particular `RenderPass`
 /// with `RenderPass.setBindGroup`, or to a `ComputePass` with `ComputePass.setBindGroup`.
-/// See_Also: <a href="https://docs.rs/wgpu/0.3.0/wgpu/struct.BindGroup.html">wgpu::BindGroup</a>
+/// See_Also: <a href="https://docs.rs/wgpu/0.6.0/wgpu/struct.BindGroup.html">wgpu::BindGroup</a>
 struct BindGroup {
   package WgpuId id;
 }
@@ -365,7 +368,7 @@ struct BindGroup {
 /// a `BindGroupDescriptor` object, which in turn can be used to create a `BindGroup` object with
 /// `Device.createBindGroup`. A series of `BindGroupLayout`s can also be used to create a
 /// `PipelineLayoutDescriptor`, which can be used to create a `PipelineLayout`.
-/// See_Also: <a href="https://docs.rs/wgpu/0.3.0/wgpu/struct.BindGroupLayout.html">wgpu::BindGroupLayout</a>
+/// See_Also: <a href="https://docs.rs/wgpu/0.6.0/wgpu/struct.BindGroupLayout.html">wgpu::BindGroupLayout</a>
 struct BindGroupLayout {
   package WgpuId id;
 }
@@ -373,7 +376,7 @@ struct BindGroupLayout {
 /// An opaque handle to a pipeline layout.
 ///
 /// A `PipelineLayout` object describes the available binding groups of a pipeline.
-/// See_Also: <a href="https://docs.rs/wgpu/0.3.0/wgpu/struct.PipelineLayout.html">wgpu::PipelineLayout</a>
+/// See_Also: <a href="https://docs.rs/wgpu/0.6.0/wgpu/struct.PipelineLayout.html">wgpu::PipelineLayout</a>
 struct PipelineLayout {
   package WgpuId id;
 }
@@ -382,7 +385,7 @@ struct PipelineLayout {
 ///
 /// A `RenderPipeline` object represents a graphics pipeline and its stages, bindings, vertex buffers and targets.
 /// A `RenderPipeline` may be created with `Device.createRenderPipeline`.
-/// See_Also: <a href="https://docs.rs/wgpu/0.3.0/wgpu/struct.RenderPipeline.html">wgpu::RenderPipeline</a>
+/// See_Also: <a href="https://docs.rs/wgpu/0.6.0/wgpu/struct.RenderPipeline.html">wgpu::RenderPipeline</a>
 struct RenderPipeline {
   package WgpuId id;
 
@@ -392,7 +395,7 @@ struct RenderPipeline {
 }
 
 /// An in-progress recording of a render pass.
-/// See_Also: <a href="https://docs.rs/wgpu/0.3.0/wgpu/struct.RenderPass.html">wgpu::RenderPass</a>
+/// See_Also: <a href="https://docs.rs/wgpu/0.6.0/wgpu/struct.RenderPass.html">wgpu::RenderPass</a>
 struct RenderPass {
   import std.typecons : Tuple;
 
@@ -400,7 +403,11 @@ struct RenderPass {
 
   /// Sets the active bind group for a given bind group index.
   void setBindGroup(const uint index, const BindGroup bindGroup, BufferAddress[] offsets) {
-    wgpu_render_pass_set_bind_group(instance, index, bindGroup.id, &offsets, offsets.length);
+    import std.algorithm.iteration : map;
+    import std.array : array;
+
+    auto offsetsAsUints = offsets.map!(offset => offset.to!(const uint)).array;
+    wgpu_render_pass_set_bind_group(instance, index, bindGroup.id, cast(const(uint)*) &offsetsAsUints, offsets.length);
   }
 
   /// Sets the active render pipeline.
@@ -425,9 +432,12 @@ struct RenderPass {
   ///
   /// Each element of `bufferPairs` describes a vertex buffer and an offset in bytes into that buffer.
   /// The offset must be aligned to a multiple of 4 bytes.
-  void setVertexBuffers(uint startSlot, Tuple!(Buffer, BufferAddress) bufferPairs) {
-    foreach (buffer, bufferAddress; bufferPairs)
+  void setVertexBuffers(uint startSlot, Tuple!(Buffer, BufferAddress)[] bufferPairs) {
+    foreach (bufferPair; bufferPairs) {
+      auto buffer = bufferPair[0];
+      auto bufferAddress = bufferPair[1];
       wgpu_render_pass_set_vertex_buffer(instance, startSlot, buffer.id, bufferAddress, buffer.size);
+    }
   }
 
   /// Sets the scissor region.
@@ -471,19 +481,23 @@ struct RenderPass {
 }
 
 /// A handle to a compute pipeline.
-/// See_Also: <a href="https://docs.rs/wgpu/0.3.0/wgpu/struct.ComputePipeline.html">wgpu::ComputePipeline</a>
+/// See_Also: <a href="https://docs.rs/wgpu/0.6.0/wgpu/struct.ComputePipeline.html">wgpu::ComputePipeline</a>
 struct ComputePipeline {
   package WgpuId id;
 }
 
 /// An in-progress recording of a compute pass.
-/// See_Also: <a href="https://docs.rs/wgpu/0.3.0/wgpu/struct.ComputePass.html">wgpu::ComputePass</a>
+/// See_Also: <a href="https://docs.rs/wgpu/0.6.0/wgpu/struct.ComputePass.html">wgpu::ComputePass</a>
 struct ComputePass {
   package WGPUComputePass* instance;
 
   /// Sets the active bind group for a given bind group index.
   void setBindGroup(const uint index, const BindGroup bindGroup, BufferAddress[] offsets) {
-    wgpu_compute_pass_set_bind_group(instance, index, bindGroup.id, &offsets, offsets.length);
+    import std.algorithm.iteration : map;
+    import std.array : array;
+
+    auto offsetsAsUints = offsets.map!(offset => offset.to!(const uint)).array;
+    wgpu_compute_pass_set_bind_group(instance, index, bindGroup.id, cast(const(uint)*) &offsetsAsUints, offsets.length);
   }
 
   /// Sets the active compute pipeline.
