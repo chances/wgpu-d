@@ -26,7 +26,7 @@ headless: bin/headless
 .PHONY: headless
 
 test:
-	dub test --parallel
+	env LD_LIBRARY_PATH=$(LIBS_PATH) dub test --parallel
 .PHONY: test
 
 cover: $(SOURCES)
