@@ -398,6 +398,15 @@ struct Buffer {
   WgpuId id;
   /// Size of this Buffer, in bytes.
   size_t size;
+
+  ~this() {
+    wgpu_buffer_destroy(id);
+  }
+
+  /// Flushes any pending write operations and unmaps the buffer from host memory.
+  void unmap() {
+    wgpu_buffer_unmap(id);
+  }
 }
 
 /// A handle to a texture on the GPU.

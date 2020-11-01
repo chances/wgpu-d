@@ -89,5 +89,5 @@ void main()
 
   // TODO: Write a bmp or png of the output
 
-  // outputBuffer.unmap();
+  outputBuffer.unmap();
 }
