@@ -6,6 +6,10 @@ all: docs
 
 EXAMPLES := bin/headless
 examples: $(EXAMPLES)
+	@echo "Sanity check for Linking to wgpu-native:"
+	ld -Llib/wgpu-64-debug -l wgpu_native
+	@rm -f a.out
+	@echo "👍️"
 .PHONY: examples
 
 HEADLESS_SOURCES := $(shell find examples/headless/source -name '*.d')
