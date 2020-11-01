@@ -143,7 +143,8 @@ extern (C) private void wgpu_request_adapter_callback(ulong id, void* data) {
 ///
 /// See_Also: <a href="https://docs.rs/wgpu/0.6.0/wgpu/struct.Adapter.html">wgpu::Adapter</a>
 struct Adapter {
-  package WgpuId id;
+  /// Handle identifier.
+  WgpuId id;
 
   /// Requests a new Adapter, asynchronously.
   ///
@@ -202,7 +203,8 @@ struct Adapter {
 /// The `Device` is the responsible for the creation of most rendering and compute resources, as well as exposing `Queue` objects.
 /// See_Also: <a href="https://docs.rs/wgpu/0.6.0/wgpu/struct.Device.html">wgpu::Device</a>
 struct Device {
-  package WgpuId id;
+  /// Handle identifier.
+  WgpuId id;
   /// label for this Device.
   string label;
 
@@ -300,7 +302,8 @@ struct Device {
 /// A Surface may be created with `Surface.create`.
 /// See_Also: <a href="https://docs.rs/wgpu/0.6.0/wgpu/struct.Surface.html">wgpu::Surface</a>
 struct Surface {
-  package WgpuId id;
+  /// Handle identifier.
+  WgpuId id;
 }
 
 /// A handle to a swap chain.
@@ -309,7 +312,8 @@ struct Surface {
 /// A `SwapChain` may be created with `Device.createSwapChain`.
 /// See_Also: <a href="https://docs.rs/wgpu/0.6.0/wgpu/struct.SwapChain.html">wgpu::SwapChain</a>
 struct SwapChain {
-  package WgpuId id;
+  /// Handle identifier.
+  WgpuId id;
 
   /// Returns the next texture to be presented by the swapchain for drawing.
   SwapChainOutput getNextTexture() {
@@ -357,7 +361,8 @@ const struct SwapChainOutput {
 /// A handle to a GPU-accessible buffer.
 /// See_Also: <a href="https://docs.rs/wgpu/0.6.0/wgpu/struct.Buffer.html">wgpu::Buffer</a>
 struct Buffer {
-  package WgpuId id;
+  /// Handle identifier.
+  WgpuId id;
   /// Size of this Buffer, in bytes.
   size_t size;
 }
@@ -365,7 +370,8 @@ struct Buffer {
 /// A handle to a texture on the GPU.
 /// See_Also: <a href="https://docs.rs/wgpu/0.6.0/wgpu/struct.Texture.html">wgpu::Texture</a>
 struct Texture {
-  package WgpuId id;
+  /// Handle identifier.
+  WgpuId id;
 
   /// Creates a view of this texture.
   TextureView createView(const TextureViewDescriptor descriptor) {
@@ -383,7 +389,8 @@ struct Texture {
 /// A `TextureView` object describes a texture and associated metadata needed by a `RenderPipeline` or `BindGroup`.
 /// See_Also: <a href="https://docs.rs/wgpu/0.6.0/wgpu/struct.TextureView.html">wgpu::TextureView</a>
 struct TextureView {
-  package WgpuId id;
+  /// Handle identifier.
+  WgpuId id;
 }
 
 /// A handle to a sampler.
@@ -394,13 +401,15 @@ struct TextureView {
 /// See the documentation for `SamplerDescriptor` for more information.
 /// See_Also: <a href="https://docs.rs/wgpu/0.6.0/wgpu/struct.Sampler.html">wgpu::Sampler</a>
 struct Sampler {
-  package WgpuId id;
+  /// Handle identifier.
+  WgpuId id;
 }
 
 /// A Queue executes finished C`ommandBuffer` objects.
 /// See_Also: <a href="https://docs.rs/wgpu/0.6.0/wgpu/struct.Queue.html">wgpu::Queue</a>
 struct Queue {
-  package WgpuId id;
+  /// Handle identifier.
+  WgpuId id;
 
   /// Submits a series of finished command buffers for execution.
   void submit(CommandBuffer[] commands) {
@@ -418,7 +427,8 @@ struct Queue {
 /// A `CommandBuffer` is obtained by recording a series of commands to a `CommandEncoder` and then calling `CommandEncoder.finish`.
 /// See_Also: <a href="https://docs.rs/wgpu/0.6.0/wgpu/struct.CommandBuffer.html">wgpu::CommandBuffer</a>
 struct CommandBuffer {
-  package WgpuId id;
+  /// Handle identifier.
+  WgpuId id;
 }
 
 /// A handle to a compiled shader module.
@@ -427,7 +437,8 @@ struct CommandBuffer {
 /// Shader modules are used to define programmable stages of a pipeline.
 /// See_Also: <a href="https://docs.rs/wgpu/0.6.0/wgpu/struct.ShaderModule.html">wgpu::ShaderModule</a>
 struct ShaderModule {
-  package WgpuId id;
+  /// Handle identifier.
+  WgpuId id;
 }
 
 /// An object that encodes GPU operations.
@@ -437,7 +448,8 @@ struct ShaderModule {
 /// When finished recording, call `CommandEncoder.finish` to obtain a `CommandBuffer` which may be submitted for execution.
 /// See_Also: <a href="https://docs.rs/wgpu/0.6.0/wgpu/struct.CommandEncoder.html">wgpu::CommandEncoder</a>
 struct CommandEncoder {
-  package WgpuId id;
+  /// Handle identifier.
+  WgpuId id;
   /// Describes a `CommandBuffer`.
   const CommandBufferDescriptor descriptor;
 
@@ -468,7 +480,8 @@ struct CommandEncoder {
 /// with `RenderPass.setBindGroup`, or to a `ComputePass` with `ComputePass.setBindGroup`.
 /// See_Also: <a href="https://docs.rs/wgpu/0.6.0/wgpu/struct.BindGroup.html">wgpu::BindGroup</a>
 struct BindGroup {
-  package WgpuId id;
+  /// Handle identifier.
+  WgpuId id;
 }
 
 /// An opaque handle to a binding group layout.
@@ -479,7 +492,8 @@ struct BindGroup {
 /// `PipelineLayoutDescriptor`, which can be used to create a `PipelineLayout`.
 /// See_Also: <a href="https://docs.rs/wgpu/0.6.0/wgpu/struct.BindGroupLayout.html">wgpu::BindGroupLayout</a>
 struct BindGroupLayout {
-  package WgpuId id;
+  /// Handle identifier.
+  WgpuId id;
 }
 
 /// An opaque handle to a pipeline layout.
@@ -487,7 +501,8 @@ struct BindGroupLayout {
 /// A `PipelineLayout` object describes the available binding groups of a pipeline.
 /// See_Also: <a href="https://docs.rs/wgpu/0.6.0/wgpu/struct.PipelineLayout.html">wgpu::PipelineLayout</a>
 struct PipelineLayout {
-  package WgpuId id;
+  /// Handle identifier.
+  WgpuId id;
 }
 
 /// A handle to a rendering (graphics) pipeline.
@@ -496,7 +511,8 @@ struct PipelineLayout {
 /// A `RenderPipeline` may be created with `Device.createRenderPipeline`.
 /// See_Also: <a href="https://docs.rs/wgpu/0.6.0/wgpu/struct.RenderPipeline.html">wgpu::RenderPipeline</a>
 struct RenderPipeline {
-  package WgpuId id;
+  /// Handle identifier.
+  WgpuId id;
 
   ~this() {
     wgpu_render_pipeline_destroy(id);
@@ -592,7 +608,8 @@ struct RenderPass {
 /// A handle to a compute pipeline.
 /// See_Also: <a href="https://docs.rs/wgpu/0.6.0/wgpu/struct.ComputePipeline.html">wgpu::ComputePipeline</a>
 struct ComputePipeline {
-  package WgpuId id;
+  /// Handle identifier.
+  WgpuId id;
 }
 
 /// An in-progress recording of a compute pass.
