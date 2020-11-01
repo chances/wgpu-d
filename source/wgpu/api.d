@@ -33,29 +33,74 @@ static const MAX_VERTEX_BUFFERS = 16;
 
 alias WgpuId = c_ulong;
 alias RequestAdapterOptions = WGPURequestAdapterOptions;
+/// Metadata about a backend adapter.
+/// See_Also: <a href="https://docs.rs/wgpu/0.6.0/wgpu/struct.AdapterInfo.html">wgpu::AdapterInfo</a>
 alias AdapterInfo = WGPUCAdapterInfo;
+/// Features that are not guaranteed to be supported.
+///
+/// These are either part of the webgpu standard, or are extension features supported by wgpu when targeting native.
+///
+/// If you want to use a feature, you need to first verify that the adapter supports the feature. If the adapter
+/// does not support the feature, requesting a device with it enabled will panic.
+/// See_Also: <a href="https://docs.rs/wgpu/0.6.0/wgpu/struct.Features.html">wgpu::Features</a>
+alias Features = WGPUFeatures;
+/// Represents the sets of limits an adapter/device supports.
+///
+/// Limits "better" than the default must be supported by the adapter and requested when requesting a device.
+/// If limits "better" than the adapter supports are requested, requesting a device will panic. Once a device is
+/// requested, you may only use resources up to the limits requested even if the adapter supports "better" limits.
+///
+/// Requesting limits that are "better" than you need may cause performance to decrease because the implementation
+/// needs to support more than is needed. You should ideally only request exactly what you need.
+///
+/// <strong>See Also</strong>: https://gpuweb.github.io/gpuweb/#dictdef-gpulimits
+/// See_Also: <a href="https://docs.rs/wgpu/0.6.0/wgpu/struct.Limits.html">wgpu::Limits</a>
 alias Limits = WGPUCLimits;
+/// RGBA double precision color.
+///
+/// This is not to be used as a generic color type, only for specific wgpu interfaces.
+/// See_Also: <a href="https://docs.rs/wgpu/0.6.0/wgpu/struct.Color.html">wgpu::Color</a>
 alias Color = WGPUColor;
+/// Describes a `Texture`.
 alias TextureDescriptor = WGPUTextureDescriptor;
+/// Describes a `TextureView`.
 alias TextureViewDescriptor = WGPUTextureViewDescriptor;
+/// Describes a `Sampler`.
 alias SamplerDescriptor = WGPUSamplerDescriptor;
+/// Extent of a texture related operation.
+alias Extent3d = WGPUExtent3d;
+/// Describes a `SwapChain`.
 alias SwapChainDescriptor = WGPUSwapChainDescriptor;
-alias SwapChainOutput = WGPUSwapChainOutput;
 
 /// Integral type used for buffer offsets.
 alias BufferAddress = WGPUBufferAddress;
+/// Describes a `Buffer`.
 alias BufferDescriptor = WGPUBufferDescriptor;
+/// Describes a `CommandEncoder`.
 alias CommandEncoderDescriptor = WGPUCommandEncoderDescriptor;
+/// Describes a `BindGroup`.
 alias BindGroupDescriptor = WGPUBindGroupDescriptor;
+/// Describes a single binding inside a bind group.
 alias BindGroupLayoutEntry = WGPUBindGroupLayoutEntry;
+/// Describes a `BindGroupLayout`.
 alias BindGroupLayoutDescriptor = WGPUBindGroupLayoutDescriptor;
+/// Describes a `PipelineLayout`.
 alias PipelineLayoutDescriptor = WGPUPipelineLayoutDescriptor;
+/// Describes a `RenderPipeline`.
 alias RenderPipelineDescriptor = WGPURenderPipelineDescriptor;
+/// Describes a `ComputePipeline`.
 alias ComputePipelineDescriptor = WGPUComputePipelineDescriptor;
+/// Describes a `RenderPass`.
 alias RenderPassDescriptor = WGPURenderPassDescriptor;
+/// Describes a `ComputePass`.
 alias ComputePassDescriptor = WGPUComputePassDescriptor;
+/// Describes a `CommandBuffer`.
 alias CommandBufferDescriptor = WGPUCommandBufferDescriptor;
 
+public import wgpu.bindings: AddressMode, Backend, BindingType, BlendFactor, BlendOperation, BufferMapAsyncStatus,
+  CDeviceType, CompareFunction, CullMode, FilterMode, FrontFace, IndexFormat, InputStepMode, LoadOp, LogLevel,
+  PowerPreference, PresentMode, PrimitiveTopology, SType, StencilOperation, StoreOp, SwapChainStatus, TextureAspect,
+  TextureComponentType, TextureDimension, TextureFormat, TextureViewDimension, VertexFormat;
 
 /// See_Also: <a href="https://docs.rs/wgpu/0.6.0/wgpu/struct.ShaderStage.html">wgpu::ShaderStage</a>
 enum ShaderStage : WGPUShaderStage {
@@ -125,16 +170,30 @@ struct Adapter {
     return info;
   }
 
+  /// List all features that are supported with this adapter.
+  ///
+  /// Features must be explicitly requested in `Adapter.requestDevice` in order to use them.
+  Features features() @property const {
+    return wgpu_adapter_features(id);
+  }
+
+  /// List the "best" limits that are supported by this adapter.
+  ///
+  /// Limits must be explicitly requested in `Adapter.requestDevice` to set the values that you are allowed to use.
+  Limits limits() @property const {
+    return wgpu_adapter_limits(id);
+  }
+
   /// Requests a connection to a physical device, creating a logical device.
   ///
   /// Params:
-  /// limits =
-  /// label = Optional label for this Device.
+  /// limits = The sets of limits the device supports.
+  /// label = Optional label for the `Device`.
   Device requestDevice(const Limits limits, string label = fullyQualifiedName!Device) {
     assert(ready);
     auto id = wgpu_adapter_request_device(id, 0, &limits, true, toStringz(label));
     assert(id > 0);
-    return Device(id, limits, label);
+    return Device(id, label);
   }
 }
 
@@ -144,10 +203,15 @@ struct Adapter {
 /// See_Also: <a href="https://docs.rs/wgpu/0.6.0/wgpu/struct.Device.html">wgpu::Device</a>
 struct Device {
   package WgpuId id;
-  /// Limits on this Device
-  Limits limits;
   /// label for this Device.
   string label;
+
+  /// List all limits that were requested of this device.
+  ///
+  /// If any of these limits are exceeded, functions may panic.
+  Limits limits() @property const {
+    return wgpu_device_limits(id);
+  }
 
   /// Obtains a queue which can accept `CommandBuffer` submissions.
   Queue queue() @property const {
@@ -240,9 +304,47 @@ struct Surface {
 struct SwapChain {
   package WgpuId id;
 
+  /// Returns the next texture to be presented by the swapchain for drawing.
   SwapChainOutput getNextTexture() {
-    return wgpu_swap_chain_get_next_texture(id);
+    auto output = wgpu_swap_chain_get_next_texture(id);
+    auto status = output.status.to!int.to!SwapChainStatus;
+    auto successful = status == SwapChainStatus.Good || status == SwapChainStatus.Suboptimal;
+    TextureView* view = null;
+    if (successful) view = new TextureView(output.view_id);
+
+    return SwapChainOutput(
+      view,
+      successful,
+      status == SwapChainStatus.Suboptimal,
+      output.status.to!int > 1 ? output.status.to!int.to!SwapChainError : SwapChainError.None
+    );
   }
+}
+
+/// Result of an unsuccessful call to `SwapChain.getNextTexture`.
+enum SwapChainError {
+  None = 0,
+  /// A timeout was encountered while trying to acquire the next frame.
+  Timeout = 2,
+  /// The underlying surface has changed, and therefore the swap chain must be updated.
+  Outdated = 3,
+  /// The swap chain has been lost and needs to be recreated.
+  Lost = 4,
+  /// There is no more memory left to allocate a new frame.
+  OutOfMemory = 5,
+}
+
+/// Result of a call to `SwapChain.getNextTexture`.
+/// See_Also: <a href="https://docs.rs/wgpu/0.6.0/wgpu/struct.SwapChainFrame.html">wgpu::SwapChainFrame</a>
+const struct SwapChainOutput {
+  /// The texture into which the next frame should be rendered. `null` if the call to `SwapChain.getNextTexture` was unsuccessful.
+  TextureView* view;
+  /// Whether a call to `SwapChain.getNextTexture` was successful.
+  bool success = false;
+  /// `true` if the acquired buffer can still be used for rendering, but should be recreated for maximum performance.
+  bool suboptimal = false;
+  /// Result of an unsuccessful call to `SwapChain.getNextTexture`. `SwapChainError.None` if the call was successful.
+  SwapChainError error = SwapChainError.None;
 }
 
 /// A handle to a GPU-accessible buffer.
