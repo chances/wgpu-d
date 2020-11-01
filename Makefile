@@ -17,7 +17,7 @@ ifeq ($(TARGET_OS),Linux)
 	HEADLESS_SOURCES := $(HEADLESS_SOURCES)
 endif
 
-bin/triangle: $(SOURCES) $(HEADLESS_SOURCES)
+bin/headless: $(SOURCES) $(HEADLESS_SOURCES)
 	cd examples/headless && dub build
 
 test:
