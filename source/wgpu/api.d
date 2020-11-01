@@ -92,6 +92,8 @@ alias RenderPipelineDescriptor = WGPURenderPipelineDescriptor;
 alias ComputePipelineDescriptor = WGPUComputePipelineDescriptor;
 /// Describes a `RenderPass`.
 alias RenderPassDescriptor = WGPURenderPassDescriptor;
+/// Describes a color attachment to a `RenderPass`.
+alias RenderPassColorAttachmentDescriptor = WGPURenderPassColorAttachmentDescriptor;
 /// Describes a `ComputePass`.
 alias ComputePassDescriptor = WGPUComputePassDescriptor;
 /// Describes a `CommandBuffer`.
