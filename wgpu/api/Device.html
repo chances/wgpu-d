@@ -94,7 +94,7 @@ $('#symbolSearchPane').show();</script>
 						<td>
 							<a href="../../wgpu/api/Device.label.html" class="public"><code>label</code></a>
 						</td>
-						<td class="typecol"><code class="prettyprint lang-d"><span class="typ">string</span></code></td><td>label for this Device.
+						<td class="typecol"><code class="prettyprint lang-d"><span class="typ">string</span></code></td><td>Label for this Device.
 </td>
 					</tr>
 				</table>
@@ -117,6 +117,13 @@ $('#symbolSearchPane').show();</script>
 							<a href="../../wgpu/api/Device.queue.html" class="public property"><code>queue</code></a><span class="tableEntryAnnotation">[get]</span>
 						</td>
 						<td class="typecol"><code class="prettyprint lang-d"><a href="../../wgpu/api/Queue.html"><span class="typ">Queue</span></a></code></td><td>Obtains a queue which can accept <code class="lang-d"><a href="../../wgpu/api/CommandBuffer.html"><span class="typ">CommandBuffer</span></a></code> submissions.
+</td>
+					</tr>
+					<tr>
+						<td>
+							<a href="../../wgpu/api/Device.ready.html" class="public property"><code>ready</code></a><span class="tableEntryAnnotation">[get]</span>
+						</td>
+						<td class="typecol"><code class="prettyprint lang-d"><span class="typ">bool</span></code></td><td>Whether this Device handle is valid and ready for use.
 </td>
 					</tr>
 				</table>
@@ -235,6 +242,16 @@ $('#symbolSearchPane').show();</script>
 							<span class="tableEntryAnnotation">(descriptor)</span>
 						</td>
 						<td>Creates a new <code class="lang-d"><a href="../../wgpu/api/Texture.html"><span class="typ">Texture</span></a></code>.
+</td>
+					</tr>
+					<tr>
+						<td>
+							<a href="../../wgpu/api/Device.destroy.html" class="public">
+								<code>destroy</code>
+							</a>
+							<span class="tableEntryAnnotation">()</span>
+						</td>
+						<td>Release the given handle.
 </td>
 					</tr>
 					<tr>
