@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8"/>
+		<title>Struct Adapter - wgpu-d</title>
+		<link rel="stylesheet" type="text/css" href="../../styles/ddox.css"/>
+		<link rel="stylesheet" href="../../prettify/prettify.css" type="text/css"/>
+		<script type="text/javascript" src="../../scripts/jquery.js">/**/</script><script type="text/javascript" src="../../scripts/ddox.js">/**/</script>
+	</head>
+	<body onload="setupDdox();">
+<style>
+#main-nav > h1 {
+  display: flex;
+  align-items: flex-end;
+}
+#main-nav > h1 > span {
+  padding-bottom: 0.25em;
+}
+#logo {
+  margin-right: 0.5rem;
+  max-width: 4rem;
+}
+</style>
+<nav id="main-nav">
+  <h1>
+    <img id="logo" src="/images/logo.png" alt="wgpu Logo">
+    <span>D Bindings</span>
+  </h1>
+  <ul style="list-style: none; padding: 0;">
+    <li>
+      <a href="https://chances.github.io/wgpu-d">API Reference</a>
+    </li>
+    <li>
+      <a href="https://code.dlang.org/packages/wgpu-d">Download</a>
+    </li>
+    <li>
+      <a href="https://github.com/chances/wgpu-d#readme">Open Source on GitHub</a>
+    </li>
+  </ul>
+  <h2>API Reference</h2>
+			<noscript>
+				<p style="color: red">The search functionality needs JavaScript enabled</p>
+			</noscript>
+			<div id="symbolSearchPane" style="display: none">
+				<form action="#" method="GET">
+					<input id="symbolSearch" type="text" name="q" placeholder="Search for symbols" autocomplete="off" onchange="performSymbolSearch(40);" onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();"/>
+				</form>
+				<ul id="symbolSearchResults" class="symbolList" style="display: none"></ul><script type="application/javascript" src="../../symbols.js"></script><script type="application/javascript">var symbolSearchRootDir = "../../";
+$('#symbolSearchPane').show();</script>
+			</div>
+			<ul class="tree-view">
+				<li class="tree-view ">
+					<div class="package ">wgpu
+					</div>
+			<ul class="tree-view">
+				<li>
+					<div class="module selected">
+						<a href="../../wgpu/api.html">api</a>
+					</div>
+				</li>
+			</ul>
+				</li>
+			</ul>
+		</nav>
+		<div id="main-contents">
+			<h1>Struct Adapter</h1><p>A handle to a physical graphics and/or compute device.
+</p>
+			<div class="prototype">
+				<code class="lang-d">
+					<div class="single-prototype">
+			<span class="kwd">struct</span> <span class="typ">Adapter</span>
+			<span class="pun">;</span>
+					</div>
+				</code>
+			</div>
+			<section></section>
+
+			<section><h2>Constructors</h2>
+				<table>
+					<col class="caption"/>
+					<tr>
+						<th>Name</th><th>Description</th>
+					</tr>
+					<tr>
+						<td>
+							<a href="../../wgpu/api/Adapter.this.html" class="public">
+								<code>this</code>
+							</a>
+							<span class="tableEntryAnnotation">(options)</span>
+						</td>
+						<td>Requests a new Adapter, asynchronously.
+</td>
+					</tr>
+				</table>
+			</section>
+			<section><h2>Properties</h2>
+				<table>
+					<col class="caption"/>
+					<tr>
+						<th>Name</th><th>Type</th><th>Description</th>
+					</tr>
+					<tr>
+						<td>
+							<a href="../../wgpu/api/Adapter.info.html" class="public property"><code>info</code></a><span class="tableEntryAnnotation">[get]</span>
+						</td>
+						<td class="typecol"><code class="prettyprint lang-d"><span class="pln">wgpu<wbr/></span><span class="pun">.</span><span class="pln">bindings<wbr/></span><span class="pun">.</span><span class="typ">WGPUCAdapterInfo</span></code></td><td>Information about this Adapter.
+</td>
+					</tr>
+					<tr>
+						<td>
+							<a href="../../wgpu/api/Adapter.ready.html" class="public property"><code>ready</code></a><span class="tableEntryAnnotation">[get]</span>
+						</td>
+						<td class="typecol"><code class="prettyprint lang-d"><span class="typ">bool</span></code></td><td>Whether this Adapter handle has finished being requested and is ready for use.
+</td>
+					</tr>
+				</table>
+			</section>
+			<section><h2>Methods</h2>
+				<table>
+					<col class="caption"/>
+					<tr>
+						<th>Name</th><th>Description</th>
+					</tr>
+					<tr>
+						<td>
+							<a href="../../wgpu/api/Adapter.requestDevice.html" class="public">
+								<code>requestDevice</code>
+							</a>
+							<span class="tableEntryAnnotation">(limits, label)</span>
+						</td>
+						<td>Requests a connection to a physical device, creating a logical device.
+</td>
+					</tr>
+				</table>
+			</section>
+			<section><h2>See Also</h2>
+<p><a href="https://docs.rs/wgpu/0.6.0/wgpu/struct.Adapter.html">wgpu::Adapter</a>
+</p>
+</section>
+
+			<footer>
+				<table class="license-info">
+					<tr>
+						<th>Authors</th>
+						<td>
+							<p>Chance Snow
+</p>
+
+						</td>
+					</tr>
+					<tr>
+						<th>Copyright</th>
+						<td>
+							<p>Copyright © 2020 Chance Snow. All rights reserved.
+</p>
+
+						</td>
+					</tr>
+					<tr>
+						<th>License</th>
+						<td>
+							<p>MIT License
+</p>
+
+						</td>
+					</tr>
+				</table>
+<div style="display: flex; justify-content: space-between; margin-top: 2em;">
+  <a href="https://github.com/chances/wgpu-d#readme">GitHub</a>
+  <span class="faint" style="float: right;">Generated using <a href="https://code.dlang.org/packages/ddox">DDOX</a></span>
+</div>
+			</footer>
+		</div>
+	</body>
+</html>

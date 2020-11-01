@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8"/>
+		<title>Struct Device - wgpu-d</title>
+		<link rel="stylesheet" type="text/css" href="../../styles/ddox.css"/>
+		<link rel="stylesheet" href="../../prettify/prettify.css" type="text/css"/>
+		<script type="text/javascript" src="../../scripts/jquery.js">/**/</script><script type="text/javascript" src="../../scripts/ddox.js">/**/</script>
+	</head>
+	<body onload="setupDdox();">
+<style>
+#main-nav > h1 {
+  display: flex;
+  align-items: flex-end;
+}
+#main-nav > h1 > span {
+  padding-bottom: 0.25em;
+}
+#logo {
+  margin-right: 0.5rem;
+  max-width: 4rem;
+}
+</style>
+<nav id="main-nav">
+  <h1>
+    <img id="logo" src="/images/logo.png" alt="wgpu Logo">
+    <span>D Bindings</span>
+  </h1>
+  <ul style="list-style: none; padding: 0;">
+    <li>
+      <a href="https://chances.github.io/wgpu-d">API Reference</a>
+    </li>
+    <li>
+      <a href="https://code.dlang.org/packages/wgpu-d">Download</a>
+    </li>
+    <li>
+      <a href="https://github.com/chances/wgpu-d#readme">Open Source on GitHub</a>
+    </li>
+  </ul>
+  <h2>API Reference</h2>
+			<noscript>
+				<p style="color: red">The search functionality needs JavaScript enabled</p>
+			</noscript>
+			<div id="symbolSearchPane" style="display: none">
+				<form action="#" method="GET">
+					<input id="symbolSearch" type="text" name="q" placeholder="Search for symbols" autocomplete="off" onchange="performSymbolSearch(40);" onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();"/>
+				</form>
+				<ul id="symbolSearchResults" class="symbolList" style="display: none"></ul><script type="application/javascript" src="../../symbols.js"></script><script type="application/javascript">var symbolSearchRootDir = "../../";
+$('#symbolSearchPane').show();</script>
+			</div>
+			<ul class="tree-view">
+				<li class="tree-view ">
+					<div class="package ">wgpu
+					</div>
+			<ul class="tree-view">
+				<li>
+					<div class="module selected">
+						<a href="../../wgpu/api.html">api</a>
+					</div>
+				</li>
+			</ul>
+				</li>
+			</ul>
+		</nav>
+		<div id="main-contents">
+			<h1>Struct Device</h1><p>An open connection to a graphics and/or compute device.
+</p>
+			<div class="prototype">
+				<code class="lang-d">
+					<div class="single-prototype">
+			<span class="kwd">struct</span> <span class="typ">Device</span>
+			<span class="pun">;</span>
+					</div>
+				</code>
+			</div>
+			<section><p>The <code class="lang-d"><span class="typ">Device</span></code> is the responsible for the creation of most rendering and compute resources, as well as exposing <code class="lang-d"><a href="../../wgpu/api/Queue.html"><span class="typ">Queue</span></a></code> objects.
+</p>
+</section>
+
+			<section><h2>Fields</h2>
+				<table>
+					<col class="caption"/>
+					<tr>
+						<th>Name</th><th>Type</th><th>Description</th>
+					</tr>
+					<tr>
+						<td>
+							<a href="../../wgpu/api/Device.label.html" class="public"><code>label</code></a>
+						</td>
+						<td class="typecol"><code class="prettyprint lang-d"><span class="typ">string</span></code></td><td>label for this Device.
+</td>
+					</tr>
+					<tr>
+						<td>
+							<a href="../../wgpu/api/Device.limits.html" class="public"><code>limits</code></a>
+						</td>
+						<td class="typecol"><code class="prettyprint lang-d"><span class="pln">wgpu<wbr/></span><span class="pun">.</span><span class="pln">bindings<wbr/></span><span class="pun">.</span><span class="typ">WGPUCLimits</span></code></td><td>Limits on this Device
+</td>
+					</tr>
+				</table>
+			</section>
+			<section><h2>Properties</h2>
+				<table>
+					<col class="caption"/>
+					<tr>
+						<th>Name</th><th>Type</th><th>Description</th>
+					</tr>
+					<tr>
+						<td>
+							<a href="../../wgpu/api/Device.queue.html" class="public property"><code>queue</code></a><span class="tableEntryAnnotation">[get]</span>
+						</td>
+						<td class="typecol"><code class="prettyprint lang-d"><a href="../../wgpu/api/Queue.html"><span class="typ">Queue</span></a></code></td><td>Obtains a queue which can accept <code class="lang-d"><a href="../../wgpu/api/CommandBuffer.html"><span class="typ">CommandBuffer</span></a></code> submissions.
+</td>
+					</tr>
+				</table>
+			</section>
+			<section><h2>Methods</h2>
+				<table>
+					<col class="caption"/>
+					<tr>
+						<th>Name</th><th>Description</th>
+					</tr>
+					<tr>
+						<td>
+							<a href="../../wgpu/api/Device.createBindGroup.html" class="public">
+								<code>createBindGroup</code>
+							</a>
+							<span class="tableEntryAnnotation">(descriptor)</span>
+						</td>
+						<td>Creates a new bind group.
+</td>
+					</tr>
+					<tr>
+						<td>
+							<a href="../../wgpu/api/Device.createBindGroupLayout.html" class="public">
+								<code>createBindGroupLayout</code>
+							</a>
+							<span class="tableEntryAnnotation">(descriptor)</span>
+						</td>
+						<td>Creates a bind group layout.
+</td>
+					</tr>
+					<tr>
+						<td>
+							<a href="../../wgpu/api/Device.createBuffer.html" class="public">
+								<code>createBuffer</code>
+							</a>
+							<span class="tableEntryAnnotation">(descriptor)</span>
+						</td>
+						<td>Creates a new buffer.
+</td>
+					</tr>
+					<tr>
+						<td>
+							<a href="../../wgpu/api/Device.createCommandEncoder.html" class="public">
+								<code>createCommandEncoder</code>
+							</a>
+							<span class="tableEntryAnnotation">(descriptor)</span>
+						</td>
+						<td>Creates an empty <code class="lang-d"><a href="../../wgpu/api/CommandEncoder.html"><span class="typ">CommandEncoder</span></a></code>.
+</td>
+					</tr>
+					<tr>
+						<td>
+							<a href="../../wgpu/api/Device.createComputePipeline.html" class="public">
+								<code>createComputePipeline</code>
+							</a>
+							<span class="tableEntryAnnotation">(descriptor)</span>
+						</td>
+						<td>Creates a compute pipeline.
+</td>
+					</tr>
+					<tr>
+						<td>
+							<a href="../../wgpu/api/Device.createPipelineLayout.html" class="public">
+								<code>createPipelineLayout</code>
+							</a>
+							<span class="tableEntryAnnotation">(descriptor)</span>
+						</td>
+						<td>Creates a bind group layout.
+</td>
+					</tr>
+					<tr>
+						<td>
+							<a href="../../wgpu/api/Device.createRenderPipeline.html" class="public">
+								<code>createRenderPipeline</code>
+							</a>
+							<span class="tableEntryAnnotation">(descriptor)</span>
+						</td>
+						<td>Creates a render pipeline.
+</td>
+					</tr>
+					<tr>
+						<td>
+							<a href="../../wgpu/api/Device.createSampler.html" class="public">
+								<code>createSampler</code>
+							</a>
+							<span class="tableEntryAnnotation">(descriptor)</span>
+						</td>
+						<td>Creates a new <code class="lang-d"><a href="../../wgpu/api/Sampler.html"><span class="typ">Sampler</span></a></code>.
+</td>
+					</tr>
+					<tr>
+						<td>
+							<a href="../../wgpu/api/Device.createShaderModule.html" class="public">
+								<code>createShaderModule</code>
+							</a>
+							<span class="tableEntryAnnotation">(spv)</span>
+						</td>
+						<td>Creates a shader module from SPIR-V source code.
+</td>
+					</tr>
+					<tr>
+						<td>
+							<a href="../../wgpu/api/Device.createSwapChain.html" class="public">
+								<code>createSwapChain</code>
+							</a>
+							<span class="tableEntryAnnotation">(surface, descriptor)</span>
+						</td>
+						<td>Create a new <code class="lang-d"><a href="../../wgpu/api/SwapChain.html"><span class="typ">SwapChain</span></a></code> which targets <code class="lang-d"><a href="../../wgpu/api/Device.createSwapChain.html#surface"><span class="pln">surface</span></a></code>.
+</td>
+					</tr>
+					<tr>
+						<td>
+							<a href="../../wgpu/api/Device.createTexture.html" class="public">
+								<code>createTexture</code>
+							</a>
+							<span class="tableEntryAnnotation">(descriptor)</span>
+						</td>
+						<td>Creates a new <code class="lang-d"><a href="../../wgpu/api/Texture.html"><span class="typ">Texture</span></a></code>.
+</td>
+					</tr>
+				</table>
+			</section>
+			<section><h2>See Also</h2>
+<p><a href="https://docs.rs/wgpu/0.6.0/wgpu/struct.Device.html">wgpu::Device</a>
+</p>
+</section>
+
+			<footer>
+				<table class="license-info">
+					<tr>
+						<th>Authors</th>
+						<td>
+							<p>Chance Snow
+</p>
+
+						</td>
+					</tr>
+					<tr>
+						<th>Copyright</th>
+						<td>
+							<p>Copyright © 2020 Chance Snow. All rights reserved.
+</p>
+
+						</td>
+					</tr>
+					<tr>
+						<th>License</th>
+						<td>
+							<p>MIT License
+</p>
+
+						</td>
+					</tr>
+				</table>
+<div style="display: flex; justify-content: space-between; margin-top: 2em;">
+  <a href="https://github.com/chances/wgpu-d#readme">GitHub</a>
+  <span class="faint" style="float: right;">Generated using <a href="https://code.dlang.org/packages/ddox">DDOX</a></span>
+</div>
+			</footer>
+		</div>
+	</body>
+</html>

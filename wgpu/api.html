@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8"/>
+		<title>Module wgpu.api - wgpu-d</title>
+		<link rel="stylesheet" type="text/css" href="../styles/ddox.css"/>
+		<link rel="stylesheet" href="../prettify/prettify.css" type="text/css"/>
+		<script type="text/javascript" src="../scripts/jquery.js">/**/</script><script type="text/javascript" src="../scripts/ddox.js">/**/</script>
+	</head>
+	<body onload="setupDdox();">
+<style>
+#main-nav > h1 {
+  display: flex;
+  align-items: flex-end;
+}
+#main-nav > h1 > span {
+  padding-bottom: 0.25em;
+}
+#logo {
+  margin-right: 0.5rem;
+  max-width: 4rem;
+}
+</style>
+<nav id="main-nav">
+  <h1>
+    <img id="logo" src="/images/logo.png" alt="wgpu Logo">
+    <span>D Bindings</span>
+  </h1>
+  <ul style="list-style: none; padding: 0;">
+    <li>
+      <a href="https://chances.github.io/wgpu-d">API Reference</a>
+    </li>
+    <li>
+      <a href="https://code.dlang.org/packages/wgpu-d">Download</a>
+    </li>
+    <li>
+      <a href="https://github.com/chances/wgpu-d#readme">Open Source on GitHub</a>
+    </li>
+  </ul>
+  <h2>API Reference</h2>
+			<noscript>
+				<p style="color: red">The search functionality needs JavaScript enabled</p>
+			</noscript>
+			<div id="symbolSearchPane" style="display: none">
+				<form action="#" method="GET">
+					<input id="symbolSearch" type="text" name="q" placeholder="Search for symbols" autocomplete="off" onchange="performSymbolSearch(40);" onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();"/>
+				</form>
+				<ul id="symbolSearchResults" class="symbolList" style="display: none"></ul><script type="application/javascript" src="../symbols.js"></script><script type="application/javascript">var symbolSearchRootDir = "../";
+$('#symbolSearchPane').show();</script>
+			</div>
+			<ul class="tree-view">
+				<li class="tree-view ">
+					<div class="package ">wgpu
+					</div>
+			<ul class="tree-view">
+				<li>
+					<div class="module selected">
+						<a href="../wgpu/api.html">api</a>
+					</div>
+				</li>
+			</ul>
+				</li>
+			</ul>
+		</nav>
+		<div id="main-contents">
+			<h1>Module wgpu.api</h1><p>An idiomatic D wrapper for wgpu-native.
+</p><section></section>
+
+			<section></section>
+			<section>
+				<h2>Structs</h2>
+				<table>
+					<col class="caption"/>
+					<tr>
+						<th>Name</th><th>Description</th>
+					</tr>
+					<tr>
+						<td>
+							<code>
+								<a id="Adapter" class="public" href="../wgpu/api/Adapter.html">Adapter</a>
+							</code>
+						</td>
+						<td>A handle to a physical graphics and/or compute device.
+</td>
+					</tr>
+					<tr>
+						<td>
+							<code>
+								<a id="BindGroup" class="public" href="../wgpu/api/BindGroup.html">BindGroup</a>
+							</code>
+						</td>
+						<td>An opaque handle to a binding group.
+</td>
+					</tr>
+					<tr>
+						<td>
+							<code>
+								<a id="BindGroupLayout" class="public" href="../wgpu/api/BindGroupLayout.html">BindGroupLayout</a>
+							</code>
+						</td>
+						<td>An opaque handle to a binding group layout.
+</td>
+					</tr>
+					<tr>
+						<td>
+							<code>
+								<a id="Buffer" class="public" href="../wgpu/api/Buffer.html">Buffer</a>
+							</code>
+						</td>
+						<td>A handle to a GPU-accessible buffer.
+</td>
+					</tr>
+					<tr>
+						<td>
+							<code>
+								<a id="CommandBuffer" class="public" href="../wgpu/api/CommandBuffer.html">CommandBuffer</a>
+							</code>
+						</td>
+						<td>An opaque handle to a command buffer on the GPU.
+</td>
+					</tr>
+					<tr>
+						<td>
+							<code>
+								<a id="CommandEncoder" class="public" href="../wgpu/api/CommandEncoder.html">CommandEncoder</a>
+							</code>
+						</td>
+						<td>An object that encodes GPU operations.
+</td>
+					</tr>
+					<tr>
+						<td>
+							<code>
+								<a id="ComputePass" class="public" href="../wgpu/api/ComputePass.html">ComputePass</a>
+							</code>
+						</td>
+						<td>An in-progress recording of a compute pass.
+</td>
+					</tr>
+					<tr>
+						<td>
+							<code>
+								<a id="ComputePipeline" class="public" href="../wgpu/api/ComputePipeline.html">ComputePipeline</a>
+							</code>
+						</td>
+						<td>A handle to a compute pipeline.
+</td>
+					</tr>
+					<tr>
+						<td>
+							<code>
+								<a id="Device" class="public" href="../wgpu/api/Device.html">Device</a>
+							</code>
+						</td>
+						<td>An open connection to a graphics and/or compute device.
+</td>
+					</tr>
+					<tr>
+						<td>
+							<code>
+								<a id="PipelineLayout" class="public" href="../wgpu/api/PipelineLayout.html">PipelineLayout</a>
+							</code>
+						</td>
+						<td>An opaque handle to a pipeline layout.
+</td>
+					</tr>
+					<tr>
+						<td>
+							<code>
+								<a id="Queue" class="public" href="../wgpu/api/Queue.html">Queue</a>
+							</code>
+						</td>
+						<td>A Queue executes finished C<code class="lang-d"><span class="pln">ommandBuffer</span></code> objects.
+</td>
+					</tr>
+					<tr>
+						<td>
+							<code>
+								<a id="RenderPass" class="public" href="../wgpu/api/RenderPass.html">RenderPass</a>
+							</code>
+						</td>
+						<td>An in-progress recording of a render pass.
+</td>
+					</tr>
+					<tr>
+						<td>
+							<code>
+								<a id="RenderPipeline" class="public" href="../wgpu/api/RenderPipeline.html">RenderPipeline</a>
+							</code>
+						</td>
+						<td>A handle to a rendering (graphics) pipeline.
+</td>
+					</tr>
+					<tr>
+						<td>
+							<code>
+								<a id="Sampler" class="public" href="../wgpu/api/Sampler.html">Sampler</a>
+							</code>
+						</td>
+						<td>A handle to a sampler.
+</td>
+					</tr>
+					<tr>
+						<td>
+							<code>
+								<a id="ShaderModule" class="public" href="../wgpu/api/ShaderModule.html">ShaderModule</a>
+							</code>
+						</td>
+						<td>A handle to a compiled shader module.
+</td>
+					</tr>
+					<tr>
+						<td>
+							<code>
+								<a id="Surface" class="public" href="../wgpu/api/Surface.html">Surface</a>
+							</code>
+						</td>
+						<td>A handle to a presentable surface.
+</td>
+					</tr>
+					<tr>
+						<td>
+							<code>
+								<a id="SwapChain" class="public" href="../wgpu/api/SwapChain.html">SwapChain</a>
+							</code>
+						</td>
+						<td>A handle to a swap chain.
+</td>
+					</tr>
+					<tr>
+						<td>
+							<code>
+								<a id="Texture" class="public" href="../wgpu/api/Texture.html">Texture</a>
+							</code>
+						</td>
+						<td>A handle to a texture on the GPU.
+</td>
+					</tr>
+					<tr>
+						<td>
+							<code>
+								<a id="TextureView" class="public" href="../wgpu/api/TextureView.html">TextureView</a>
+							</code>
+						</td>
+						<td>A handle to a texture view.
+</td>
+					</tr>
+				</table>
+			</section>
+			<section>
+				<h2>Enums</h2>
+				<table>
+					<col class="caption"/>
+					<tr>
+						<th>Name</th><th>Description</th>
+					</tr>
+					<tr>
+						<td>
+							<code>
+								<a id="BufferUsage" class="public" href="../wgpu/api/BufferUsage.html">BufferUsage</a>
+							</code>
+						</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>
+							<code>
+								<a id="ShaderStage" class="public" href="../wgpu/api/ShaderStage.html">ShaderStage</a>
+							</code>
+						</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>
+							<code>
+								<a id="TextureUsage" class="public" href="../wgpu/api/TextureUsage.html">TextureUsage</a>
+							</code>
+						</td>
+						<td></td>
+					</tr>
+				</table>
+			</section>
+			<section>
+				<h2>Global variables</h2>
+				<table>
+					<col class="caption"/>
+					<tr>
+						<th>Name</th><th>Type</th><th>Description</th>
+					</tr>
+					<tr>
+						<td>
+							<a id="COPY_BYTES_PER_ROW_ALIGNMENT" class="public" href="../wgpu/api/COPY_BYTES_PER_ROW_ALIGNMENT.html">
+								<code>COPY_BYTES_PER_ROW_ALIGNMENT</code>
+							</a>
+						</td>
+						<td>
+							<code class="prettyprint lang-d"><span class="kwd">const</span><span class="pun">(</span><span class="typ">int</span><span class="pun">)</span></code>
+						</td>
+						<td>Buffer-Texture copies must have bytes_per_row aligned to this number.
+</td>
+					</tr>
+					<tr>
+						<td>
+							<a id="DESIRED_NUM_FRAMES" class="public" href="../wgpu/api/DESIRED_NUM_FRAMES.html">
+								<code>DESIRED_NUM_FRAMES</code>
+							</a>
+						</td>
+						<td>
+							<code class="prettyprint lang-d"><span class="kwd">const</span><span class="pun">(</span><span class="typ">int</span><span class="pun">)</span></code>
+						</td>
+						<td>Unknown
+</td>
+					</tr>
+					<tr>
+						<td>
+							<a id="MAX_ANISOTROPY" class="public" href="../wgpu/api/MAX_ANISOTROPY.html">
+								<code>MAX_ANISOTROPY</code>
+							</a>
+						</td>
+						<td>
+							<code class="prettyprint lang-d"><span class="kwd">const</span><span class="pun">(</span><span class="typ">int</span><span class="pun">)</span></code>
+						</td>
+						<td>Maximum anisotropy.
+</td>
+					</tr>
+					<tr>
+						<td>
+							<a id="MAX_COLOR_TARGETS" class="public" href="../wgpu/api/MAX_COLOR_TARGETS.html">
+								<code>MAX_COLOR_TARGETS</code>
+							</a>
+						</td>
+						<td>
+							<code class="prettyprint lang-d"><span class="kwd">const</span><span class="pun">(</span><span class="typ">int</span><span class="pun">)</span></code>
+						</td>
+						<td>Maximum number of color targets.
+</td>
+					</tr>
+					<tr>
+						<td>
+							<a id="MAX_MIP_LEVELS" class="public" href="../wgpu/api/MAX_MIP_LEVELS.html">
+								<code>MAX_MIP_LEVELS</code>
+							</a>
+						</td>
+						<td>
+							<code class="prettyprint lang-d"><span class="kwd">const</span><span class="pun">(</span><span class="typ">int</span><span class="pun">)</span></code>
+						</td>
+						<td>Maximum amount of mipmap levels.
+</td>
+					</tr>
+					<tr>
+						<td>
+							<a id="MAX_VERTEX_BUFFERS" class="public" href="../wgpu/api/MAX_VERTEX_BUFFERS.html">
+								<code>MAX_VERTEX_BUFFERS</code>
+							</a>
+						</td>
+						<td>
+							<code class="prettyprint lang-d"><span class="kwd">const</span><span class="pun">(</span><span class="typ">int</span><span class="pun">)</span></code>
+						</td>
+						<td>Maximum number of vertex buffers.
+</td>
+					</tr>
+					<tr>
+						<td>
+							<a id="VERSION" class="public" href="../wgpu/api/VERSION.html">
+								<code>VERSION</code>
+							</a>
+						</td>
+						<td>
+							<code class="prettyprint lang-d"><span class="kwd">const</span><span class="pun">(</span><span class="typ">string</span><span class="pun">)</span></code>
+						</td>
+						<td>Version of wgpu-native this library binds.
+</td>
+					</tr>
+				</table>
+			</section>
+			<section>
+				<h2>Aliases</h2>
+				<table>
+					<col class="caption"/>
+					<tr>
+						<th>Name</th><th>Type</th><th>Description</th>
+					</tr>
+					<tr>
+						<td>
+							<a id="BufferAddress" class="public" href="../wgpu/api/BufferAddress.html">
+								<code>BufferAddress</code>
+							</a>
+						</td>
+						<td>
+							<code class="prettyprint lang-d"><span class="typ">ulong</span></code>
+						</td>
+						<td>Integral type used for buffer offsets.
+</td>
+					</tr>
+				</table>
+			</section>
+			<footer>
+				<table class="license-info">
+					<tr>
+						<th>Authors</th>
+						<td>
+							<p>Chance Snow
+</p>
+
+						</td>
+					</tr>
+					<tr>
+						<th>Copyright</th>
+						<td>
+							<p>Copyright © 2020 Chance Snow. All rights reserved.
+</p>
+
+						</td>
+					</tr>
+					<tr>
+						<th>License</th>
+						<td>
+							<p>MIT License
+</p>
+
+						</td>
+					</tr>
+				</table>
+<div style="display: flex; justify-content: space-between; margin-top: 2em;">
+  <a href="https://github.com/chances/wgpu-d#readme">GitHub</a>
+  <span class="faint" style="float: right;">Generated using <a href="https://code.dlang.org/packages/ddox">DDOX</a></span>
+</div>
+			</footer>
+		</div>
+	</body>
+</html>
