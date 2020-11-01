@@ -429,13 +429,13 @@ struct Buffer {
     return data[0 .. size];
   }
 
-  /// Read this `Buffer`'s asynchronously.
+  /// Map the buffer for reading asynchronously.
   /// See_Also: <a href="https://docs.rs/wgpu/0.6.0/wgpu/struct.BufferSlice.html#method.map_async">wgpu::BufferSlice::map_async</a>
   void mapReadAsync(BufferAddress start, BufferAddress size) {
     wgpu_buffer_map_read_async(id, start, size, &wgpu_buffer_map_callback, cast(ubyte*) &this);
   }
 
-  /// Write to this `Buffer` asynchronously.
+  /// Map the buffer for writing asynchronously.
   /// See_Also: <a href="https://docs.rs/wgpu/0.6.0/wgpu/struct.BufferSlice.html#method.map_async">wgpu::BufferSlice::map_async</a>
   void mapWriteAsync(BufferAddress start, BufferAddress size) {
     wgpu_buffer_map_write_async(id, start, size, &wgpu_buffer_map_callback, cast(ubyte*) &this);
