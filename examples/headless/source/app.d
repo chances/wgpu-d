@@ -103,4 +103,5 @@ void main()
   write_image("bin/headless.png", width, height, data, ColFmt.RGBA);
 
   outputBuffer.unmap();
+  outputBuffer.destroy();
 }

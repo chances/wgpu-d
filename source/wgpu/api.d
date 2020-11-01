@@ -187,8 +187,10 @@ struct Adapter {
     wgpu_request_adapter_async(&options, allowedBackends, false, &wgpu_request_adapter_callback, &this);
   }
 
-  ~this() {
+  /// Release the given handle.
+  void destroy() {
     if (ready) wgpu_adapter_destroy(id);
+    id = 0;
   }
 
   /// Whether this Adapter handle has finished being requested and is ready for use.
@@ -240,8 +242,10 @@ struct Device {
   /// Label for this Device.
   string label;
 
-  ~this() {
+  /// Release the given handle.
+  void destroy() {
     if (ready) wgpu_device_destroy(id);
+    id = 0;
   }
 
   /// Whether this Device handle is valid and ready for use.
@@ -458,8 +462,10 @@ struct Buffer {
   /// Result of a call to `Buffer.mapReadAsync` or `Buffer.mapWriteAsync`.
   BufferMapAsyncStatus status = BufferMapAsyncStatus.unknown;
 
-  ~this() {
-    wgpu_buffer_destroy(id);
+  /// Release the given handle.
+  void destroy() {
+    if (id) wgpu_buffer_destroy(id);
+    id = 0;
   }
 
   /// Get the sliced `Buffer` data requested by either `Buffer.mapReadAsync` or `Buffer.mapWriteAsync`.
@@ -494,8 +500,10 @@ struct Texture {
   /// Handle identifier.
   WgpuId id;
 
-  ~this() {
-    wgpu_texture_destroy(id);
+  /// Release the given handle.
+  void destroy() {
+    if (id) wgpu_texture_destroy(id);
+    id = 0;
   }
 
   /// Creates a view of this texture.
@@ -648,8 +656,10 @@ struct RenderPipeline {
   /// Handle identifier.
   WgpuId id;
 
-  ~this() {
-    wgpu_render_pipeline_destroy(id);
+  /// Release the given handle.
+  void destroy() {
+    if (id) wgpu_render_pipeline_destroy(id);
+    id = 0;
   }
 }
 
@@ -744,6 +754,12 @@ struct RenderPass {
 struct ComputePipeline {
   /// Handle identifier.
   WgpuId id;
+
+  /// Release the given handle.
+  void destroy() {
+    if (id) wgpu_compute_pipeline_destroy(id);
+    id = 0;
+  }
 }
 
 /// An in-progress recording of a compute pass.
