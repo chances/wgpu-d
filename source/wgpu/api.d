@@ -79,6 +79,14 @@ alias BufferAddress = WGPUBufferAddress;
 alias BufferDescriptor = WGPUBufferDescriptor;
 /// Describes a `CommandEncoder`.
 alias CommandEncoderDescriptor = WGPUCommandEncoderDescriptor;
+/// Origin of a copy to/from a texture.
+alias Origin3d = WGPUOrigin3d;
+/// View of a texture which can be used to copy to/from a buffer/texture.
+alias TextureCopyView = WGPUTextureCopyView;
+/// Layout of a texture in a buffer's memory.
+alias TextureDataLayout = WGPUTextureDataLayout;
+/// View of a buffer which can be used to copy to/from a texture.
+alias BufferCopyView = WGPUBufferCopyView;
 /// Describes a `BindGroup`.
 alias BindGroupDescriptor = WGPUBindGroupDescriptor;
 /// Describes a single binding inside a bind group.
@@ -95,6 +103,7 @@ alias ComputePipelineDescriptor = WGPUComputePipelineDescriptor;
 alias RenderPassDescriptor = WGPURenderPassDescriptor;
 /// Describes a color attachment to a `RenderPass`.
 alias RenderPassColorAttachmentDescriptor = WGPURenderPassColorAttachmentDescriptor;
+alias PassChannel_Color = WGPUPassChannel_Color;
 /// Describes a `ComputePass`.
 alias ComputePassDescriptor = WGPUComputePassDescriptor;
 /// Describes a `CommandBuffer`.
@@ -397,6 +406,10 @@ struct Texture {
   /// Handle identifier.
   WgpuId id;
 
+  ~this() {
+    wgpu_texture_destroy(id);
+  }
+
   /// Creates a view of this texture.
   TextureView createView(const TextureViewDescriptor descriptor) {
     return TextureView(wgpu_texture_create_view(id, &descriptor));
@@ -435,13 +448,17 @@ struct Queue {
   /// Handle identifier.
   WgpuId id;
 
+  /// Submits a finished command buffer for execution.
+  void submit(CommandBuffer commands) {
+    submit([commands]);
+  }
   /// Submits a series of finished command buffers for execution.
-  void submit(CommandBuffer[] commands) {
+  void submit(CommandBuffer[] commandBuffers) {
     import std.algorithm.iteration : map;
     import std.array : array;
 
-    auto commandIds = commands.map!(c => c.id).array;
-    wgpu_queue_submit(id, cast(const(c_ulong)*) &commandIds, commands.length);
+    auto commandIds = commandBuffers.map!(c => c.id).array;
+    wgpu_queue_submit(id, cast(const(c_ulong)*) &commandIds, commandBuffers.length);
   }
 }
 
@@ -494,6 +511,11 @@ struct CommandEncoder {
   /// This function returns a `ComputePass` object which records a single compute pass.
   ComputePass beginComputePass(const ComputePassDescriptor descriptor) {
     return ComputePass(wgpu_command_encoder_begin_compute_pass(id, &descriptor));
+  }
+
+  /// Copy data from a texture to a buffer.
+  void copyTextureToBuffer(const TextureCopyView source, const BufferCopyView destination, const Extent3d copySize) {
+    wgpu_command_encoder_copy_texture_to_buffer(id, &source, &destination, &copySize);
   }
 }
 
