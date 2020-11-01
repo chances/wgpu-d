@@ -52,6 +52,7 @@ docs/sitemap.xml: $(SOURCES)
 	# Footer
 	@sed -i -e "/<p class=\"faint\">Generated using the DDOX documentation generator<\/p>/r views/footer.html" -e "/<p class=\"faint\">Generated using the DDOX documentation generator<\/p>/d" `find docs -name '*.html'`
 	# Dub Package Version
+	@echo `git describe --tags --abbrev=0`
 	@sed -i "s/DUB_VERSION/$(LATEST_VERSION_TAG)/g" `find docs -name '*.html'`
 	@echo Done
 
