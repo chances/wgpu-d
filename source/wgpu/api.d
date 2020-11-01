@@ -261,15 +261,15 @@ struct Device {
   }
 
   /// Creates a shader module from SPIR-V source code.
-  ShaderModule createShaderModule(const ubyte[] spv) {
+  ShaderModule createShaderModule(const byte[] spv) {
     import std.algorithm.iteration : map;
     import std.array : array;
 
     const bytes = spv.map!(byte_ => byte_.to!(const uint)).array;
-    return ShaderModule(wgpu_device_create_shader_module(id, WGPUShaderSource(
-      cast(const(uint)*) &bytes,
-      spv.length
-    )));
+    return ShaderModule(wgpu_device_create_shader_module(
+      id,
+      WGPUShaderSource(bytes.ptr, spv.length))
+    );
   }
 
   /// Creates an empty `CommandEncoder`.
@@ -466,8 +466,8 @@ struct Queue {
     import std.algorithm.iteration : map;
     import std.array : array;
 
-    auto commandIds = commandBuffers.map!(c => c.id).array;
-    wgpu_queue_submit(id, cast(const(c_ulong)*) &commandIds, commandBuffers.length);
+    const commandBufferIds = commandBuffers.map!(c => c.id).array;
+    wgpu_queue_submit(id, commandBufferIds.ptr, commandBuffers.length);
   }
 }
 
@@ -587,7 +587,7 @@ struct RenderPass {
     import std.array : array;
 
     auto offsetsAsUints = offsets.map!(offset => offset.to!(const uint)).array;
-    wgpu_render_pass_set_bind_group(instance, index, bindGroup.id, cast(const(uint)*) &offsetsAsUints, offsets.length);
+    wgpu_render_pass_set_bind_group(instance, index, bindGroup.id, offsetsAsUints.ptr, offsets.length);
   }
 
   /// Sets the active render pipeline.
@@ -678,7 +678,7 @@ struct ComputePass {
     import std.array : array;
 
     auto offsetsAsUints = offsets.map!(offset => offset.to!(const uint)).array;
-    wgpu_compute_pass_set_bind_group(instance, index, bindGroup.id, cast(const(uint)*) &offsetsAsUints, offsets.length);
+    wgpu_compute_pass_set_bind_group(instance, index, bindGroup.id, offsetsAsUints.ptr, offsets.length);
   }
 
   /// Sets the active compute pipeline.
