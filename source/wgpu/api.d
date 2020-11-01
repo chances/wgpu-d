@@ -226,7 +226,6 @@ struct Adapter {
   Device requestDevice(const Limits limits, string label = fullyQualifiedName!Device) {
     assert(ready);
     auto id = wgpu_adapter_request_device(id, 0, &limits, true, toStringz(label));
-    assert(id > 0);
     return Device(id, label);
   }
 }
@@ -238,8 +237,19 @@ struct Adapter {
 struct Device {
   /// Handle identifier.
   WgpuId id;
-  /// label for this Device.
+  /// Label for this Device.
   string label;
+
+  ~this() {
+    if (ready) wgpu_device_destroy(id);
+  }
+
+  /// Whether this Device handle is valid and ready for use.
+  ///
+  /// If `false`, `Adapter.requestDevice` likely failed.
+  bool ready() @property const {
+    return id > 0;
+  }
 
   /// List all limits that were requested of this device.
   ///
