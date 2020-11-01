@@ -9,6 +9,7 @@
   "targetType": "executable",
   "targetPath": "../../bin",
   "dependencies": {
+    "imageformats": "~>7.0.2",
     "wgpu-d": {
       "path": "../.."
     }
