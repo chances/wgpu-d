@@ -1,6 +1,21 @@
+<style>
+#main-nav > h1 {
+  display: flex;
+  align-items: flex-end;
+}
+#main-nav > h1 > span {
+  padding-bottom: 0.25em;
+}
+#logo {
+  margin-right: 0.5rem;
+  max-width: 4rem;
+}
+</style>
 <nav id="main-nav">
-  <img src="/images/logo.png" alt="wgpu Logo">
-  <h1>wgpu-d</h1>
+  <h1>
+    <img id="logo" src="/images/logo.png" alt="wgpu Logo">
+    <span>D Bindings</span>
+  </h1>
   <ul style="list-style: none; padding: 0;">
     <li>
       <a href="https://chances.github.io/wgpu-d">API Reference</a>
