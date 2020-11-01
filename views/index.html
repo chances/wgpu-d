@@ -1,0 +1,77 @@
+<style>
+.bs-hbtn {
+  display: inline-block;
+  color: white;
+  height: 34pt;
+  vertical-align: top;
+  text-align: center;
+  float: right;
+}
+.bs-hbtn.red.left {
+  background: #ab1919;
+  background-repeat: no-repeat, no-repeat, no-repeat;
+  background-size: 100% 34pt, 100% 18pt, 18.5pt 34pt;
+  background-position: 0 0, 18pt 34pt, 0 0;
+  background-clip: content-box, border-box, border-box;
+}
+.bs-hbtn.black.right {
+  background: black;
+  margin-right: 18pt;
+  background-repeat: no-repeat, no-repeat;
+  background-size: 100% 34pt, 100% 18pt, 18.5pt 34pt;
+  background-position: 0 0, -18pt 34pt, 100% 0;
+  background-clip: content-box, border-box, border-box;
+}
+.dub-logo {
+  background-image: url(images/dub-logo.png);
+  width: 56px;
+  height: 100%;
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+}
+#downloadButton {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+#downloadButton large {
+  font-size: 14pt;
+  line-height: 16pt;
+}
+#downloadButton .content {
+  padding: 0 5pt;
+}
+</style>
+
+<a id="downloadButton" href="https://code.dlang.org/packages/wgpu-d">
+  <div class="bs-hbtn right black">
+    <div class="content">get <strong>wgpu-d</strong><br><large>DUB_VERSION</large></div>
+  </div><div class="bs-hbtn left red">
+    <div class="dub-logo"></div>
+  </div>
+</a>
+
+<h1>wgpu-d API Reference</h1>
+<p>
+  <a href="https://code.dlang.org/packages/wgpu-d">
+    <img src="https://img.shields.io/dub/v/wgpu-d.svg" alt="DUB Package">
+  </a>
+  <a target="_blank" href="https://opensource.org/licenses/MIT">
+    <img src="https://img.shields.io/badge/license-MIT-blue" alt="MIT License">
+  </a>
+  <a target="_blank" rel="noopener noreferrer" href="https://github.com/chances/wgpu-d/workflows/wgpu-d%20CI/badge.svg?branch=master">
+    <img src="https://github.com/chances/wgpu-d/workflows/wgpu-d%20CI/badge.svg?branch=master" alt="wgpu-d CI">
+  </a>
+  <!-- TODO: Add unit and/or integration tests -->
+  <!-- <a href="https://codecov.io/gh/chances/wgpu-d/">
+    <img src="https://codecov.io/gh/chances/wgpu-d/branch/master/graph/badge.svg" alt="codecov">
+  </a> -->
+</p>
+<p>D bindings to <a href="https://github.com/gfx-rs/wgpu-native">wgpu-native</a> and an idiomatic D wrapper around the library.</p>
+<h2 id="Usage">Usage</h2>
+<pre class="json">
+"dependencies": {
+  "wgpu-d": "DUB_VERSION"
+}
+</pre>
+<h2>Modules</h2>

@@ -6,5 +6,20 @@
   ],
   "license": "MIT",
   "copyright": "Copyright © 2020, Chance Snow",
-  "targetType": "sourceLibrary"
+  "subPackages": [
+    "examples/headless"
+  ],
+  "targetType": "sourceLibrary",
+  "targetPath": "bin",
+  "libs": [
+    "wgpu_native"
+  ],
+  "lflags": [
+    "-Llib/wgpu-64-debug",
+    "-Llib/wgpu-64-release"
+  ],
+  "copyFiles": [
+    "lib/wgpu-64-debug",
+    "lib/wgpu-64-release"
+  ]
 }

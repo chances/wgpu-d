@@ -1,0 +1,20 @@
+{
+  "name": "headless",
+  "description": "Headless (windowless) rendering example",
+	"authors": [
+		"Chance Snow"
+	],
+	"license": "MIT",
+  "copyright": "Copyright © 2020, Chance Snow",
+  "targetType": "executable",
+  "targetPath": "../../bin",
+  "dependencies": {
+    "wgpu-d": {
+      "path": "../.."
+    }
+  },
+  "lflags": [
+    "-L../../lib/wgpu-64-debug",
+    "-L../../lib/wgpu-64-release"
+  ]
+}
