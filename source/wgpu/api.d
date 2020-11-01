@@ -187,8 +187,10 @@ struct Adapter {
     wgpu_request_adapter_async(&options, allowedBackends, false, &wgpu_request_adapter_callback, &this);
   }
 
-  ~this() {
+  /// Release the given handle.
+  void destroy() {
     if (ready) wgpu_adapter_destroy(id);
+    id = 0;
   }
 
   /// Whether this Adapter handle has finished being requested and is ready for use.
@@ -226,7 +228,6 @@ struct Adapter {
   Device requestDevice(const Limits limits, string label = fullyQualifiedName!Device) {
     assert(ready);
     auto id = wgpu_adapter_request_device(id, 0, &limits, true, toStringz(label));
-    assert(id > 0);
     return Device(id, label);
   }
 }
@@ -238,8 +239,21 @@ struct Adapter {
 struct Device {
   /// Handle identifier.
   WgpuId id;
-  /// label for this Device.
+  /// Label for this Device.
   string label;
+
+  /// Release the given handle.
+  void destroy() {
+    if (ready) wgpu_device_destroy(id);
+    id = 0;
+  }
+
+  /// Whether this Device handle is valid and ready for use.
+  ///
+  /// If `false`, `Adapter.requestDevice` likely failed.
+  bool ready() @property const {
+    return id > 0;
+  }
 
   /// List all limits that were requested of this device.
   ///
@@ -337,6 +351,37 @@ struct Device {
 struct Surface {
   /// Handle identifier.
   WgpuId id;
+
+  version (Windows) {
+    /// Create a new `Surface` from an Android handle.
+    static Surface fromAndroid(void* androidNativeWindow) {
+      return Surface(wgpu_create_surface_from_android( androidNativeWindow));
+    }
+  }
+  version (OSX) {
+    /// Create a new `Surface` from a Metal layer.
+    static Surface fromMetalLayer(void* layer) {
+      return Surface(wgpu_create_surface_from_metal_layer(layer));
+    }
+  }
+  version (Linux) {
+    /// Create a new `Surface` from a Wayland window handle.
+    static Surface fromWayland(void* surface, void* display) {
+      return Surface(wgpu_create_surface_from_wayland(surface, display));
+    }
+  }
+  version (Windows) {
+    /// Create a new `Surface` from a Windows window handle.
+    static Surface fromWindowsHwnd(void* _hinstance, void* hwnd) {
+      return Surface(wgpu_create_surface_from_windows_hwnd(_hinstance, hwnd));
+    }
+  }
+  version (Linux) {
+    /// Create a new `Surface` from a Xlib window handle.
+    static Surface fromXlib(const(void)** display, c_ulong window) {
+      return Surface(wgpu_create_surface_from_xlib(display, window));
+    }
+  }
 }
 
 /// A handle to a swap chain.
@@ -417,8 +462,10 @@ struct Buffer {
   /// Result of a call to `Buffer.mapReadAsync` or `Buffer.mapWriteAsync`.
   BufferMapAsyncStatus status = BufferMapAsyncStatus.unknown;
 
-  ~this() {
-    wgpu_buffer_destroy(id);
+  /// Release the given handle.
+  void destroy() {
+    if (id) wgpu_buffer_destroy(id);
+    id = 0;
   }
 
   /// Get the sliced `Buffer` data requested by either `Buffer.mapReadAsync` or `Buffer.mapWriteAsync`.
@@ -453,8 +500,10 @@ struct Texture {
   /// Handle identifier.
   WgpuId id;
 
-  ~this() {
-    wgpu_texture_destroy(id);
+  /// Release the given handle.
+  void destroy() {
+    if (id) wgpu_texture_destroy(id);
+    id = 0;
   }
 
   /// Creates a view of this texture.
@@ -607,8 +656,10 @@ struct RenderPipeline {
   /// Handle identifier.
   WgpuId id;
 
-  ~this() {
-    wgpu_render_pipeline_destroy(id);
+  /// Release the given handle.
+  void destroy() {
+    if (id) wgpu_render_pipeline_destroy(id);
+    id = 0;
   }
 }
 
@@ -703,6 +754,12 @@ struct RenderPass {
 struct ComputePipeline {
   /// Handle identifier.
   WgpuId id;
+
+  /// Release the given handle.
+  void destroy() {
+    if (id) wgpu_compute_pipeline_destroy(id);
+    id = 0;
+  }
 }
 
 /// An in-progress recording of a compute pass.

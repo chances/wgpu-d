@@ -14,6 +14,7 @@ void main()
   writefln("Adapter limits: %s", adapter.limits);
 
   auto device = adapter.requestDevice(Limits());
+  assert(device.ready, "Device is not ready");
   writefln("Device limits: %s", device.limits);
 
   const width = 400;
@@ -102,4 +103,5 @@ void main()
   write_image("bin/headless.png", width, height, data, ColFmt.RGBA);
 
   outputBuffer.unmap();
+  outputBuffer.destroy();
 }
