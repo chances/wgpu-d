@@ -20,10 +20,15 @@ static const VERSION = "0.6.0";
 static const COPY_BYTES_PER_ROW_ALIGNMENT = 256;
 
 // TODO: Does the library need these?
+/// Unknown
 static const DESIRED_NUM_FRAMES = 3;
+/// Maximum anisotropy.
 static const MAX_ANISOTROPY = 16;
+/// Maximum number of color targets.
 static const MAX_COLOR_TARGETS = 4;
+/// Maximum amount of mipmap levels.
 static const MAX_MIP_LEVELS = 16;
+/// Maximum number of vertex buffers.
 static const MAX_VERTEX_BUFFERS = 16;
 
 alias WgpuId = c_ulong;
@@ -380,6 +385,10 @@ struct PipelineLayout {
 /// See_Also: <a href="https://docs.rs/wgpu/0.3.0/wgpu/struct.RenderPipeline.html">wgpu::RenderPipeline</a>
 struct RenderPipeline {
   package WgpuId id;
+
+  ~this() {
+    wgpu_render_pipeline_destroy(id);
+  }
 }
 
 /// An in-progress recording of a render pass.
@@ -390,51 +399,75 @@ struct RenderPass {
   package WGPURenderPass* instance;
 
   /// Sets the active bind group for a given bind group index.
-  void setBindGroup(const uint index, const BindGroup bindGroup, BufferAddress[] offsets) {}
+  void setBindGroup(const uint index, const BindGroup bindGroup, BufferAddress[] offsets) {
+    wgpu_render_pass_set_bind_group(instance, index, bindGroup.id, &offsets, offsets.length);
+  }
 
   /// Sets the active render pipeline.
   ///
   /// Subsequent draw calls will exhibit the behavior defined by `pipeline`.
-  void setPipeline(const RenderPipeline pipeline) {}
+  void setPipeline(const RenderPipeline pipeline) {
+    wgpu_render_pass_set_pipeline(instance, pipeline.id);
+  }
 
-  void setBlendColor(Color color) {}
+  void setBlendColor(const Color color) {
+    wgpu_render_pass_set_blend_color(instance, &color);
+  }
 
   /// Sets the active index buffer.
   ///
   /// Subsequent calls to `drawIndexed` on this `RenderPass` will use buffer as the source index buffer.
-  void setIndexBuffer(Buffer buffer, BufferAddress offset) {}
+  void setIndexBuffer(const Buffer buffer, const BufferAddress offset) {
+    wgpu_render_pass_set_index_buffer(instance, buffer.id, offset, buffer.size);
+  }
 
   /// Sets the active vertex buffers, starting from `startSlot`.
   ///
   /// Each element of `bufferPairs` describes a vertex buffer and an offset in bytes into that buffer.
   /// The offset must be aligned to a multiple of 4 bytes.
-  void setVertexBuffers(uint startSlot, Tuple!(Buffer, BufferAddress) bufferPairs) {}
+  void setVertexBuffers(uint startSlot, Tuple!(Buffer, BufferAddress) bufferPairs) {
+    foreach (buffer, bufferAddress; bufferPairs)
+      wgpu_render_pass_set_vertex_buffer(instance, startSlot, buffer.id, bufferAddress, buffer.size);
+  }
 
   /// Sets the scissor region.
   ///
   /// Subsequent draw calls will discard any fragments that fall outside this region.
-  void setScissorRect(uint x, uint y, uint w, uint h) {}
+  void setScissorRect(uint x, uint y, uint w, uint h) {
+    wgpu_render_pass_set_scissor_rect(instance, x, y, w, h);
+  }
 
   /// Sets the viewport region.
   ///
   /// Subsequent draw calls will draw any fragments in this region.
-  void setViewport(float x, float y, float w, float h, float minDepth, float maxDepth) {}
+  void setViewport(float x, float y, float w, float h, float minDepth, float maxDepth) {
+    wgpu_render_pass_set_viewport(instance, x, y, w, h, minDepth, maxDepth);
+  }
 
   /// Sets the stencil reference.
   ///
   /// Subsequent stencil tests will test against this value.
-  void setStencilReference(uint reference) {}
+  void setStencilReference(uint reference) {
+    wgpu_render_pass_set_stencil_reference(instance, reference);
+  }
 
   /// Draws primitives from the active vertex buffer(s).
   ///
   /// The active vertex buffers can be set with `RenderPass.setVertexBuffers`.
-  void draw(uint[] vertices, uint[] instances) {}
+  void draw(uint[] vertices, uint[] instances) {
+    assert(vertices.length);
+    assert(instances.length);
+  }
 
   /// Draws indexed primitives using the active index buffer and the active vertex buffers.
   ///
   /// The active index buffer can be set with `RenderPass.setIndexBuffer`, while the active vertex
   /// buffers can be set with `RenderPass.setVertexBuffers`.
-  void drawIndexed(uint[] indices, int base_vertex, uint[] instances) {}
+  void drawIndexed(uint[] indices, int baseVertex, uint[] instances) {
+    assert(indices.length);
+    assert(baseVertex >= 0);
+    assert(instances.length);
+  }
 }
 
 /// A handle to a compute pipeline.
@@ -449,13 +482,19 @@ struct ComputePass {
   package WGPUComputePass* instance;
 
   /// Sets the active bind group for a given bind group index.
-  void setBindGroup(const uint index, const BindGroup bindGroup, BufferAddress[] offsets) {}
+  void setBindGroup(const uint index, const BindGroup bindGroup, BufferAddress[] offsets) {
+    wgpu_compute_pass_set_bind_group(instance, index, bindGroup.id, &offsets, offsets.length);
+  }
 
   /// Sets the active compute pipeline.
-  void setPipeline(const ComputePipeline pipeline) {}
+  void setPipeline(const ComputePipeline pipeline) {
+    wgpu_compute_pass_set_pipeline(instance, pipeline.id);
+  }
 
   ///Dispatches compute work operations.
   ///
   /// x, y and z denote the number of work groups to dispatch in each dimension.
-  void dispatch(const uint x, const uint y, const uint z) {}
+  void dispatch(const uint x, const uint y, const uint z) {
+    wgpu_compute_pass_dispatch(instance, x, y, z);
+  }
 }
