@@ -1,4 +1,5 @@
-
+module wgpu.bindings;
+// AUTOMATICALLY GENERATED: DO NOT EDIT
 
 
         import core.stdc.config;

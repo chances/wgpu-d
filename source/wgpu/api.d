@@ -3,14 +3,14 @@
 /// Authors: Chance Snow
 /// Copyright: Copyright © 2020 Chance Snow. All rights reserved.
 /// License: MIT License
-module api;
+module wgpu.api;
 
 import core.stdc.config : c_ulong;
 import std.conv : to;
 import std.string : toStringz;
 import std.traits : fullyQualifiedName;
 
-import wgpu;
+import wgpu.bindings;
 
 /// Version of wgpu-native this library binds.
 static const VERSION = "0.6.0";
