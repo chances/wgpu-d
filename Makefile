@@ -7,10 +7,7 @@ all: docs
 
 EXAMPLES := bin/headless
 examples: $(EXAMPLES)
-	@echo "Sanity check for Linking to wgpu-native:"
-	ld -L$(LIBS_PATH) -l wgpu_native
-	@rm -f a.out
-	@echo "👍️"
+
 .PHONY: examples
 
 HEADLESS_SOURCES := $(shell find examples/headless/source -name '*.d')
@@ -18,18 +15,25 @@ ifeq ($(TARGET_OS),Linux)
 	HEADLESS_SOURCES := $(HEADLESS_SOURCES)
 endif
 
-bin/headless: $(SOURCES) $(HEADLESS_SOURCES)
+bin/headless: $(SOURCES) $(HEADLESS_SOURCES) library-sanity-check
 	cd examples/headless && dub build
 
 headless: bin/headless
 	env LD_LIBRARY_PATH=$(LIBS_PATH) bin/headless
 .PHONY: headless
 
-test:
+library-sanity-check:
+	@echo "Sanity check for Linking to wgpu-native:"
+	ld -L$(LIBS_PATH) -l wgpu_native
+	@rm -f a.out
+	@echo "All good! 👍️"
+.PHONY: library-sanity-check
+
+test: library-sanity-check
 	env LD_LIBRARY_PATH=$(LIBS_PATH) dub test --parallel
 .PHONY: test
 
-cover: $(SOURCES)
+cover: $(SOURCES) library-sanity-check
 	dub test --parallel --coverage
 
 docs/sitemap.xml: $(SOURCES)
