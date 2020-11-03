@@ -14,7 +14,7 @@
   "libs": [
     "wgpu_native"
   ],
-  "lflags": [
+  "lflags-posix": [
     "-Llib/wgpu-64-debug",
     "-Llib/wgpu-64-release"
   ],
