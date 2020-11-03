@@ -364,7 +364,7 @@ struct Surface {
       return Surface(wgpu_create_surface_from_metal_layer(layer));
     }
   }
-  version (Linux) {
+  version (linux) {
     /// Create a new `Surface` from a Wayland window handle.
     static Surface fromWayland(void* surface, void* display) {
       return Surface(wgpu_create_surface_from_wayland(surface, display));
@@ -376,7 +376,7 @@ struct Surface {
       return Surface(wgpu_create_surface_from_windows_hwnd(_hinstance, hwnd));
     }
   }
-  version (Linux) {
+  version (linux) {
     /// Create a new `Surface` from a Xlib window handle.
     static Surface fromXlib(const(void)** display, c_ulong window) {
       return Surface(wgpu_create_surface_from_xlib(display, window));
