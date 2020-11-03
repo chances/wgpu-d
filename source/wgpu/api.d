@@ -14,7 +14,7 @@ import std.traits : fullyQualifiedName;
 /// Version of <a href="https://github.com/gfx-rs/wgpu-native">wgpu-native</a> this library binds.
 /// See_Also: <a href="https://github.com/gfx-rs/wgpu-native/releases/tag/v0.6.0">github.com/gfx-rs/wgpu-native/releases/tag/v0.6.0</a>
 static const VERSION = "0.6.0";
-/// Buffer-Texture copies must have bytes_per_row aligned to this number.
+/// Buffer-Texture copies must have `bytes_per_row` aligned to this number.
 ///
 /// This doesn't apply to `Queue.writeTexture`.
 static const COPY_BYTES_PER_ROW_ALIGNMENT = 256;
