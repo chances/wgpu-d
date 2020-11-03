@@ -20,8 +20,6 @@ static const VERSION = "0.6.0";
 static const COPY_BYTES_PER_ROW_ALIGNMENT = 256;
 
 // TODO: Does the library need these?
-/// Unknown
-static const DESIRED_NUM_FRAMES = 3;
 /// Maximum anisotropy.
 static const MAX_ANISOTROPY = 16;
 /// Maximum number of color targets.
