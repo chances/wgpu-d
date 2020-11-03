@@ -581,6 +581,7 @@ alias SwapChainDescriptor = WGPUSwapChainDescriptor;
 alias BufferAddress = WGPUBufferAddress;
 /// Describes a `Buffer`.
 alias BufferDescriptor = WGPUBufferDescriptor;
+// TODO: Wrap `CommandEncoderDescriptor` so that it accepts `string` as the label
 /// Describes a `CommandEncoder`.
 alias CommandEncoderDescriptor = WGPUCommandEncoderDescriptor;
 /// Describes a `CommandBuffer`.
