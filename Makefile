@@ -1,4 +1,3 @@
-LATEST_VERSION_TAG := $(shell git describe --tags --abbrev=0 | sed "s/v//")
 SOURCES := $(shell find source -name '*.d')
 TARGET_OS := $(shell uname -s)
 LIBS_PATH := lib/wgpu-64-debug
@@ -37,6 +36,7 @@ test: library-sanity-check
 cover: $(SOURCES) library-sanity-check
 	env LD_LIBRARY_PATH=$(LIBS_PATH) dub test --parallel --coverage
 
+PACKAGE_VERSION := 0.6.3
 docs/sitemap.xml: $(SOURCES)
 	dub build -b ddox
 	@echo "Performing cosmetic changes..."
@@ -53,7 +53,7 @@ docs/sitemap.xml: $(SOURCES)
 	@sed -i -e "/<p class=\"faint\">Generated using the DDOX documentation generator<\/p>/r views/footer.html" -e "/<p class=\"faint\">Generated using the DDOX documentation generator<\/p>/d" `find docs -name '*.html'`
 	# Dub Package Version
 	@echo `git describe --tags --abbrev=0`
-	@sed -i "s/DUB_VERSION/$(LATEST_VERSION_TAG)/g" `find docs -name '*.html'`
+	@sed -i "s/DUB_VERSION/$(PACKAGE_VERSION)/g" `find docs -name '*.html'`
 	@echo Done
 
 docs: docs/sitemap.xml

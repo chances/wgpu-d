@@ -9,6 +9,6 @@ D bindings to [wgpu-native](https://github.com/gfx-rs/wgpu-native) and an idioma
 
 ```json
 "dependencies": {
-    "wgpu-d": "0.6.2"
+    "wgpu-d": "0.6.3"
 }
 ```
