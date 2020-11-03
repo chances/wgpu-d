@@ -122,6 +122,11 @@
 <url><loc>http://127.0.0.1/wgpu/api/ShaderModule.id.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/ShaderStage.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/Surface.html</loc></url>
+<url><loc>http://127.0.0.1/wgpu/api/Surface.fromAndroid.html</loc></url>
+<url><loc>http://127.0.0.1/wgpu/api/Surface.fromMetalLayer.html</loc></url>
+<url><loc>http://127.0.0.1/wgpu/api/Surface.fromWayland.html</loc></url>
+<url><loc>http://127.0.0.1/wgpu/api/Surface.fromWindowsHwnd.html</loc></url>
+<url><loc>http://127.0.0.1/wgpu/api/Surface.fromXlib.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/Surface.id.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/SwapChain.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/SwapChain.descriptor.html</loc></url>
