@@ -1,6 +1,6 @@
 {
   "name": "wgpu-d",
-	"description": "D bindings to wgpu-native",
+	"description": "An idiomatic D wrapper for wgpu-native",
 	"authors": [
 		"Chance Snow"
   ],
@@ -11,15 +11,7 @@
   ],
   "targetType": "sourceLibrary",
   "targetPath": "bin",
-  "libs": [
-    "wgpu_native"
-  ],
-  "lflags-posix": [
-    "-Llib/wgpu-64-debug",
-    "-Llib/wgpu-64-release"
-  ],
-  "copyFiles": [
-    "lib/wgpu-64-debug",
-    "lib/wgpu-64-release"
-  ]
+  "dependencies": {
+    "bindbc-wgpu": "0.1.0-alpha.10"
+  }
 }

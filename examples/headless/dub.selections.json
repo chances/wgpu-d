@@ -1,6 +1,8 @@
 {
 	"fileVersion": 1,
 	"versions": {
+		"bindbc-loader": "0.3.2",
+		"bindbc-wgpu": "0.1.0-alpha.10",
 		"imageformats": "7.0.2",
 		"wgpu-d": {"path":"../.."}
 	}
