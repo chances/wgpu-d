@@ -11,10 +11,12 @@ void main()
 
   assert(adapter.ready, "Adapter is not ready");
   writefln("Adapter info: %s", adapter.info);
+  writefln("Adapter features: %s", adapter.features);
   writefln("Adapter limits: %s", adapter.limits);
 
-  auto device = adapter.requestDevice(Limits());
+  auto device = adapter.requestDevice(adapter.features, adapter.limits);
   assert(device.ready, "Device is not ready");
+  writefln("Device features: %s", device.features);
   writefln("Device limits: %s", device.limits);
 
   const width = 400;

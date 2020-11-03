@@ -223,11 +223,12 @@ struct Adapter {
   /// Requests a connection to a physical device, creating a logical device.
   ///
   /// Params:
+  /// featured = The sets of features the device supports.
   /// limits = The sets of limits the device supports.
   /// label = Optional label for the `Device`.
-  Device requestDevice(const Limits limits, string label = fullyQualifiedName!Device) {
+  Device requestDevice(const Features features, const Limits limits, string label = fullyQualifiedName!Device) {
     assert(ready);
-    auto id = wgpu_adapter_request_device(id, 0, &limits, true, toStringz(label));
+    auto id = wgpu_adapter_request_device(id, features, &limits, true, toStringz(label));
     return Device(id, label);
   }
 }
