@@ -288,32 +288,32 @@ struct Device {
 
   /// Creates an empty `CommandEncoder`.
   CommandEncoder createCommandEncoder(const CommandEncoderDescriptor descriptor) {
-    return CommandEncoder(wgpu_device_create_command_encoder(id, &descriptor));
+    return CommandEncoder(wgpu_device_create_command_encoder(id, &descriptor), descriptor);
   }
 
   /// Creates a new bind group.
   BindGroup createBindGroup(const BindGroupDescriptor descriptor) {
-    return BindGroup(wgpu_device_create_bind_group(id, &descriptor));
+    return BindGroup(wgpu_device_create_bind_group(id, &descriptor), descriptor);
   }
 
   /// Creates a bind group layout.
   BindGroupLayout createBindGroupLayout(const BindGroupLayoutDescriptor descriptor) {
-    return BindGroupLayout(wgpu_device_create_bind_group_layout(id, &descriptor));
+    return BindGroupLayout(wgpu_device_create_bind_group_layout(id, &descriptor), descriptor);
   }
 
   /// Creates a bind group layout.
   PipelineLayout createPipelineLayout(const PipelineLayoutDescriptor descriptor) {
-    return PipelineLayout(wgpu_device_create_pipeline_layout(id, &descriptor));
+    return PipelineLayout(wgpu_device_create_pipeline_layout(id, &descriptor), descriptor);
   }
 
   /// Creates a render pipeline.
   RenderPipeline createRenderPipeline(const RenderPipelineDescriptor descriptor) {
-    return RenderPipeline(wgpu_device_create_render_pipeline(id, &descriptor));
+    return RenderPipeline(wgpu_device_create_render_pipeline(id, &descriptor), descriptor);
   }
 
   /// Creates a compute pipeline.
   ComputePipeline createComputePipeline(const ComputePipelineDescriptor descriptor) {
-    return ComputePipeline(wgpu_device_create_compute_pipeline(id, &descriptor));
+    return ComputePipeline(wgpu_device_create_compute_pipeline(id, &descriptor), descriptor);
   }
 
   /// Creates a new buffer.
@@ -326,7 +326,7 @@ struct Device {
   /// Params:
   /// descriptor = Specifies the general format of the texture.
   Texture createTexture(const TextureDescriptor descriptor) {
-    return Texture(wgpu_device_create_texture(id, &descriptor));
+    return Texture(wgpu_device_create_texture(id, &descriptor), descriptor);
   }
 
   /// Creates a new `Sampler`.
@@ -334,12 +334,12 @@ struct Device {
   /// Params:
   /// descriptor = Specifies the behavior of the sampler.
   Sampler createSampler(const SamplerDescriptor descriptor) {
-    return Sampler(wgpu_device_create_sampler(id, &descriptor));
+    return Sampler(wgpu_device_create_sampler(id, &descriptor), descriptor);
   }
 
   /// Create a new `SwapChain` which targets `surface`.
   SwapChain createSwapChain(const Surface surface, const SwapChainDescriptor descriptor) {
-    return SwapChain(wgpu_device_create_swap_chain(id, surface.id, &descriptor));
+    return SwapChain(wgpu_device_create_swap_chain(id, surface.id, &descriptor), descriptor);
   }
 }
 
@@ -392,6 +392,8 @@ struct Surface {
 struct SwapChain {
   /// Handle identifier.
   WgpuId id;
+  /// Describes this `SwapChain.`
+  SwapChainDescriptor descriptor;
 
   /// Returns the next texture to be presented by the swapchain for drawing.
   SwapChainOutput getNextTexture() {
@@ -457,7 +459,7 @@ extern (C) private void wgpu_buffer_map_callback(WGPUBufferMapAsyncStatus status
 struct Buffer {
   /// Handle identifier.
   WgpuId id;
-  /// Describes a `Buffer`.
+  /// Describes this `Buffer`.
   BufferDescriptor descriptor;
   /// Result of a call to `Buffer.mapReadAsync` or `Buffer.mapWriteAsync`.
   BufferMapAsyncStatus status = BufferMapAsyncStatus.unknown;
@@ -499,6 +501,8 @@ struct Buffer {
 struct Texture {
   /// Handle identifier.
   WgpuId id;
+  /// Describes this `Texture`.
+  TextureDescriptor descriptor;
 
   /// Release the given handle.
   void destroy() {
@@ -536,6 +540,8 @@ struct TextureView {
 struct Sampler {
   /// Handle identifier.
   WgpuId id;
+  /// Describes this `Sampler`.
+  SamplerDescriptor descriptor;
 }
 
 /// A Queue executes finished C`ommandBuffer` objects.
@@ -566,6 +572,8 @@ struct Queue {
 struct CommandBuffer {
   /// Handle identifier.
   WgpuId id;
+  /// Describes a `CommandBuffer`.
+  const CommandBufferDescriptor descriptor;
 }
 
 /// A handle to a compiled shader module.
@@ -587,12 +595,13 @@ struct ShaderModule {
 struct CommandEncoder {
   /// Handle identifier.
   WgpuId id;
-  /// Describes a `CommandBuffer`.
-  const CommandBufferDescriptor descriptor;
+  /// Describes a `CommandEncoder`.
+  const CommandEncoderDescriptor descriptor;
 
   /// Finishes recording and returns a `CommandBuffer` that can be submitted for execution.
   CommandBuffer finish() {
-    return CommandBuffer(wgpu_command_encoder_finish(id, &descriptor));
+    auto commandBufferDescriptor = CommandBufferDescriptor();
+    return CommandBuffer(wgpu_command_encoder_finish(id, &commandBufferDescriptor), commandBufferDescriptor);
   }
 
   /// Begins recording of a render pass.
@@ -624,6 +633,8 @@ struct CommandEncoder {
 struct BindGroup {
   /// Handle identifier.
   WgpuId id;
+  /// Describes this `BindGroup`.
+  BindGroupDescriptor descriptor;
 }
 
 /// An opaque handle to a binding group layout.
@@ -636,6 +647,8 @@ struct BindGroup {
 struct BindGroupLayout {
   /// Handle identifier.
   WgpuId id;
+  /// Describes this `BindGroupLayout`.
+  BindGroupLayoutDescriptor descriptor;
 }
 
 /// An opaque handle to a pipeline layout.
@@ -645,6 +658,8 @@ struct BindGroupLayout {
 struct PipelineLayout {
   /// Handle identifier.
   WgpuId id;
+  /// Describes this `PipelineLayout`.
+  PipelineLayoutDescriptor descriptor;
 }
 
 /// A handle to a rendering (graphics) pipeline.
@@ -655,6 +670,8 @@ struct PipelineLayout {
 struct RenderPipeline {
   /// Handle identifier.
   WgpuId id;
+  /// Describes this `RenderPipeline`.
+  RenderPipelineDescriptor descriptor;
 
   /// Release the given handle.
   void destroy() {
@@ -669,6 +686,8 @@ struct RenderPass {
   import std.typecons : Tuple;
 
   package WGPURenderPass* instance;
+  /// Describes this `RenderPass`.
+  RenderPassDescriptor descriptor;
 
   /// Sets the active bind group for a given bind group index.
   void setBindGroup(const uint index, const BindGroup bindGroup, BufferAddress[] offsets) {
@@ -754,6 +773,8 @@ struct RenderPass {
 struct ComputePipeline {
   /// Handle identifier.
   WgpuId id;
+  /// Describes this `ComputePipeline`.
+  ComputePipelineDescriptor descriptor;
 
   /// Release the given handle.
   void destroy() {
@@ -766,6 +787,8 @@ struct ComputePipeline {
 /// See_Also: <a href="https://docs.rs/wgpu/0.6.0/wgpu/struct.ComputePass.html">wgpu::ComputePass</a>
 struct ComputePass {
   package WGPUComputePass* instance;
+  /// Describes this `ComputePass`.
+  ComputePassDescriptor descriptor;
 
   /// Sets the active bind group for a given bind group index.
   void setBindGroup(const uint index, const BindGroup bindGroup, BufferAddress[] offsets) {
