@@ -382,6 +382,28 @@ struct Surface {
       return Surface(wgpu_create_surface_from_xlib(display, window));
     }
   }
+  version (D_Ddoc) {
+    /// Create a new `Surface` from an Android handle.
+    static Surface fromAndroid(void* androidNativeWindow) {
+      return Surface(wgpu_create_surface_from_android( androidNativeWindow));
+    }
+    /// Create a new `Surface` from a Metal layer.
+    static Surface fromMetalLayer(void* layer) {
+      return Surface(wgpu_create_surface_from_metal_layer(layer));
+    }
+    /// Create a new `Surface` from a Wayland window handle.
+    static Surface fromWayland(void* surface, void* display) {
+      return Surface(wgpu_create_surface_from_wayland(surface, display));
+    }
+    /// Create a new `Surface` from a Windows window handle.
+    static Surface fromWindowsHwnd(void* _hinstance, void* hwnd) {
+      return Surface(wgpu_create_surface_from_windows_hwnd(_hinstance, hwnd));
+    }
+    /// Create a new `Surface` from a Xlib window handle.
+    static Surface fromXlib(const(void)** display, c_ulong window) {
+      return Surface(wgpu_create_surface_from_xlib(display, window));
+    }
+  }
 }
 
 /// A handle to a swap chain.
