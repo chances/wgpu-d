@@ -256,6 +256,13 @@ struct Device {
     return id > 0;
   }
 
+  /// List all features that were requested of this device.
+  ///
+  /// If any of these limits are exceeded, functions may panic.
+  Features features() @property const {
+    return wgpu_device_features(id);
+  }
+
   /// List all limits that were requested of this device.
   ///
   /// If any of these limits are exceeded, functions may panic.
