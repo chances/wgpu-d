@@ -13,9 +13,11 @@
 <url><loc>http://127.0.0.1/wgpu/api/Adapter.this.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/AdapterInfo.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/BindGroup.html</loc></url>
+<url><loc>http://127.0.0.1/wgpu/api/BindGroup.descriptor.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/BindGroup.id.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/BindGroupDescriptor.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/BindGroupLayout.html</loc></url>
+<url><loc>http://127.0.0.1/wgpu/api/BindGroupLayout.descriptor.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/BindGroupLayout.id.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/BindGroupLayoutDescriptor.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/BindGroupLayoutEntry.html</loc></url>
@@ -35,6 +37,7 @@
 <url><loc>http://127.0.0.1/wgpu/api/BufferUsage.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/Color.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/CommandBuffer.html</loc></url>
+<url><loc>http://127.0.0.1/wgpu/api/CommandBuffer.descriptor.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/CommandBuffer.id.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/CommandBufferDescriptor.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/CommandEncoder.html</loc></url>
@@ -46,11 +49,13 @@
 <url><loc>http://127.0.0.1/wgpu/api/CommandEncoder.id.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/CommandEncoderDescriptor.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/ComputePass.html</loc></url>
+<url><loc>http://127.0.0.1/wgpu/api/ComputePass.descriptor.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/ComputePass.dispatch.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/ComputePass.setBindGroup.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/ComputePass.setPipeline.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/ComputePassDescriptor.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/ComputePipeline.html</loc></url>
+<url><loc>http://127.0.0.1/wgpu/api/ComputePipeline.descriptor.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/ComputePipeline.destroy.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/ComputePipeline.id.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/ComputePipelineDescriptor.html</loc></url>
@@ -84,6 +89,7 @@
 <url><loc>http://127.0.0.1/wgpu/api/MAX_VERTEX_BUFFERS.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/Origin3d.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/PipelineLayout.html</loc></url>
+<url><loc>http://127.0.0.1/wgpu/api/PipelineLayout.descriptor.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/PipelineLayout.id.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/PipelineLayoutDescriptor.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/Queue.html</loc></url>
@@ -91,6 +97,7 @@
 <url><loc>http://127.0.0.1/wgpu/api/Queue.submit.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/Queue.submit.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/RenderPass.html</loc></url>
+<url><loc>http://127.0.0.1/wgpu/api/RenderPass.descriptor.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/RenderPass.draw.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/RenderPass.drawIndexed.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/RenderPass.setBindGroup.html</loc></url>
@@ -103,10 +110,12 @@
 <url><loc>http://127.0.0.1/wgpu/api/RenderPassColorAttachmentDescriptor.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/RenderPassDescriptor.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/RenderPipeline.html</loc></url>
+<url><loc>http://127.0.0.1/wgpu/api/RenderPipeline.descriptor.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/RenderPipeline.destroy.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/RenderPipeline.id.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/RenderPipelineDescriptor.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/Sampler.html</loc></url>
+<url><loc>http://127.0.0.1/wgpu/api/Sampler.descriptor.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/Sampler.id.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/SamplerDescriptor.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/ShaderModule.html</loc></url>
@@ -115,6 +124,7 @@
 <url><loc>http://127.0.0.1/wgpu/api/Surface.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/Surface.id.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/SwapChain.html</loc></url>
+<url><loc>http://127.0.0.1/wgpu/api/SwapChain.descriptor.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/SwapChain.getNextTexture.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/SwapChain.id.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/SwapChainDescriptor.html</loc></url>
@@ -127,6 +137,7 @@
 <url><loc>http://127.0.0.1/wgpu/api/Texture.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/Texture.createDefaultView.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/Texture.createView.html</loc></url>
+<url><loc>http://127.0.0.1/wgpu/api/Texture.descriptor.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/Texture.destroy.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/Texture.id.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/TextureCopyView.html</loc></url>

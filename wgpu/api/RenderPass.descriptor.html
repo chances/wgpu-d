@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8"/>
-		<title>Struct CommandBuffer - wgpu-d</title>
+		<title>Variable RenderPass.descriptor - wgpu-d</title>
 		<link rel="stylesheet" type="text/css" href="../../styles/ddox.css"/>
 		<link rel="stylesheet" href="../../prettify/prettify.css" type="text/css"/>
 		<script type="text/javascript" src="../../scripts/jquery.js">/**/</script><script type="text/javascript" src="../../scripts/ddox.js">/**/</script>
@@ -63,48 +63,30 @@ $('#symbolSearchPane').show();</script>
 			</ul>
 		</nav>
 		<div id="main-contents">
-			<h1>Struct CommandBuffer</h1><p>An opaque handle to a command buffer on the GPU.
+			<h1>Variable RenderPass.descriptor</h1><p>Describes this <code class="lang-d"><a href="../../wgpu/api/RenderPass.html"><span class="typ">RenderPass</span></a></code>.
 </p>
 			<div class="prototype">
 				<code class="lang-d">
 					<div class="single-prototype">
-			<span class="kwd">struct</span> <span class="typ">CommandBuffer</span>
+			<span class="kwd">struct</span> <a href="../../wgpu/api/RenderPass.html"><span class="typ">RenderPass</span></a>
+			<br/>
+			<span class="pun">
+				{
+				<br/>
+			</span>
+			&nbsp;&nbsp;<span class="com">// ...</span>
+			<br/>
+			&nbsp;&nbsp;<span class="pln">wgpu<wbr/></span><span class="pun">.</span><span class="pln">bindings<wbr/></span><span class="pun">.</span><span class="typ">WGPURenderPassDescriptor</span> <span class="pln">descriptor</span>
 			<span class="pun">;</span>
+			<br/>
+			&nbsp;&nbsp;<span class="com">// ...</span>
+			<br/>
+			<span class="pun">}</span>
 					</div>
 				</code>
 			</div>
-			<section><p>A <code class="lang-d"><span class="typ">CommandBuffer</span></code> represents a complete sequence of commands that may be submitted to a command queue with <code class="lang-d"><a href="../../wgpu/api/Queue.submit.html"><span class="typ">Queue<wbr/></span><span class="pun">.</span><span class="pln">submit</span></a></code>.
-A <code class="lang-d"><span class="typ">CommandBuffer</span></code> is obtained by recording a series of commands to a <code class="lang-d"><a href="../../wgpu/api/CommandEncoder.html"><span class="typ">CommandEncoder</span></a></code> and then calling <code class="lang-d"><a href="../../wgpu/api/CommandEncoder.finish.html"><span class="typ">CommandEncoder<wbr/></span><span class="pun">.</span><span class="pln">finish</span></a></code>.
-</p>
-</section>
-
-			<section><h2>Fields</h2>
-				<table>
-					<col class="caption"/>
-					<tr>
-						<th>Name</th><th>Type</th><th>Description</th>
-					</tr>
-					<tr>
-						<td>
-							<a href="../../wgpu/api/CommandBuffer.descriptor.html" class="public"><code>descriptor</code></a>
-						</td>
-						<td class="typecol"><code class="prettyprint lang-d"><span class="kwd">const</span><span class="pun">(</span><span class="pln">wgpu<wbr/></span><span class="pun">.</span><span class="pln">bindings<wbr/></span><span class="pun">.</span><span class="typ">WGPUCommandBufferDescriptor</span><span class="pun">)</span></code></td><td>Describes a <code class="lang-d"><a href="../../wgpu/api/CommandBuffer.html"><span class="typ">CommandBuffer</span></a></code>.
-</td>
-					</tr>
-					<tr>
-						<td>
-							<a href="../../wgpu/api/CommandBuffer.id.html" class="public"><code>id</code></a>
-						</td>
-						<td class="typecol"><code class="prettyprint lang-d"><span class="typ">ulong</span></code></td><td>Handle identifier.
-</td>
-					</tr>
-				</table>
-			</section>
-			<section><h2>See Also</h2>
-<p><a href="https://docs.rs/wgpu/0.6.0/wgpu/struct.CommandBuffer.html">wgpu::CommandBuffer</a>
-</p>
-</section>
-
+			
+			
 			<footer>
 				<table class="license-info">
 					<tr>
