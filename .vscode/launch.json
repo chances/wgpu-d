@@ -12,7 +12,7 @@
       "args": [],
       "cwd": "${workspaceFolder}",
       "env": {
-        "LD_LIBRARY_PATH": "wgpu-64-debug",
+        "LD_LIBRARY_PATH": "bin/wgpu-64-debug",
         "RUST_BACKTRACE": "1"
       }
     }

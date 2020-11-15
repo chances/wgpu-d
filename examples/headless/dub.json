@@ -13,9 +13,5 @@
     "wgpu-d": {
       "path": "../.."
     }
-  },
-  "lflags": [
-    "-L../../lib/wgpu-64-debug",
-    "-L../../lib/wgpu-64-release"
-  ]
+  }
 }
