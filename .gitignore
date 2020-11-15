@@ -16,6 +16,7 @@ bin/
 *.exe
 
 # DUB
+dub.selections.json
 .dub
 docs.json
 __dummy.html

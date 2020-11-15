@@ -29,7 +29,7 @@ test:
 cover: $(SOURCES)
 	env LD_LIBRARY_PATH=$(LIBS_PATH) dub test --parallel --coverage
 
-PACKAGE_VERSION := 0.6.3
+PACKAGE_VERSION := 0.1.0-alpha.1
 docs/sitemap.xml: $(SOURCES)
 	dub build -b ddox
 	@echo "Performing cosmetic changes..."
