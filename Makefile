@@ -11,29 +11,18 @@ examples: $(EXAMPLES)
 .PHONY: examples
 
 HEADLESS_SOURCES := $(shell find examples/headless/source -name '*.d')
-ifeq ($(TARGET_OS),Linux)
-	HEADLESS_SOURCES := $(HEADLESS_SOURCES)
-endif
-
-bin/headless: $(SOURCES) $(HEADLESS_SOURCES) library-sanity-check
+bin/headless: $(SOURCES) $(HEADLESS_SOURCES)
 	cd examples/headless && dub build
 
 headless: bin/headless
 	env LD_LIBRARY_PATH=$(LIBS_PATH) bin/headless
 .PHONY: headless
 
-library-sanity-check:
-	@echo "Sanity check for Linking to wgpu-native:"
-	ld -L$(LIBS_PATH) -l wgpu_native
-	@rm -f a.out
-	@echo "All good! 👍️"
-.PHONY: library-sanity-check
-
-test: library-sanity-check
+test:
 	env LD_LIBRARY_PATH=$(LIBS_PATH) dub test --parallel
 .PHONY: test
 
-cover: $(SOURCES) library-sanity-check
+cover: $(SOURCES)
 	env LD_LIBRARY_PATH=$(LIBS_PATH) dub test --parallel --coverage
 
 PACKAGE_VERSION := 0.1.0-alpha.1
