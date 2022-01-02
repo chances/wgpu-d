@@ -1,7 +1,7 @@
 /// An idiomatic D wrapper for <a href="https://github.com/gfx-rs/wgpu-native">wgpu-native</a>.
 ///
 /// Authors: Chance Snow
-/// Copyright: Copyright © 2020 Chance Snow. All rights reserved.
+/// Copyright: Copyright © 2020-2022 Chance Snow. All rights reserved.
 /// License: MIT License
 module wgpu.api;
 
