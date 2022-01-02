@@ -1,29 +1,60 @@
+OS := $(shell uname -s)
+ifeq ($(OS),Darwin)
+CC := clang
+endif
+ifeq ($(OS),Linux)
+CC := gcc
+endif
+ifndef CC
+$(error Unsupported target OS '$(OS)')
+endif
 SOURCES := $(shell find source -name '*.d')
-TARGET_OS := $(shell uname -s)
-LIBS_PATH := lib/wgpu-64-debug
+LIBS_PATH := lib
 
 .DEFAULT_GOAL := docs
 all: docs
 
+#################################################
+# Subprojects
+#################################################
+ifeq ($(OS),Darwin)
+LIB_WGPU_EXT := dylib
+endif
+ifeq ($(OS),Linux)
+LIB_WGPU_EXT := so
+endif
+ifndef LIB_WGPU_EXT
+$(error Unsupported target OS '$(OS)')
+endif
+LIB_WGPU_SOURCE := subprojects/wgpu/libwgpu.$(LIB_WGPU_EXT)
+LIB_WGPU := lib/libwgpu.$(LIB_WGPU_EXT)
+wgpu: source/wgpu/bindings.i $(LIB_WGPU)
+.PHONY: wgpu
+subprojects/wgpu/wgpu.h: subprojects/wgpu.Makefile
+	@make -C subprojects -q -f wgpu.Makefile
+source/wgpu/bindings.i: subprojects/wgpu/wgpu.h
+	@$(CC) -E subprojects/wgpu/wgpu.h > source/wgpu/bindings.i
+$(LIB_WGPU): $(LIB_WGPU_SOURCE)
+	@mkdir -p lib
+	@cp $(LIB_WGPU_SOURCE) lib/.
+
+#################################################
+# Examples
+#################################################
 EXAMPLES := bin/headless
 examples: $(EXAMPLES)
-
 .PHONY: examples
 
 HEADLESS_SOURCES := $(shell find examples/headless/source -name '*.d')
 bin/headless: $(SOURCES) $(HEADLESS_SOURCES)
 	cd examples/headless && dub build
 
-headless: bin/headless
-	env LD_LIBRARY_PATH=$(LIBS_PATH) bin/headless
-.PHONY: headless
-
-test:
-	env LD_LIBRARY_PATH=$(LIBS_PATH) dub test --parallel
-.PHONY: test
-
 cover: $(SOURCES)
-	env LD_LIBRARY_PATH=$(LIBS_PATH) dub test --parallel --coverage
+	dub test --build=unittest-cov
+
+#################################################
+# Documentation
+#################################################
 
 PACKAGE_VERSION := 0.1.0-alpha.1
 docs/sitemap.xml: $(SOURCES)
@@ -49,7 +80,7 @@ docs: docs/sitemap.xml
 .PHONY: docs
 
 clean:
-	rm -f bin/headless
+	rm -rf lib
 	rm -f $(EXAMPLES)
 	rm -f docs.json
 	rm -f docs/sitemap.xml docs/file_hashes.json
