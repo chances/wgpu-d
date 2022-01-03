@@ -16,7 +16,7 @@ import wgpu.bindings;
 /// See_Also: <a href="https://github.com/gfx-rs/wgpu-native/releases/tag/v0.10.4.1">github.com/gfx-rs/wgpu-native/releases/tag/v0.10.4.1</a>
 static const VERSION = "0.10.4.1";
 
-/// Buffer-Texture copies must have bytes_per_row aligned to this number.
+/// Buffer-Texture copies must have `TextureDataLayout.bytesPerRow` aligned to this number.
 ///
 /// This doesn't apply to `Queue.writeTexture`.
 static const COPY_BYTES_PER_ROW_ALIGNMENT = 256;
@@ -132,7 +132,7 @@ alias ColorTargetState = WGPUColorTargetState;
 /// Describes a `ComputePipeline`.
 alias ComputePipelineDescriptor = WGPUComputePipelineDescriptor;
 alias DeviceDescriptor = WGPUDeviceDescriptor;
-/// Describes a `RenderPass`.
+/// Describes the attachments of a `RenderPass`.
 alias RenderPassDescriptor = WGPURenderPassDescriptor;
 alias VertexState = WGPUVertexState;
 alias FragmentState = WGPUFragmentState;
@@ -678,6 +678,7 @@ struct Buffer {
 
 /// A handle to a texture on the GPU.
 /// See_Also: <a href="https://docs.rs/wgpu/0.6.0/wgpu/struct.Texture.html">wgpu::Texture</a>
+// TODO: Expand docs akin to https://veldrid.dev/articles/textures.html
 struct Texture {
   /// Handle identifier.
   WGPUTexture id;
@@ -772,6 +773,7 @@ struct CommandBuffer {
 /// A `ShaderModule` represents a compiled shader module on the GPU. It can be created by passing valid SPIR-V source code to `Device.createShaderModule`.
 /// Shader modules are used to define programmable stages of a pipeline.
 /// See_Also: <a href="https://docs.rs/wgpu/0.6.0/wgpu/struct.ShaderModule.html">wgpu::ShaderModule</a>
+// TODO: Add docs akin to https://veldrid.dev/articles/specialization-constants.html
 struct ShaderModule {
   /// Handle identifier.
   WGPUShaderModule id;
@@ -922,7 +924,9 @@ struct RenderPass {
     wgpuRenderPassEncoderSetPipeline(instance, pipeline.id);
   }
 
+  /// Sets the blend color as used by some of the blending modes.
   ///
+  /// Subsequent blending tests will test against this value.
   void setBlendConstant(Color color) {
     wgpuRenderPassEncoderSetBlendConstant(instance, &color);
   }
