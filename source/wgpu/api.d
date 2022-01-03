@@ -534,17 +534,6 @@ struct Surface {
       return Surface(wgpuInstanceCreateSurface(instance.id, &desc));
     }
   }
-  version (linux) {
-    /// Create a new `Surface` from a Wayland window handle.
-    static Surface fromWayland(Instance instance, void* surface, void* display, string label = null) {
-      auto wayland = SurfaceDescriptorFromWayland(
-        ChainedStruct(null, cast(WGPUSType) SType.surfaceDescriptorFromWayland.asOriginalType),
-        surface, display
-      );
-      auto desc = SurfaceDescriptor(cast(ChainedStruct*) &wayland, label is null ? null : label.toStringz);
-      return Surface(wgpuInstanceCreateSurface(instance.id, &desc));
-    }
-  }
   version (Windows) {
     /// Create a new `Surface` from a Windows window handle.
     static Surface fromWindowsHwnd(Instance instance, void* _hinstance, void* hwnd, string label = null) {
@@ -570,12 +559,11 @@ struct Surface {
   version (D_Ddoc) {
     /// Create a new `Surface` from a Metal layer.
     static Surface fromMetalLayer(Instance instance, void* layer, string label = null);
-    /// Create a new `Surface` from a Wayland window handle.
-    static Surface fromWayland(Instance instance, void* surface, void* display, string label = null);
     /// Create a new `Surface` from a Windows window handle.
     static Surface fromWindowsHwnd(Instance instance, void* _hinstance, void* hwnd, string label = null);
     /// Create a new `Surface` from a Xlib window handle.
     static Surface fromXlib(Instance instance, const(void)** display, c_ulong window, string label = null);
+    // TODO: Support Wayland with a `linux-wayland` version config once upstream wgpu-native supports it
   }
 
   /// Retreive the preferred swap chain format for this `Surface`.
