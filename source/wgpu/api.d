@@ -685,6 +685,198 @@ struct Texture {
   /// Describes this `Texture`.
   TextureDescriptor descriptor;
 
+
+  ///
+  Extent3d size() @property const {
+    return descriptor.size;
+  }
+  ///
+  uint width() @property const {
+    return descriptor.size.width;
+  }
+  ///
+  uint height() @property const {
+    return descriptor.size.height;
+  }
+
+  /// Bytes per “block” of this texture, in bytes.
+  ///
+  /// A “block” is one pixel or compressed block of a texture.
+  ///
+  /// See_Also: `TextureFormat`
+  uint bytesPerBlock() @property const {
+    switch (descriptor.format) {
+      // 8 * 1 / 8
+      case TextureFormat.r8Snorm:
+      case TextureFormat.r8Sint:
+      case TextureFormat.r8Unorm:
+      case TextureFormat.r8Uint:
+      case TextureFormat.stencil8:
+        return 1;
+      // 8 * 2 / 8
+      case TextureFormat.rg8Uint:
+      case TextureFormat.rg8Unorm:
+      case TextureFormat.rg8Snorm:
+      case TextureFormat.rg8Sint:
+      // 16 * 1 / 8
+      case TextureFormat.r16Uint:
+      case TextureFormat.r16Sint:
+      case TextureFormat.r16Float:
+      case TextureFormat.depth16Unorm:
+        return 2;
+      // 8 * 4 / 8
+      case TextureFormat.rgba8Uint:
+      case TextureFormat.rgba8Snorm:
+      case TextureFormat.rgba8Sint:
+      case TextureFormat.rgba8Unorm:
+      case TextureFormat.rgba8UnormSrgb:
+      case TextureFormat.bgra8Unorm:
+      case TextureFormat.bgra8UnormSrgb:
+      // 32 * 1 / 8
+      case TextureFormat.r32Float:
+      case TextureFormat.r32Uint:
+      case TextureFormat.r32Sint:
+      case TextureFormat.depth32Float:
+      // 16 * 2 / 8
+      case TextureFormat.rg16Uint:
+      case TextureFormat.rg16Sint:
+      case TextureFormat.rg16Float:
+        return 4;
+      // 32 * 2 / 8
+      case TextureFormat.rg32Float:
+      case TextureFormat.rg32Uint:
+      case TextureFormat.rg32Sint:
+      // 16 * 4 / 8
+      case TextureFormat.rgba16Uint:
+      case TextureFormat.rgba16Sint:
+      case TextureFormat.rgba16Float:
+        return 8;
+      // 32 * 4 / 8
+      case TextureFormat.rgba32Float:
+      case TextureFormat.rgba32Uint:
+      case TextureFormat.rgba32Sint:
+      // Compressed, 4 pixels per block
+      case TextureFormat.bc3RGBAUnorm:
+      case TextureFormat.bc3RGBAUnormSrgb:
+        return 16;
+      case TextureFormat.rgb10A2Unorm:
+      case TextureFormat.rg11B10Ufloat:
+      case TextureFormat.rgb9E5Ufloat:
+      case TextureFormat.bc1RGBAUnorm:
+      case TextureFormat.bc1RGBAUnormSrgb:
+      case TextureFormat.bc2RGBAUnorm:
+      case TextureFormat.bc2RGBAUnormSrgb:
+      case TextureFormat.bc4RUnorm:
+      case TextureFormat.bc4RSnorm:
+      case TextureFormat.bc5RGUnorm:
+      case TextureFormat.bc5RGSnorm:
+      case TextureFormat.bc6HRGBUfloat:
+      case TextureFormat.bc6HRGBFloat:
+      case TextureFormat.bc7RGBAUnorm:
+      case TextureFormat.bc7RGBAUnormSrgb:
+        // FIXME: Supply block sizes for these texture formats
+        assert(0, "Unknown block size in bytes of " ~ descriptor.format.stringof);
+      // QUESTION: Depth formats of _at least_ 24 bits, therefore there's no guarenteed block size?
+      case TextureFormat.depth24Plus:
+      case TextureFormat.depth24PlusStencil8:
+      case TextureFormat.undefined:
+        assert(0, "Undefined block size");
+      default: assert(0, "Unknown texture format");
+    }
+  }
+
+  ///
+  uint pixelsPerBlock() @property const {
+    switch (descriptor.format) {
+      case TextureFormat.r8Snorm:
+      case TextureFormat.r8Sint:
+      case TextureFormat.r8Unorm:
+      case TextureFormat.r8Uint:
+      case TextureFormat.stencil8:
+      case TextureFormat.rg8Uint:
+      case TextureFormat.rg8Unorm:
+      case TextureFormat.rg8Snorm:
+      case TextureFormat.rg8Sint:
+      case TextureFormat.r16Uint:
+      case TextureFormat.r16Sint:
+      case TextureFormat.r16Float:
+      case TextureFormat.rgba8Uint:
+      case TextureFormat.rgba8Snorm:
+      case TextureFormat.rgba8Sint:
+      case TextureFormat.rgba8Unorm:
+      case TextureFormat.rgba8UnormSrgb:
+      case TextureFormat.bgra8Unorm:
+      case TextureFormat.bgra8UnormSrgb:
+      case TextureFormat.r32Float:
+      case TextureFormat.r32Uint:
+      case TextureFormat.r32Sint:
+      case TextureFormat.rg16Uint:
+      case TextureFormat.rg16Sint:
+      case TextureFormat.rg16Float:
+      case TextureFormat.rg32Float:
+      case TextureFormat.rg32Uint:
+      case TextureFormat.rg32Sint:
+      case TextureFormat.rgba16Uint:
+      case TextureFormat.rgba16Sint:
+      case TextureFormat.rgba16Float:
+      case TextureFormat.rgba32Float:
+      case TextureFormat.rgba32Uint:
+      case TextureFormat.rgba32Sint:
+      case TextureFormat.rgb10A2Unorm:
+      case TextureFormat.rg11B10Ufloat:
+      case TextureFormat.rgb9E5Ufloat:
+        return 1;
+      // BC3 compression, 4 pixels per block
+      case TextureFormat.bc3RGBAUnorm:
+      case TextureFormat.bc3RGBAUnormSrgb:
+        return 4;
+      case TextureFormat.bc1RGBAUnorm:
+      case TextureFormat.bc1RGBAUnormSrgb:
+      case TextureFormat.bc2RGBAUnorm:
+      case TextureFormat.bc2RGBAUnormSrgb:
+      case TextureFormat.bc4RUnorm:
+      case TextureFormat.bc4RSnorm:
+      case TextureFormat.bc5RGUnorm:
+      case TextureFormat.bc5RGSnorm:
+      case TextureFormat.bc6HRGBUfloat:
+      case TextureFormat.bc6HRGBFloat:
+      case TextureFormat.bc7RGBAUnorm:
+      case TextureFormat.bc7RGBAUnormSrgb:
+        // FIXME: Supply pixel compression ratios for these texture formats
+        assert(0, "Unknown compression ratio of " ~ descriptor.format.stringof);
+      // QUESTION: Depth formats of _at least_ 24 bits, therefore there's no guarenteed block size?
+      case TextureFormat.depth16Unorm:
+      case TextureFormat.depth32Float:
+      case TextureFormat.depth24Plus:
+      case TextureFormat.depth24PlusStencil8:
+      case TextureFormat.undefined:
+        assert(0, "Undefined block size");
+      default: assert(0, "Unreachable");
+    }
+  }
+
+  /// Size of one row of pixels in this texture, in bytes.
+  uint bytesPerRow() @property const {
+    return descriptor.size.width * bytesPerBlock;
+  }
+
+  /// Size of one row of pixels in this texture, in bytes. Aligned to `COPY_BYTES_PER_ROW_ALIGNMENT`.
+  uint paddedBytesPerRow() @property const {
+    // https://github.com/rukai/wgpu-rs/blob/f6123e4fe89f74754093c07b476099623b76dd08/examples/capture/main.rs#L53
+    const alignment = COPY_BYTES_PER_ROW_ALIGNMENT;
+    const unpaddedBytesPerRow = this.bytesPerRow;
+    auto paddedBytesPerRowPadding = (alignment - unpaddedBytesPerRow % alignment) % alignment;
+    return unpaddedBytesPerRow + paddedBytesPerRowPadding;
+  }
+
+  /// “Rows” that make up a single “image”.
+  ///
+  /// A “row” is one row of pixels or compressed blocks in the x direction.
+  /// An “image” is one layer in the z direction of a 3D image or 2D array texture.
+  uint rowsPerImage() @property const {
+    return height / pixelsPerBlock;
+  }
+
   /// Release the given handle.
   void destroy() {
     if (id !is null) wgpuTextureDestroy(id);
