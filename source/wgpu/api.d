@@ -594,11 +594,11 @@ struct Device {
     uint sampleCount = 1,
     string label = null
   ) {
-    debug import std.math : isPowerOf2;
     assert(extent.depthOrArrayLayers > 0, "Textures must have at least one texel/array layer");
     assert(mipLevelCount > 0, "Textures must have at least one mipmap level");
     assert(sampleCount > 0, "Textures must have a non-zero sample count");
-    assert(sampleCount.isPowerOf2, "Texture sample count must be a power of two");
+    debug import std.math : isPowerOf2;
+    debug assert(sampleCount.isPowerOf2, "Texture sample count must be a power of two");
     return createTexture(TextureDescriptor(
       null, label is null ? null : label.toStringz, usage, dimension, extent, format, mipLevelCount, sampleCount
     ));
@@ -1278,7 +1278,7 @@ struct RenderPass {
   /// view = The view to use as an attachment.
   /// loadOp = How data should be read through this attachment.
   /// clearColor = Value with which to fill the given `view` if `loadOp` equals `LoadOp.clear`.
-  /// storeOp = Whether data will be written to through this attachment. Defaults to `true`.
+  /// store = Whether data will be written to through this attachment. Defaults to `true`.
   ///
   /// Remarks: The render target must be cleared at least once before its content is loaded.
   /// SeeAlso: `CommandEncoder.beginRenderPass`
@@ -1290,7 +1290,11 @@ struct RenderPass {
   /// ditto
   ///
   /// Params:
+  /// view = The view to use as an attachment.
   /// resolveTarget = The view that will receive the resolved output if multisampling is used.
+  /// loadOp = How data should be read through this attachment.
+  /// clearColor = Value with which to fill the given `view` if `loadOp` equals `LoadOp.clear`.
+  /// store = Whether data will be written to through this attachment. Defaults to `true`.
   static RenderPassColorAttachment colorAttachment(
     TextureView view, TextureView* resolveTarget, LoadOp loadOp, Color clearColor, Flag!"store" store = Yes.store
   ) {
