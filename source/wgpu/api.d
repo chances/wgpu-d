@@ -159,6 +159,12 @@ private mixin template EnumAlias(T) if (is(T == enum)) {
     idiomaticMember = idiomaticMember == "null" || idiomaticMember == "float" || idiomaticMember == "uint"
       ? idiomaticMember ~ "_"
       : idiomaticMember;
+    // Fix case of "RG", "RGB", and "RGBA" prefixes
+    if (idiomaticMember.length > 4) {
+      if (idiomaticMember[0..4] == "rGBA") idiomaticMember = "rgba" ~ idiomaticMember[4..$];
+      else if (idiomaticMember[0..3] == "rGB") idiomaticMember = "rgb" ~ idiomaticMember[3..$];
+      else if (idiomaticMember[0..2] == "rG") idiomaticMember = "rg" ~ idiomaticMember[2..$];
+    }
     return "  " ~ idiomaticMember ~ " = cast(" ~ name ~ ") " ~ member ~ `,`;
   }
 
