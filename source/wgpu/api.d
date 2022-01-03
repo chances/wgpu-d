@@ -884,12 +884,13 @@ struct Texture {
   }
 
   /// Creates a view of this texture.
-  TextureView createView(const TextureViewDescriptor descriptor) {
-    return TextureView(wgpuTextureCreateView(id, &descriptor));
+  TextureView createView(const TextureViewDescriptor descriptor) inout @trusted {
+    assert(id !is null);
+    return TextureView(wgpuTextureCreateView(cast(WGPUTexture) id, &descriptor));
   }
 
   /// Creates a default view of this whole texture.
-  TextureView createDefaultView() {
+  TextureView defaultView() @property const {
     TextureViewDescriptor desc = {
       nextInChain: null,
       label: null,
@@ -901,7 +902,7 @@ struct Texture {
       baseMipLevel: 0,
       mipLevelCount: 0,
     };
-    return TextureView(wgpuTextureCreateView(id, &desc));
+    return createView(desc);
   }
 }
 
