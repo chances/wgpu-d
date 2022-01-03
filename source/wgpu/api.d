@@ -47,7 +47,7 @@ alias BufferDescriptor = WGPUBufferDescriptor;
 /// RGBA double precision color.
 ///
 /// This is not to be used as a generic color type, only for specific wgpu interfaces.
-/// See_Also: <a href="https://docs.rs/wgpu/0.6.0/wgpu/struct.Color.html">wgpu::Color</a>
+/// See_Also: <a href="https://docs.rs/wgpu/0.10.2/wgpu/struct.Color.html">wgpu::Color</a>
 alias Color = WGPUColor;
 /// Describes a `CommandBuffer`.
 alias CommandBufferDescriptor = WGPUCommandBufferDescriptor;
@@ -70,7 +70,7 @@ alias InstanceDescriptor = WGPUInstanceDescriptor;
 /// needs to support more than is needed. You should ideally only request exactly what you need.
 ///
 /// <strong>See Also</strong>: https://gpuweb.github.io/gpuweb/#dictdef-gpulimits
-/// See_Also: <a href="https://docs.rs/wgpu/0.6.0/wgpu/struct.Limits.html">wgpu::Limits</a>
+/// See_Also: <a href="https://docs.rs/wgpu/0.10.2/wgpu/struct.Limits.html">wgpu::Limits</a>
 alias Limits = WGPULimits;
 alias MultisampleState = WGPUMultisampleState;
 /// Origin of a copy to/from a texture.
@@ -205,7 +205,7 @@ mixin EnumAlias!WGPUErrorType;
 ///
 /// If you want to use a feature, you need to first verify that the adapter supports the feature. If the adapter
 /// does not support the feature, requesting a device with it enabled will panic.
-/// See_Also: <a href="https://docs.rs/wgpu/0.6.0/wgpu/struct.Features.html">wgpu::Features</a>
+/// See_Also: <a href="https://docs.rs/wgpu/0.10.2/wgpu/struct.Features.html">wgpu::Features</a>
 mixin EnumAlias!WGPUFeatureName;
 mixin EnumAlias!WGPUFilterMode;
 mixin EnumAlias!WGPUFrontFace;
@@ -237,7 +237,7 @@ mixin EnumAlias!WGPUVertexStepMode;
 /// The usages determine what kind of memory the buffer is allocated from and what actions the buffer can partake in.
 ///
 /// These can be combined in a bitwise combination.
-/// See_Also: <a href="https://docs.rs/wgpu/0.6.0/wgpu/struct.BufferUsage.html">wgpu::BufferUsage</a>
+/// See_Also: <a href="https://docs.rs/wgpu/0.10.2/wgpu/struct.BufferUsages.html">wgpu::BufferUsages</a>
 mixin EnumAlias!WGPUBufferUsage;
 mixin EnumAlias!WGPUColorWriteMask;
 mixin EnumAlias!WGPUMapMode;
@@ -248,14 +248,14 @@ mixin EnumAlias!WGPUMapMode;
 /// For example, something that is visible from both vertex and fragment shaders can be defined as:
 ///
 /// `ShaderStage.vertex | ShaderStage.fragment`
-/// See_Also: <a href="https://docs.rs/wgpu/0.6.0/wgpu/struct.ShaderStage.html">wgpu::ShaderStage</a>
+/// See_Also: <a href="https://docs.rs/wgpu/0.10.2/wgpu/struct.ShaderStages.html">wgpu::ShaderStages</a>
 mixin EnumAlias!WGPUShaderStage;
 /// Different ways that you can use a texture.
 ///
 /// The usages determine what kind of memory the texture is allocated from and what actions the texture can partake in.
 ///
 /// These can be combined in a bitwise combination.
-/// See_Also: <a href="https://docs.rs/wgpu/0.6.0/wgpu/struct.TextureUsage.html">wgpu::TextureUsage</a>
+/// See_Also: <a href="https://docs.rs/wgpu/0.10.2/wgpu/struct.TextureUsages.html">wgpu::TextureUsages</a>
 mixin EnumAlias!WGPUTextureUsage;
 
 extern (C) private void wgpu_request_adapter_callback(
@@ -348,7 +348,7 @@ struct Instance {
 
 /// A handle to a physical graphics and/or compute device.
 ///
-/// See_Also: <a href="https://docs.rs/wgpu/0.6.0/wgpu/struct.Adapter.html">wgpu::Adapter</a>
+/// See_Also: <a href="https://docs.rs/wgpu/0.10.2/wgpu/struct.Adapter.html">wgpu::Adapter</a>
 struct Adapter {
   /// Handle identifier.
   WGPUAdapter id;
@@ -415,7 +415,7 @@ struct Adapter {
 /// An open connection to a graphics and/or compute device.
 ///
 /// The `Device` is the responsible for the creation of most rendering and compute resources, as well as exposing `Queue` objects.
-/// See_Also: <a href="https://docs.rs/wgpu/0.6.0/wgpu/struct.Device.html">wgpu::Device</a>
+/// See_Also: <a href="https://docs.rs/wgpu/0.10.2/wgpu/struct.Device.html">wgpu::Device</a>
 struct Device {
   import std.typecons : Flag, No;
 
@@ -618,7 +618,7 @@ struct Device {
 ///
 /// A Surface represents a platform-specific surface (e.g. a window) to which rendered images may be presented.
 /// A Surface may be created with `Surface.create`.
-/// See_Also: <a href="https://docs.rs/wgpu/0.6.0/wgpu/struct.Surface.html">wgpu::Surface</a>
+/// See_Also: <a href="https://docs.rs/wgpu/0.10.2/wgpu/struct.Surface.html">wgpu::Surface</a>
 struct Surface {
   import std.conv : asOriginalType;
 
@@ -668,7 +668,7 @@ struct Surface {
     // TODO: Support Wayland with a `linux-wayland` version config once upstream wgpu-native supports it
   }
 
-  /// Retreive the preferred swap chain format for this `Surface`.
+  /// Retreive an optimal texture format for this `Surface`.
   TextureFormat preferredFormat(Adapter adapter) {
     assert(id !is null);
     assert(adapter.ready);
@@ -680,7 +680,7 @@ struct Surface {
 ///
 /// A `SwapChain` represents the image or series of images that will be presented to a `Surface`.
 /// A `SwapChain` may be created with `Device.createSwapChain`.
-/// See_Also: <a href="https://docs.rs/wgpu/0.6.0/wgpu/struct.SwapChain.html">wgpu::SwapChain</a>
+/// See_Also: <a href="https://docs.rs/wgpu/0.9.0/wgpu/struct.SwapChain.html">wgpu::SwapChain</a>
 struct SwapChain {
   /// Handle identifier.
   WGPUSwapChain id;
@@ -715,7 +715,9 @@ extern (C) private void wgpuBufferMapCallback(WGPUBufferMapAsyncStatus status, v
 }
 
 /// A handle to a GPU-accessible buffer.
-/// See_Also: <a href="https://docs.rs/wgpu/0.6.0/wgpu/struct.Buffer.html">wgpu::Buffer</a>
+///
+/// Created with `Device.createBuffer`.
+/// See_Also: <a href="https://docs.rs/wgpu/0.10.2/wgpu/struct.Buffer.html">wgpu::Buffer</a>
 struct Buffer {
   /// Handle identifier.
   WGPUBuffer id;
@@ -739,13 +741,13 @@ struct Buffer {
   }
 
   /// Map the buffer for reading asynchronously.
-  /// See_Also: <a href="https://docs.rs/wgpu/0.6.0/wgpu/struct.BufferSlice.html#method.map_async">wgpu::BufferSlice::map_async</a>
+  /// See_Also: <a href="https://docs.rs/wgpu/0.10.2/wgpu/struct.BufferSlice.html#method.map_async">wgpu::BufferSlice::map_async</a>
   void mapReadAsync(size_t start, size_t size) {
     wgpuBufferMapAsync(id, MapMode.read, start, size, &wgpuBufferMapCallback, &this);
   }
 
   /// Map the buffer for writing asynchronously.
-  /// See_Also: <a href="https://docs.rs/wgpu/0.6.0/wgpu/struct.BufferSlice.html#method.map_async">wgpu::BufferSlice::map_async</a>
+  /// See_Also: <a href="https://docs.rs/wgpu/0.10.2/wgpu/struct.BufferSlice.html#method.map_async">wgpu::BufferSlice::map_async</a>
   void mapWriteAsync(size_t start, size_t size) {
     wgpuBufferMapAsync(id, MapMode.write, start, size, &wgpuBufferMapCallback, &this);
   }
@@ -757,7 +759,7 @@ struct Buffer {
 }
 
 /// A handle to a texture on the GPU.
-/// See_Also: <a href="https://docs.rs/wgpu/0.6.0/wgpu/struct.Texture.html">wgpu::Texture</a>
+/// See_Also: <a href="https://docs.rs/wgpu/0.10.2/wgpu/struct.Texture.html">wgpu::Texture</a>
 // TODO: Expand docs akin to https://veldrid.dev/articles/textures.html
 struct Texture {
   /// Handle identifier.
@@ -783,7 +785,11 @@ struct Texture {
   ///
   /// A “block” is one pixel or compressed block of a texture.
   ///
-  /// See_Also: `TextureFormat`
+  /// See_Also:
+  /// $(UL
+  ///   $(LI `TextureFormat` )
+  ///   $(LI <a href="https://docs.rs/wgpu/0.10.2/wgpu/struct.ImageDataLayout.html">wgpu::ImageDataLayout</a> )
+  /// )
   uint bytesPerBlock() @property const {
     switch (descriptor.format) {
       // 8 * 1 / 8
@@ -865,7 +871,7 @@ struct Texture {
     }
   }
 
-  ///
+  /// See_Also: <a href="https://docs.rs/wgpu/0.10.2/wgpu/struct.ImageDataLayout.html">wgpu::ImageDataLayout</a>
   uint pixelsPerBlock() @property const {
     final switch (descriptor.format) {
       case TextureFormat.r8Snorm:
@@ -936,11 +942,13 @@ struct Texture {
   }
 
   /// Size of one row of pixels in this texture, in bytes.
+  /// See_Also: <a href="https://docs.rs/wgpu/0.10.2/wgpu/struct.ImageDataLayout.html">wgpu::ImageDataLayout</a>
   uint bytesPerRow() @property const {
     return descriptor.size.width * bytesPerBlock;
   }
 
   /// Size of one row of pixels in this texture, in bytes. Aligned to `COPY_BYTES_PER_ROW_ALIGNMENT`.
+  /// See_Also: <a href="https://docs.rs/wgpu/0.10.2/wgpu/struct.ImageDataLayout.html">wgpu::ImageDataLayout</a>
   uint paddedBytesPerRow() @property const {
     // https://github.com/rukai/wgpu-rs/blob/f6123e4fe89f74754093c07b476099623b76dd08/examples/capture/main.rs#L53
     const alignment = COPY_BYTES_PER_ROW_ALIGNMENT;
@@ -953,6 +961,7 @@ struct Texture {
   ///
   /// A “row” is one row of pixels or compressed blocks in the x direction.
   /// An “image” is one layer in the z direction of a 3D image or 2D array texture.
+  /// See_Also: <a href="https://docs.rs/wgpu/0.10.2/wgpu/struct.ImageDataLayout.html">wgpu::ImageDataLayout</a>
   uint rowsPerImage() @property const {
     return height / pixelsPerBlock;
   }
@@ -989,7 +998,7 @@ struct Texture {
 /// A handle to a texture view.
 ///
 /// A `TextureView` object describes a texture and associated metadata needed by a `RenderPipeline` or `BindGroup`.
-/// See_Also: <a href="https://docs.rs/wgpu/0.6.0/wgpu/struct.TextureView.html">wgpu::TextureView</a>
+/// See_Also: <a href="https://docs.rs/wgpu/0.10.2/wgpu/struct.TextureView.html">wgpu::TextureView</a>
 struct TextureView {
   /// Handle identifier.
   WGPUTextureView id;
@@ -1007,7 +1016,7 @@ struct TextureView {
 /// filters (including anisotropy) and address (wrapping) modes, among other things.
 ///
 /// See the documentation for `SamplerDescriptor` for more information.
-/// See_Also: <a href="https://docs.rs/wgpu/0.6.0/wgpu/struct.Sampler.html">wgpu::Sampler</a>
+/// See_Also: <a href="https://docs.rs/wgpu/0.10.2/wgpu/struct.Sampler.html">wgpu::Sampler</a>
 struct Sampler {
   /// Handle identifier.
   WGPUSampler id;
@@ -1039,7 +1048,7 @@ struct Queue {
 ///
 /// A `CommandBuffer` represents a complete sequence of commands that may be submitted to a command queue with `Queue.submit`.
 /// A `CommandBuffer` is obtained by recording a series of commands to a `CommandEncoder` and then calling `CommandEncoder.finish`.
-/// See_Also: <a href="https://docs.rs/wgpu/0.6.0/wgpu/struct.CommandBuffer.html">wgpu::CommandBuffer</a>
+/// See_Also: <a href="https://docs.rs/wgpu/0.10.2/wgpu/struct.CommandBuffer.html">wgpu::CommandBuffer</a>
 struct CommandBuffer {
   /// Handle identifier.
   WGPUCommandBuffer id;
@@ -1051,7 +1060,7 @@ struct CommandBuffer {
 ///
 /// A `ShaderModule` represents a compiled shader module on the GPU. It can be created by passing valid SPIR-V source code to `Device.createShaderModule`.
 /// Shader modules are used to define programmable stages of a pipeline.
-/// See_Also: <a href="https://docs.rs/wgpu/0.6.0/wgpu/struct.ShaderModule.html">wgpu::ShaderModule</a>
+/// See_Also: <a href="https://docs.rs/wgpu/0.10.2/wgpu/struct.ShaderModule.html">wgpu::ShaderModule</a>
 // TODO: Add docs akin to https://veldrid.dev/articles/specialization-constants.html
 struct ShaderModule {
   /// Handle identifier.
@@ -1069,7 +1078,7 @@ struct ShaderModule {
 /// A `CommandEncoder` can record `RenderPass`es, `ComputePass`es, and transfer operations between driver-managed resources like `Buffer`s and `Texture`s.
 ///
 /// When finished recording, call `CommandEncoder.finish` to obtain a `CommandBuffer` which may be submitted for execution.
-/// See_Also: <a href="https://docs.rs/wgpu/0.6.0/wgpu/struct.CommandEncoder.html">wgpu::CommandEncoder</a>
+/// See_Also: <a href="https://docs.rs/wgpu/0.10.2/wgpu/struct.CommandEncoder.html">wgpu::CommandEncoder</a>
 struct CommandEncoder {
   /// Handle identifier.
   WGPUCommandEncoder id;
@@ -1192,7 +1201,7 @@ struct CommandEncoder {
 /// A `BindGroup` represents the set of resources bound to the bindings described by a `BindGroupLayout`.
 /// It can be created with `Device.createBindGroup`. A `BindGroup` can be bound to a particular `RenderPass`
 /// with `RenderPass.setBindGroup`, or to a `ComputePass` with `ComputePass.setBindGroup`.
-/// See_Also: <a href="https://docs.rs/wgpu/0.6.0/wgpu/struct.BindGroup.html">wgpu::BindGroup</a>
+/// See_Also: <a href="https://docs.rs/wgpu/0.10.2/wgpu/struct.BindGroup.html">wgpu::BindGroup</a>
 struct BindGroup {
   /// Handle identifier.
   WGPUBindGroup id;
@@ -1206,7 +1215,7 @@ struct BindGroup {
 /// a `BindGroupDescriptor` object, which in turn can be used to create a `BindGroup` object with
 /// `Device.createBindGroup`. A series of `BindGroupLayout`s can also be used to create a
 /// `PipelineLayoutDescriptor`, which can be used to create a `PipelineLayout`.
-/// See_Also: <a href="https://docs.rs/wgpu/0.6.0/wgpu/struct.BindGroupLayout.html">wgpu::BindGroupLayout</a>
+/// See_Also: <a href="https://docs.rs/wgpu/0.10.2/wgpu/struct.BindGroupLayout.html">wgpu::BindGroupLayout</a>
 struct BindGroupLayout {
   /// Handle identifier.
   WGPUBindGroupLayout id;
@@ -1214,10 +1223,10 @@ struct BindGroupLayout {
   BindGroupLayoutDescriptor descriptor;
 }
 
-/// An opaque handle to a pipeline layout.
+/// An opaque handle to a pipeline layout describing the available binding groups of a pipeline.
 ///
 /// A `PipelineLayout` object describes the available binding groups of a pipeline.
-/// See_Also: <a href="https://docs.rs/wgpu/0.6.0/wgpu/struct.PipelineLayout.html">wgpu::PipelineLayout</a>
+/// See_Also: <a href="https://docs.rs/wgpu/0.10.2/wgpu/struct.PipelineLayout.html">wgpu::PipelineLayout</a>
 struct PipelineLayout {
   /// Handle identifier.
   WGPUPipelineLayout id;
@@ -1229,7 +1238,7 @@ struct PipelineLayout {
 ///
 /// A `RenderPipeline` object represents a graphics pipeline and its stages, bindings, vertex buffers and targets.
 /// A `RenderPipeline` may be created with `Device.createRenderPipeline`.
-/// See_Also: <a href="https://docs.rs/wgpu/0.6.0/wgpu/struct.RenderPipeline.html">wgpu::RenderPipeline</a>
+/// See_Also: <a href="https://docs.rs/wgpu/0.10.2/wgpu/struct.RenderPipeline.html">wgpu::RenderPipeline</a>
 struct RenderPipeline {
   /// Handle identifier.
   WGPURenderPipeline id;
@@ -1244,7 +1253,7 @@ struct RenderPipeline {
 }
 
 /// An in-progress recording of a render pass.
-/// See_Also: <a href="https://docs.rs/wgpu/0.6.0/wgpu/struct.RenderPass.html">wgpu::RenderPass</a>
+/// See_Also: <a href="https://docs.rs/wgpu/0.10.2/wgpu/struct.RenderPass.html">wgpu::RenderPass</a>
 struct RenderPass {
   import std.typecons : Flag, Tuple, Yes;
 
@@ -1387,7 +1396,7 @@ struct RenderPass {
 }
 
 /// A handle to a compute pipeline.
-/// See_Also: <a href="https://docs.rs/wgpu/0.6.0/wgpu/struct.ComputePipeline.html">wgpu::ComputePipeline</a>
+/// See_Also: <a href="https://docs.rs/wgpu/0.10.2/wgpu/struct.ComputePipeline.html">wgpu::ComputePipeline</a>
 struct ComputePipeline {
   /// Handle identifier.
   WGPUComputePipeline id;
@@ -1402,7 +1411,7 @@ struct ComputePipeline {
 }
 
 /// An in-progress recording of a compute pass.
-/// See_Also: <a href="https://docs.rs/wgpu/0.6.0/wgpu/struct.ComputePass.html">wgpu::ComputePass</a>
+/// See_Also: <a href="https://docs.rs/wgpu/0.10.2/wgpu/struct.ComputePass.html">wgpu::ComputePass</a>
 struct ComputePass {
   package WGPUComputePassEncoder instance;
   /// Describes this `ComputePass`.
