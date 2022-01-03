@@ -17,6 +17,9 @@ public import wgpu.limits;
 /// See_Also: <a href="https://github.com/gfx-rs/wgpu-native/releases/tag/v0.10.4.1">github.com/gfx-rs/wgpu-native/releases/tag/v0.10.4.1</a>
 static const VERSION = "0.10.4.1";
 
+/// Bound uniform/storage buffer offsets must be aligned to this number.
+static const uint BIND_BUFFER_ALIGNMENT = 256;
+
 /// Buffer-Texture copies must have `TextureDataLayout.bytesPerRow` aligned to this number.
 ///
 /// This doesn't apply to `Queue.writeTexture`.
@@ -1323,12 +1326,10 @@ struct RenderPass {
   // TODO: void wgpuRenderPassEncoderWriteTimestamp(WGPURenderPassEncoder renderPassEncoder, WGPUQuerySet querySet, uint32_t queryIndex);
 
   /// Sets the active bind group for a given bind group index.
-  void setBindGroup(const uint index, BindGroup bindGroup, size_t[] offsets) {
-    import std.algorithm.iteration : map;
-    import std.array : array;
-
-    auto offsetsAsUints = offsets.map!(offset => offset.to!(const uint)).array;
-    wgpuRenderPassEncoderSetBindGroup(instance, index, bindGroup.id, offsets.length.to!uint, offsetsAsUints.ptr);
+  ///
+  /// If the bind group have dynamic offsets, provide them in order of their declaration. These offsets must be aligned to `BIND_BUFFER_ALIGNMENT`.
+  void setBindGroup(const uint index, BindGroup bindGroup, const uint[] offsets) {
+    wgpuRenderPassEncoderSetBindGroup(instance, index, bindGroup.id, offsets.length.to!uint, offsets.ptr);
   }
 
   /// Sets the active render pipeline.
@@ -1433,12 +1434,10 @@ struct ComputePass {
   ComputePassDescriptor descriptor;
 
   /// Sets the active bind group for a given bind group index.
-  void setBindGroup(const uint index, BindGroup bindGroup, size_t[] offsets) {
-    import std.algorithm.iteration : map;
-    import std.array : array;
-
-    auto offsetsAsUints = offsets.map!(offset => offset.to!(const uint)).array;
-    wgpuComputePassEncoderSetBindGroup(instance, index, bindGroup.id, offsets.length.to!uint, offsetsAsUints.ptr);
+  ///
+  /// If the bind group have dynamic offsets, provide them in order of their declaration. These offsets must be aligned to `BIND_BUFFER_ALIGNMENT`.
+  void setBindGroup(const uint index, BindGroup bindGroup, const uint[] offsets) {
+    wgpuComputePassEncoderSetBindGroup(instance, index, bindGroup.id, offsets.length.to!uint, offsets.ptr);
   }
 
   /// Sets the active compute pipeline.
