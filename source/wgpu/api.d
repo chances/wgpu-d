@@ -23,6 +23,7 @@ static const uint BIND_BUFFER_ALIGNMENT = 256;
 /// Buffer-Texture copies must have `TextureDataLayout.bytesPerRow` aligned to this number.
 ///
 /// This doesn't apply to `Queue.writeTexture`.
+/// See_Also: `Texture.paddedBytesPerRow`: Size of one row of a texture's pixels/blocks, in bytes. Aligned to `COPY_BYTES_PER_ROW_ALIGNMENT`.
 static const uint COPY_BYTES_PER_ROW_ALIGNMENT = 256;
 
 /// Size of a single occlusion/timestamp query, when copied into a buffer, in bytes.
@@ -119,6 +120,11 @@ alias SurfaceDescriptorFromXlib = WGPUSurfaceDescriptorFromXlib;
 alias SwapChainDescriptor = WGPUSwapChainDescriptor;
 alias TextureBindingLayout = WGPUTextureBindingLayout;
 /// Layout of a texture in a buffer's memory.
+/// See_Also:
+/// $(UL
+///   $(LI `Texture.dataLayout` )
+///   $(LI <a href="https://docs.rs/wgpu/0.10.2/wgpu/struct.ImageDataLayout.html">wgpu::ImageDataLayout</a> )
+/// )
 alias TextureDataLayout = WGPUTextureDataLayout;
 /// Describes a `TextureView`.
 alias TextureViewDescriptor = WGPUTextureViewDescriptor;
@@ -958,13 +964,13 @@ struct Texture {
     }
   }
 
-  /// Size of one row of pixels in this texture, in bytes.
+  /// Size of one row of a texture's pixels/blocks, in bytes.
   /// See_Also: <a href="https://docs.rs/wgpu/0.10.2/wgpu/struct.ImageDataLayout.html">wgpu::ImageDataLayout</a>
   uint bytesPerRow() @property const {
     return descriptor.size.width * bytesPerBlock;
   }
 
-  /// Size of one row of pixels in this texture, in bytes. Aligned to `COPY_BYTES_PER_ROW_ALIGNMENT`.
+  /// Size of one row of a texture's pixels/blocks, in bytes. Aligned to `COPY_BYTES_PER_ROW_ALIGNMENT`.
   /// See_Also: <a href="https://docs.rs/wgpu/0.10.2/wgpu/struct.ImageDataLayout.html">wgpu::ImageDataLayout</a>
   uint paddedBytesPerRow() @property const {
     // https://github.com/rukai/wgpu-rs/blob/f6123e4fe89f74754093c07b476099623b76dd08/examples/capture/main.rs#L53
@@ -981,6 +987,29 @@ struct Texture {
   /// See_Also: <a href="https://docs.rs/wgpu/0.10.2/wgpu/struct.ImageDataLayout.html">wgpu::ImageDataLayout</a>
   uint rowsPerImage() @property const {
     return height / pixelsPerBlock;
+  }
+
+  /// Make an `ImageCopyTexture` representing the whole texture.
+  ImageCopyTexture asImageCopy() @property const {
+    return ImageCopyTexture(
+      null,
+      cast(WGPUTexture) id,
+      /* Mip level */ 0,
+      Origin3d(0, 0, 0),
+      TextureAspect.all
+    );
+  }
+
+  /// Make a `TextureDataLayout` given this texture's `size` and `TextureFormat`.
+  ///
+  /// Returns: A result suitable for use in Buffer-Texture copies, e.g. `CommandEncoder.copyTextureToBuffer`.
+  TextureDataLayout dataLayout() @property const {
+    return TextureDataLayout(
+      null,
+      0, // Offset
+      paddedBytesPerRow,
+      size.depthOrArrayLayers == 1 ? 0 : rowsPerImage,
+    );
   }
 
   /// Release the given handle.
@@ -1178,30 +1207,15 @@ struct CommandEncoder {
 
   /// Copy data from a `Texture` to a `Buffer`.
   ///
-  /// Remarks: Copies the whole extent of the source `texture`.
+  /// Remarks: Copies the whole extent of the `source` texture.
   void copyTextureToBuffer(const Texture source, const Buffer destination) {
     copyTextureToBuffer(source, destination, source.descriptor.size);
   }
   /// Copy data from a `Texture` to a `Buffer`.
   void copyTextureToBuffer(const Texture source, const Buffer destination, const Extent3d copySize) {
     copyTextureToBuffer(
-      ImageCopyTexture(
-        null,
-        cast(WGPUTexture) source.id,
-        0, // Mip level
-        Origin3d(0, 0, 0),
-        TextureAspect.all
-      ),
-      ImageCopyBuffer(
-        null,
-        TextureDataLayout(
-          null,
-          0, // Offset
-          source.paddedBytesPerRow,
-          source.size.depthOrArrayLayers == 1 ? 0 : source.rowsPerImage,
-        ),
-        cast(WGPUBuffer) destination.id,
-      ),
+      source.asImageCopy,
+      ImageCopyBuffer(null, source.dataLayout, cast(WGPUBuffer) destination.id),
       copySize
     );
   }
