@@ -158,6 +158,15 @@ $('#symbolSearchPane').show();</script>
 					<tr>
 						<td>
 							<code>
+								<a id="Instance" class="public" href="../wgpu/api/Instance.html">Instance</a>
+							</code>
+						</td>
+						<td>Context for all other wgpu objects. Instance of wgpu.
+</td>
+					</tr>
+					<tr>
+						<td>
+							<code>
 								<a id="PipelineLayout" class="public" href="../wgpu/api/PipelineLayout.html">PipelineLayout</a>
 							</code>
 						</td>
@@ -170,7 +179,7 @@ $('#symbolSearchPane').show();</script>
 								<a id="Queue" class="public" href="../wgpu/api/Queue.html">Queue</a>
 							</code>
 						</td>
-						<td>A Queue executes finished C<code class="lang-d"><span class="pln">ommandBuffer</span></code> objects.
+						<td>A Queue executes finished <code class="lang-d"><a href="../wgpu/api/CommandBuffer.html"><span class="typ">CommandBuffer</span></a></code> objects.
 </td>
 					</tr>
 					<tr>
@@ -230,15 +239,6 @@ $('#symbolSearchPane').show();</script>
 					<tr>
 						<td>
 							<code>
-								<a id="SwapChainOutput" class="public" href="../wgpu/api/SwapChainOutput.html">SwapChainOutput</a>
-							</code>
-						</td>
-						<td>Result of a call to <code class="lang-d"><a href="../wgpu/api/SwapChain.getNextTexture.html"><span class="typ">SwapChain<wbr/></span><span class="pun">.</span><span class="pln">getNextTexture</span></a></code>.
-</td>
-					</tr>
-					<tr>
-						<td>
-							<code>
 								<a id="Texture" class="public" href="../wgpu/api/Texture.html">Texture</a>
 							</code>
 						</td>
@@ -272,42 +272,6 @@ $('#symbolSearchPane').show();</script>
 						<td>Result of a call to <code class="lang-d"><a href="../wgpu/api/Buffer.mapReadAsync.html"><span class="typ">Buffer<wbr/></span><span class="pun">.</span><span class="pln">mapReadAsync</span></a></code> or <code class="lang-d"><a href="../wgpu/api/Buffer.mapWriteAsync.html"><span class="typ">Buffer<wbr/></span><span class="pun">.</span><span class="pln">mapWriteAsync</span></a></code>.
 </td>
 					</tr>
-					<tr>
-						<td>
-							<code>
-								<a id="BufferUsage" class="public" href="../wgpu/api/BufferUsage.html">BufferUsage</a>
-							</code>
-						</td>
-						<td>Different ways that you can use a buffer.
-</td>
-					</tr>
-					<tr>
-						<td>
-							<code>
-								<a id="ShaderStage" class="public" href="../wgpu/api/ShaderStage.html">ShaderStage</a>
-							</code>
-						</td>
-						<td>Describes the shader stages that a binding will be visible from.
-</td>
-					</tr>
-					<tr>
-						<td>
-							<code>
-								<a id="SwapChainError" class="public" href="../wgpu/api/SwapChainError.html">SwapChainError</a>
-							</code>
-						</td>
-						<td>Result of an unsuccessful call to <code class="lang-d"><a href="../wgpu/api/SwapChain.getNextTexture.html"><span class="typ">SwapChain<wbr/></span><span class="pun">.</span><span class="pln">getNextTexture</span></a></code>.
-</td>
-					</tr>
-					<tr>
-						<td>
-							<code>
-								<a id="TextureUsage" class="public" href="../wgpu/api/TextureUsage.html">TextureUsage</a>
-							</code>
-						</td>
-						<td>Different ways that you can use a texture.
-</td>
-					</tr>
 				</table>
 			</section>
 			<section>
@@ -327,18 +291,6 @@ $('#symbolSearchPane').show();</script>
 							<code class="prettyprint lang-d"><span class="kwd">const</span><span class="pun">(</span><span class="typ">int</span><span class="pun">)</span></code>
 						</td>
 						<td>Buffer-Texture copies must have bytes_per_row aligned to this number.
-</td>
-					</tr>
-					<tr>
-						<td>
-							<a id="DESIRED_NUM_FRAMES" class="public" href="../wgpu/api/DESIRED_NUM_FRAMES.html">
-								<code>DESIRED_NUM_FRAMES</code>
-							</a>
-						</td>
-						<td>
-							<code class="prettyprint lang-d"><span class="kwd">const</span><span class="pun">(</span><span class="typ">int</span><span class="pun">)</span></code>
-						</td>
-						<td>Unknown
 </td>
 					</tr>
 					<tr>
@@ -412,24 +364,12 @@ $('#symbolSearchPane').show();</script>
 					</tr>
 					<tr>
 						<td>
-							<a id="AdapterInfo" class="public" href="../wgpu/api/AdapterInfo.html">
-								<code>AdapterInfo</code>
-							</a>
-						</td>
-						<td>
-							<code class="prettyprint lang-d"><span class="pln">wgpu<wbr/></span><span class="pun">.</span><span class="pln">bindings<wbr/></span><span class="pun">.</span><span class="typ">WGPUCAdapterInfo</span></code>
-						</td>
-						<td>Metadata about a backend adapter.
-</td>
-					</tr>
-					<tr>
-						<td>
 							<a id="BindGroupDescriptor" class="public" href="../wgpu/api/BindGroupDescriptor.html">
 								<code>BindGroupDescriptor</code>
 							</a>
 						</td>
 						<td>
-							<code class="prettyprint lang-d"><span class="pln">wgpu<wbr/></span><span class="pun">.</span><span class="pln">bindings<wbr/></span><span class="pun">.</span><span class="typ">WGPUBindGroupDescriptor</span></code>
+							<code class="prettyprint lang-d"><span class="pln">bindings<wbr/></span><span class="pun">.</span><span class="typ">WGPUBindGroupDescriptor</span></code>
 						</td>
 						<td>Describes a <code class="lang-d"><a href="../wgpu/api/BindGroup.html"><span class="typ">BindGroup</span></a></code>.
 </td>
@@ -441,7 +381,7 @@ $('#symbolSearchPane').show();</script>
 							</a>
 						</td>
 						<td>
-							<code class="prettyprint lang-d"><span class="pln">wgpu<wbr/></span><span class="pun">.</span><span class="pln">bindings<wbr/></span><span class="pun">.</span><span class="typ">WGPUBindGroupLayoutDescriptor</span></code>
+							<code class="prettyprint lang-d"><span class="pln">bindings<wbr/></span><span class="pun">.</span><span class="typ">WGPUBindGroupLayoutDescriptor</span></code>
 						</td>
 						<td>Describes a <code class="lang-d"><a href="../wgpu/api/BindGroupLayout.html"><span class="typ">BindGroupLayout</span></a></code>.
 </td>
@@ -453,33 +393,9 @@ $('#symbolSearchPane').show();</script>
 							</a>
 						</td>
 						<td>
-							<code class="prettyprint lang-d"><span class="pln">wgpu<wbr/></span><span class="pun">.</span><span class="pln">bindings<wbr/></span><span class="pun">.</span><span class="typ">WGPUBindGroupLayoutEntry</span></code>
+							<code class="prettyprint lang-d"><span class="pln">bindings<wbr/></span><span class="pun">.</span><span class="typ">WGPUBindGroupLayoutEntry</span></code>
 						</td>
 						<td>Describes a single binding inside a bind group.
-</td>
-					</tr>
-					<tr>
-						<td>
-							<a id="BufferAddress" class="public" href="../wgpu/api/BufferAddress.html">
-								<code>BufferAddress</code>
-							</a>
-						</td>
-						<td>
-							<code class="prettyprint lang-d"><span class="typ">ulong</span></code>
-						</td>
-						<td>Integral type used for buffer offsets.
-</td>
-					</tr>
-					<tr>
-						<td>
-							<a id="BufferCopyView" class="public" href="../wgpu/api/BufferCopyView.html">
-								<code>BufferCopyView</code>
-							</a>
-						</td>
-						<td>
-							<code class="prettyprint lang-d"><span class="pln">wgpu<wbr/></span><span class="pun">.</span><span class="pln">bindings<wbr/></span><span class="pun">.</span><span class="typ">WGPUBufferCopyView</span></code>
-						</td>
-						<td>View of a buffer which can be used to copy to/from a texture.
 </td>
 					</tr>
 					<tr>
@@ -489,7 +405,7 @@ $('#symbolSearchPane').show();</script>
 							</a>
 						</td>
 						<td>
-							<code class="prettyprint lang-d"><span class="pln">wgpu<wbr/></span><span class="pun">.</span><span class="pln">bindings<wbr/></span><span class="pun">.</span><span class="typ">WGPUBufferDescriptor</span></code>
+							<code class="prettyprint lang-d"><span class="pln">bindings<wbr/></span><span class="pun">.</span><span class="typ">WGPUBufferDescriptor</span></code>
 						</td>
 						<td>Describes a <code class="lang-d"><a href="../wgpu/api/Buffer.html"><span class="typ">Buffer</span></a></code>.
 </td>
@@ -501,7 +417,7 @@ $('#symbolSearchPane').show();</script>
 							</a>
 						</td>
 						<td>
-							<code class="prettyprint lang-d"><span class="pln">wgpu<wbr/></span><span class="pun">.</span><span class="pln">bindings<wbr/></span><span class="pun">.</span><span class="typ">WGPUColor</span></code>
+							<code class="prettyprint lang-d"><span class="pln">bindings<wbr/></span><span class="pun">.</span><span class="typ">WGPUColor</span></code>
 						</td>
 						<td>RGBA double precision color.
 </td>
@@ -513,7 +429,7 @@ $('#symbolSearchPane').show();</script>
 							</a>
 						</td>
 						<td>
-							<code class="prettyprint lang-d"><span class="pln">wgpu<wbr/></span><span class="pun">.</span><span class="pln">bindings<wbr/></span><span class="pun">.</span><span class="typ">WGPUCommandBufferDescriptor</span></code>
+							<code class="prettyprint lang-d"><span class="pln">bindings<wbr/></span><span class="pun">.</span><span class="typ">WGPUCommandBufferDescriptor</span></code>
 						</td>
 						<td>Describes a <code class="lang-d"><a href="../wgpu/api/CommandBuffer.html"><span class="typ">CommandBuffer</span></a></code>.
 </td>
@@ -525,7 +441,7 @@ $('#symbolSearchPane').show();</script>
 							</a>
 						</td>
 						<td>
-							<code class="prettyprint lang-d"><span class="pln">wgpu<wbr/></span><span class="pun">.</span><span class="pln">bindings<wbr/></span><span class="pun">.</span><span class="typ">WGPUCommandEncoderDescriptor</span></code>
+							<code class="prettyprint lang-d"><span class="pln">bindings<wbr/></span><span class="pun">.</span><span class="typ">WGPUCommandEncoderDescriptor</span></code>
 						</td>
 						<td>Describes a <code class="lang-d"><a href="../wgpu/api/CommandEncoder.html"><span class="typ">CommandEncoder</span></a></code>.
 </td>
@@ -537,7 +453,7 @@ $('#symbolSearchPane').show();</script>
 							</a>
 						</td>
 						<td>
-							<code class="prettyprint lang-d"><span class="pln">wgpu<wbr/></span><span class="pun">.</span><span class="pln">bindings<wbr/></span><span class="pun">.</span><span class="typ">WGPUComputePassDescriptor</span></code>
+							<code class="prettyprint lang-d"><span class="pln">bindings<wbr/></span><span class="pun">.</span><span class="typ">WGPUComputePassDescriptor</span></code>
 						</td>
 						<td>Describes a <code class="lang-d"><a href="../wgpu/api/ComputePass.html"><span class="typ">ComputePass</span></a></code>.
 </td>
@@ -549,7 +465,7 @@ $('#symbolSearchPane').show();</script>
 							</a>
 						</td>
 						<td>
-							<code class="prettyprint lang-d"><span class="pln">wgpu<wbr/></span><span class="pun">.</span><span class="pln">bindings<wbr/></span><span class="pun">.</span><span class="typ">WGPUComputePipelineDescriptor</span></code>
+							<code class="prettyprint lang-d"><span class="pln">bindings<wbr/></span><span class="pun">.</span><span class="typ">WGPUComputePipelineDescriptor</span></code>
 						</td>
 						<td>Describes a <code class="lang-d"><a href="../wgpu/api/ComputePipeline.html"><span class="typ">ComputePipeline</span></a></code>.
 </td>
@@ -561,21 +477,33 @@ $('#symbolSearchPane').show();</script>
 							</a>
 						</td>
 						<td>
-							<code class="prettyprint lang-d"><span class="pln">wgpu<wbr/></span><span class="pun">.</span><span class="pln">bindings<wbr/></span><span class="pun">.</span><span class="typ">WGPUExtent3d</span></code>
+							<code class="prettyprint lang-d"><span class="pln">bindings<wbr/></span><span class="pun">.</span><span class="typ">WGPUExtent3D</span></code>
 						</td>
 						<td>Extent of a texture related operation.
 </td>
 					</tr>
 					<tr>
 						<td>
-							<a id="Features" class="public" href="../wgpu/api/Features.html">
-								<code>Features</code>
+							<a id="ImageCopyBuffer" class="public" href="../wgpu/api/ImageCopyBuffer.html">
+								<code>ImageCopyBuffer</code>
 							</a>
 						</td>
 						<td>
-							<code class="prettyprint lang-d"><span class="typ">ulong</span></code>
+							<code class="prettyprint lang-d"><span class="pln">bindings<wbr/></span><span class="pun">.</span><span class="typ">WGPUImageCopyBuffer</span></code>
 						</td>
-						<td>Features that are not guaranteed to be supported.
+						<td>View of a texture which can be used to copy to/from a buffer.
+</td>
+					</tr>
+					<tr>
+						<td>
+							<a id="ImageCopyTexture" class="public" href="../wgpu/api/ImageCopyTexture.html">
+								<code>ImageCopyTexture</code>
+							</a>
+						</td>
+						<td>
+							<code class="prettyprint lang-d"><span class="pln">bindings<wbr/></span><span class="pun">.</span><span class="typ">WGPUImageCopyTexture</span></code>
+						</td>
+						<td>View of a texture which can be used to copy to/from a texture.
 </td>
 					</tr>
 					<tr>
@@ -585,7 +513,7 @@ $('#symbolSearchPane').show();</script>
 							</a>
 						</td>
 						<td>
-							<code class="prettyprint lang-d"><span class="pln">wgpu<wbr/></span><span class="pun">.</span><span class="pln">bindings<wbr/></span><span class="pun">.</span><span class="typ">WGPUCLimits</span></code>
+							<code class="prettyprint lang-d"><span class="pln">bindings<wbr/></span><span class="pun">.</span><span class="typ">WGPULimits</span></code>
 						</td>
 						<td>Represents the sets of limits an adapter/device supports.
 </td>
@@ -597,7 +525,7 @@ $('#symbolSearchPane').show();</script>
 							</a>
 						</td>
 						<td>
-							<code class="prettyprint lang-d"><span class="pln">wgpu<wbr/></span><span class="pun">.</span><span class="pln">bindings<wbr/></span><span class="pun">.</span><span class="typ">WGPUOrigin3d</span></code>
+							<code class="prettyprint lang-d"><span class="pln">bindings<wbr/></span><span class="pun">.</span><span class="typ">WGPUOrigin3D</span></code>
 						</td>
 						<td>Origin of a copy to/from a texture.
 </td>
@@ -609,21 +537,33 @@ $('#symbolSearchPane').show();</script>
 							</a>
 						</td>
 						<td>
-							<code class="prettyprint lang-d"><span class="pln">wgpu<wbr/></span><span class="pun">.</span><span class="pln">bindings<wbr/></span><span class="pun">.</span><span class="typ">WGPUPipelineLayoutDescriptor</span></code>
+							<code class="prettyprint lang-d"><span class="pln">bindings<wbr/></span><span class="pun">.</span><span class="typ">WGPUPipelineLayoutDescriptor</span></code>
 						</td>
 						<td>Describes a <code class="lang-d"><a href="../wgpu/api/PipelineLayout.html"><span class="typ">PipelineLayout</span></a></code>.
 </td>
 					</tr>
 					<tr>
 						<td>
-							<a id="RenderPassColorAttachmentDescriptor" class="public" href="../wgpu/api/RenderPassColorAttachmentDescriptor.html">
-								<code>RenderPassColorAttachmentDescriptor</code>
+							<a id="RenderPassColorAttachment" class="public" href="../wgpu/api/RenderPassColorAttachment.html">
+								<code>RenderPassColorAttachment</code>
 							</a>
 						</td>
 						<td>
-							<code class="prettyprint lang-d"><span class="pln">wgpu<wbr/></span><span class="pun">.</span><span class="pln">bindings<wbr/></span><span class="pun">.</span><span class="typ">WGPURenderPassColorAttachmentDescriptorBase_TextureViewId</span></code>
+							<code class="prettyprint lang-d"><span class="pln">bindings<wbr/></span><span class="pun">.</span><span class="typ">WGPURenderPassColorAttachment</span></code>
 						</td>
 						<td>Describes a color attachment to a <code class="lang-d"><a href="../wgpu/api/RenderPass.html"><span class="typ">RenderPass</span></a></code>.
+</td>
+					</tr>
+					<tr>
+						<td>
+							<a id="RenderPassDepthStencilAttachment" class="public" href="../wgpu/api/RenderPassDepthStencilAttachment.html">
+								<code>RenderPassDepthStencilAttachment</code>
+							</a>
+						</td>
+						<td>
+							<code class="prettyprint lang-d"><span class="pln">bindings<wbr/></span><span class="pun">.</span><span class="typ">WGPURenderPassDepthStencilAttachment</span></code>
+						</td>
+						<td>Describes a depth stencil attachment to a <code class="lang-d"><a href="../wgpu/api/RenderPass.html"><span class="typ">RenderPass</span></a></code>.
 </td>
 					</tr>
 					<tr>
@@ -633,7 +573,7 @@ $('#symbolSearchPane').show();</script>
 							</a>
 						</td>
 						<td>
-							<code class="prettyprint lang-d"><span class="pln">wgpu<wbr/></span><span class="pun">.</span><span class="pln">bindings<wbr/></span><span class="pun">.</span><span class="typ">WGPURenderPassDescriptor</span></code>
+							<code class="prettyprint lang-d"><span class="pln">bindings<wbr/></span><span class="pun">.</span><span class="typ">WGPURenderPassDescriptor</span></code>
 						</td>
 						<td>Describes a <code class="lang-d"><a href="../wgpu/api/RenderPass.html"><span class="typ">RenderPass</span></a></code>.
 </td>
@@ -645,7 +585,7 @@ $('#symbolSearchPane').show();</script>
 							</a>
 						</td>
 						<td>
-							<code class="prettyprint lang-d"><span class="pln">wgpu<wbr/></span><span class="pun">.</span><span class="pln">bindings<wbr/></span><span class="pun">.</span><span class="typ">WGPURenderPipelineDescriptor</span></code>
+							<code class="prettyprint lang-d"><span class="pln">bindings<wbr/></span><span class="pun">.</span><span class="typ">WGPURenderPipelineDescriptor</span></code>
 						</td>
 						<td>Describes a <code class="lang-d"><a href="../wgpu/api/RenderPipeline.html"><span class="typ">RenderPipeline</span></a></code>.
 </td>
@@ -657,7 +597,7 @@ $('#symbolSearchPane').show();</script>
 							</a>
 						</td>
 						<td>
-							<code class="prettyprint lang-d"><span class="pln">wgpu<wbr/></span><span class="pun">.</span><span class="pln">bindings<wbr/></span><span class="pun">.</span><span class="typ">WGPUSamplerDescriptor</span></code>
+							<code class="prettyprint lang-d"><span class="pln">bindings<wbr/></span><span class="pun">.</span><span class="typ">WGPUSamplerDescriptor</span></code>
 						</td>
 						<td>Describes a <code class="lang-d"><a href="../wgpu/api/Sampler.html"><span class="typ">Sampler</span></a></code>.
 </td>
@@ -669,21 +609,9 @@ $('#symbolSearchPane').show();</script>
 							</a>
 						</td>
 						<td>
-							<code class="prettyprint lang-d"><span class="pln">wgpu<wbr/></span><span class="pun">.</span><span class="pln">bindings<wbr/></span><span class="pun">.</span><span class="typ">WGPUSwapChainDescriptor</span></code>
+							<code class="prettyprint lang-d"><span class="pln">bindings<wbr/></span><span class="pun">.</span><span class="typ">WGPUSwapChainDescriptor</span></code>
 						</td>
 						<td>Describes a <code class="lang-d"><a href="../wgpu/api/SwapChain.html"><span class="typ">SwapChain</span></a></code>.
-</td>
-					</tr>
-					<tr>
-						<td>
-							<a id="TextureCopyView" class="public" href="../wgpu/api/TextureCopyView.html">
-								<code>TextureCopyView</code>
-							</a>
-						</td>
-						<td>
-							<code class="prettyprint lang-d"><span class="pln">wgpu<wbr/></span><span class="pun">.</span><span class="pln">bindings<wbr/></span><span class="pun">.</span><span class="typ">WGPUTextureCopyView</span></code>
-						</td>
-						<td>View of a texture which can be used to copy to/from a buffer/texture.
 </td>
 					</tr>
 					<tr>
@@ -693,7 +621,7 @@ $('#symbolSearchPane').show();</script>
 							</a>
 						</td>
 						<td>
-							<code class="prettyprint lang-d"><span class="pln">wgpu<wbr/></span><span class="pun">.</span><span class="pln">bindings<wbr/></span><span class="pun">.</span><span class="typ">WGPUTextureDataLayout</span></code>
+							<code class="prettyprint lang-d"><span class="pln">bindings<wbr/></span><span class="pun">.</span><span class="typ">WGPUTextureDataLayout</span></code>
 						</td>
 						<td>Layout of a texture in a buffer's memory.
 </td>
@@ -705,7 +633,7 @@ $('#symbolSearchPane').show();</script>
 							</a>
 						</td>
 						<td>
-							<code class="prettyprint lang-d"><span class="pln">wgpu<wbr/></span><span class="pun">.</span><span class="pln">bindings<wbr/></span><span class="pun">.</span><span class="typ">WGPUTextureDescriptor</span></code>
+							<code class="prettyprint lang-d"><span class="pln">bindings<wbr/></span><span class="pun">.</span><span class="typ">WGPUTextureDescriptor</span></code>
 						</td>
 						<td>Describes a <code class="lang-d"><a href="../wgpu/api/Texture.html"><span class="typ">Texture</span></a></code>.
 </td>
@@ -717,7 +645,7 @@ $('#symbolSearchPane').show();</script>
 							</a>
 						</td>
 						<td>
-							<code class="prettyprint lang-d"><span class="pln">wgpu<wbr/></span><span class="pun">.</span><span class="pln">bindings<wbr/></span><span class="pun">.</span><span class="typ">WGPUTextureViewDescriptor</span></code>
+							<code class="prettyprint lang-d"><span class="pln">bindings<wbr/></span><span class="pun">.</span><span class="typ">WGPUTextureViewDescriptor</span></code>
 						</td>
 						<td>Describes a <code class="lang-d"><a href="../wgpu/api/TextureView.html"><span class="typ">TextureView</span></a></code>.
 </td>
@@ -737,7 +665,7 @@ $('#symbolSearchPane').show();</script>
 					<tr>
 						<th>Copyright</th>
 						<td>
-							<p>Copyright © 2020 Chance Snow. All rights reserved.
+							<p>Copyright © 2020-2022 Chance Snow. All rights reserved.
 </p>
 
 						</td>

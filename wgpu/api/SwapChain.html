@@ -88,14 +88,14 @@ A <code class="lang-d"><span class="typ">SwapChain</span></code> may be created 
 						<td>
 							<a href="../../wgpu/api/SwapChain.descriptor.html" class="public"><code>descriptor</code></a>
 						</td>
-						<td class="typecol"><code class="prettyprint lang-d"><span class="pln">wgpu<wbr/></span><span class="pun">.</span><span class="pln">bindings<wbr/></span><span class="pun">.</span><span class="typ">WGPUSwapChainDescriptor</span></code></td><td>Describes this <code class="lang-d"><span class="typ">SwapChain<wbr/></span><span class="pun">.</span></code>
+						<td class="typecol"><code class="prettyprint lang-d"><span class="pln">bindings<wbr/></span><span class="pun">.</span><span class="typ">WGPUSwapChainDescriptor</span></code></td><td>Describes this <code class="lang-d"><span class="typ">SwapChain<wbr/></span><span class="pun">.</span></code>
 </td>
 					</tr>
 					<tr>
 						<td>
 							<a href="../../wgpu/api/SwapChain.id.html" class="public"><code>id</code></a>
 						</td>
-						<td class="typecol"><code class="prettyprint lang-d"><span class="typ">ulong</span></code></td><td>Handle identifier.
+						<td class="typecol"><code class="prettyprint lang-d"><span class="pln">bindings<wbr/></span><span class="pun">.</span><span class="typ">WGPUSwapChainImpl</span><span class="pun">*</span></code></td><td>Handle identifier.
 </td>
 					</tr>
 				</table>
@@ -115,6 +115,15 @@ A <code class="lang-d"><span class="typ">SwapChain</span></code> may be created 
 						</td>
 						<td>Returns the next texture to be presented by the swapchain for drawing.
 </td>
+					</tr>
+					<tr>
+						<td>
+							<a href="../../wgpu/api/SwapChain.present.html" class="public">
+								<code>present</code>
+							</a>
+							<span class="tableEntryAnnotation">()</span>
+						</td>
+						<td></td>
 					</tr>
 				</table>
 			</section>
@@ -136,7 +145,7 @@ A <code class="lang-d"><span class="typ">SwapChain</span></code> may be created 
 					<tr>
 						<th>Copyright</th>
 						<td>
-							<p>Copyright © 2020 Chance Snow. All rights reserved.
+							<p>Copyright © 2020-2022 Chance Snow. All rights reserved.
 </p>
 
 						</td>

@@ -68,10 +68,10 @@ $('#symbolSearchPane').show();</script>
 			<div class="prototype">
 				<code class="lang-d">
 					<div class="single-prototype">
-			<a href="../../wgpu/api/Device.html"><span class="typ">Device</span></a> <span class="pln">requestDevice</span>
+			<a href="../../wgpu/api/Device.html"><span class="typ">Device</span></a><span class="pun">*</span> <span class="pln">requestDevice</span>
 			<span class="pun">(</span>
 			<br/>
-			&nbsp;&nbsp;<span class="kwd">const</span><span class="pun">(</span><span class="pln">wgpu<wbr/></span><span class="pun">.</span><span class="pln">bindings<wbr/></span><span class="pun">.</span><span class="typ">WGPUCLimits</span><span class="pun">)</span> <span class="pln">limits</span><span class="pun">,</span>
+			&nbsp;&nbsp;<span class="kwd">const</span><span class="pun">(</span><span class="pln">bindings<wbr/></span><span class="pun">.</span><span class="typ">WGPULimits</span><span class="pun">)</span> <span class="pln">limits</span><span class="pun">,</span>
 			<br/>
 			&nbsp;&nbsp;<span class="typ">string</span> <span class="pln">label</span> <span class="pun">=</span> <span class="str">"wgpu.api.Device"</span>
 			<br/>
@@ -83,7 +83,7 @@ $('#symbolSearchPane').show();</script>
 
 			<section><h2>Parameters</h2>
 <table><col class="caption"><tr><th>Name</th><th>Description</th></tr>
-<tr><td id="limits">limits</td><td> The sets of limits the device supports.</td></tr>
+<tr><td id="limits">limits</td><td> Set of required limits the device must supports.</td></tr>
 <tr><td id="label">label</td><td> Optional label for the <code class="lang-d"><a href="../../wgpu/api/Device.html"><span class="typ">Device</span></a></code>.</td></tr>
 </table>
 </section>
@@ -101,7 +101,7 @@ $('#symbolSearchPane').show();</script>
 					<tr>
 						<th>Copyright</th>
 						<td>
-							<p>Copyright © 2020 Chance Snow. All rights reserved.
+							<p>Copyright © 2020-2022 Chance Snow. All rights reserved.
 </p>
 
 						</td>

@@ -75,24 +75,6 @@ $('#symbolSearchPane').show();</script>
 			</div>
 			<section></section>
 
-			<section><h2>Constructors</h2>
-				<table>
-					<col class="caption"/>
-					<tr>
-						<th>Name</th><th>Description</th>
-					</tr>
-					<tr>
-						<td>
-							<a href="../../wgpu/api/Adapter.this.html" class="public">
-								<code>this</code>
-							</a>
-							<span class="tableEntryAnnotation">(options)</span>
-						</td>
-						<td>Requests a new Adapter, asynchronously.
-</td>
-					</tr>
-				</table>
-			</section>
 			<section><h2>Fields</h2>
 				<table>
 					<col class="caption"/>
@@ -103,7 +85,7 @@ $('#symbolSearchPane').show();</script>
 						<td>
 							<a href="../../wgpu/api/Adapter.id.html" class="public"><code>id</code></a>
 						</td>
-						<td class="typecol"><code class="prettyprint lang-d"><span class="typ">ulong</span></code></td><td>Handle identifier.
+						<td class="typecol"><code class="prettyprint lang-d"><span class="pln">bindings<wbr/></span><span class="pun">.</span><span class="typ">WGPUAdapterImpl</span><span class="pun">*</span></code></td><td>Handle identifier.
 </td>
 					</tr>
 				</table>
@@ -113,27 +95,6 @@ $('#symbolSearchPane').show();</script>
 					<col class="caption"/>
 					<tr>
 						<th>Name</th><th>Type</th><th>Description</th>
-					</tr>
-					<tr>
-						<td>
-							<a href="../../wgpu/api/Adapter.features.html" class="public property"><code>features</code></a><span class="tableEntryAnnotation">[get]</span>
-						</td>
-						<td class="typecol"><code class="prettyprint lang-d"><span class="typ">ulong</span></code></td><td>List all features that are supported with this adapter.
-</td>
-					</tr>
-					<tr>
-						<td>
-							<a href="../../wgpu/api/Adapter.info.html" class="public property"><code>info</code></a><span class="tableEntryAnnotation">[get]</span>
-						</td>
-						<td class="typecol"><code class="prettyprint lang-d"><span class="pln">wgpu<wbr/></span><span class="pun">.</span><span class="pln">bindings<wbr/></span><span class="pun">.</span><span class="typ">WGPUCAdapterInfo</span></code></td><td>Information about this Adapter.
-</td>
-					</tr>
-					<tr>
-						<td>
-							<a href="../../wgpu/api/Adapter.limits.html" class="public property"><code>limits</code></a><span class="tableEntryAnnotation">[get]</span>
-						</td>
-						<td class="typecol"><code class="prettyprint lang-d"><span class="pln">wgpu<wbr/></span><span class="pun">.</span><span class="pln">bindings<wbr/></span><span class="pun">.</span><span class="typ">WGPUCLimits</span></code></td><td>List the "best" limits that are supported by this adapter.
-</td>
 					</tr>
 					<tr>
 						<td>
@@ -152,12 +113,32 @@ $('#symbolSearchPane').show();</script>
 					</tr>
 					<tr>
 						<td>
-							<a href="../../wgpu/api/Adapter.destroy.html" class="public">
-								<code>destroy</code>
+							<a href="../../wgpu/api/Adapter.features.html" class="public">
+								<code>features</code>
 							</a>
 							<span class="tableEntryAnnotation">()</span>
 						</td>
-						<td>Release the given handle.
+						<td>List all features that are supported with this adapter.
+</td>
+					</tr>
+					<tr>
+						<td>
+							<a href="../../wgpu/api/Adapter.limits.html" class="public">
+								<code>limits</code>
+							</a>
+							<span class="tableEntryAnnotation">()</span>
+						</td>
+						<td>List the "best" limits that are supported by this adapter.
+</td>
+					</tr>
+					<tr>
+						<td>
+							<a href="../../wgpu/api/Adapter.properties.html" class="public">
+								<code>properties</code>
+							</a>
+							<span class="tableEntryAnnotation">()</span>
+						</td>
+						<td>Information about this Adapter.
 </td>
 					</tr>
 					<tr>
@@ -190,7 +171,7 @@ $('#symbolSearchPane').show();</script>
 					<tr>
 						<th>Copyright</th>
 						<td>
-							<p>Copyright © 2020 Chance Snow. All rights reserved.
+							<p>Copyright © 2020-2022 Chance Snow. All rights reserved.
 </p>
 
 						</td>
