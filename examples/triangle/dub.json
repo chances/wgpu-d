@@ -1,0 +1,30 @@
+{
+  "name": "triangle",
+  "description": "Triangle (windowed) example",
+	"authors": [
+		"Chance Snow"
+	],
+	"license": "MIT",
+  "copyright": "Copyright © 2022, Chance Snow",
+  "targetType": "executable",
+  "targetPath": "../../bin",
+  "dependencies": {
+    "imageformats": "~>7.0.2",
+    "wgpu-d": {
+      "path": "../.."
+    }
+  },
+  "preGenerateCommands-posix": [
+    "make -C subprojects -f glfw.Makefile"
+  ],
+  "postBuildCommands-osx": [
+    "echo Fixing up libwgpu dylib path...",
+    "install_name_tool -change /Users/runner/work/wgpu-native/wgpu-native/target/x86_64-apple-darwin/debug/deps/libwgpu_native.dylib @executable_path/lib/libwgpu.dylib ../../bin/triangle"
+  ],
+  "libs": [
+    "glfw3"
+  ],
+  "lflags-posix": [
+    "-L$PACKAGE_DIR/subprojects/glfw/src"
+  ]
+}
