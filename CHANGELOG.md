@@ -1,12 +1,26 @@
+<!-- https://keepachangelog.com/en/1.0.0/ -->
 # Changelog
 
 ## v0.1.0-alpha.2
 
-### Additions
+Upgraded to [`wgpu-native`@0.10.4.1](https://github.com/gfx-rs/wgpu-native/releases/tag/v0.10.4.1).
+
+### Added
+
+- [`RenderPass.end`](https://chances.github.io/wgpu-d/wgpu/api/RenderPass.end.html)
+- [`RenderPass.setBlendConstant`](https://chances.github.io/wgpu-d/wgpu/api/RenderPass.setBlendConstant.html)
+
+### Changed
+
+- The method of binding to [wgpu-native](https://github.com/gfx-rs/wgpu-native) was switched from [`dpp`](https://github.com/atilaneves/dpp#readme) to [ImportC](https://dlang.org/spec/importc.html) ([#5](https://github.com/chances/wgpu-d/pull/5))
 
 ### Fixes
 
 - Fix `Surface` static initializers for Linuxes
+
+### Removed
+
+- Removed Wayland support
 
 ## v0.1.0-alpha.1
 
