@@ -867,7 +867,7 @@ struct Texture {
 
   ///
   uint pixelsPerBlock() @property const {
-    switch (descriptor.format) {
+    final switch (descriptor.format) {
       case TextureFormat.r8Snorm:
       case TextureFormat.r8Sint:
       case TextureFormat.r8Unorm:
@@ -925,13 +925,13 @@ struct Texture {
         // FIXME: Supply pixel compression ratios for these texture formats
         assert(0, "Unknown compression ratio of " ~ descriptor.format.stringof);
       // QUESTION: Depth formats of _at least_ 24 bits, therefore there's no guarenteed block size?
+      case TextureFormat.undefined:
       case TextureFormat.depth16Unorm:
       case TextureFormat.depth32Float:
       case TextureFormat.depth24Plus:
       case TextureFormat.depth24PlusStencil8:
-      case TextureFormat.undefined:
+      case TextureFormat.force32:
         assert(0, "Undefined block size");
-      default: assert(0, "Unreachable");
     }
   }
 
