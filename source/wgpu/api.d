@@ -36,7 +36,7 @@ static const MAX_MIP_LEVELS = 16;
 static const MAX_VERTEX_BUFFERS = 16;
 
 // Opaque Pointers
-// TODO: Implement a wrapper areound `WGPUQuerySet`
+// TODO: Implement a wrapper around `WGPUQuerySet`
 alias QuerySet = WGPUQuerySet;
 
 // Structures
@@ -1323,6 +1323,7 @@ struct RenderPass {
   // TODO: void wgpuRenderPassEncoderInsertDebugMarker(WGPURenderPassEncoder renderPassEncoder, char const * markerLabel);
   // TODO: void wgpuRenderPassEncoderPushDebugGroup(WGPURenderPassEncoder renderPassEncoder, char const * groupLabel);
   // TODO: void wgpuRenderPassEncoderPopDebugGroup(WGPURenderPassEncoder renderPassEncoder);
+  // See_Also: `QUERY_SIZE`
   // TODO: void wgpuRenderPassEncoderWriteTimestamp(WGPURenderPassEncoder renderPassEncoder, WGPUQuerySet querySet, uint32_t queryIndex);
 
   /// Sets the active bind group for a given bind group index.
@@ -1424,6 +1425,9 @@ struct ComputePipeline {
     if (id !is null) wgpuComputePipelineDrop(id);
     id = null;
   }
+
+  /// Get the bind group layout at the given `index`.
+  // TODO: BindGroupLayout bindGroupLayout(uint index) {}
 }
 
 /// An in-progress recording of a compute pass.
@@ -1460,5 +1464,6 @@ struct ComputePass {
   // TODO: void wgpuComputePassEncoderInsertDebugMarker(WGPUComputePassEncoder computePassEncoder, char const * markerLabel);
   // TODO: void wgpuComputePassEncoderPopDebugGroup(WGPUComputePassEncoder computePassEncoder);
   // TODO: void wgpuComputePassEncoderPushDebugGroup(WGPUComputePassEncoder computePassEncoder, char const * groupLabel);
+  // See_Also: `QUERY_SIZE`
   // TODO: void wgpuComputePassEncoderWriteTimestamp(WGPUComputePassEncoder computePassEncoder, WGPUQuerySet querySet, uint32_t queryIndex);
 }
