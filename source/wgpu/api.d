@@ -11,6 +11,7 @@ import std.string : toStringz;
 import std.traits : fullyQualifiedName;
 
 import wgpu.bindings;
+public import wgpu.limits;
 
 /// Version of <a href="https://github.com/gfx-rs/wgpu-native">wgpu-native</a> this library binds.
 /// See_Also: <a href="https://github.com/gfx-rs/wgpu-native/releases/tag/v0.10.4.1">github.com/gfx-rs/wgpu-native/releases/tag/v0.10.4.1</a>
@@ -62,6 +63,13 @@ alias Extent3d = WGPUExtent3D;
 alias InstanceDescriptor = WGPUInstanceDescriptor;
 /// Represents the sets of limits an adapter/device supports.
 ///
+/// Provided are two sets of defaults:
+/// $(UL
+///   $(LI `wgpu.limits.defaultLimits`: Set of limits that is guaranteed to work on all modern backends and is guaranteed to be supported by WebGPU. )
+///   $(LI `wgpu.limits.downlevelDefaultLimits`: Set of limits that are guaranteed to be compatible with GLES3, WebGL, and D3D11. )
+/// )
+///
+/// Remarks:
 /// Limits "better" than the default must be supported by the adapter and requested when requesting a device.
 /// If limits "better" than the adapter supports are requested, requesting a device will panic. Once a device is
 /// requested, you may only use resources up to the limits requested even if the adapter supports "better" limits.
@@ -69,8 +77,11 @@ alias InstanceDescriptor = WGPUInstanceDescriptor;
 /// Requesting limits that are "better" than you need may cause performance to decrease because the implementation
 /// needs to support more than is needed. You should ideally only request exactly what you need.
 ///
-/// <strong>See Also</strong>: https://gpuweb.github.io/gpuweb/#dictdef-gpulimits
-/// See_Also: <a href="https://docs.rs/wgpu/0.10.2/wgpu/struct.Limits.html">wgpu::Limits</a>
+/// See_Also:
+/// $(UL
+///   $(LI <a href="https://gpuweb.github.io/gpuweb/#dictdef-gpulimits">gpuweb.github.io/gpuweb/#dictdef-gpulimits</a> )
+///   $(LI <a href="https://docs.rs/wgpu/0.10.2/wgpu/struct.Limits.html">wgpu::Limits</a> )
+/// )
 alias Limits = WGPULimits;
 alias MultisampleState = WGPUMultisampleState;
 /// Origin of a copy to/from a texture.
