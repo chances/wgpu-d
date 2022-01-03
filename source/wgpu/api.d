@@ -476,6 +476,13 @@ struct Device {
   }
 
   /// Creates an empty `CommandEncoder`.
+  ///
+  /// Params:
+  /// label = Optional, human-readable debug label for the command encoder.
+  CommandEncoder createCommandEncoder(string label = null) {
+    return createCommandEncoder(CommandEncoderDescriptor(null, label is null ? null : label.toStringz));
+  }
+  /// Creates an empty `CommandEncoder`.
   CommandEncoder createCommandEncoder(const CommandEncoderDescriptor descriptor) {
     return CommandEncoder(wgpuDeviceCreateCommandEncoder(id, &descriptor), descriptor);
   }
@@ -508,10 +515,83 @@ struct Device {
   }
 
   /// Creates a new buffer.
+  ///
+  /// Params:
+  /// usage = How the buffer shall be used.
+  /// size = Size of the buffer, in bytes.
+  /// mappedAtCreation = Whether the buffer is mapped to local memory upon creation.
+  /// label = Optional, human-readable debug label for the buffer.
+  Buffer createBuffer(
+    BufferUsage usage, uint size,
+    Flag!"mappedAtCreation" mappedAtCreation = No.mappedAtCreation,
+    string label = null
+  ) {
+    return createBuffer(BufferDescriptor(null, label is null ? null : label.toStringz, usage, size, mappedAtCreation));
+  }
+  /// Creates a new buffer.
   Buffer createBuffer(const BufferDescriptor descriptor) {
     return Buffer(wgpuDeviceCreateBuffer(id, &descriptor), descriptor);
   }
 
+  /// Creates a new `Texture`.
+  ///
+  /// Remarks: The created texture will have one <a href="https://en.wikipedia.org/wiki/Mipmap">mip level</a> and a single sample used in fragments.
+  ///
+  /// Params:
+  /// width = Width of the texture.
+  /// height = Height of the texture.
+  /// format = Bit-level format of the texture's data.
+  /// usage = How the texture shall be used.
+  /// dimension = Dimesnionality of the texture, e.g. 2D or 3D. Defaults to 2D.
+  /// mipLevelCount = Number of <a href="https://en.wikipedia.org/wiki/Mipmap">mipmapping levels</a> of this texture, usually used to reduce aliasing effects. Defaults to one.
+  /// sampleCount = Number of samples used in each fragment. Defaults to one.
+  /// depthOrArrayLayers = Depth/total array layers of the texture. Defaults to one. See `Limits.maxTextureArrayLayers`.
+  /// label = Optional, human-readable debug label for the texture.
+  Texture createTexture(
+    uint width, uint height,
+    TextureFormat format, TextureUsage usage,
+    TextureDimension dimension = TextureDimension._2D,
+    uint mipLevelCount = 1,
+    uint sampleCount = 1,
+    uint depthOrArrayLayers = 1,
+    string label = null
+  ) {
+    return createTexture(TextureDescriptor(
+      null,
+      label is null ? null : label.toStringz,
+      usage, dimension,
+      Extent3d(width, height, depthOrArrayLayers),
+      format,
+      mipLevelCount,
+      sampleCount
+    ));
+  }
+  /// Creates a new `Texture`.
+  ///
+  /// Params:
+  /// extent = Size and depth/total array layers of the texture. See `Limits.maxTextureArrayLayers`.
+  /// format = Bit-level format of the texture's data.
+  /// usage = How the texture shall be used.
+  /// dimension = Dimesnionality of the texture, e.g. 2D or 3D. Defaults to 2D.
+  /// mipLevelCount = Number of <a href="https://en.wikipedia.org/wiki/Mipmap">mipmapping levels</a> of this texture, usually used to reduce aliasing effects. Defaults to one.
+  /// sampleCount = Number of samples used in each fragment. Defaults to one.
+  /// label = Optional, human-readable debug label for the texture.
+  Texture createTexture(
+    Extent3d extent, TextureFormat format, TextureUsage usage,
+    TextureDimension dimension = TextureDimension._2D,
+    uint mipLevelCount = 1,
+    uint sampleCount = 1,
+    string label = null
+  ) {
+    debug import std.math : isPowerOf2;
+    assert(extent.depthOrArrayLayers > 0, "Textures must have at least one texel/array layer");
+    assert(mipLevelCount > 0, "Textures must have at least one mipmap level");
+    assert(sampleCount > 0, "Textures must have a non-zero sample count");
+    assert(sampleCount.isPowerOf2, "Texture sample count must be a power of two");
+    return createTexture(TextureDescriptor(
+      null, label is null ? null : label.toStringz, usage, dimension, extent, format, mipLevelCount, sampleCount
+    ));
+  }
   /// Creates a new `Texture`.
   ///
   /// Params:
@@ -1005,6 +1085,57 @@ struct CommandEncoder {
   /// Begins recording of a render pass.
   ///
   /// This function returns a `RenderPass` object which records a single render pass.
+  ///
+  /// Params:
+  /// colorAttachments = Color attachments of the render pass.
+  /// label = Optional, human-readable debug label for the render pass.
+  RenderPass beginRenderPass(
+    RenderPassColorAttachment[] colorAttachments,
+    string label = null
+  ) {
+    return beginRenderPass(colorAttachments, null, label);
+  }
+  /// Begins recording of a render pass.
+  ///
+  /// This function returns a `RenderPass` object which records a single render pass.
+  ///
+  /// Params:
+  /// colorAttachment = Color attachment of the render pass.
+  /// depthStencilAttachment = Optional depth stencil attachment.
+  /// label = Optional, human-readable debug label for the render pass.
+  RenderPass beginRenderPass(
+    RenderPassColorAttachment colorAttachment,
+    RenderPassDepthStencilAttachment* depthStencilAttachment = null,
+    string label = null
+  ) {
+    return beginRenderPass([colorAttachment], depthStencilAttachment, label);
+  }
+  /// Begins recording of a render pass.
+  ///
+  /// This function returns a `RenderPass` object which records a single render pass.
+  ///
+  /// Params:
+  /// colorAttachments = Color attachments of the render pass.
+  /// depthStencilAttachment = Optional depth stencil attachment.
+  /// label = Optional, human-readable debug label for the render pass.
+  RenderPass beginRenderPass(
+    RenderPassColorAttachment[] colorAttachments,
+    RenderPassDepthStencilAttachment* depthStencilAttachment = null,
+    string label = null
+  ) {
+    assert(colorAttachments.length);
+    return beginRenderPass(RenderPassDescriptor(
+      null,
+      label is null ? null : label.toStringz,
+      colorAttachments.length.to!uint,
+      colorAttachments.ptr,
+      depthStencilAttachment,
+      null, // occlusion query set
+    ));
+  }
+  /// Begins recording of a render pass.
+  ///
+  /// This function returns a `RenderPass` object which records a single render pass.
   RenderPass beginRenderPass(const RenderPassDescriptor descriptor) {
     return RenderPass(wgpuCommandEncoderBeginRenderPass(id, &descriptor));
   }
@@ -1019,6 +1150,35 @@ struct CommandEncoder {
   // TODO: void wgpuCommandEncoderCopyBufferToBuffer(WGPUCommandEncoder commandEncoder, WGPUBuffer source, uint64_t sourceOffset, WGPUBuffer destination, uint64_t destinationOffset, uint64_t size);
   // TODO: void wgpuCommandEncoderCopyBufferToTexture(WGPUCommandEncoder commandEncoder, WGPUImageCopyBuffer const * source, WGPUImageCopyTexture const * destination, WGPUExtent3D const * copySize);
 
+  /// Copy data from a `Texture` to a `Buffer`.
+  ///
+  /// Remarks: Copies the whole extent of the source `texture`.
+  void copyTextureToBuffer(const Texture source, const Buffer destination) {
+    copyTextureToBuffer(source, destination, source.descriptor.size);
+  }
+  /// Copy data from a `Texture` to a `Buffer`.
+  void copyTextureToBuffer(const Texture source, const Buffer destination, const Extent3d copySize) {
+    copyTextureToBuffer(
+      ImageCopyTexture(
+        null,
+        cast(WGPUTexture) source.id,
+        0, // Mip level
+        Origin3d(0, 0, 0),
+        TextureAspect.all
+      ),
+      ImageCopyBuffer(
+        null,
+        TextureDataLayout(
+          null,
+          0, // Offset
+          source.paddedBytesPerRow,
+          source.size.depthOrArrayLayers == 1 ? 0 : source.rowsPerImage,
+        ),
+        cast(WGPUBuffer) destination.id,
+      ),
+      copySize
+    );
+  }
   /// Copy data from a texture to a buffer.
   void copyTextureToBuffer(const ImageCopyTexture source, const ImageCopyBuffer destination, const Extent3d copySize) {
     wgpuCommandEncoderCopyTextureToBuffer(id, &source, &destination, &copySize);
@@ -1086,11 +1246,42 @@ struct RenderPipeline {
 /// An in-progress recording of a render pass.
 /// See_Also: <a href="https://docs.rs/wgpu/0.6.0/wgpu/struct.RenderPass.html">wgpu::RenderPass</a>
 struct RenderPass {
-  import std.typecons : Tuple;
+  import std.typecons : Flag, Tuple, Yes;
 
   package WGPURenderPassEncoder instance;
   /// Describes this `RenderPass`.
   RenderPassDescriptor descriptor;
+
+  /// Create a color attachment for a render pass.
+  ///
+  /// Params:
+  /// view = The view to use as an attachment.
+  /// loadOp = How data should be read through this attachment.
+  /// clearColor = Value with which to fill the given `view` if `loadOp` equals `LoadOp.clear`.
+  /// storeOp = Whether data will be written to through this attachment. Defaults to `true`.
+  ///
+  /// Remarks: The render target must be cleared at least once before its content is loaded.
+  /// SeeAlso: `CommandEncoder.beginRenderPass`
+  static RenderPassColorAttachment colorAttachment(
+    TextureView view, LoadOp loadOp, Color clearColor, Flag!"store" store = Yes.store
+  ) {
+    return colorAttachment(view, null, loadOp, clearColor, store);
+  }
+  /// ditto
+  ///
+  /// Params:
+  /// resolveTarget = The view that will receive the resolved output if multisampling is used.
+  static RenderPassColorAttachment colorAttachment(
+    TextureView view, TextureView* resolveTarget, LoadOp loadOp, Color clearColor, Flag!"store" store = Yes.store
+  ) {
+    return RenderPassColorAttachment(
+      view.id,
+      resolveTarget is null ? null : resolveTarget.id,
+      loadOp,
+      store ? StoreOp.store : StoreOp.discard,
+      clearColor
+    );
+  }
 
   ///
   void end() {

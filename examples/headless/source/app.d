@@ -21,75 +21,28 @@ void main()
   const width = 400;
   const height = 300;
 
-  // https://github.com/rukai/wgpu-rs/blob/f6123e4fe89f74754093c07b476099623b76dd08/examples/capture/main.rs#L53
-  const bytesPerPixel = uint.sizeof;
-  const unpaddedBytesPerRow = width * bytesPerPixel;
-  const alignment = COPY_BYTES_PER_ROW_ALIGNMENT;
-  const paddedBytesPerRowPadding = (alignment - unpaddedBytesPerRow % alignment) % alignment;
-  const paddedBytesPerRow = unpaddedBytesPerRow + paddedBytesPerRowPadding;
+  // The render pipeline renders data into this texture
+  auto texture = device.createTexture(
+    width, height,
+    TextureFormat.rgba8UnormSrgb,
+    TextureUsage.renderAttachment | TextureUsage.copySrc,
+  );
 
   // The output buffer lets us retrieve data as an array
-  auto outputBuffer = device.createBuffer(BufferDescriptor(
-    null,
-    null,
+  auto outputBuffer = device.createBuffer(
     BufferUsage.mapRead | BufferUsage.copyDst,
-    paddedBytesPerRow * height,
-    false
-  ));
-
-  // The render pipeline renders data into this texture
-  auto textureExtent = Extent3d(width, height, 1);
-  auto texture = device.createTexture(TextureDescriptor(
-    null,
-    null,
-    TextureUsage.renderAttachment | TextureUsage.copySrc,
-    TextureDimension._2D,
-    textureExtent,
-    TextureFormat.rgba8UnormSrgb,
-    1, // Mip level count
-    1, // Sample count
-  ));
-  auto textureView = texture.createDefaultView();
+    texture.paddedBytesPerRow * texture.height
+  );
 
   // Set the background to red
-  auto encoder = device.createCommandEncoder(CommandEncoderDescriptor());
-  auto colorAttachment = RenderPassColorAttachment(
-    textureView.id,
-    null, // Resolve target
-    LoadOp.clear,
-    StoreOp.store,
-    Color(1, 0, 0, 1), // Red
+  auto encoder = device.createCommandEncoder();
+  auto renderPass = encoder.beginRenderPass(
+    RenderPass.colorAttachment(texture.defaultView, LoadOp.clear, /* Red */ Color(1, 0, 0, 1))
   );
-  auto renderPass = encoder.beginRenderPass(RenderPassDescriptor(
-    null,
-    null,
-    1,
-    &colorAttachment,
-    null, // depth stencil attachment
-    null // occlusion query set
-  ));
   renderPass.end();
+
   // Copy the data from the texture to the buffer
-  encoder.copyTextureToBuffer(
-    ImageCopyTexture(
-      null,
-      texture.id,
-      0, // Mip level
-      Origin3d(0, 0, 0),
-      TextureAspect.all
-    ),
-    ImageCopyBuffer(
-      null,
-      TextureDataLayout(
-        null,
-        0, // Offset
-        paddedBytesPerRow, // Bytes per row
-        0 // Rows per image
-      ),
-      outputBuffer.id,
-    ),
-    textureExtent
-  );
+  encoder.copyTextureToBuffer(texture, outputBuffer);
 
   auto commandBuffer = encoder.finish();
   device.queue.submit(commandBuffer);
@@ -105,8 +58,8 @@ void main()
   import std.algorithm.iteration : map, joiner;
   import std.array : array;
   import std.range : chunks;
-  auto data = paddedBuffer.chunks(paddedBytesPerRow)
-    .map!(paddedRow => paddedRow[0 .. unpaddedBytesPerRow]).joiner.array;
+  auto data = paddedBuffer.chunks(texture.paddedBytesPerRow)
+    .map!(paddedRow => paddedRow[0 .. texture.bytesPerRow]).joiner.array;
 
   import imageformats : ColFmt, write_image;
   write_image("bin/headless.png", width, height, data, ColFmt.RGBA);
