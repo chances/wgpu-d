@@ -23,17 +23,20 @@ static const uint BIND_BUFFER_ALIGNMENT = 256;
 /// Buffer-Texture copies must have `TextureDataLayout.bytesPerRow` aligned to this number.
 ///
 /// This doesn't apply to `Queue.writeTexture`.
-static const COPY_BYTES_PER_ROW_ALIGNMENT = 256;
+static const uint COPY_BYTES_PER_ROW_ALIGNMENT = 256;
+
+/// Size of a single occlusion/timestamp query, when copied into a buffer, in bytes.
+static const uint QUERY_SIZE = 8;
 
 // TODO: Does the library need these?
 /// Maximum anisotropy.
-static const MAX_ANISOTROPY = 16;
+static const uint MAX_ANISOTROPY = 16;
 /// Maximum number of color targets.
-static const MAX_COLOR_TARGETS = 4;
+static const uint MAX_COLOR_TARGETS = 4;
 /// Maximum amount of mipmap levels.
-static const MAX_MIP_LEVELS = 16;
+static const uint MAX_MIP_LEVELS = 16;
 /// Maximum number of vertex buffers.
-static const MAX_VERTEX_BUFFERS = 16;
+static const uint MAX_VERTEX_BUFFERS = 16;
 
 // Opaque Pointers
 // TODO: Implement a wrapper around `WGPUQuerySet`
