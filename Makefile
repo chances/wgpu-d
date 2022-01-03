@@ -46,7 +46,7 @@ examples: $(EXAMPLES)
 .PHONY: examples
 
 HEADLESS_SOURCES := $(shell find examples/headless/source -name '*.d')
-bin/headless: $(SOURCES) $(HEADLESS_SOURCES)
+bin/headless: $(SOURCES) $(HEADLESS_SOURCES) examples/headless/dub.json
 	cd examples/headless && dub build
 
 cover: $(SOURCES)

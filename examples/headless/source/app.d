@@ -7,13 +7,14 @@ void main()
   // Adapted from https://github.com/rukai/wgpu-rs/blob/f6123e4fe89f74754093c07b476099623b76dd08/examples/capture/main.rs
   writeln("Headless (windowless) Example");
 
-	auto adapter = Adapter(RequestAdapterOptions(PowerPreference.Default));
+  auto adapter = Instance.requestAdapter(null, PowerPreference.lowPower);
+  assert(adapter !is null, "Adapter instance was not initialized");
 
   assert(adapter.ready, "Adapter is not ready");
-  writefln("Adapter info: %s", adapter.info);
+  writefln("Adapter properties: %s", adapter.properties);
   writefln("Adapter limits: %s", adapter.limits);
 
-  auto device = adapter.requestDevice(Limits());
+  auto device = adapter.requestDevice(adapter.limits);
   assert(device.ready, "Device is not ready");
   writefln("Device limits: %s", device.limits);
 
@@ -30,8 +31,9 @@ void main()
   // The output buffer lets us retrieve data as an array
   auto outputBuffer = device.createBuffer(BufferDescriptor(
     null,
-    paddedBytesPerRow * height,
+    null,
     BufferUsage.mapRead | BufferUsage.copyDst,
+    paddedBytesPerRow * height,
     false
   ));
 
@@ -39,46 +41,52 @@ void main()
   auto textureExtent = Extent3d(width, height, 1);
   auto texture = device.createTexture(TextureDescriptor(
     null,
+    null,
+    TextureUsage.renderAttachment | TextureUsage.copySrc,
+    TextureDimension._2D,
     textureExtent,
+    TextureFormat.rgba8UnormSrgb,
     1, // Mip level count
     1, // Sample count
-    TextureDimension.D2,
-    TextureFormat.Rgba8UnormSrgb,
-    TextureUsage.outputAttachment | TextureUsage.copySrc,
   ));
   auto textureView = texture.createDefaultView();
 
   // Set the background to red
   auto encoder = device.createCommandEncoder(CommandEncoderDescriptor());
-  auto colorAttachment = RenderPassColorAttachmentDescriptor(
+  auto colorAttachment = RenderPassColorAttachment(
     textureView.id,
-    0, // Resolve target
-    PassChannel_Color(
-      LoadOp.Clear,
-      StoreOp.Store,
-      Color(1, 0, 0, 1), // Red
-      false // Is *not* read only
-    )
+    null, // Resolve target
+    LoadOp.clear,
+    StoreOp.store,
+    Color(1, 0, 0, 1), // Red
   );
-  encoder.beginRenderPass(RenderPassDescriptor(
-    &colorAttachment,
+  auto renderPass = encoder.beginRenderPass(RenderPassDescriptor(
+    null,
+    null,
     1,
-    null // depth stencil attachment
+    &colorAttachment,
+    null, // depth stencil attachment
+    null // occlusion query set
   ));
+  renderPass.end();
   // Copy the data from the texture to the buffer
   encoder.copyTextureToBuffer(
-    TextureCopyView(
+    ImageCopyTexture(
+      null,
       texture.id,
       0, // Mip level
       Origin3d(0, 0, 0),
+      TextureAspect.all
     ),
-    BufferCopyView(
-      outputBuffer.id,
+    ImageCopyBuffer(
+      null,
       TextureDataLayout(
+        null,
         0, // Offset
         paddedBytesPerRow, // Bytes per row
         0 // Rows per image
       ),
+      outputBuffer.id,
     ),
     textureExtent
   );
@@ -89,7 +97,8 @@ void main()
   // Request a slice of the buffer
   outputBuffer.mapReadAsync(0, outputBuffer.descriptor.size);
 
-  device.poll(true); // Force wait for a frame to render and pump callbacks
+  import std.typecons : Yes;
+  device.poll(Yes.forceWait); // Force wait for a frame to render and pump callbacks
 
   auto paddedBuffer = outputBuffer.getMappedRange(0, outputBuffer.descriptor.size);
 

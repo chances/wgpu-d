@@ -19,7 +19,16 @@
 	},
   "configurations": [
     {
+      "name": "library",
+      "lflags-posix": [
+        "-L$PACKAGE_DIR/lib"
+      ]
+    },
+    {
       "name": "unittest",
+      "lflags-posix": [
+        "-Llib"
+      ],
       "postBuildCommands-osx": [
         "echo Fixing up libwgpu dylib path...",
         "install_name_tool -change /Users/runner/work/wgpu-native/wgpu-native/target/x86_64-apple-darwin/debug/deps/libwgpu_native.dylib @executable_path/lib/libwgpu.dylib bin/wgpu-d-test-unittest"
@@ -31,9 +40,6 @@
   ],
   "preGenerateCommands-posix": [
     "make wgpu"
-  ],
-  "lflags-posix": [
-    "-Llib"
   ],
   "copyFiles": [
     "lib"

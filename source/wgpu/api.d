@@ -298,10 +298,16 @@ struct Instance {
   /// Handle identifier.
   WGPUInstance id;
 
+  @disable this();
+  private this(WGPUInstance id) {
+    this.id = id;
+  }
+
   /// Create a new instance of wgpu.
-  this(BackendType backends) {
-    // TODO: Implement `Instance` constructor
-    assert(0, "Unimplemented!");
+  static Instance create() {
+    assert(0, "Unimplemented in wgpu-native!");
+    // auto desc = InstanceDescriptor();
+    // return Instance(wgpuCreateInstance(&desc));
   }
 
   /// Retrieves all available `Adapter`s that match the given `Backends`.
@@ -310,8 +316,8 @@ struct Instance {
   /// backends = Backends from which to enumerate adapters.
   static @property Adapter[] adapters(BackendType backends = BackendType.null_) {
     assert(backends >= 0);
-    // TODO: Implement adapter enumerator as a custom range
     assert(0, "Unimplemented!");
+    // TODO: Implement adapter enumerator as a custom range
   }
 
   /// Retrieves a new Adapter, asynchronously.
@@ -320,17 +326,21 @@ struct Instance {
   ///
   /// Remarks:
   /// Use `Adapter.ready` to determine whether an Adapter was successfully requested.
-  ref Adapter requestAdapter(
-    Surface compatibleSurface, PowerPreference powerPreference = PowerPreference.highPerformance,
+  static Adapter* requestAdapter(
+    Surface* compatibleSurface, PowerPreference powerPreference = PowerPreference.highPerformance,
     Flag!"forceFallbackAdapter" forceFallbackAdapter = No.forceFallbackAdapter
   ) {
-    return requestAdapter(RequestAdapterOptions(null, compatibleSurface.id, powerPreference, forceFallbackAdapter));
+    return requestAdapter(RequestAdapterOptions(
+      null,
+      compatibleSurface is null ? null : compatibleSurface.id,
+      powerPreference, forceFallbackAdapter
+    ));
   }
   /// ditto
-  ref Adapter requestAdapter(RequestAdapterOptions options) @trusted {
+  static Adapter* requestAdapter(RequestAdapterOptions options) @trusted {
     auto adapter = new Adapter;
-    wgpuInstanceRequestAdapter(id, &options, &wgpu_request_adapter_callback, &adapter);
-    return *adapter;
+    wgpuInstanceRequestAdapter(null, &options, &wgpu_request_adapter_callback, adapter);
+    return adapter;
   }
 }
 
@@ -374,7 +384,9 @@ struct Adapter {
   Limits limits() {
     assert(ready);
     SupportedLimits limits;
-    assert(wgpuAdapterGetLimits(id, &limits));
+    // https://github.com/gfx-rs/wgpu-native/blob/9d962ef667ef6006cca7bac7489d5bf303a2a244/src/device.rs#L119
+    // TODO: assert(wgpuAdapterGetLimits(id, &limits), "Could not retreive adapter limits");
+    wgpuAdapterGetLimits(id, &limits);
     return limits.limits;
   }
 
@@ -383,7 +395,7 @@ struct Adapter {
   /// Params:
   /// limits = Set of required limits the device must supports.
   /// label = Optional label for the `Device`.
-  ref Device requestDevice(const Limits limits, string label = fullyQualifiedName!Device) {
+  Device* requestDevice(const Limits limits, string label = fullyQualifiedName!Device) {
     assert(ready);
     auto device = new Device(null, label);
     const WGPUDeviceExtras extras = {
@@ -394,7 +406,7 @@ struct Adapter {
     WGPURequiredLimits requiredLimits = { limits: limits };
     DeviceDescriptor desc = { nextInChain: cast(const(WGPUChainedStruct)*) &extras, requiredLimits: &requiredLimits };
     wgpuAdapterRequestDevice(id, &desc, &wgpu_request_device_callback, device);
-    return *device;
+    return device;
   }
 }
 
@@ -428,7 +440,9 @@ struct Device {
   /// If any of these limits are exceeded, functions may panic.
   Limits limits() {
     WGPUSupportedLimits limits;
-    assert(wgpuDeviceGetLimits(id, &limits));
+    // https://github.com/gfx-rs/wgpu-native/blob/9d962ef667ef6006cca7bac7489d5bf303a2a244/src/device.rs#L132
+    // TODO: assert(wgpuDeviceGetLimits(id, &limits), "Could not retreive device limits");
+    wgpuDeviceGetLimits(id, &limits);
     return limits.limits;
   }
 
@@ -681,7 +695,18 @@ struct Texture {
 
   /// Creates a default view of this whole texture.
   TextureView createDefaultView() {
-    return TextureView(wgpuTextureCreateView(id, null));
+    TextureViewDescriptor desc = {
+      nextInChain: null,
+      label: null,
+      format: TextureFormat.undefined,
+      dimension: TextureViewDimension.undefined,
+      aspect: TextureAspect.all,
+      arrayLayerCount: 0,
+      baseArrayLayer: 0,
+      baseMipLevel: 0,
+      mipLevelCount: 0,
+    };
+    return TextureView(wgpuTextureCreateView(id, &desc));
   }
 }
 
@@ -864,7 +889,11 @@ struct RenderPass {
   /// Describes this `RenderPass`.
   RenderPassDescriptor descriptor;
 
-  // TODO: void wgpuRenderPassEncoderEndPass(WGPURenderPassEncoder renderPassEncoder);
+  ///
+  void end() {
+    wgpuRenderPassEncoderEndPass(instance);
+  }
+
   // TODO: void wgpuRenderPassEncoderBeginOcclusionQuery(WGPURenderPassEncoder renderPassEncoder, uint32_t queryIndex);
   // TODO: void wgpuRenderPassEncoderEndOcclusionQuery(WGPURenderPassEncoder renderPassEncoder);
   // TODO: void wgpuRenderPassEncoderBeginPipelineStatisticsQuery(WGPURenderPassEncoder renderPassEncoder, WGPUQuerySet querySet, uint32_t queryIndex);
