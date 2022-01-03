@@ -990,12 +990,6 @@ struct RenderPass {
   // TODO: void wgpuRenderPassEncoderDrawIndirect(WGPURenderPassEncoder renderPassEncoder, WGPUBuffer indirectBuffer, uint64_t indirectOffset);
 }
 
-/// A handle to a compute pass encoder.
-struct ComputePassEncoder {
-  /// Handle identifier.
-  WGPUComputePassEncoder id;
-}
-
 /// A handle to a compute pipeline.
 /// See_Also: <a href="https://docs.rs/wgpu/0.6.0/wgpu/struct.ComputePipeline.html">wgpu::ComputePipeline</a>
 struct ComputePipeline {
