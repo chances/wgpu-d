@@ -31,7 +31,7 @@ LIB_WGPU := lib/libwgpu.$(LIB_WGPU_EXT)
 wgpu: source/wgpu/bindings.i $(LIB_WGPU)
 .PHONY: wgpu
 subprojects/wgpu/wgpu.h: subprojects/wgpu.Makefile
-	@make -C subprojects -q -f wgpu.Makefile
+	@make -C subprojects -f wgpu.Makefile
 source/wgpu/bindings.i: subprojects/wgpu/wgpu.h
 	@$(CC) -E subprojects/wgpu/wgpu.h > source/wgpu/bindings.i
 $(LIB_WGPU): $(LIB_WGPU_SOURCE)
@@ -80,10 +80,11 @@ docs: docs/sitemap.xml
 .PHONY: docs
 
 clean:
-	rm -rf lib
-	rm -f $(EXAMPLES)
-	rm -f docs.json
-	rm -f docs/sitemap.xml docs/file_hashes.json
-	rm -rf `find docs -name '*.html'`
+	rm -rf bin lib
+	dub clean
+	@echo "Cleaning generated documentation..."
+	@rm -f docs.json
+	@rm -f docs/sitemap.xml docs/file_hashes.json
+	@rm -rf `find docs -name '*.html'`
 	rm -f -- *.lst
 .PHONY: clean
