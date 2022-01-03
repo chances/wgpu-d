@@ -22,7 +22,7 @@ jobs:
     - name: Lint
       run: dub lint
     - name: Test
-      run: make test
+      run: env LD_LIBRARY_PATH=lib dub test --parallel
     # - name: Integration Test
     #   run: make headless
     # - name: Test

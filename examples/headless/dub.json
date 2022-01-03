@@ -5,7 +5,7 @@
 		"Chance Snow"
 	],
 	"license": "MIT",
-  "copyright": "Copyright © 2020, Chance Snow",
+  "copyright": "Copyright © 2020-2022, Chance Snow",
   "targetType": "executable",
   "targetPath": "../../bin",
   "dependencies": {
@@ -14,8 +14,8 @@
       "path": "../.."
     }
   },
-  "lflags": [
-    "-L../../lib/wgpu-64-debug",
-    "-L../../lib/wgpu-64-release"
+  "postBuildCommands-osx": [
+    "echo Fixing up libwgpu dylib path...",
+    "install_name_tool -change /Users/runner/work/wgpu-native/wgpu-native/target/x86_64-apple-darwin/debug/deps/libwgpu_native.dylib @executable_path/lib/libwgpu.dylib ../../bin/headless"
   ]
 }

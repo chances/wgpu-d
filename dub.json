@@ -5,21 +5,43 @@
 		"Chance Snow"
   ],
   "license": "MIT",
-  "copyright": "Copyright © 2020, Chance Snow",
+  "copyright": "Copyright © 2020-2022, Chance Snow",
   "subPackages": [
     "examples/headless"
   ],
   "targetType": "sourceLibrary",
   "targetPath": "bin",
-  "libs": [
-    "wgpu_native"
+  "toolchainRequirements": {
+    "frontend": ">=2.098.0",
+		"dmd": "no",
+		"gdc": "no",
+		"ldc": ">=1.28.0"
+	},
+  "configurations": [
+    {
+      "name": "library",
+      "lflags-posix": [
+        "-L$PACKAGE_DIR/lib"
+      ]
+    },
+    {
+      "name": "unittest",
+      "lflags-posix": [
+        "-Llib"
+      ],
+      "postBuildCommands-osx": [
+        "echo Fixing up libwgpu dylib path...",
+        "install_name_tool -change /Users/runner/work/wgpu-native/wgpu-native/target/x86_64-apple-darwin/debug/deps/libwgpu_native.dylib @executable_path/lib/libwgpu.dylib bin/wgpu-d-test-unittest"
+      ]
+    }
   ],
-  "lflags": [
-    "-Llib/wgpu-64-debug",
-    "-Llib/wgpu-64-release"
+  "libs": [
+    "wgpu"
+  ],
+  "preGenerateCommands-posix": [
+    "make wgpu"
   ],
   "copyFiles": [
-    "lib/wgpu-64-debug",
-    "lib/wgpu-64-release"
+    "lib"
   ]
 }

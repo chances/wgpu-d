@@ -1,3 +1,6 @@
+# Intermediate sources
+source/wgpu/bindings.i
+
 # Compiled Object files
 *.o
 *.obj
