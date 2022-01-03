@@ -913,6 +913,12 @@ struct Texture {
 struct TextureView {
   /// Handle identifier.
   WGPUTextureView id;
+
+  /// Release the handle to this texture view.
+  void destroy() {
+    if (id !is null) wgpuTextureViewDrop(id);
+    id = null;
+  }
 }
 
 /// A handle to a sampler.
