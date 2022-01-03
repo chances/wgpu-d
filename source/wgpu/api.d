@@ -547,7 +547,7 @@ struct Surface {
   }
   version (linux) {
     /// Create a new `Surface` from a Xlib window handle.
-    static Surface fromXlib(Instance instance, const(void)** display, c_ulong window, string label = null) {
+    static Surface fromXlib(Instance instance, void* display, uint window, string label = null) {
       auto xlib = SurfaceDescriptorFromXlib(
         ChainedStruct(null, cast(WGPUSType) SType.surfaceDescriptorFromXlib.asOriginalType),
         display, window
@@ -562,7 +562,7 @@ struct Surface {
     /// Create a new `Surface` from a Windows window handle.
     static Surface fromWindowsHwnd(Instance instance, void* _hinstance, void* hwnd, string label = null);
     /// Create a new `Surface` from a Xlib window handle.
-    static Surface fromXlib(Instance instance, const(void)** display, c_ulong window, string label = null);
+    static Surface fromXlib(Instance instance, void* display, uint window, string label = null);
     // TODO: Support Wayland with a `linux-wayland` version config once upstream wgpu-native supports it
   }
 
