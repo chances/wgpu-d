@@ -1,7 +1,7 @@
 <!-- https://keepachangelog.com/en/1.0.0/ -->
 # Changelog
 
-## Unreleased
+## v0.1.0
 
 Add a windowed triangle example.
 
