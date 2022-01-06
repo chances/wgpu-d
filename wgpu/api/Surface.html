@@ -63,6 +63,11 @@ $('#symbolSearchPane').show();</script>
 						<a href="../../wgpu/limits.html">limits</a>
 					</div>
 				</li>
+				<li>
+					<div class="module ">
+						<a href="../../wgpu/utils.html">utils</a>
+					</div>
+				</li>
 			</ul>
 				</li>
 			</ul>
@@ -79,7 +84,9 @@ $('#symbolSearchPane').show();</script>
 				</code>
 			</div>
 			<section><p>A Surface represents a platform-specific surface (e.g. a window) to which rendered images may be presented.
-A Surface may be created with <code class="lang-d"><span class="typ">Surface<wbr/></span><span class="pun">.</span><span class="pln">create</span></code>.
+</p>
+
+<p>A Surface may be created with <code class="lang-d"><a href="../../wgpu/api/Surface.fromMetalLayer.html"><span class="typ">Surface<wbr/></span><span class="pun">.</span><span class="pln">fromMetalLayer</span></a></code>, <code class="lang-d"><a href="../../wgpu/api/Surface.fromWindowsHwnd.html"><span class="typ">Surface<wbr/></span><span class="pun">.</span><span class="pln">fromWindowsHwnd</span></a></code>, or <code class="lang-d"><a href="../../wgpu/api/Surface.fromXlib.html"><span class="typ">Surface<wbr/></span><span class="pun">.</span><span class="pln">fromXlib</span></a></code>.
 </p>
 </section>
 
@@ -109,7 +116,7 @@ A Surface may be created with <code class="lang-d"><span class="typ">Surface<wbr
 							<a href="../../wgpu/api/Surface.fromMetalLayer.html" class="public">
 								<code>fromMetalLayer</code>
 							</a>
-							<span class="tableEntryAnnotation">(instance, layer, label)</span>
+							<span class="tableEntryAnnotation">(layer, label)</span>
 						</td>
 						<td>Create a new <code class="lang-d"><a href="../../wgpu/api/Surface.html"><span class="typ">Surface</span></a></code> from a Metal layer.
 </td>
@@ -119,7 +126,7 @@ A Surface may be created with <code class="lang-d"><span class="typ">Surface<wbr
 							<a href="../../wgpu/api/Surface.fromWindowsHwnd.html" class="public">
 								<code>fromWindowsHwnd</code>
 							</a>
-							<span class="tableEntryAnnotation">(instance, _hinstance, hwnd, label)</span>
+							<span class="tableEntryAnnotation">(_hinstance, hwnd, label)</span>
 						</td>
 						<td>Create a new <code class="lang-d"><a href="../../wgpu/api/Surface.html"><span class="typ">Surface</span></a></code> from a Windows window handle.
 </td>
@@ -129,17 +136,7 @@ A Surface may be created with <code class="lang-d"><span class="typ">Surface<wbr
 							<a href="../../wgpu/api/Surface.fromXlib.html" class="public">
 								<code>fromXlib</code>
 							</a>
-							<span class="tableEntryAnnotation">(instance, display, window, label)</span>
-						</td>
-						<td>Create a new <code class="lang-d"><a href="../../wgpu/api/Surface.html"><span class="typ">Surface</span></a></code> from a Xlib window handle.
-</td>
-					</tr>
-					<tr>
-						<td>
-							<a href="../../wgpu/api/Surface.fromXlib.html" class="public">
-								<code>fromXlib</code>
-							</a>
-							<span class="tableEntryAnnotation">(instance, display, window, label)</span>
+							<span class="tableEntryAnnotation">(display, window, label)</span>
 						</td>
 						<td>Create a new <code class="lang-d"><a href="../../wgpu/api/Surface.html"><span class="typ">Surface</span></a></code> from a Xlib window handle.
 </td>

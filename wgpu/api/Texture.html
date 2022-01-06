@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8"/>
-		<title>Struct Texture - wgpu-d</title>
+		<title>Class Texture - wgpu-d</title>
 		<link rel="stylesheet" type="text/css" href="../../styles/ddox.css"/>
 		<link rel="stylesheet" href="../../prettify/prettify.css" type="text/css"/>
 		<script type="text/javascript" src="../../scripts/jquery.js">/**/</script><script type="text/javascript" src="../../scripts/ddox.js">/**/</script>
@@ -63,17 +63,22 @@ $('#symbolSearchPane').show();</script>
 						<a href="../../wgpu/limits.html">limits</a>
 					</div>
 				</li>
+				<li>
+					<div class="module ">
+						<a href="../../wgpu/utils.html">utils</a>
+					</div>
+				</li>
 			</ul>
 				</li>
 			</ul>
 		</nav>
 		<div id="main-contents">
-			<h1>Struct Texture</h1><p>A handle to a texture on the GPU.
+			<h1>Class Texture</h1><p>A handle to a texture on the GPU.
 </p>
 			<div class="prototype">
 				<code class="lang-d">
 					<div class="single-prototype">
-			<span class="kwd">struct</span> <span class="typ">Texture</span>
+			<span class="kwd">class</span> <span class="typ">Texture</span>
 			<span class="pun">;</span>
 					</div>
 				</code>
@@ -89,14 +94,14 @@ $('#symbolSearchPane').show();</script>
 						<td>
 							<a href="../../wgpu/api/Texture.descriptor.html" class="public"><code>descriptor</code></a>
 						</td>
-						<td class="typecol"><code class="prettyprint lang-d"><span class="pln">bindings<wbr/></span><span class="pun">.</span><span class="typ">WGPUTextureDescriptor</span></code></td><td>Describes this <code class="lang-d"><a href="../../wgpu/api/Texture.html"><span class="typ">Texture</span></a></code>.
+						<td class="typecol"><code class="prettyprint lang-d"><span class="kwd">const</span><span class="pun">(</span><span class="pln">bindings<wbr/></span><span class="pun">.</span><span class="typ">WGPUTextureDescriptor</span><span class="pun">)</span></code></td><td>Describes this texture.
 </td>
 					</tr>
 					<tr>
 						<td>
-							<a href="../../wgpu/api/Texture.id.html" class="public"><code>id</code></a>
+							<a href="../../wgpu/api/Texture.label.html" class="public"><code>label</code></a>
 						</td>
-						<td class="typecol"><code class="prettyprint lang-d"><span class="pln">bindings<wbr/></span><span class="pun">.</span><span class="typ">WGPUTextureImpl</span><span class="pun">*</span></code></td><td>Handle identifier.
+						<td class="typecol"><code class="prettyprint lang-d"><span class="kwd">const</span><span class="pun">(</span><span class="typ">string</span><span class="pun">)</span></code></td><td>Optional, human-readable debug label for this texture.
 </td>
 					</tr>
 				</table>
@@ -118,7 +123,7 @@ $('#symbolSearchPane').show();</script>
 						<td>
 							<a href="../../wgpu/api/Texture.bytesPerBlock.html" class="public property"><code>bytesPerBlock</code></a><span class="tableEntryAnnotation">[get]</span>
 						</td>
-						<td class="typecol"><code class="prettyprint lang-d"><span class="typ">uint</span></code></td><td>Bytes per “block” of this texture, in bytes.
+						<td class="typecol"><code class="prettyprint lang-d"><span class="typ">uint</span></code></td><td>Bytes per “block” of this texture.
 </td>
 					</tr>
 					<tr>
@@ -172,7 +177,8 @@ $('#symbolSearchPane').show();</script>
 						<td>
 							<a href="../../wgpu/api/Texture.size.html" class="public property"><code>size</code></a><span class="tableEntryAnnotation">[get]</span>
 						</td>
-						<td class="typecol"><code class="prettyprint lang-d"><span class="pln">bindings<wbr/></span><span class="pun">.</span><span class="typ">WGPUExtent3D</span></code></td><td></td>
+						<td class="typecol"><code class="prettyprint lang-d"><span class="pln">bindings<wbr/></span><span class="pun">.</span><span class="typ">WGPUExtent3D</span></code></td><td>Size and depth/layer count of this texture.
+</td>
 					</tr>
 					<tr>
 						<td>
@@ -187,6 +193,26 @@ $('#symbolSearchPane').show();</script>
 					<col class="caption"/>
 					<tr>
 						<th>Name</th><th>Description</th>
+					</tr>
+					<tr>
+						<td>
+							<a href="../../wgpu/api/Texture.asRenderTarget.html" class="public">
+								<code>asRenderTarget</code>
+							</a>
+							<span class="tableEntryAnnotation">(blend, writeMask)</span>
+						</td>
+						<td>Make a <code class="lang-d"><a href="../../wgpu/api/ColorTargetState.html"><span class="typ">ColorTargetState</span></a></code> given this texture's <code class="lang-d"><span class="typ">TextureFormat</span></code> and a constant blending mode.
+</td>
+					</tr>
+					<tr>
+						<td>
+							<a href="../../wgpu/api/Texture.asRenderTarget.html" class="public">
+								<code>asRenderTarget</code>
+							</a>
+							<span class="tableEntryAnnotation">(blend, writeMask)</span>
+						</td>
+						<td>Make a <code class="lang-d"><a href="../../wgpu/api/ColorTargetState.html"><span class="typ">ColorTargetState</span></a></code> given this texture's <code class="lang-d"><span class="typ">TextureFormat</span></code> and a custom blending mode.
+</td>
 					</tr>
 					<tr>
 						<td>
@@ -206,6 +232,16 @@ $('#symbolSearchPane').show();</script>
 							<span class="tableEntryAnnotation">()</span>
 						</td>
 						<td>Release the given handle.
+</td>
+					</tr>
+					<tr>
+						<td>
+							<a href="../../wgpu/api/Texture.multisampleState.html" class="public">
+								<code>multisampleState</code>
+							</a>
+							<span class="tableEntryAnnotation">(mask, alphaToCoverageEnabled)</span>
+						</td>
+						<td>Creates a multisample state given this texture's <code class="lang-d"><span class="typ">TextureDescriptor<wbr/></span><span class="pun">.</span><span class="pln">sampleCount</span></code>.
 </td>
 					</tr>
 				</table>

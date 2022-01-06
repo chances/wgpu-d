@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8"/>
-		<title>Function Device.createSampler - wgpu-d</title>
+		<title>Device.createSampler - multiple declarations - wgpu-d</title>
 		<link rel="stylesheet" type="text/css" href="../../styles/ddox.css"/>
 		<link rel="stylesheet" href="../../prettify/prettify.css" type="text/css"/>
 		<script type="text/javascript" src="../../scripts/jquery.js">/**/</script><script type="text/javascript" src="../../scripts/ddox.js">/**/</script>
@@ -63,12 +63,31 @@ $('#symbolSearchPane').show();</script>
 						<a href="../../wgpu/limits.html">limits</a>
 					</div>
 				</li>
+				<li>
+					<div class="module ">
+						<a href="../../wgpu/utils.html">utils</a>
+					</div>
+				</li>
 			</ul>
 				</li>
 			</ul>
 		</nav>
 		<div id="main-contents">
-			<h1>Function Device.createSampler</h1><p>Creates a new <code class="lang-d"><a href="../../wgpu/api/Sampler.html"><span class="typ">Sampler</span></a></code>.
+			<h1>Device.createSampler - multiple declarations</h1>
+			<nav class="page-nav">
+				<ul>
+					<li>
+						<a href="#0">
+							Function <code>Device.createSampler</code>
+						</a>
+					</li>
+					<li>
+						<a href="#1">
+							Function <code>Device.createSampler</code>
+						</a>
+					</li>
+				</ul>
+			</nav><h2 id="0">Function Device.createSampler</h2><p>Creates a new <code class="lang-d"><a href="../../wgpu/api/Sampler.html"><span class="typ">Sampler</span></a></code>.
 </p>
 			<div class="prototype">
 				<code class="lang-d">
@@ -84,9 +103,39 @@ $('#symbolSearchPane').show();</script>
 			</div>
 			<section></section>
 
-			<section><h2>Parameters</h2>
+			<section><h3>Parameters</h3>
 <table><col class="caption"><tr><th>Name</th><th>Description</th></tr>
 <tr><td id="descriptor">descriptor</td><td> Specifies the behavior of the sampler.</td></tr>
+</table>
+</section>
+<h2 id="1">Function Device.createSampler</h2><p>Creates a new <code class="lang-d"><a href="../../wgpu/api/Sampler.html"><span class="typ">Sampler</span></a></code>.
+</p>
+			<div class="prototype">
+				<code class="lang-d">
+					<div class="single-prototype">
+			<a href="../../wgpu/api/Sampler.html"><span class="typ">Sampler</span></a> <span class="pln">createSampler</span>
+			<span class="pun">(</span>
+			<br/>
+			&nbsp;&nbsp;<span class="pln">wgpu<wbr/></span><span class="pun">.</span><span class="pln">api<wbr/></span><span class="pun">.</span><span class="pln">__mixin108<wbr/></span><span class="pun">.</span><span class="typ">AddressMode</span> <span class="pln">addressMode</span><span class="pun">,</span>
+			<br/>
+			&nbsp;&nbsp;<span class="pln">wgpu<wbr/></span><span class="pun">.</span><span class="pln">api<wbr/></span><span class="pun">.</span><span class="pln">__mixin122<wbr/></span><span class="pun">.</span><span class="typ">FilterMode</span> <span class="pln">magFilter</span><span class="pun">,</span>
+			<br/>
+			&nbsp;&nbsp;<span class="pln">wgpu<wbr/></span><span class="pun">.</span><span class="pln">api<wbr/></span><span class="pun">.</span><span class="pln">__mixin122<wbr/></span><span class="pun">.</span><span class="typ">FilterMode</span> <span class="pln">minFilter</span><span class="pun">,</span>
+			<br/>
+			&nbsp;&nbsp;<span class="pln">wgpu<wbr/></span><span class="pun">.</span><span class="pln">api<wbr/></span><span class="pun">.</span><span class="pln">__mixin122<wbr/></span><span class="pun">.</span><span class="typ">FilterMode</span> <span class="pln">mipmapFilter</span> <span class="pun">=</span> <span class="typ">FilterMode<wbr/></span><span class="pun">.</span><span class="pln">nearest</span>
+			<br/>
+			<span class="pun">)</span><span class="pun">;</span>
+					</div>
+				</code>
+			</div>
+			<section></section>
+
+			<section><h3>Parameters</h3>
+<table><col class="caption"><tr><th>Name</th><th>Description</th></tr>
+<tr><td id="addressMode">addressMode</td><td> How to deal with out of bounds accesses.</td></tr>
+<tr><td id="magFilter">magFilter</td><td> How to filter the texture when it needs to be magnified/made larger.</td></tr>
+<tr><td id="minFilter">minFilter</td><td> How to filter the texture when it needs to be minified/made smaller.</td></tr>
+<tr><td id="mipmapFilter">mipmapFilter</td><td> How to filter between mip map levels.</td></tr>
 </table>
 </section>
 

@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8"/>
-		<title>Function Adapter.requestDevice - wgpu-d</title>
+		<title>Adapter.requestDevice - multiple declarations - wgpu-d</title>
 		<link rel="stylesheet" type="text/css" href="../../styles/ddox.css"/>
 		<link rel="stylesheet" href="../../prettify/prettify.css" type="text/css"/>
 		<script type="text/javascript" src="../../scripts/jquery.js">/**/</script><script type="text/javascript" src="../../scripts/ddox.js">/**/</script>
@@ -63,17 +63,36 @@ $('#symbolSearchPane').show();</script>
 						<a href="../../wgpu/limits.html">limits</a>
 					</div>
 				</li>
+				<li>
+					<div class="module ">
+						<a href="../../wgpu/utils.html">utils</a>
+					</div>
+				</li>
 			</ul>
 				</li>
 			</ul>
 		</nav>
 		<div id="main-contents">
-			<h1>Function Adapter.requestDevice</h1><p>Requests a connection to a physical device, creating a logical device.
+			<h1>Adapter.requestDevice - multiple declarations</h1>
+			<nav class="page-nav">
+				<ul>
+					<li>
+						<a href="#0">
+							Function <code>Adapter.requestDevice</code>
+						</a>
+					</li>
+					<li>
+						<a href="#1">
+							Function <code>Adapter.requestDevice</code>
+						</a>
+					</li>
+				</ul>
+			</nav><h2 id="0">Function Adapter.requestDevice</h2><p>Requests a connection to a physical device, creating a logical device.
 </p>
 			<div class="prototype">
 				<code class="lang-d">
 					<div class="single-prototype">
-			<a href="../../wgpu/api/Device.html"><span class="typ">Device</span></a><span class="pun">*</span> <span class="pln">requestDevice</span>
+			<a href="../../wgpu/api/Device.html"><span class="typ">Device</span></a> <span class="pln">requestDevice</span>
 			<span class="pun">(</span>
 			<br/>
 			&nbsp;&nbsp;<span class="kwd">const</span><span class="pun">(</span><span class="pln">bindings<wbr/></span><span class="pun">.</span><span class="typ">WGPULimits</span><span class="pun">)</span> <span class="pln">limits</span><span class="pun">,</span>
@@ -86,10 +105,37 @@ $('#symbolSearchPane').show();</script>
 			</div>
 			<section></section>
 
-			<section><h2>Parameters</h2>
+			<section><h3>Parameters</h3>
 <table><col class="caption"><tr><th>Name</th><th>Description</th></tr>
 <tr><td id="limits">limits</td><td> Set of required limits the device must supports.</td></tr>
 <tr><td id="label">label</td><td> Optional label for the <code class="lang-d"><a href="../../wgpu/api/Device.html"><span class="typ">Device</span></a></code>.</td></tr>
+</table>
+</section>
+<h2 id="1">Function Adapter.requestDevice</h2><p>Requests a connection to a physical device, creating a logical device.
+</p>
+			<div class="prototype">
+				<code class="lang-d">
+					<div class="single-prototype">
+			<a href="../../wgpu/api/Device.html"><span class="typ">Device</span></a> <span class="pln">requestDevice</span>
+			<span class="pun">(</span>
+			<br/>
+			&nbsp;&nbsp;<span class="kwd">const</span><span class="pun">(</span><span class="pln">bindings<wbr/></span><span class="pun">.</span><span class="typ">WGPULimits</span><span class="pun">)</span> <span class="pln">limits</span><span class="pun">,</span>
+			<br/>
+			&nbsp;&nbsp;<span class="typ">string</span> <span class="pln">tracePath</span> <span class="pun">=</span> <span class="kwd">null</span><span class="pun">,</span>
+			<br/>
+			&nbsp;&nbsp;<span class="typ">string</span> <span class="pln">label</span> <span class="pun">=</span> <span class="str">"wgpu.api.Device"</span>
+			<br/>
+			<span class="pun">)</span><span class="pun">;</span>
+					</div>
+				</code>
+			</div>
+			<section></section>
+
+			<section><h3>Parameters</h3>
+<table><col class="caption"><tr><th>Name</th><th>Description</th></tr>
+<tr><td id="limits">limits</td><td> Set of required limits the device must supports.</td></tr>
+<tr><td id="tracePath">tracePath</td><td> Optional path on the target file system at which to write a GPU debug trace.</td></tr>
+<tr><td id="label">label</td><td> Optional debug label for the <code class="lang-d"><a href="../../wgpu/api/Device.html"><span class="typ">Device</span></a></code>.</td></tr>
 </table>
 </section>
 

@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8"/>
-		<title>Function Device.createRenderPipeline - wgpu-d</title>
+		<title>Device.createRenderPipeline - multiple declarations - wgpu-d</title>
 		<link rel="stylesheet" type="text/css" href="../../styles/ddox.css"/>
 		<link rel="stylesheet" href="../../prettify/prettify.css" type="text/css"/>
 		<script type="text/javascript" src="../../scripts/jquery.js">/**/</script><script type="text/javascript" src="../../scripts/ddox.js">/**/</script>
@@ -63,12 +63,31 @@ $('#symbolSearchPane').show();</script>
 						<a href="../../wgpu/limits.html">limits</a>
 					</div>
 				</li>
+				<li>
+					<div class="module ">
+						<a href="../../wgpu/utils.html">utils</a>
+					</div>
+				</li>
 			</ul>
 				</li>
 			</ul>
 		</nav>
 		<div id="main-contents">
-			<h1>Function Device.createRenderPipeline</h1><p>Creates a render pipeline.
+			<h1>Device.createRenderPipeline - multiple declarations</h1>
+			<nav class="page-nav">
+				<ul>
+					<li>
+						<a href="#0">
+							Function <code>Device.createRenderPipeline</code>
+						</a>
+					</li>
+					<li>
+						<a href="#1">
+							Function <code>Device.createRenderPipeline</code>
+						</a>
+					</li>
+				</ul>
+			</nav><h2 id="0">Function Device.createRenderPipeline</h2><p>Creates a render pipeline.
 </p>
 			<div class="prototype">
 				<code class="lang-d">
@@ -76,7 +95,47 @@ $('#symbolSearchPane').show();</script>
 			<a href="../../wgpu/api/RenderPipeline.html"><span class="typ">RenderPipeline</span></a> <span class="pln">createRenderPipeline</span>
 			<span class="pun">(</span>
 			<br/>
-			&nbsp;&nbsp;<span class="pln">bindings<wbr/></span><span class="pun">.</span><span class="typ">WGPURenderPipelineDescriptor</span> <span class="pln">descriptor</span>
+			&nbsp;&nbsp;<a href="../../wgpu/api/PipelineLayout.html"><span class="typ">PipelineLayout</span></a> <span class="pln">layout</span><span class="pun">,</span>
+			<br/>
+			&nbsp;&nbsp;<a href="../../wgpu/api/VertexState.html"><span class="typ">VertexState</span></a> <span class="pln">vertexState</span><span class="pun">,</span>
+			<br/>
+			&nbsp;&nbsp;<a href="../../wgpu/api/PrimitiveState.html"><span class="typ">PrimitiveState</span></a> <span class="pln">primitiveState</span><span class="pun">,</span>
+			<br/>
+			&nbsp;&nbsp;<a href="../../wgpu/api/MultisampleState.html"><span class="typ">MultisampleState</span></a> <span class="pln">multisampleState</span><span class="pun">,</span>
+			<br/>
+			&nbsp;&nbsp;<a href="../../wgpu/api/FragmentState.html"><span class="typ">FragmentState</span></a> <span class="pln">fragmentState</span><span class="pun">,</span>
+			<br/>
+			&nbsp;&nbsp;<span class="typ">string</span> <span class="pln">label</span> <span class="pun">=</span> <span class="kwd">null</span>
+			<br/>
+			<span class="pun">)</span><span class="pun">;</span>
+					</div>
+				</code>
+			</div>
+			<section><p>The depth and stencil buffers are disabled in the created pipeline.
+</p>
+</section>
+
+			<h2 id="1">Function Device.createRenderPipeline</h2><p>Creates a render pipeline.
+</p>
+			<div class="prototype">
+				<code class="lang-d">
+					<div class="single-prototype">
+			<a href="../../wgpu/api/RenderPipeline.html"><span class="typ">RenderPipeline</span></a> <span class="pln">createRenderPipeline</span>
+			<span class="pun">(</span>
+			<br/>
+			&nbsp;&nbsp;<a href="../../wgpu/api/PipelineLayout.html"><span class="typ">PipelineLayout</span></a> <span class="pln">layout</span><span class="pun">,</span>
+			<br/>
+			&nbsp;&nbsp;<a href="../../wgpu/api/VertexState.html"><span class="typ">VertexState</span></a> <span class="pln">vertexState</span><span class="pun">,</span>
+			<br/>
+			&nbsp;&nbsp;<a href="../../wgpu/api/PrimitiveState.html"><span class="typ">PrimitiveState</span></a> <span class="pln">primitiveState</span><span class="pun">,</span>
+			<br/>
+			&nbsp;&nbsp;<span class="kwd">const</span><span class="pun">(</span><a href="../../wgpu/api/DepthStencilState.html"><span class="typ">DepthStencilState</span></a><span class="pun">)</span> <span class="pln">depthStencilState</span><span class="pun">,</span>
+			<br/>
+			&nbsp;&nbsp;<a href="../../wgpu/api/MultisampleState.html"><span class="typ">MultisampleState</span></a> <span class="pln">multisampleState</span><span class="pun">,</span>
+			<br/>
+			&nbsp;&nbsp;<a href="../../wgpu/api/FragmentState.html"><span class="typ">FragmentState</span></a> <span class="pln">fragmentState</span><span class="pun">,</span>
+			<br/>
+			&nbsp;&nbsp;<span class="typ">string</span> <span class="pln">label</span> <span class="pun">=</span> <span class="kwd">null</span>
 			<br/>
 			<span class="pun">)</span><span class="pun">;</span>
 					</div>

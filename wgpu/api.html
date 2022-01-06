@@ -63,6 +63,11 @@ $('#symbolSearchPane').show();</script>
 						<a href="../wgpu/limits.html">limits</a>
 					</div>
 				</li>
+				<li>
+					<div class="module ">
+						<a href="../wgpu/utils.html">utils</a>
+					</div>
+				</li>
 			</ul>
 				</li>
 			</ul>
@@ -72,6 +77,78 @@ $('#symbolSearchPane').show();</script>
 </p><section></section>
 
 			<section></section>
+			<section>
+				<h2>Classes</h2>
+				<table>
+					<col class="caption"/>
+					<tr>
+						<th>Name</th><th>Description</th>
+					</tr>
+					<tr>
+						<td>
+							<code>
+								<a id="Buffer" class="public" href="../wgpu/api/Buffer.html">Buffer</a>
+							</code>
+						</td>
+						<td>A handle to a GPU-accessible buffer.
+</td>
+					</tr>
+					<tr>
+						<td>
+							<code>
+								<a id="ColorTargetState" class="public" href="../wgpu/api/ColorTargetState.html">ColorTargetState</a>
+							</code>
+						</td>
+						<td>Describes the color state of a render pipeline.
+</td>
+					</tr>
+					<tr>
+						<td>
+							<code>
+								<a id="Device" class="public" href="../wgpu/api/Device.html">Device</a>
+							</code>
+						</td>
+						<td>An open connection to a graphics and/or compute device.
+</td>
+					</tr>
+					<tr>
+						<td>
+							<code>
+								<a id="FragmentState" class="public" href="../wgpu/api/FragmentState.html">FragmentState</a>
+							</code>
+						</td>
+						<td>Describes the fragment process in a render pipeline.
+</td>
+					</tr>
+					<tr>
+						<td>
+							<code>
+								<a id="RenderPipeline" class="public" href="../wgpu/api/RenderPipeline.html">RenderPipeline</a>
+							</code>
+						</td>
+						<td>A handle to a rendering (graphics) pipeline.
+</td>
+					</tr>
+					<tr>
+						<td>
+							<code>
+								<a id="SwapChain" class="public" href="../wgpu/api/SwapChain.html">SwapChain</a>
+							</code>
+						</td>
+						<td>A handle to a swap chain.
+</td>
+					</tr>
+					<tr>
+						<td>
+							<code>
+								<a id="Texture" class="public" href="../wgpu/api/Texture.html">Texture</a>
+							</code>
+						</td>
+						<td>A handle to a texture on the GPU.
+</td>
+					</tr>
+				</table>
+			</section>
 			<section>
 				<h2>Structs</h2>
 				<table>
@@ -104,15 +181,6 @@ $('#symbolSearchPane').show();</script>
 							</code>
 						</td>
 						<td>An opaque handle to a binding group layout.
-</td>
-					</tr>
-					<tr>
-						<td>
-							<code>
-								<a id="Buffer" class="public" href="../wgpu/api/Buffer.html">Buffer</a>
-							</code>
-						</td>
-						<td>A handle to a GPU-accessible buffer.
 </td>
 					</tr>
 					<tr>
@@ -154,10 +222,10 @@ $('#symbolSearchPane').show();</script>
 					<tr>
 						<td>
 							<code>
-								<a id="Device" class="public" href="../wgpu/api/Device.html">Device</a>
+								<a id="DepthStencilState" class="public" href="../wgpu/api/DepthStencilState.html">DepthStencilState</a>
 							</code>
 						</td>
-						<td>An open connection to a graphics and/or compute device.
+						<td>Describes the depth/stencil state in a render pipeline.
 </td>
 					</tr>
 					<tr>
@@ -172,10 +240,28 @@ $('#symbolSearchPane').show();</script>
 					<tr>
 						<td>
 							<code>
+								<a id="MultisampleState" class="public" href="../wgpu/api/MultisampleState.html">MultisampleState</a>
+							</code>
+						</td>
+						<td>Describes the multi-sampling state of a render pipeline.
+</td>
+					</tr>
+					<tr>
+						<td>
+							<code>
 								<a id="PipelineLayout" class="public" href="../wgpu/api/PipelineLayout.html">PipelineLayout</a>
 							</code>
 						</td>
 						<td>An opaque handle to a pipeline layout describing the available binding groups of a pipeline.
+</td>
+					</tr>
+					<tr>
+						<td>
+							<code>
+								<a id="PrimitiveState" class="public" href="../wgpu/api/PrimitiveState.html">PrimitiveState</a>
+							</code>
+						</td>
+						<td>Describes the state of primitive assembly and rasterization in a render pipeline.
 </td>
 					</tr>
 					<tr>
@@ -199,15 +285,6 @@ $('#symbolSearchPane').show();</script>
 					<tr>
 						<td>
 							<code>
-								<a id="RenderPipeline" class="public" href="../wgpu/api/RenderPipeline.html">RenderPipeline</a>
-							</code>
-						</td>
-						<td>A handle to a rendering (graphics) pipeline.
-</td>
-					</tr>
-					<tr>
-						<td>
-							<code>
 								<a id="Sampler" class="public" href="../wgpu/api/Sampler.html">Sampler</a>
 							</code>
 						</td>
@@ -220,7 +297,7 @@ $('#symbolSearchPane').show();</script>
 								<a id="ShaderModule" class="public" href="../wgpu/api/ShaderModule.html">ShaderModule</a>
 							</code>
 						</td>
-						<td>A handle to a compiled shader module.
+						<td>A handle to a compiled shader module on the GPU.
 </td>
 					</tr>
 					<tr>
@@ -235,28 +312,19 @@ $('#symbolSearchPane').show();</script>
 					<tr>
 						<td>
 							<code>
-								<a id="SwapChain" class="public" href="../wgpu/api/SwapChain.html">SwapChain</a>
-							</code>
-						</td>
-						<td>A handle to a swap chain.
-</td>
-					</tr>
-					<tr>
-						<td>
-							<code>
-								<a id="Texture" class="public" href="../wgpu/api/Texture.html">Texture</a>
-							</code>
-						</td>
-						<td>A handle to a texture on the GPU.
-</td>
-					</tr>
-					<tr>
-						<td>
-							<code>
 								<a id="TextureView" class="public" href="../wgpu/api/TextureView.html">TextureView</a>
 							</code>
 						</td>
 						<td>A handle to a texture view.
+</td>
+					</tr>
+					<tr>
+						<td>
+							<code>
+								<a id="VertexState" class="public" href="../wgpu/api/VertexState.html">VertexState</a>
+							</code>
+						</td>
+						<td>Describes the vertex process in a render pipeline.
 </td>
 					</tr>
 				</table>
@@ -267,6 +335,15 @@ $('#symbolSearchPane').show();</script>
 					<col class="caption"/>
 					<tr>
 						<th>Name</th><th>Description</th>
+					</tr>
+					<tr>
+						<td>
+							<code>
+								<a id="BlendMode" class="public" href="../wgpu/api/BlendMode.html">BlendMode</a>
+							</code>
+						</td>
+						<td>Constant blending modes usable when constructing a <code class="lang-d"><a href="../wgpu/api/ColorTargetState.html"><span class="typ">ColorTargetState</span></a></code>'s <code class="lang-d"><span class="typ">BlendState</span></code>.
+</td>
 					</tr>
 					<tr>
 						<td>
@@ -402,6 +479,17 @@ $('#symbolSearchPane').show();</script>
 						</td>
 						<td>Describes a <code class="lang-d"><a href="../wgpu/api/BindGroup.html"><span class="typ">BindGroup</span></a></code>.
 </td>
+					</tr>
+					<tr>
+						<td>
+							<a id="BindGroupEntry" class="public" href="../wgpu/api/BindGroupEntry.html">
+								<code>BindGroupEntry</code>
+							</a>
+						</td>
+						<td>
+							<code class="prettyprint lang-d"><span class="pln">bindings<wbr/></span><span class="pun">.</span><span class="typ">WGPUBindGroupEntry</span></code>
+						</td>
+						<td></td>
 					</tr>
 					<tr>
 						<td>
@@ -677,6 +765,18 @@ $('#symbolSearchPane').show();</script>
 							<code class="prettyprint lang-d"><span class="pln">bindings<wbr/></span><span class="pun">.</span><span class="typ">WGPUTextureViewDescriptor</span></code>
 						</td>
 						<td>Describes a <code class="lang-d"><a href="../wgpu/api/TextureView.html"><span class="typ">TextureView</span></a></code>.
+</td>
+					</tr>
+					<tr>
+						<td>
+							<a id="VertexBufferLayout" class="public" href="../wgpu/api/VertexBufferLayout.html">
+								<code>VertexBufferLayout</code>
+							</a>
+						</td>
+						<td>
+							<code class="prettyprint lang-d"><span class="pln">bindings<wbr/></span><span class="pun">.</span><span class="typ">WGPUVertexBufferLayout</span></code>
+						</td>
+						<td>Describes how the vertex buffer is interpreted.
 </td>
 					</tr>
 				</table>

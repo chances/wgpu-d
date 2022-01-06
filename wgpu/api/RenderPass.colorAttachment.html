@@ -63,6 +63,11 @@ $('#symbolSearchPane').show();</script>
 						<a href="../../wgpu/limits.html">limits</a>
 					</div>
 				</li>
+				<li>
+					<div class="module ">
+						<a href="../../wgpu/utils.html">utils</a>
+					</div>
+				</li>
 			</ul>
 				</li>
 			</ul>
@@ -81,8 +86,48 @@ $('#symbolSearchPane').show();</script>
 							Function <code>RenderPass.colorAttachment</code>
 						</a>
 					</li>
+					<li>
+						<a href="#2">
+							Function <code>RenderPass.colorAttachment</code>
+						</a>
+					</li>
 				</ul>
 			</nav><h2 id="0">Function RenderPass.colorAttachment</h2><p>Create a color attachment for a render pass.
+</p>
+			<div class="prototype">
+				<code class="lang-d">
+					<div class="single-prototype">
+			<span class="kwd">static </span><span class="pln">bindings<wbr/></span><span class="pun">.</span><span class="typ">WGPURenderPassColorAttachment</span> <span class="pln">colorAttachment</span>
+			<span class="pun">(</span>
+			<br/>
+			&nbsp;&nbsp;<a href="../../wgpu/api/TextureView.html"><span class="typ">TextureView</span></a> <span class="pln">view</span><span class="pun">,</span>
+			<br/>
+			&nbsp;&nbsp;<span class="pln">bindings<wbr/></span><span class="pun">.</span><span class="typ">WGPUColor</span> <span class="pln">clearColor</span><span class="pun">,</span>
+			<br/>
+			&nbsp;&nbsp;<span class="pln">std<wbr/></span><span class="pun">.</span><span class="pln">typecons<wbr/></span><span class="pun">.</span><span class="typ">Flag</span>!("store") <span class="pln">store</span> <span class="pun">=</span> <span class="typ">Flag<wbr/></span><span class="pun">.</span><span class="pln">yes</span>
+			<br/>
+			<span class="pun">)</span><span class="pun">;</span>
+					</div>
+				</code>
+			</div>
+			<section></section>
+
+			<section><h3>Parameters</h3>
+<table><col class="caption"><tr><th>Name</th><th>Description</th></tr>
+<tr><td id="view">view</td><td> The view to use as an attachment.</td></tr>
+<tr><td id="clearColor">clearColor</td><td> Value with which to fill the given <code class="lang-d"><a href="../../wgpu/api/RenderPass.colorAttachment.html#view"><span class="pln">view</span></a></code>.</td></tr>
+<tr><td id="store">store</td><td> Whether data will be written to through this attachment. Defaults to <code class="lang-d"><span class="kwd">true</span></code>.</td></tr>
+</table>
+</section>
+<section><h3>Remarks</h3>
+<p>The render target is cleared its content is loaded, i.e. <code class="lang-d"><span class="typ">LoadOp<wbr/></span><span class="pun">.</span><span class="pln">clear</span></code> is used.
+</p>
+</section>
+<section><h3>SeeAlso</h3>
+<p><code class="lang-d"><a href="../../wgpu/api/CommandEncoder.beginRenderPass.html"><span class="typ">CommandEncoder<wbr/></span><span class="pun">.</span><span class="pln">beginRenderPass</span></a></code>
+</p>
+</section>
+<h2 id="1">Function RenderPass.colorAttachment</h2><p>Create a color attachment for a render pass.
 </p>
 			<div class="prototype">
 				<code class="lang-d">
@@ -120,7 +165,7 @@ $('#symbolSearchPane').show();</script>
 <p><code class="lang-d"><a href="../../wgpu/api/CommandEncoder.beginRenderPass.html"><span class="typ">CommandEncoder<wbr/></span><span class="pun">.</span><span class="pln">beginRenderPass</span></a></code>
 </p>
 </section>
-<h2 id="1">Function RenderPass.colorAttachment</h2><p>ditto
+<h2 id="2">Function RenderPass.colorAttachment</h2><p>ditto
 </p>
 			<div class="prototype">
 				<code class="lang-d">

@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8"/>
-		<title>Struct Device - wgpu-d</title>
+		<title>Class Device - wgpu-d</title>
 		<link rel="stylesheet" type="text/css" href="../../styles/ddox.css"/>
 		<link rel="stylesheet" href="../../prettify/prettify.css" type="text/css"/>
 		<script type="text/javascript" src="../../scripts/jquery.js">/**/</script><script type="text/javascript" src="../../scripts/ddox.js">/**/</script>
@@ -63,17 +63,22 @@ $('#symbolSearchPane').show();</script>
 						<a href="../../wgpu/limits.html">limits</a>
 					</div>
 				</li>
+				<li>
+					<div class="module ">
+						<a href="../../wgpu/utils.html">utils</a>
+					</div>
+				</li>
 			</ul>
 				</li>
 			</ul>
 		</nav>
 		<div id="main-contents">
-			<h1>Struct Device</h1><p>An open connection to a graphics and/or compute device.
+			<h1>Class Device</h1><p>An open connection to a graphics and/or compute device.
 </p>
 			<div class="prototype">
 				<code class="lang-d">
 					<div class="single-prototype">
-			<span class="kwd">struct</span> <span class="typ">Device</span>
+			<span class="kwd">class</span> <span class="typ">Device</span>
 			<span class="pun">;</span>
 					</div>
 				</code>
@@ -87,13 +92,6 @@ $('#symbolSearchPane').show();</script>
 					<col class="caption"/>
 					<tr>
 						<th>Name</th><th>Type</th><th>Description</th>
-					</tr>
-					<tr>
-						<td>
-							<a href="../../wgpu/api/Device.id.html" class="public"><code>id</code></a>
-						</td>
-						<td class="typecol"><code class="prettyprint lang-d"><span class="pln">bindings<wbr/></span><span class="pun">.</span><span class="typ">WGPUDeviceImpl</span><span class="pun">*</span></code></td><td>Handle identifier.
-</td>
 					</tr>
 					<tr>
 						<td>
@@ -130,7 +128,7 @@ $('#symbolSearchPane').show();</script>
 							<a href="../../wgpu/api/Device.createBindGroup.html" class="public">
 								<code>createBindGroup</code>
 							</a>
-							<span class="tableEntryAnnotation">(descriptor)</span>
+							<span class="tableEntryAnnotation">(layout, entries, label)</span>
 						</td>
 						<td>Creates a new bind group.
 </td>
@@ -140,7 +138,7 @@ $('#symbolSearchPane').show();</script>
 							<a href="../../wgpu/api/Device.createBindGroupLayout.html" class="public">
 								<code>createBindGroupLayout</code>
 							</a>
-							<span class="tableEntryAnnotation">(descriptor)</span>
+							<span class="tableEntryAnnotation">(entries, label)</span>
 						</td>
 						<td>Creates a bind group layout.
 </td>
@@ -200,9 +198,9 @@ $('#symbolSearchPane').show();</script>
 							<a href="../../wgpu/api/Device.createPipelineLayout.html" class="public">
 								<code>createPipelineLayout</code>
 							</a>
-							<span class="tableEntryAnnotation">(descriptor)</span>
+							<span class="tableEntryAnnotation">(bindGroups, label)</span>
 						</td>
-						<td>Creates a bind group layout.
+						<td>Creates a bind group <code class="lang-d"><a href="../../wgpu/api/PipelineLayout.html"><span class="typ">PipelineLayout</span></a></code>.
 </td>
 					</tr>
 					<tr>
@@ -210,7 +208,17 @@ $('#symbolSearchPane').show();</script>
 							<a href="../../wgpu/api/Device.createRenderPipeline.html" class="public">
 								<code>createRenderPipeline</code>
 							</a>
-							<span class="tableEntryAnnotation">(descriptor)</span>
+							<span class="tableEntryAnnotation">(layout, vertexState, primitiveState, multisampleState, fragmentState, label)</span>
+						</td>
+						<td>Creates a render pipeline.
+</td>
+					</tr>
+					<tr>
+						<td>
+							<a href="../../wgpu/api/Device.createRenderPipeline.html" class="public">
+								<code>createRenderPipeline</code>
+							</a>
+							<span class="tableEntryAnnotation">(layout, vertexState, primitiveState, depthStencilState, multisampleState, fragmentState, label)</span>
 						</td>
 						<td>Creates a render pipeline.
 </td>
@@ -227,6 +235,16 @@ $('#symbolSearchPane').show();</script>
 					</tr>
 					<tr>
 						<td>
+							<a href="../../wgpu/api/Device.createSampler.html" class="public">
+								<code>createSampler</code>
+							</a>
+							<span class="tableEntryAnnotation">(addressMode, magFilter, minFilter, mipmapFilter)</span>
+						</td>
+						<td>Creates a new <code class="lang-d"><a href="../../wgpu/api/Sampler.html"><span class="typ">Sampler</span></a></code>.
+</td>
+					</tr>
+					<tr>
+						<td>
 							<a href="../../wgpu/api/Device.createShaderModule.html" class="public">
 								<code>createShaderModule</code>
 							</a>
@@ -237,10 +255,20 @@ $('#symbolSearchPane').show();</script>
 					</tr>
 					<tr>
 						<td>
+							<a href="../../wgpu/api/Device.createShaderModule.html" class="public">
+								<code>createShaderModule</code>
+							</a>
+							<span class="tableEntryAnnotation">(wgsl)</span>
+						</td>
+						<td>Creates a shader module from WGSL source code.
+</td>
+					</tr>
+					<tr>
+						<td>
 							<a href="../../wgpu/api/Device.createSwapChain.html" class="public">
 								<code>createSwapChain</code>
 							</a>
-							<span class="tableEntryAnnotation">(surface, descriptor)</span>
+							<span class="tableEntryAnnotation">(surface, width, height, format, usage, presentMode, label)</span>
 						</td>
 						<td>Create a new <code class="lang-d"><a href="../../wgpu/api/SwapChain.html"><span class="typ">SwapChain</span></a></code> which targets <code class="lang-d"><a href="../../wgpu/api/Device.createSwapChain.html#surface"><span class="pln">surface</span></a></code>.
 </td>
@@ -283,6 +311,16 @@ $('#symbolSearchPane').show();</script>
 							<span class="tableEntryAnnotation">()</span>
 						</td>
 						<td>Release the given handle.
+</td>
+					</tr>
+					<tr>
+						<td>
+							<a href="../../wgpu/api/Device.emptyPipelineLayout.html" class="public">
+								<code>emptyPipelineLayout</code>
+							</a>
+							<span class="tableEntryAnnotation">(label)</span>
+						</td>
+						<td>Creates an empty <code class="lang-d"><a href="../../wgpu/api/PipelineLayout.html"><span class="typ">PipelineLayout</span></a></code> that has no bindings.
 </td>
 					</tr>
 					<tr>

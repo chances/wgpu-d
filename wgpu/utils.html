@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8"/>
+		<title>Module wgpu.utils - wgpu-d</title>
+		<link rel="stylesheet" type="text/css" href="../styles/ddox.css"/>
+		<link rel="stylesheet" href="../prettify/prettify.css" type="text/css"/>
+		<script type="text/javascript" src="../scripts/jquery.js">/**/</script><script type="text/javascript" src="../scripts/ddox.js">/**/</script>
+	</head>
+	<body onload="setupDdox();">
+<style>
+#main-nav > h1 {
+  display: flex;
+  align-items: flex-end;
+}
+#main-nav > h1 > span {
+  padding-bottom: 0.25em;
+}
+#logo {
+  margin-right: 0.5rem;
+  max-width: 4rem;
+}
+</style>
+<nav id="main-nav">
+  <h1>
+    <img id="logo" src="https://chances.github.io/wgpu-d/images/logo.png" alt="wgpu Logo">
+    <span>D Bindings</span>
+  </h1>
+  <ul style="list-style: none; padding: 0;">
+    <li>
+      <a href="https://chances.github.io/wgpu-d">API Reference</a>
+    </li>
+    <li>
+      <a href="https://code.dlang.org/packages/wgpu-d">Download</a>
+    </li>
+    <li>
+      <a href="https://github.com/chances/wgpu-d#readme">Open Source on GitHub</a>
+    </li>
+  </ul>
+  <h2>API Reference</h2>
+			<noscript>
+				<p style="color: red">The search functionality needs JavaScript enabled</p>
+			</noscript>
+			<div id="symbolSearchPane" style="display: none">
+				<form action="#" method="GET">
+					<input id="symbolSearch" type="text" name="q" placeholder="Search for symbols" autocomplete="off" onchange="performSymbolSearch(40);" onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();"/>
+				</form>
+				<ul id="symbolSearchResults" class="symbolList" style="display: none"></ul><script type="application/javascript" src="../symbols.js"></script><script type="application/javascript">var symbolSearchRootDir = "../";
+$('#symbolSearchPane').show();</script>
+			</div>
+			<ul class="tree-view">
+				<li class="tree-view ">
+					<div class="package ">wgpu
+					</div>
+			<ul class="tree-view">
+				<li>
+					<div class="module ">
+						<a href="../wgpu/api.html">api</a>
+					</div>
+				</li>
+				<li>
+					<div class="module ">
+						<a href="../wgpu/limits.html">limits</a>
+					</div>
+				</li>
+				<li>
+					<div class="module selected">
+						<a href="../wgpu/utils.html">utils</a>
+					</div>
+				</li>
+			</ul>
+				</li>
+			</ul>
+		</nav>
+		<div id="main-contents">
+			<h1>Module wgpu.utils</h1><p>Utility structures and functions.
+</p><section><p>Loosely modelled after <a href="https://docs.rs/wgpu/0.10.2/wgpu/util/index.html">wgpu::util</a>.
+</p>
+</section>
+
+			<section><section><h2>See Also</h2>
+<p><a href="https://docs.rs/wgpu/0.10.2/wgpu/util/index.html">wgpu::util</a>
+</p>
+</section>
+</section>
+			<section>
+				<h2>Functions</h2>
+				<table>
+					<col class="caption"/>
+					<tr>
+						<th>Name</th><th>Description</th>
+					</tr>
+					<tr>
+						<td>
+							<code>
+								<a id="resize" class="public" href="../wgpu/utils/resize.html">resize</a><span class="tableEntryAnnotation">(extant, device, width, height)</span>
+							</code>
+						</td>
+						<td>Recreates a new swap chain given an <code class="lang-d"><a href="../wgpu/utils/resize.html#extant"><span class="pln">extant</span></a></code> swap chain and a new size.
+</td>
+					</tr>
+					<tr>
+						<td>
+							<code>
+								<a id="resize" class="public" href="../wgpu/utils/resize.html">resize</a><span class="tableEntryAnnotation">(extant, device, width, height)</span>
+							</code>
+						</td>
+						<td>Recreates a new texture given an <code class="lang-d"><a href="../wgpu/utils/resize.html#extant"><span class="pln">extant</span></a></code> texture and a new size.
+</td>
+					</tr>
+					<tr>
+						<td>
+							<code>
+								<a id="resize" class="public" href="../wgpu/utils/resize.html">resize</a><span class="tableEntryAnnotation">(extant, device, size)</span>
+							</code>
+						</td>
+						<td>Recreates a new buffer given an <code class="lang-d"><a href="../wgpu/utils/resize.html#extant"><span class="pln">extant</span></a></code> buffer and a new size.
+</td>
+					</tr>
+					<tr>
+						<td>
+							<code>
+								<a id="valid" class="public" href="../wgpu/utils/valid.html">valid</a><span class="tableEntryAnnotation">(resource)</span>
+							</code>
+						</td>
+						<td>Whether a handle to a <code class="lang-d"><span class="pln">wgpu</span></code>-managed <code class="lang-d"><a href="../wgpu/utils/valid.html#resource"><span class="pln">resource</span></a></code> is valid, i.e. <code class="lang-d"><a href="../wgpu/utils/valid.html#resource"><span class="pln">resource</span></a></code> is not <code class="lang-d"><span class="kwd">null</span></code> and it's currently initialized.
+</td>
+					</tr>
+					<tr>
+						<td>
+							<code>
+								<a id="viewDimension" class="public" href="../wgpu/utils/viewDimension.html">viewDimension</a><span class="tableEntryAnnotation">(dimension, depthOrArrayLayers)</span>
+							</code>
+						</td>
+						<td>Convert the given texture <code class="lang-d"><a href="../wgpu/utils/viewDimension.html#dimension"><span class="pln">dimension</span></a></code> into a texture view dimension.
+</td>
+					</tr>
+				</table>
+			</section>
+			<section>
+				<h2>Interfaces</h2>
+				<table>
+					<col class="caption"/>
+					<tr>
+						<th>Name</th><th>Description</th>
+					</tr>
+					<tr>
+						<td>
+							<code>
+								<a id="RenderEncoder" class="public" href="../wgpu/utils/RenderEncoder.html">RenderEncoder</a>
+							</code>
+						</td>
+						<td>Methods shared by <code class="lang-d"><a href="../wgpu/api/RenderPass.html" title="wgpu.api.RenderPass"><span class="typ">RenderPass</span></a></code> and <code class="lang-d"><span class="pln">wgpu<wbr/></span><span class="pun">.</span><span class="pln">api<wbr/></span><span class="pun">.</span><span class="typ">RenderBundleEncoder</span></code>.
+</td>
+					</tr>
+				</table>
+			</section>
+			<section>
+				<h2>Manifest constants</h2>
+				<table>
+					<col class="caption"/>
+					<tr>
+						<th>Name</th><th>Type</th><th>Description</th>
+					</tr>
+					<tr>
+						<td>
+							<a id="isResource" class="public" href="../wgpu/utils/isResource.html">
+								<code>isResource</code>
+							</a>
+						</td>
+						<td>
+						</td>
+						<td>Detects whether <code class="lang-d"><span class="pln">T</span></code> is a handle to a <code class="lang-d"><span class="pln">wgpu</span></code>-managed resource.
+</td>
+					</tr>
+				</table>
+			</section>
+			<section>
+				<h2>Aliases</h2>
+				<table>
+					<col class="caption"/>
+					<tr>
+						<th>Name</th><th>Type</th><th>Description</th>
+					</tr>
+					<tr>
+						<td>
+							<a id="BufferAddress" class="public" href="../wgpu/utils/BufferAddress.html">
+								<code>BufferAddress</code>
+							</a>
+						</td>
+						<td>
+							<code class="prettyprint lang-d"><span class="typ">ulong</span></code>
+						</td>
+						<td>Integral type used for buffer offsets.
+</td>
+					</tr>
+					<tr>
+						<td>
+							<a id="BufferSlice" class="public" href="../wgpu/utils/BufferSlice.html">
+								<code>BufferSlice</code>
+							</a>
+						</td>
+						<td>
+							<code class="prettyprint lang-d"><span class="typ">ubyte</span><span class="pun">[]</span></code>
+						</td>
+						<td>Slice into a <code class="lang-d"><a href="../wgpu/api/Buffer.html" title="wgpu.api.Buffer"><span class="typ">Buffer</span></a></code>.
+</td>
+					</tr>
+				</table>
+			</section>
+			<footer>
+				<table class="license-info">
+					<tr>
+						<th>Authors</th>
+						<td>
+							<p>Chance Snow
+</p>
+
+						</td>
+					</tr>
+					<tr>
+						<th>Copyright</th>
+						<td>
+							<p>Copyright © 2022 Chance Snow. All rights reserved.
+</p>
+
+						</td>
+					</tr>
+					<tr>
+						<th>License</th>
+						<td>
+							<p>MIT License
+</p>
+
+						</td>
+					</tr>
+				</table>
+<div style="display: flex; justify-content: space-between; margin-top: 2em;">
+  <a href="https://github.com/chances/wgpu-d#readme">GitHub</a>
+  <span class="faint" style="float: right;">Generated using <a href="https://code.dlang.org/packages/ddox">DDOX</a></span>
+</div>
+			</footer>
+		</div>
+	</body>
+</html>

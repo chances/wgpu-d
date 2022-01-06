@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8"/>
-		<title>Struct SwapChain - wgpu-d</title>
+		<title>Class SwapChain - wgpu-d</title>
 		<link rel="stylesheet" type="text/css" href="../../styles/ddox.css"/>
 		<link rel="stylesheet" href="../../prettify/prettify.css" type="text/css"/>
 		<script type="text/javascript" src="../../scripts/jquery.js">/**/</script><script type="text/javascript" src="../../scripts/ddox.js">/**/</script>
@@ -63,17 +63,22 @@ $('#symbolSearchPane').show();</script>
 						<a href="../../wgpu/limits.html">limits</a>
 					</div>
 				</li>
+				<li>
+					<div class="module ">
+						<a href="../../wgpu/utils.html">utils</a>
+					</div>
+				</li>
 			</ul>
 				</li>
 			</ul>
 		</nav>
 		<div id="main-contents">
-			<h1>Struct SwapChain</h1><p>A handle to a swap chain.
+			<h1>Class SwapChain</h1><p>A handle to a swap chain.
 </p>
 			<div class="prototype">
 				<code class="lang-d">
 					<div class="single-prototype">
-			<span class="kwd">struct</span> <span class="typ">SwapChain</span>
+			<span class="kwd">class</span> <span class="typ">SwapChain</span>
 			<span class="pun">;</span>
 					</div>
 				</code>
@@ -93,14 +98,21 @@ A <code class="lang-d"><span class="typ">SwapChain</span></code> may be created 
 						<td>
 							<a href="../../wgpu/api/SwapChain.descriptor.html" class="public"><code>descriptor</code></a>
 						</td>
-						<td class="typecol"><code class="prettyprint lang-d"><span class="pln">bindings<wbr/></span><span class="pun">.</span><span class="typ">WGPUSwapChainDescriptor</span></code></td><td>Describes this <code class="lang-d"><span class="typ">SwapChain<wbr/></span><span class="pun">.</span></code>
+						<td class="typecol"><code class="prettyprint lang-d"><span class="kwd">const</span><span class="pun">(</span><span class="pln">bindings<wbr/></span><span class="pun">.</span><span class="typ">WGPUSwapChainDescriptor</span><span class="pun">)</span></code></td><td>Describes this <code class="lang-d"><span class="typ">SwapChain<wbr/></span><span class="pun">.</span></code>
 </td>
 					</tr>
 					<tr>
 						<td>
-							<a href="../../wgpu/api/SwapChain.id.html" class="public"><code>id</code></a>
+							<a href="../../wgpu/api/SwapChain.label.html" class="public"><code>label</code></a>
 						</td>
-						<td class="typecol"><code class="prettyprint lang-d"><span class="pln">bindings<wbr/></span><span class="pun">.</span><span class="typ">WGPUSwapChainImpl</span><span class="pun">*</span></code></td><td>Handle identifier.
+						<td class="typecol"><code class="prettyprint lang-d"><span class="kwd">const</span><span class="pun">(</span><span class="typ">string</span><span class="pun">)</span></code></td><td>Optional, human-readable debug label for this swap chain.
+</td>
+					</tr>
+					<tr>
+						<td>
+							<a href="../../wgpu/api/SwapChain.surface.html" class="public"><code>surface</code></a>
+						</td>
+						<td class="typecol"><code class="prettyprint lang-d"><span class="kwd">const</span><span class="pun">(</span><a href="../../wgpu/api/Surface.html"><span class="typ">Surface</span></a><span class="pun">)</span></code></td><td><code class="lang-d"><a href="../../wgpu/api/Surface.html"><span class="typ">Surface</span></a></code> this swap chain renders to.
 </td>
 					</tr>
 				</table>

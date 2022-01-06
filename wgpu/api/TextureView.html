@@ -63,6 +63,11 @@ $('#symbolSearchPane').show();</script>
 						<a href="../../wgpu/limits.html">limits</a>
 					</div>
 				</li>
+				<li>
+					<div class="module ">
+						<a href="../../wgpu/utils.html">utils</a>
+					</div>
+				</li>
 			</ul>
 				</li>
 			</ul>
@@ -90,9 +95,16 @@ $('#symbolSearchPane').show();</script>
 					</tr>
 					<tr>
 						<td>
-							<a href="../../wgpu/api/TextureView.id.html" class="public"><code>id</code></a>
+							<a href="../../wgpu/api/TextureView.descriptor.html" class="public"><code>descriptor</code></a>
 						</td>
-						<td class="typecol"><code class="prettyprint lang-d"><span class="pln">bindings<wbr/></span><span class="pun">.</span><span class="typ">WGPUTextureViewImpl</span><span class="pun">*</span></code></td><td>Handle identifier.
+						<td class="typecol"><code class="prettyprint lang-d"><span class="kwd">const</span><span class="pun">(</span><span class="pln">bindings<wbr/></span><span class="pun">.</span><span class="typ">WGPUTextureViewDescriptor</span><span class="pun">)</span></code></td><td>Describes this texture view.
+</td>
+					</tr>
+					<tr>
+						<td>
+							<a href="../../wgpu/api/TextureView.multisampled.html" class="public"><code>multisampled</code></a>
+						</td>
+						<td class="typecol"><code class="prettyprint lang-d"><span class="kwd">const</span><span class="pun">(</span><span class="pln">std<wbr/></span><span class="pun">.</span><span class="pln">typecons<wbr/></span><span class="pun">.</span><span class="typ">Flag</span>!("multisampled")<span class="pun">)</span></code></td><td>Whether this texture view is multisampled.
 </td>
 					</tr>
 				</table>
@@ -105,12 +117,32 @@ $('#symbolSearchPane').show();</script>
 					</tr>
 					<tr>
 						<td>
+							<a href="../../wgpu/api/TextureView.binding.html" class="public">
+								<code>binding</code>
+							</a>
+							<span class="tableEntryAnnotation">(location)</span>
+						</td>
+						<td>Creates a texture view binding.
+</td>
+					</tr>
+					<tr>
+						<td>
 							<a href="../../wgpu/api/TextureView.destroy.html" class="public">
 								<code>destroy</code>
 							</a>
 							<span class="tableEntryAnnotation">()</span>
 						</td>
 						<td>Release the handle to this texture view.
+</td>
+					</tr>
+					<tr>
+						<td>
+							<a href="../../wgpu/api/TextureView.textureSampler.html" class="public">
+								<code>textureSampler</code>
+							</a>
+							<span class="tableEntryAnnotation">(location, visibility, filtering)</span>
+						</td>
+						<td>Creates a texture-sampler pair of consecutive bindings, starting at <code class="lang-d"><a href="../../wgpu/api/TextureView.textureSampler.html#location"><span class="pln">location</span></a></code>.
 </td>
 					</tr>
 				</table>

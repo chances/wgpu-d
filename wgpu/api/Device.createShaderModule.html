@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8"/>
-		<title>Function Device.createShaderModule - wgpu-d</title>
+		<title>Device.createShaderModule - multiple declarations - wgpu-d</title>
 		<link rel="stylesheet" type="text/css" href="../../styles/ddox.css"/>
 		<link rel="stylesheet" href="../../prettify/prettify.css" type="text/css"/>
 		<script type="text/javascript" src="../../scripts/jquery.js">/**/</script><script type="text/javascript" src="../../scripts/ddox.js">/**/</script>
@@ -63,12 +63,31 @@ $('#symbolSearchPane').show();</script>
 						<a href="../../wgpu/limits.html">limits</a>
 					</div>
 				</li>
+				<li>
+					<div class="module ">
+						<a href="../../wgpu/utils.html">utils</a>
+					</div>
+				</li>
 			</ul>
 				</li>
 			</ul>
 		</nav>
 		<div id="main-contents">
-			<h1>Function Device.createShaderModule</h1><p>Creates a shader module from SPIR-V source code.
+			<h1>Device.createShaderModule - multiple declarations</h1>
+			<nav class="page-nav">
+				<ul>
+					<li>
+						<a href="#0">
+							Function <code>Device.createShaderModule</code>
+						</a>
+					</li>
+					<li>
+						<a href="#1">
+							Function <code>Device.createShaderModule</code>
+						</a>
+					</li>
+				</ul>
+			</nav><h2 id="0">Function Device.createShaderModule</h2><p>Creates a shader module from SPIR-V source code.
 </p>
 			<div class="prototype">
 				<code class="lang-d">
@@ -78,11 +97,32 @@ $('#symbolSearchPane').show();</script>
 			<br/>
 			&nbsp;&nbsp;<span class="kwd">const</span><span class="pun">(</span><span class="typ">byte</span><span class="pun">[]</span><span class="pun">)</span> <span class="pln">spv</span>
 			<br/>
-			<span class="pun">)</span><span class="pun">;</span>
+			<span class="pun">)</span><span class="pln"> </span><span class="kwd">@trusted</span><span class="pun">;</span>
 					</div>
 				</code>
 			</div>
-			
+			<section><p>Shader modules are used to define programmable stages of a pipeline.
+</p>
+</section>
+
+			<h2 id="1">Function Device.createShaderModule</h2><p>Creates a shader module from WGSL source code.
+</p>
+			<div class="prototype">
+				<code class="lang-d">
+					<div class="single-prototype">
+			<a href="../../wgpu/api/ShaderModule.html"><span class="typ">ShaderModule</span></a> <span class="pln">createShaderModule</span>
+			<span class="pun">(</span>
+			<br/>
+			&nbsp;&nbsp;<span class="typ">string</span> <span class="pln">wgsl</span>
+			<br/>
+			<span class="pun">)</span><span class="pln"> </span><span class="kwd">@trusted</span><span class="pun">;</span>
+					</div>
+				</code>
+			</div>
+			<section><p>Shader modules are used to define programmable stages of a pipeline.
+</p>
+</section>
+
 			
 			<footer>
 				<table class="license-info">

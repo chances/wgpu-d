@@ -63,12 +63,17 @@ $('#symbolSearchPane').show();</script>
 						<a href="../../wgpu/limits.html">limits</a>
 					</div>
 				</li>
+				<li>
+					<div class="module ">
+						<a href="../../wgpu/utils.html">utils</a>
+					</div>
+				</li>
 			</ul>
 				</li>
 			</ul>
 		</nav>
 		<div id="main-contents">
-			<h1>Struct ShaderModule</h1><p>A handle to a compiled shader module.
+			<h1>Struct ShaderModule</h1><p>A handle to a compiled shader module on the GPU.
 </p>
 			<div class="prototype">
 				<code class="lang-d">
@@ -78,8 +83,7 @@ $('#symbolSearchPane').show();</script>
 					</div>
 				</code>
 			</div>
-			<section><p>A <code class="lang-d"><span class="typ">ShaderModule</span></code> represents a compiled shader module on the GPU. It can be created by passing valid SPIR-V source code to <code class="lang-d"><a href="../../wgpu/api/Device.createShaderModule.html"><span class="typ">Device<wbr/></span><span class="pun">.</span><span class="pln">createShaderModule</span></a></code>.
-Shader modules are used to define programmable stages of a pipeline.
+			<section><p>A <code class="lang-d"><span class="typ">ShaderModule</span></code> can be created by passing valid SPIR-V source code to <code class="lang-d"><a href="../../wgpu/api/Device.createShaderModule.html"><span class="typ">Device<wbr/></span><span class="pun">.</span><span class="pln">createShaderModule</span></a></code>.
 </p>
 </section>
 
@@ -116,7 +120,11 @@ Shader modules are used to define programmable stages of a pipeline.
 					</tr>
 				</table>
 			</section>
-			<section><h2>See Also</h2>
+			<section><h2>Remarks</h2>
+<p>Shader modules are used to define programmable stages of a pipeline.
+</p>
+</section>
+<section><h2>See Also</h2>
 <p><a href="https://docs.rs/wgpu/0.10.2/wgpu/struct.ShaderModule.html">wgpu::ShaderModule</a>
 </p>
 </section>
