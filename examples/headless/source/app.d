@@ -2,15 +2,12 @@ import std.stdio;
 
 import wgpu.api;
 
-void main()
-{
-  // Adapted from https://github.com/rukai/wgpu-rs/blob/f6123e4fe89f74754093c07b476099623b76dd08/examples/capture/main.rs
+// Adapted from https://github.com/gfx-rs/wgpu-rs/blob/f6123e4fe89f74754093c07b476099623b76dd08/examples/capture/main.rs
+void main() {
   writeln("Headless (windowless) Example");
 
-  auto adapter = Instance.requestAdapter(null, PowerPreference.lowPower);
-  assert(adapter !is null, "Adapter instance was not initialized");
-
-  assert(adapter.ready, "Adapter is not ready");
+  auto adapter = Instance.requestAdapter(PowerPreference.lowPower);
+  assert(adapter.ready, "Adapter instance was not initialized");
   writefln("Adapter properties: %s", adapter.properties);
   writefln("Adapter limits: %s", adapter.limits);
 
