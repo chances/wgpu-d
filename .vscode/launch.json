@@ -15,6 +15,18 @@
         "LD_LIBRARY_PATH": "${workspaceFolder}/lib",
         "RUST_BACKTRACE": "1"
       }
+    },
+    {
+      "type": "lldb",
+      "request": "launch",
+      "name": "Debug Triangle Example",
+      "program": "${workspaceFolder}/bin/triangle",
+      "args": [],
+      "cwd": "${workspaceFolder}",
+      "env": {
+        "LD_LIBRARY_PATH": "${workspaceFolder}/lib",
+        "RUST_BACKTRACE": "1"
+      }
     }
   ]
 }

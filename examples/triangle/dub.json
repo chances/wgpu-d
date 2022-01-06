@@ -9,10 +9,15 @@
   "targetType": "executable",
   "targetPath": "../../bin",
   "dependencies": {
+    "bindbc-glfw": "~>1.0.0",
     "imageformats": "~>7.0.2",
     "wgpu-d": {
       "path": "../.."
     }
+  },
+  "versions": ["GLFW_32"],
+  "subConfigurations": {
+    "bindbc-glfw": "static"
   },
   "preGenerateCommands-posix": [
     "make -C subprojects -f glfw.Makefile"
@@ -21,10 +26,14 @@
     "echo Fixing up libwgpu dylib path...",
     "install_name_tool -change /Users/runner/work/wgpu-native/wgpu-native/target/x86_64-apple-darwin/debug/deps/libwgpu_native.dylib @executable_path/lib/libwgpu.dylib ../../bin/triangle"
   ],
-  "libs": [
-    "glfw3"
+  "libs": ["glfw3"],
+  "libs-linux": [
+    "X11"
   ],
-  "lflags-posix": [
-    "-L$PACKAGE_DIR/subprojects/glfw/src"
+  "lflags-posix": ["-L$PACKAGE_DIR/subprojects/glfw/src"],
+  "lflags-osx": [
+    "-framework", "AppKit",
+    "-framework", "Metal",
+    "-framework", "QuartzCore"
   ]
 }
