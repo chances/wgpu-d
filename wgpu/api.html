@@ -58,6 +58,11 @@ $('#symbolSearchPane').show();</script>
 						<a href="../wgpu/api.html">api</a>
 					</div>
 				</li>
+				<li>
+					<div class="module ">
+						<a href="../wgpu/limits.html">limits</a>
+					</div>
+				</li>
 			</ul>
 				</li>
 			</ul>
@@ -170,7 +175,7 @@ $('#symbolSearchPane').show();</script>
 								<a id="PipelineLayout" class="public" href="../wgpu/api/PipelineLayout.html">PipelineLayout</a>
 							</code>
 						</td>
-						<td>An opaque handle to a pipeline layout.
+						<td>An opaque handle to a pipeline layout describing the available binding groups of a pipeline.
 </td>
 					</tr>
 					<tr>
@@ -283,14 +288,26 @@ $('#symbolSearchPane').show();</script>
 					</tr>
 					<tr>
 						<td>
+							<a id="BIND_BUFFER_ALIGNMENT" class="public" href="../wgpu/api/BIND_BUFFER_ALIGNMENT.html">
+								<code>BIND_BUFFER_ALIGNMENT</code>
+							</a>
+						</td>
+						<td>
+							<code class="prettyprint lang-d"><span class="kwd">const</span><span class="pun">(</span><span class="typ">uint</span><span class="pun">)</span></code>
+						</td>
+						<td>Bound uniform/storage buffer offsets must be aligned to this number.
+</td>
+					</tr>
+					<tr>
+						<td>
 							<a id="COPY_BYTES_PER_ROW_ALIGNMENT" class="public" href="../wgpu/api/COPY_BYTES_PER_ROW_ALIGNMENT.html">
 								<code>COPY_BYTES_PER_ROW_ALIGNMENT</code>
 							</a>
 						</td>
 						<td>
-							<code class="prettyprint lang-d"><span class="kwd">const</span><span class="pun">(</span><span class="typ">int</span><span class="pun">)</span></code>
+							<code class="prettyprint lang-d"><span class="kwd">const</span><span class="pun">(</span><span class="typ">uint</span><span class="pun">)</span></code>
 						</td>
-						<td>Buffer-Texture copies must have bytes_per_row aligned to this number.
+						<td>Buffer-Texture copies must have <code class="lang-d"><span class="typ">TextureDataLayout<wbr/></span><span class="pun">.</span><span class="pln">bytesPerRow</span></code> aligned to this number.
 </td>
 					</tr>
 					<tr>
@@ -300,7 +317,7 @@ $('#symbolSearchPane').show();</script>
 							</a>
 						</td>
 						<td>
-							<code class="prettyprint lang-d"><span class="kwd">const</span><span class="pun">(</span><span class="typ">int</span><span class="pun">)</span></code>
+							<code class="prettyprint lang-d"><span class="kwd">const</span><span class="pun">(</span><span class="typ">uint</span><span class="pun">)</span></code>
 						</td>
 						<td>Maximum anisotropy.
 </td>
@@ -312,7 +329,7 @@ $('#symbolSearchPane').show();</script>
 							</a>
 						</td>
 						<td>
-							<code class="prettyprint lang-d"><span class="kwd">const</span><span class="pun">(</span><span class="typ">int</span><span class="pun">)</span></code>
+							<code class="prettyprint lang-d"><span class="kwd">const</span><span class="pun">(</span><span class="typ">uint</span><span class="pun">)</span></code>
 						</td>
 						<td>Maximum number of color targets.
 </td>
@@ -324,7 +341,7 @@ $('#symbolSearchPane').show();</script>
 							</a>
 						</td>
 						<td>
-							<code class="prettyprint lang-d"><span class="kwd">const</span><span class="pun">(</span><span class="typ">int</span><span class="pun">)</span></code>
+							<code class="prettyprint lang-d"><span class="kwd">const</span><span class="pun">(</span><span class="typ">uint</span><span class="pun">)</span></code>
 						</td>
 						<td>Maximum amount of mipmap levels.
 </td>
@@ -336,9 +353,21 @@ $('#symbolSearchPane').show();</script>
 							</a>
 						</td>
 						<td>
-							<code class="prettyprint lang-d"><span class="kwd">const</span><span class="pun">(</span><span class="typ">int</span><span class="pun">)</span></code>
+							<code class="prettyprint lang-d"><span class="kwd">const</span><span class="pun">(</span><span class="typ">uint</span><span class="pun">)</span></code>
 						</td>
 						<td>Maximum number of vertex buffers.
+</td>
+					</tr>
+					<tr>
+						<td>
+							<a id="QUERY_SIZE" class="public" href="../wgpu/api/QUERY_SIZE.html">
+								<code>QUERY_SIZE</code>
+							</a>
+						</td>
+						<td>
+							<code class="prettyprint lang-d"><span class="kwd">const</span><span class="pun">(</span><span class="typ">uint</span><span class="pun">)</span></code>
+						</td>
+						<td>Size of a single occlusion/timestamp query, when copied into a buffer, in bytes.
 </td>
 					</tr>
 					<tr>
@@ -575,7 +604,7 @@ $('#symbolSearchPane').show();</script>
 						<td>
 							<code class="prettyprint lang-d"><span class="pln">bindings<wbr/></span><span class="pun">.</span><span class="typ">WGPURenderPassDescriptor</span></code>
 						</td>
-						<td>Describes a <code class="lang-d"><a href="../wgpu/api/RenderPass.html"><span class="typ">RenderPass</span></a></code>.
+						<td>Describes the attachments of a <code class="lang-d"><a href="../wgpu/api/RenderPass.html"><span class="typ">RenderPass</span></a></code>.
 </td>
 					</tr>
 					<tr>

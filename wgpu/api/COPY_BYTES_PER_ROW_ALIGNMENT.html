@@ -58,18 +58,23 @@ $('#symbolSearchPane').show();</script>
 						<a href="../../wgpu/api.html">api</a>
 					</div>
 				</li>
+				<li>
+					<div class="module ">
+						<a href="../../wgpu/limits.html">limits</a>
+					</div>
+				</li>
 			</ul>
 				</li>
 			</ul>
 		</nav>
 		<div id="main-contents">
-			<h1>Variable COPY_BYTES_PER_ROW_ALIGNMENT</h1><p>Buffer-Texture copies must have bytes_per_row aligned to this number.
+			<h1>Variable COPY_BYTES_PER_ROW_ALIGNMENT</h1><p>Buffer-Texture copies must have <code class="lang-d"><span class="typ">TextureDataLayout<wbr/></span><span class="pun">.</span><span class="pln">bytesPerRow</span></code> aligned to this number.
 </p>
 			<div class="prototype">
 				<code class="lang-d">
 					<div class="single-prototype">
-			<span class="kwd">const</span><span class="pun">(</span><span class="typ">int</span><span class="pun">)</span> <span class="pln">COPY_BYTES_PER_ROW_ALIGNMENT</span>
-			 <span class="pun">=</span> <span class="lit">256</span><span class="pun">;</span>
+			<span class="kwd">const</span><span class="pun">(</span><span class="typ">uint</span><span class="pun">)</span> <span class="pln">COPY_BYTES_PER_ROW_ALIGNMENT</span>
+			 <span class="pun">=</span> <span class="lit">256u</span><span class="pun">;</span>
 					</div>
 				</code>
 			</div>
@@ -77,7 +82,11 @@ $('#symbolSearchPane').show();</script>
 </p>
 </section>
 
-			
+			<section><h2>See Also</h2>
+<p><code class="lang-d"><a href="../../wgpu/api/Texture.paddedBytesPerRow.html"><span class="typ">Texture<wbr/></span><span class="pun">.</span><span class="pln">paddedBytesPerRow</span></a></code>: Size of one row of a texture's pixels/blocks, in bytes. Aligned to <code class="lang-d"><span class="pln">COPY_BYTES_PER_ROW_ALIGNMENT</span></code>.
+</p>
+</section>
+
 			<footer>
 				<table class="license-info">
 					<tr>

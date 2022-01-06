@@ -58,6 +58,11 @@ $('#symbolSearchPane').show();</script>
 						<a href="../../wgpu/api.html">api</a>
 					</div>
 				</li>
+				<li>
+					<div class="module ">
+						<a href="../../wgpu/limits.html">limits</a>
+					</div>
+				</li>
 			</ul>
 				</li>
 			</ul>
@@ -73,7 +78,15 @@ $('#symbolSearchPane').show();</script>
 					</div>
 				</code>
 			</div>
-			<section><p>Limits "better" than the default must be supported by the adapter and requested when requesting a device.
+			<section><p>Provided are two sets of defaults:
+<ul><li><code class="lang-d"><a href="../../wgpu/limits/defaultLimits.html" title="wgpu.limits.defaultLimits"><span class="pln">defaultLimits</span></a></code>: Set of limits that is guaranteed to work on all modern backends and is guaranteed to be supported by WebGPU. </li>
+<li><code class="lang-d"><a href="../../wgpu/limits/downlevelDefaultLimits.html" title="wgpu.limits.downlevelDefaultLimits"><span class="pln">downlevelDefaultLimits</span></a></code>: Set of limits that are guaranteed to be compatible with GLES3, WebGL, and D3D11. </li>
+</ul>
+</p>
+</section>
+
+			<section><h2>Remarks</h2>
+<p>Limits "better" than the default must be supported by the adapter and requested when requesting a device.
 If limits "better" than the adapter supports are requested, requesting a device will panic. Once a device is
 requested, you may only use resources up to the limits requested even if the adapter supports "better" limits.
 </p>
@@ -81,13 +94,11 @@ requested, you may only use resources up to the limits requested even if the ada
 <p>Requesting limits that are "better" than you need may cause performance to decrease because the implementation
 needs to support more than is needed. You should ideally only request exactly what you need.
 </p>
-
-<p><strong>See Also</strong>: https://gpuweb.github.io/gpuweb/#dictdef-gpulimits
-</p>
 </section>
-
-			<section><h2>See Also</h2>
-<p><a href="https://docs.rs/wgpu/0.6.0/wgpu/struct.Limits.html">wgpu::Limits</a>
+<section><h2>See Also</h2>
+<p><ul><li><a href="https://gpuweb.github.io/gpuweb/#dictdef-gpulimits">gpuweb.github.io/gpuweb/#dictdef-gpulimits</a> </li>
+<li><a href="https://docs.rs/wgpu/0.10.2/wgpu/struct.Limits.html">wgpu::Limits</a> </li>
+</ul>
 </p>
 </section>
 

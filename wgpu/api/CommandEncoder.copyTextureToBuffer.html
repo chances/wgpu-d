@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8"/>
-		<title>Function CommandEncoder.copyTextureToBuffer - wgpu-d</title>
+		<title>CommandEncoder.copyTextureToBuffer - multiple declarations - wgpu-d</title>
 		<link rel="stylesheet" type="text/css" href="../../styles/ddox.css"/>
 		<link rel="stylesheet" href="../../prettify/prettify.css" type="text/css"/>
 		<script type="text/javascript" src="../../scripts/jquery.js">/**/</script><script type="text/javascript" src="../../scripts/ddox.js">/**/</script>
@@ -58,12 +58,77 @@ $('#symbolSearchPane').show();</script>
 						<a href="../../wgpu/api.html">api</a>
 					</div>
 				</li>
+				<li>
+					<div class="module ">
+						<a href="../../wgpu/limits.html">limits</a>
+					</div>
+				</li>
 			</ul>
 				</li>
 			</ul>
 		</nav>
 		<div id="main-contents">
-			<h1>Function CommandEncoder.copyTextureToBuffer</h1><p>Copy data from a texture to a buffer.
+			<h1>CommandEncoder.copyTextureToBuffer - multiple declarations</h1>
+			<nav class="page-nav">
+				<ul>
+					<li>
+						<a href="#0">
+							Function <code>CommandEncoder.copyTextureToBuffer</code>
+						</a>
+					</li>
+					<li>
+						<a href="#1">
+							Function <code>CommandEncoder.copyTextureToBuffer</code>
+						</a>
+					</li>
+					<li>
+						<a href="#2">
+							Function <code>CommandEncoder.copyTextureToBuffer</code>
+						</a>
+					</li>
+				</ul>
+			</nav><h2 id="0">Function CommandEncoder.copyTextureToBuffer</h2><p>Copy data from a <code class="lang-d"><a href="../../wgpu/api/Texture.html"><span class="typ">Texture</span></a></code> to a <code class="lang-d"><a href="../../wgpu/api/Buffer.html"><span class="typ">Buffer</span></a></code>.
+</p>
+			<div class="prototype">
+				<code class="lang-d">
+					<div class="single-prototype">
+			<span class="typ">void</span> <span class="pln">copyTextureToBuffer</span>
+			<span class="pun">(</span>
+			<br/>
+			&nbsp;&nbsp;<span class="kwd">const</span><span class="pun">(</span><a href="../../wgpu/api/Texture.html"><span class="typ">Texture</span></a><span class="pun">)</span> <span class="pln">source</span><span class="pun">,</span>
+			<br/>
+			&nbsp;&nbsp;<span class="kwd">const</span><span class="pun">(</span><a href="../../wgpu/api/Buffer.html"><span class="typ">Buffer</span></a><span class="pun">)</span> <span class="pln">destination</span>
+			<br/>
+			<span class="pun">)</span><span class="pun">;</span>
+					</div>
+				</code>
+			</div>
+			<section></section>
+
+			<section><h3>Remarks</h3>
+<p>Copies the whole extent of the <code class="lang-d"><a href="../../wgpu/api/CommandEncoder.copyTextureToBuffer.html#source"><span class="pln">source</span></a></code> texture.
+</p>
+</section>
+<h2 id="1">Function CommandEncoder.copyTextureToBuffer</h2><p>Copy data from a <code class="lang-d"><a href="../../wgpu/api/Texture.html"><span class="typ">Texture</span></a></code> to a <code class="lang-d"><a href="../../wgpu/api/Buffer.html"><span class="typ">Buffer</span></a></code>.
+</p>
+			<div class="prototype">
+				<code class="lang-d">
+					<div class="single-prototype">
+			<span class="typ">void</span> <span class="pln">copyTextureToBuffer</span>
+			<span class="pun">(</span>
+			<br/>
+			&nbsp;&nbsp;<span class="kwd">const</span><span class="pun">(</span><a href="../../wgpu/api/Texture.html"><span class="typ">Texture</span></a><span class="pun">)</span> <span class="pln">source</span><span class="pun">,</span>
+			<br/>
+			&nbsp;&nbsp;<span class="kwd">const</span><span class="pun">(</span><a href="../../wgpu/api/Buffer.html"><span class="typ">Buffer</span></a><span class="pun">)</span> <span class="pln">destination</span><span class="pun">,</span>
+			<br/>
+			&nbsp;&nbsp;<span class="kwd">const</span><span class="pun">(</span><span class="pln">bindings<wbr/></span><span class="pun">.</span><span class="typ">WGPUExtent3D</span><span class="pun">)</span> <span class="pln">copySize</span>
+			<br/>
+			<span class="pun">)</span><span class="pun">;</span>
+					</div>
+				</code>
+			</div>
+			
+			<h2 id="2">Function CommandEncoder.copyTextureToBuffer</h2><p>Copy data from a texture to a buffer.
 </p>
 			<div class="prototype">
 				<code class="lang-d">

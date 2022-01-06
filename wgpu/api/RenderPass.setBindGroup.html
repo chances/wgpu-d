@@ -58,6 +58,11 @@ $('#symbolSearchPane').show();</script>
 						<a href="../../wgpu/api.html">api</a>
 					</div>
 				</li>
+				<li>
+					<div class="module ">
+						<a href="../../wgpu/limits.html">limits</a>
+					</div>
+				</li>
 			</ul>
 				</li>
 			</ul>
@@ -75,13 +80,16 @@ $('#symbolSearchPane').show();</script>
 			<br/>
 			&nbsp;&nbsp;<a href="../../wgpu/api/BindGroup.html"><span class="typ">BindGroup</span></a> <span class="pln">bindGroup</span><span class="pun">,</span>
 			<br/>
-			&nbsp;&nbsp;<span class="typ">ulong</span><span class="pun">[]</span> <span class="pln">offsets</span>
+			&nbsp;&nbsp;<span class="kwd">const</span><span class="pun">(</span><span class="typ">uint</span><span class="pun">[]</span><span class="pun">)</span> <span class="pln">offsets</span>
 			<br/>
 			<span class="pun">)</span><span class="pun">;</span>
 					</div>
 				</code>
 			</div>
-			
+			<section><p>If the bind group have dynamic offsets, provide them in order of their declaration. These offsets must be aligned to <code class="lang-d"><a href="../../wgpu/api/BIND_BUFFER_ALIGNMENT.html"><span class="pln">BIND_BUFFER_ALIGNMENT</span></a></code>.
+</p>
+</section>
+
 			
 			<footer>
 				<table class="license-info">

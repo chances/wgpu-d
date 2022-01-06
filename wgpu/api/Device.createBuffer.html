@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8"/>
-		<title>Function Device.createBuffer - wgpu-d</title>
+		<title>Device.createBuffer - multiple declarations - wgpu-d</title>
 		<link rel="stylesheet" type="text/css" href="../../styles/ddox.css"/>
 		<link rel="stylesheet" href="../../prettify/prettify.css" type="text/css"/>
 		<script type="text/javascript" src="../../scripts/jquery.js">/**/</script><script type="text/javascript" src="../../scripts/ddox.js">/**/</script>
@@ -58,12 +58,61 @@ $('#symbolSearchPane').show();</script>
 						<a href="../../wgpu/api.html">api</a>
 					</div>
 				</li>
+				<li>
+					<div class="module ">
+						<a href="../../wgpu/limits.html">limits</a>
+					</div>
+				</li>
 			</ul>
 				</li>
 			</ul>
 		</nav>
 		<div id="main-contents">
-			<h1>Function Device.createBuffer</h1><p>Creates a new buffer.
+			<h1>Device.createBuffer - multiple declarations</h1>
+			<nav class="page-nav">
+				<ul>
+					<li>
+						<a href="#0">
+							Function <code>Device.createBuffer</code>
+						</a>
+					</li>
+					<li>
+						<a href="#1">
+							Function <code>Device.createBuffer</code>
+						</a>
+					</li>
+				</ul>
+			</nav><h2 id="0">Function Device.createBuffer</h2><p>Creates a new buffer.
+</p>
+			<div class="prototype">
+				<code class="lang-d">
+					<div class="single-prototype">
+			<a href="../../wgpu/api/Buffer.html"><span class="typ">Buffer</span></a> <span class="pln">createBuffer</span>
+			<span class="pun">(</span>
+			<br/>
+			&nbsp;&nbsp;<span class="pln">wgpu<wbr/></span><span class="pun">.</span><span class="pln">api<wbr/></span><span class="pun">.</span><span class="pln">__mixin147<wbr/></span><span class="pun">.</span><span class="typ">BufferUsage</span> <span class="pln">usage</span><span class="pun">,</span>
+			<br/>
+			&nbsp;&nbsp;<span class="typ">uint</span> <span class="pln">size</span><span class="pun">,</span>
+			<br/>
+			&nbsp;&nbsp;<span class="pln">std<wbr/></span><span class="pun">.</span><span class="pln">typecons<wbr/></span><span class="pun">.</span><span class="typ">Flag</span>!("mappedAtCreation") <span class="pln">mappedAtCreation</span> <span class="pun">=</span> <span class="typ">Flag<wbr/></span><span class="pun">.</span><span class="pln">no</span><span class="pun">,</span>
+			<br/>
+			&nbsp;&nbsp;<span class="typ">string</span> <span class="pln">label</span> <span class="pun">=</span> <span class="kwd">null</span>
+			<br/>
+			<span class="pun">)</span><span class="pun">;</span>
+					</div>
+				</code>
+			</div>
+			<section></section>
+
+			<section><h3>Parameters</h3>
+<table><col class="caption"><tr><th>Name</th><th>Description</th></tr>
+<tr><td id="usage">usage</td><td> How the buffer shall be used.</td></tr>
+<tr><td id="size">size</td><td> Size of the buffer, in bytes.</td></tr>
+<tr><td id="mappedAtCreation">mappedAtCreation</td><td> Whether the buffer is mapped to local memory upon creation.</td></tr>
+<tr><td id="label">label</td><td> Optional, human-readable debug label for the buffer.</td></tr>
+</table>
+</section>
+<h2 id="1">Function Device.createBuffer</h2><p>Creates a new buffer.
 </p>
 			<div class="prototype">
 				<code class="lang-d">

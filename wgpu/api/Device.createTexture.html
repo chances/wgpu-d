@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8"/>
-		<title>Function Device.createTexture - wgpu-d</title>
+		<title>Device.createTexture - multiple declarations - wgpu-d</title>
 		<link rel="stylesheet" type="text/css" href="../../styles/ddox.css"/>
 		<link rel="stylesheet" href="../../prettify/prettify.css" type="text/css"/>
 		<script type="text/javascript" src="../../scripts/jquery.js">/**/</script><script type="text/javascript" src="../../scripts/ddox.js">/**/</script>
@@ -58,12 +58,124 @@ $('#symbolSearchPane').show();</script>
 						<a href="../../wgpu/api.html">api</a>
 					</div>
 				</li>
+				<li>
+					<div class="module ">
+						<a href="../../wgpu/limits.html">limits</a>
+					</div>
+				</li>
 			</ul>
 				</li>
 			</ul>
 		</nav>
 		<div id="main-contents">
-			<h1>Function Device.createTexture</h1><p>Creates a new <code class="lang-d"><a href="../../wgpu/api/Texture.html"><span class="typ">Texture</span></a></code>.
+			<h1>Device.createTexture - multiple declarations</h1>
+			<nav class="page-nav">
+				<ul>
+					<li>
+						<a href="#0">
+							Function <code>Device.createTexture</code>
+						</a>
+					</li>
+					<li>
+						<a href="#1">
+							Function <code>Device.createTexture</code>
+						</a>
+					</li>
+					<li>
+						<a href="#2">
+							Function <code>Device.createTexture</code>
+						</a>
+					</li>
+				</ul>
+			</nav><h2 id="0">Function Device.createTexture</h2><p>Creates a new <code class="lang-d"><a href="../../wgpu/api/Texture.html"><span class="typ">Texture</span></a></code>.
+</p>
+			<div class="prototype">
+				<code class="lang-d">
+					<div class="single-prototype">
+			<a href="../../wgpu/api/Texture.html"><span class="typ">Texture</span></a> <span class="pln">createTexture</span>
+			<span class="pun">(</span>
+			<br/>
+			&nbsp;&nbsp;<span class="typ">uint</span> <span class="pln">width</span><span class="pun">,</span>
+			<br/>
+			&nbsp;&nbsp;<span class="typ">uint</span> <span class="pln">height</span><span class="pun">,</span>
+			<br/>
+			&nbsp;&nbsp;<span class="pln">wgpu<wbr/></span><span class="pun">.</span><span class="pln">api<wbr/></span><span class="pun">.</span><span class="pln">__mixin142<wbr/></span><span class="pun">.</span><span class="typ">TextureFormat</span> <span class="pln">format</span><span class="pun">,</span>
+			<br/>
+			&nbsp;&nbsp;<span class="pln">wgpu<wbr/></span><span class="pun">.</span><span class="pln">api<wbr/></span><span class="pun">.</span><span class="pln">__mixin151<wbr/></span><span class="pun">.</span><span class="typ">TextureUsage</span> <span class="pln">usage</span><span class="pun">,</span>
+			<br/>
+			&nbsp;&nbsp;<span class="pln">wgpu<wbr/></span><span class="pun">.</span><span class="pln">api<wbr/></span><span class="pun">.</span><span class="pln">__mixin141<wbr/></span><span class="pun">.</span><span class="typ">TextureDimension</span> <span class="pln">dimension</span> <span class="pun">=</span> <span class="typ">TextureDimension<wbr/></span><span class="pun">.</span><span class="pln">_2D</span><span class="pun">,</span>
+			<br/>
+			&nbsp;&nbsp;<span class="typ">uint</span> <span class="pln">mipLevelCount</span> <span class="pun">=</span> <span class="lit">1u</span><span class="pun">,</span>
+			<br/>
+			&nbsp;&nbsp;<span class="typ">uint</span> <span class="pln">sampleCount</span> <span class="pun">=</span> <span class="lit">1u</span><span class="pun">,</span>
+			<br/>
+			&nbsp;&nbsp;<span class="typ">uint</span> <span class="pln">depthOrArrayLayers</span> <span class="pun">=</span> <span class="lit">1u</span><span class="pun">,</span>
+			<br/>
+			&nbsp;&nbsp;<span class="typ">string</span> <span class="pln">label</span> <span class="pun">=</span> <span class="kwd">null</span>
+			<br/>
+			<span class="pun">)</span><span class="pun">;</span>
+					</div>
+				</code>
+			</div>
+			<section></section>
+
+			<section><h3>Remarks</h3>
+<p>The created texture will have one <a href="https://en.wikipedia.org/wiki/Mipmap">mip level</a> and a single sample used in fragments.
+</p>
+</section>
+<section><h3>Parameters</h3>
+<table><col class="caption"><tr><th>Name</th><th>Description</th></tr>
+<tr><td id="width">width</td><td> Width of the texture.</td></tr>
+<tr><td id="height">height</td><td> Height of the texture.</td></tr>
+<tr><td id="format">format</td><td> Bit-level format of the texture's data.</td></tr>
+<tr><td id="usage">usage</td><td> How the texture shall be used.</td></tr>
+<tr><td id="dimension">dimension</td><td> Dimesnionality of the texture, e.g. 2D or 3D. Defaults to 2D.</td></tr>
+<tr><td id="mipLevelCount">mipLevelCount</td><td> Number of <a href="https://en.wikipedia.org/wiki/Mipmap">mipmapping levels</a> of this texture, usually used to reduce aliasing effects. Defaults to one.</td></tr>
+<tr><td id="sampleCount">sampleCount</td><td> Number of samples used in each fragment. Defaults to one.</td></tr>
+<tr><td id="depthOrArrayLayers">depthOrArrayLayers</td><td> Depth/total array layers of the texture. Defaults to one. See <code class="lang-d"><span class="typ">Limits<wbr/></span><span class="pun">.</span><span class="pln">maxTextureArrayLayers</span></code>.</td></tr>
+<tr><td id="label">label</td><td> Optional, human-readable debug label for the texture.</td></tr>
+</table>
+</section>
+<h2 id="1">Function Device.createTexture</h2><p>Creates a new <code class="lang-d"><a href="../../wgpu/api/Texture.html"><span class="typ">Texture</span></a></code>.
+</p>
+			<div class="prototype">
+				<code class="lang-d">
+					<div class="single-prototype">
+			<a href="../../wgpu/api/Texture.html"><span class="typ">Texture</span></a> <span class="pln">createTexture</span>
+			<span class="pun">(</span>
+			<br/>
+			&nbsp;&nbsp;<span class="pln">bindings<wbr/></span><span class="pun">.</span><span class="typ">WGPUExtent3D</span> <span class="pln">extent</span><span class="pun">,</span>
+			<br/>
+			&nbsp;&nbsp;<span class="pln">wgpu<wbr/></span><span class="pun">.</span><span class="pln">api<wbr/></span><span class="pun">.</span><span class="pln">__mixin142<wbr/></span><span class="pun">.</span><span class="typ">TextureFormat</span> <span class="pln">format</span><span class="pun">,</span>
+			<br/>
+			&nbsp;&nbsp;<span class="pln">wgpu<wbr/></span><span class="pun">.</span><span class="pln">api<wbr/></span><span class="pun">.</span><span class="pln">__mixin151<wbr/></span><span class="pun">.</span><span class="typ">TextureUsage</span> <span class="pln">usage</span><span class="pun">,</span>
+			<br/>
+			&nbsp;&nbsp;<span class="pln">wgpu<wbr/></span><span class="pun">.</span><span class="pln">api<wbr/></span><span class="pun">.</span><span class="pln">__mixin141<wbr/></span><span class="pun">.</span><span class="typ">TextureDimension</span> <span class="pln">dimension</span> <span class="pun">=</span> <span class="typ">TextureDimension<wbr/></span><span class="pun">.</span><span class="pln">_2D</span><span class="pun">,</span>
+			<br/>
+			&nbsp;&nbsp;<span class="typ">uint</span> <span class="pln">mipLevelCount</span> <span class="pun">=</span> <span class="lit">1u</span><span class="pun">,</span>
+			<br/>
+			&nbsp;&nbsp;<span class="typ">uint</span> <span class="pln">sampleCount</span> <span class="pun">=</span> <span class="lit">1u</span><span class="pun">,</span>
+			<br/>
+			&nbsp;&nbsp;<span class="typ">string</span> <span class="pln">label</span> <span class="pun">=</span> <span class="kwd">null</span>
+			<br/>
+			<span class="pun">)</span><span class="pun">;</span>
+					</div>
+				</code>
+			</div>
+			<section></section>
+
+			<section><h3>Parameters</h3>
+<table><col class="caption"><tr><th>Name</th><th>Description</th></tr>
+<tr><td id="extent">extent</td><td> Size and depth/total array layers of the texture. See <code class="lang-d"><span class="typ">Limits<wbr/></span><span class="pun">.</span><span class="pln">maxTextureArrayLayers</span></code>.</td></tr>
+<tr><td id="format">format</td><td> Bit-level format of the texture's data.</td></tr>
+<tr><td id="usage">usage</td><td> How the texture shall be used.</td></tr>
+<tr><td id="dimension">dimension</td><td> Dimesnionality of the texture, e.g. 2D or 3D. Defaults to 2D.</td></tr>
+<tr><td id="mipLevelCount">mipLevelCount</td><td> Number of <a href="https://en.wikipedia.org/wiki/Mipmap">mipmapping levels</a> of this texture, usually used to reduce aliasing effects. Defaults to one.</td></tr>
+<tr><td id="sampleCount">sampleCount</td><td> Number of samples used in each fragment. Defaults to one.</td></tr>
+<tr><td id="label">label</td><td> Optional, human-readable debug label for the texture.</td></tr>
+</table>
+</section>
+<h2 id="2">Function Device.createTexture</h2><p>Creates a new <code class="lang-d"><a href="../../wgpu/api/Texture.html"><span class="typ">Texture</span></a></code>.
 </p>
 			<div class="prototype">
 				<code class="lang-d">
@@ -79,7 +191,7 @@ $('#symbolSearchPane').show();</script>
 			</div>
 			<section></section>
 
-			<section><h2>Parameters</h2>
+			<section><h3>Parameters</h3>
 <table><col class="caption"><tr><th>Name</th><th>Description</th></tr>
 <tr><td id="descriptor">descriptor</td><td> Specifies the general format of the texture.</td></tr>
 </table>

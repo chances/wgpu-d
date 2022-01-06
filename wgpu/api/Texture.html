@@ -58,6 +58,11 @@ $('#symbolSearchPane').show();</script>
 						<a href="../../wgpu/api.html">api</a>
 					</div>
 				</li>
+				<li>
+					<div class="module ">
+						<a href="../../wgpu/limits.html">limits</a>
+					</div>
+				</li>
 			</ul>
 				</li>
 			</ul>
@@ -96,21 +101,92 @@ $('#symbolSearchPane').show();</script>
 					</tr>
 				</table>
 			</section>
+			<section><h2>Properties</h2>
+				<table>
+					<col class="caption"/>
+					<tr>
+						<th>Name</th><th>Type</th><th>Description</th>
+					</tr>
+					<tr>
+						<td>
+							<a href="../../wgpu/api/Texture.asImageCopy.html" class="public property"><code>asImageCopy</code></a><span class="tableEntryAnnotation">[get]</span>
+						</td>
+						<td class="typecol"><code class="prettyprint lang-d"><span class="pln">bindings<wbr/></span><span class="pun">.</span><span class="typ">WGPUImageCopyTexture</span></code></td><td>Make an <code class="lang-d"><a href="../../wgpu/api/ImageCopyTexture.html"><span class="typ">ImageCopyTexture</span></a></code> representing the whole texture.
+</td>
+					</tr>
+					<tr>
+						<td>
+							<a href="../../wgpu/api/Texture.bytesPerBlock.html" class="public property"><code>bytesPerBlock</code></a><span class="tableEntryAnnotation">[get]</span>
+						</td>
+						<td class="typecol"><code class="prettyprint lang-d"><span class="typ">uint</span></code></td><td>Bytes per “block” of this texture, in bytes.
+</td>
+					</tr>
+					<tr>
+						<td>
+							<a href="../../wgpu/api/Texture.bytesPerRow.html" class="public property"><code>bytesPerRow</code></a><span class="tableEntryAnnotation">[get]</span>
+						</td>
+						<td class="typecol"><code class="prettyprint lang-d"><span class="typ">uint</span></code></td><td>Size of one row of a texture's pixels/blocks, in bytes.
+</td>
+					</tr>
+					<tr>
+						<td>
+							<a href="../../wgpu/api/Texture.dataLayout.html" class="public property"><code>dataLayout</code></a><span class="tableEntryAnnotation">[get]</span>
+						</td>
+						<td class="typecol"><code class="prettyprint lang-d"><span class="pln">bindings<wbr/></span><span class="pun">.</span><span class="typ">WGPUTextureDataLayout</span></code></td><td>Make a <code class="lang-d"><a href="../../wgpu/api/TextureDataLayout.html"><span class="typ">TextureDataLayout</span></a></code> given this texture's <code class="lang-d"><a href="../../wgpu/api/Texture.size.html"><span class="pln">size</span></a></code> and <code class="lang-d"><span class="typ">TextureFormat</span></code>.
+</td>
+					</tr>
+					<tr>
+						<td>
+							<a href="../../wgpu/api/Texture.defaultView.html" class="public property"><code>defaultView</code></a><span class="tableEntryAnnotation">[get]</span>
+						</td>
+						<td class="typecol"><code class="prettyprint lang-d"><a href="../../wgpu/api/TextureView.html"><span class="typ">TextureView</span></a></code></td><td>Creates a default view of this whole texture.
+</td>
+					</tr>
+					<tr>
+						<td>
+							<a href="../../wgpu/api/Texture.height.html" class="public property"><code>height</code></a><span class="tableEntryAnnotation">[get]</span>
+						</td>
+						<td class="typecol"><code class="prettyprint lang-d"><span class="typ">uint</span></code></td><td></td>
+					</tr>
+					<tr>
+						<td>
+							<a href="../../wgpu/api/Texture.paddedBytesPerRow.html" class="public property"><code>paddedBytesPerRow</code></a><span class="tableEntryAnnotation">[get]</span>
+						</td>
+						<td class="typecol"><code class="prettyprint lang-d"><span class="typ">uint</span></code></td><td>Size of one row of a texture's pixels/blocks, in bytes. Aligned to <code class="lang-d"><a href="../../wgpu/api/COPY_BYTES_PER_ROW_ALIGNMENT.html"><span class="pln">COPY_BYTES_PER_ROW_ALIGNMENT</span></a></code>.
+</td>
+					</tr>
+					<tr>
+						<td>
+							<a href="../../wgpu/api/Texture.pixelsPerBlock.html" class="public property"><code>pixelsPerBlock</code></a><span class="tableEntryAnnotation">[get]</span>
+						</td>
+						<td class="typecol"><code class="prettyprint lang-d"><span class="typ">uint</span></code></td><td></td>
+					</tr>
+					<tr>
+						<td>
+							<a href="../../wgpu/api/Texture.rowsPerImage.html" class="public property"><code>rowsPerImage</code></a><span class="tableEntryAnnotation">[get]</span>
+						</td>
+						<td class="typecol"><code class="prettyprint lang-d"><span class="typ">uint</span></code></td><td>“Rows” that make up a single “image”.
+</td>
+					</tr>
+					<tr>
+						<td>
+							<a href="../../wgpu/api/Texture.size.html" class="public property"><code>size</code></a><span class="tableEntryAnnotation">[get]</span>
+						</td>
+						<td class="typecol"><code class="prettyprint lang-d"><span class="pln">bindings<wbr/></span><span class="pun">.</span><span class="typ">WGPUExtent3D</span></code></td><td></td>
+					</tr>
+					<tr>
+						<td>
+							<a href="../../wgpu/api/Texture.width.html" class="public property"><code>width</code></a><span class="tableEntryAnnotation">[get]</span>
+						</td>
+						<td class="typecol"><code class="prettyprint lang-d"><span class="typ">uint</span></code></td><td></td>
+					</tr>
+				</table>
+			</section>
 			<section><h2>Methods</h2>
 				<table>
 					<col class="caption"/>
 					<tr>
 						<th>Name</th><th>Description</th>
-					</tr>
-					<tr>
-						<td>
-							<a href="../../wgpu/api/Texture.createDefaultView.html" class="public">
-								<code>createDefaultView</code>
-							</a>
-							<span class="tableEntryAnnotation">()</span>
-						</td>
-						<td>Creates a default view of this whole texture.
-</td>
 					</tr>
 					<tr>
 						<td>
@@ -135,7 +211,7 @@ $('#symbolSearchPane').show();</script>
 				</table>
 			</section>
 			<section><h2>See Also</h2>
-<p><a href="https://docs.rs/wgpu/0.6.0/wgpu/struct.Texture.html">wgpu::Texture</a>
+<p><a href="https://docs.rs/wgpu/0.10.2/wgpu/struct.Texture.html">wgpu::Texture</a>
 </p>
 </section>
 

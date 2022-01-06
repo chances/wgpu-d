@@ -58,6 +58,11 @@ $('#symbolSearchPane').show();</script>
 						<a href="../../wgpu/api.html">api</a>
 					</div>
 				</li>
+				<li>
+					<div class="module ">
+						<a href="../../wgpu/limits.html">limits</a>
+					</div>
+				</li>
 			</ul>
 				</li>
 			</ul>
@@ -145,9 +150,29 @@ $('#symbolSearchPane').show();</script>
 							<a href="../../wgpu/api/Device.createBuffer.html" class="public">
 								<code>createBuffer</code>
 							</a>
+							<span class="tableEntryAnnotation">(usage, size, mappedAtCreation, label)</span>
+						</td>
+						<td>Creates a new buffer.
+</td>
+					</tr>
+					<tr>
+						<td>
+							<a href="../../wgpu/api/Device.createBuffer.html" class="public">
+								<code>createBuffer</code>
+							</a>
 							<span class="tableEntryAnnotation">(descriptor)</span>
 						</td>
 						<td>Creates a new buffer.
+</td>
+					</tr>
+					<tr>
+						<td>
+							<a href="../../wgpu/api/Device.createCommandEncoder.html" class="public">
+								<code>createCommandEncoder</code>
+							</a>
+							<span class="tableEntryAnnotation">(label)</span>
+						</td>
+						<td>Creates an empty <code class="lang-d"><a href="../../wgpu/api/CommandEncoder.html"><span class="typ">CommandEncoder</span></a></code>.
 </td>
 					</tr>
 					<tr>
@@ -225,6 +250,26 @@ $('#symbolSearchPane').show();</script>
 							<a href="../../wgpu/api/Device.createTexture.html" class="public">
 								<code>createTexture</code>
 							</a>
+							<span class="tableEntryAnnotation">(width, height, format, usage, dimension, mipLevelCount, sampleCount, depthOrArrayLayers, label)</span>
+						</td>
+						<td>Creates a new <code class="lang-d"><a href="../../wgpu/api/Texture.html"><span class="typ">Texture</span></a></code>.
+</td>
+					</tr>
+					<tr>
+						<td>
+							<a href="../../wgpu/api/Device.createTexture.html" class="public">
+								<code>createTexture</code>
+							</a>
+							<span class="tableEntryAnnotation">(extent, format, usage, dimension, mipLevelCount, sampleCount, label)</span>
+						</td>
+						<td>Creates a new <code class="lang-d"><a href="../../wgpu/api/Texture.html"><span class="typ">Texture</span></a></code>.
+</td>
+					</tr>
+					<tr>
+						<td>
+							<a href="../../wgpu/api/Device.createTexture.html" class="public">
+								<code>createTexture</code>
+							</a>
 							<span class="tableEntryAnnotation">(descriptor)</span>
 						</td>
 						<td>Creates a new <code class="lang-d"><a href="../../wgpu/api/Texture.html"><span class="typ">Texture</span></a></code>.
@@ -273,7 +318,7 @@ $('#symbolSearchPane').show();</script>
 				</table>
 			</section>
 			<section><h2>See Also</h2>
-<p><a href="https://docs.rs/wgpu/0.6.0/wgpu/struct.Device.html">wgpu::Device</a>
+<p><a href="https://docs.rs/wgpu/0.10.2/wgpu/struct.Device.html">wgpu::Device</a>
 </p>
 </section>
 
