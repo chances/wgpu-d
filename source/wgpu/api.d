@@ -43,6 +43,9 @@ static const uint MAX_VERTEX_BUFFERS = 16;
 // TODO: Implement a wrapper around `WGPUQuerySet`
 alias QuerySet = WGPUQuerySet;
 
+// TODO: Because dealing with, "What if this debug label goes out of scope and gets GC'd?" is becoming a headache, convert offending `struct`ures (those with complex wrappers that aren't simply opaque pointers) to classes to reap those reference semantics: https://forum.dlang.org/post/ixfpxfdmnahtytftwald@forum.dlang.org
+// TODO: Also, for the aforementioned class conversions, ensure `id` handles and constructors whose types with `Device`-only member initializers are `package` private.
+
 alias ChainedStruct = WGPUChainedStruct;
 alias ChainedStructOut = WGPUChainedStructOut;
 alias AdapterProperties = WGPUAdapterProperties;
@@ -155,6 +158,7 @@ alias RenderPassDescriptor = WGPURenderPassDescriptor;
 /// Describes a `RenderPipeline`.
 /// See_Also: <a href="https://docs.rs/wgpu/0.10.2/wgpu/struct.RenderPipelineDescriptor.html">wgpu::RenderPipelineDescriptor</a>
 alias RenderPipelineDescriptor = WGPURenderPipelineDescriptor;
+// TODO: Wrap this into `Instance.requestAdapter`
 alias AdapterExtras = WGPUAdapterExtras;
 
 // Enumerations
@@ -663,6 +667,9 @@ class Device {
   bool ready() @property const {
     return id !is null;
   }
+
+  // TODO: void wgpuDeviceSetDeviceLostCallback(WGPUDevice device, WGPUDeviceLostCallback callback, void * userdata);
+  // TODO: void wgpuDeviceSetUncapturedErrorCallback(WGPUDevice device, WGPUErrorCallback callback, void * userdata);
 
   /// List all limits that were requested of this device.
   ///
