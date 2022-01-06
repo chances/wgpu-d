@@ -17,6 +17,9 @@
 		"gdc": "no",
 		"ldc": ">=1.28.0"
 	},
+  "systemDependencies-linux": "vulkan >= 1.1.0",
+  "systemDependencies-osx": "metal >= 2",
+  "systemDependencies-windows": "DirectX >= 11",
   "configurations": [
     {
       "name": "library",
