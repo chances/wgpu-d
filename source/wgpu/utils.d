@@ -24,14 +24,23 @@ alias BufferSlice = ubyte[];
 interface RenderEncoder {
   import wgpu.api : BindGroup, IndexFormat, RenderPipeline, ShaderStage;
 
+  ///
   void setBindGroup(uint index, BindGroup bindGroup, uint[] offsets);
+  ///
   void setPipeline(RenderPipeline pipeline);
+  ///
   void setIndexBuffer(BufferSlice bufferSlice, IndexFormat indexFormat);
+  ///
   void setVertexBuffer(uint slot, BufferSlice bufferSlice);
+  ///
   void draw(uint[] vertices, uint[] instances);
+  ///
   void drawIndexed(uint[] indices, uint baseVertex, uint[] instances);
+  ///
   void drawIndirect(Buffer indirectBuffer, ulong indirectOffset);
+  ///
   void drawIndexedIndirect(Buffer indirectBuffer, ulong indirectOffset);
+  ///
   void setPushConstants(ShaderStage stages, uint offset, ubyte[] data);
 }
 

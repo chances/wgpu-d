@@ -5,6 +5,8 @@ import std.stdio;
 import bindbc.glfw;
 import wgpu.api;
 
+package:
+
 string lastError = null;
 extern(C) void wgpu_glfw_error_callback(int error, const char* description) nothrow {
   import std.conv : ConvException;
@@ -160,16 +162,15 @@ void main() {
 
     int w, h;
     glfwGetFramebufferSize(window, &w, &h);
-    uint width = w.to!uint;
-    uint height = h.to!uint;
+    const width = w.to!uint;
+    const height = h.to!uint;
 
     // Resize render targets and then destroy the old ones
     auto extantSwapChain = swapChain;
     swapChain = swapChain.resize(device, width, height);
     extantSwapChain.destroy();
-    auto extantTexture = texture;
+    // FIXME: auto extantTexture = texture; extantTexture.destroy();
     texture = texture.resize(device, width, height);
-    // FIXME: extantTexture.destroy();
     auto extantOutputBuffer = outputBuffer;
     outputBuffer = outputBuffer.resize(device, texture.paddedBytesPerRow * texture.height);
     extantOutputBuffer.destroy();
@@ -190,7 +191,7 @@ void main() {
   }).toDelegate.bindDelegate);
 
   double elapsedTime = 0;
-  uint desiredFps = 60;
+  const uint desiredFps = 60;
   /// Approximate measure of the current FPS.
   double currentFps = 0;
   auto controls = "Press ESC to quit, P to capture framebuffer";
@@ -204,7 +205,7 @@ void main() {
 
     while (paused) glfwWaitEventsTimeout(0.25 / 2);
 
-    auto currentTime = enforce(glfwGetTime(), lastError);
+    const currentTime = enforce(glfwGetTime(), lastError);
     auto frameTime = elapsedTime - currentTime;
     currentFps = (1 / frameTime).abs;
     auto desiredFrameTime = 1 / desiredFps.to!double;

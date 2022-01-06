@@ -323,7 +323,7 @@ enum BlendMode : BlendState {
 /// Describes the multi-sampling state of a render pipeline.
 /// See_Also: <a href="https://docs.rs/wgpu/0.10.2/wgpu/struct.MultisampleState.html">wgpu::MultisampleState</a>
 struct MultisampleState {
-  WGPUMultisampleState state;
+  package WGPUMultisampleState state;
   alias state this;
 
   ///
@@ -341,9 +341,10 @@ struct MultisampleState {
 /// Describes the state of primitive assembly and rasterization in a render pipeline.
 /// See_Also: <a href="https://docs.rs/wgpu/0.10.2/wgpu/struct.PrimitiveState.html">wgpu::PrimitiveState</a>
 struct PrimitiveState {
-  WGPUPrimitiveState state;
+  package WGPUPrimitiveState state;
   alias state this;
 
+  ///
   this(WGPUPrimitiveTopology topology, WGPUIndexFormat indexFormat, WGPUFrontFace frontFace, WGPUCullMode cullMode) {
     state = WGPUPrimitiveState(null, topology, indexFormat, frontFace, cullMode);
   }
@@ -351,7 +352,7 @@ struct PrimitiveState {
 /// Describes the depth/stencil state in a render pipeline.
 /// See_Also: <a href="https://docs.rs/wgpu/0.10.2/wgpu/struct.DepthStencilState.html">wgpu::DepthStencilState</a>
 struct DepthStencilState {
-  WGPUDepthStencilState state;
+  package WGPUDepthStencilState state;
   alias state this;
 
   ///
@@ -401,7 +402,7 @@ class ColorTargetState {
 /// Describes the vertex process in a render pipeline.
 /// See_Also: <a href="https://docs.rs/wgpu/0.10.2/wgpu/struct.VertexState.html">wgpu::VertexState</a>
 struct VertexState {
-  WGPUVertexState state;
+  package WGPUVertexState state;
   alias state this;
 
   /// Params:
@@ -1012,6 +1013,7 @@ struct Surface {
   } else version (D_Ddoc) {
     /// Create a new `Surface` from a Windows window handle.
     static Surface fromWindowsHwnd(void* _hinstance, void* hwnd, string label = null);
+    /// ditto
     static Surface fromWindowsHwnd(Instance instance, void* _hinstance, void* hwnd, string label = null);
   }
   version (linux) {
@@ -1036,6 +1038,7 @@ struct Surface {
   } else version (D_Ddoc) {
     /// Create a new `Surface` from a Xlib window handle.
     static Surface fromXlib(void* display, uint window, string label = null);
+    /// ditto
     static Surface fromXlib(Instance instance, void* display, uint window, string label = null);
   }
   // TODO: Support Wayland with a `linux-wayland` version config once upstream wgpu-native supports it
