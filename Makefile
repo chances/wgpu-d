@@ -86,6 +86,7 @@ docs: docs/sitemap.xml
 clean:
 	rm -rf bin lib
 	dub clean
+	rm -f source/wgpu/bindings.i
 	@echo "Cleaning generated documentation..."
 	@rm -f docs.json
 	@rm -f docs/sitemap.xml docs/file_hashes.json
