@@ -46,6 +46,7 @@ alias QuerySet = WGPUQuerySet;
 alias ChainedStruct = WGPUChainedStruct;
 alias ChainedStructOut = WGPUChainedStructOut;
 alias AdapterProperties = WGPUAdapterProperties;
+/// See_Also: <a href="https://docs.rs/wgpu/0.10.2/wgpu/struct.BindGroupEntry.html">wgpu::BindGroupEntry</a>
 alias BindGroupEntry = WGPUBindGroupEntry;
 alias BlendComponent = WGPUBlendComponent;
 alias BufferBindingLayout = WGPUBufferBindingLayout;
@@ -141,14 +142,18 @@ alias ImageCopyTexture = WGPUImageCopyTexture;
 alias RenderPassColorAttachment = WGPURenderPassColorAttachment;
 /// Describes a `Texture`.
 alias TextureDescriptor = WGPUTextureDescriptor;
+/// Describes how the vertex buffer is interpreted.
+/// See_Also: <a href="https://docs.rs/wgpu/0.10.2/wgpu/struct.VertexBufferLayout.html">wgpu::VertexBufferLayout</a>
 alias VertexBufferLayout = WGPUVertexBufferLayout;
 /// Describes a `BindGroupLayout`.
 alias BindGroupLayoutDescriptor = WGPUBindGroupLayoutDescriptor;
 /// Describes a `ComputePipeline`.
+/// See_Also: <a href="https://docs.rs/wgpu/0.10.2/wgpu/struct.ComputePipelineDescriptor.html">wgpu::ComputePipelineDescriptor</a>
 alias ComputePipelineDescriptor = WGPUComputePipelineDescriptor;
 /// Describes the attachments of a `RenderPass`.
 alias RenderPassDescriptor = WGPURenderPassDescriptor;
 /// Describes a `RenderPipeline`.
+/// See_Also: <a href="https://docs.rs/wgpu/0.10.2/wgpu/struct.RenderPipelineDescriptor.html">wgpu::RenderPipelineDescriptor</a>
 alias RenderPipelineDescriptor = WGPURenderPipelineDescriptor;
 alias AdapterExtras = WGPUAdapterExtras;
 
@@ -243,6 +248,8 @@ mixin EnumAlias!WGPUTextureAspect;
 mixin EnumAlias!WGPUTextureComponentType;
 mixin EnumAlias!WGPUTextureDimension;
 mixin EnumAlias!WGPUTextureFormat;
+/// Specific type of a sample in a texture binding.
+/// See_Also: <a href="https://docs.rs/wgpu/0.10.2/wgpu/struct.TextureSampleType.html">wgpu::TextureSampleType</a>
 mixin EnumAlias!WGPUTextureSampleType;
 mixin EnumAlias!WGPUTextureViewDimension;
 mixin EnumAlias!WGPUVertexFormat;
@@ -254,6 +261,8 @@ mixin EnumAlias!WGPUVertexStepMode;
 /// These can be combined in a bitwise combination.
 /// See_Also: <a href="https://docs.rs/wgpu/0.10.2/wgpu/struct.BufferUsages.html">wgpu::BufferUsages</a>
 mixin EnumAlias!WGPUBufferUsage;
+/// Mask which enables/disables writes to different color/alpha channel.
+/// Disabled color channels will not be written to.
 mixin EnumAlias!WGPUColorWriteMask;
 mixin EnumAlias!WGPUMapMode;
 /// Describes the shader stages that a binding will be visible from.
@@ -586,7 +595,7 @@ struct Adapter {
 
   /// List the "best" limits that are supported by this adapter.
   ///
-  /// Limits must be explicitly requested in `Adapter.requestDevice` to set the values that you are allowed to use.
+  /// Limits must be explicitly requested in `Adapter.requestDevice` to control the values you are allowed to use.
   Limits limits() {
     assert(ready);
     WGPUSupportedLimits limits;
@@ -679,6 +688,8 @@ class Device {
   }
 
   /// Creates a shader module from SPIR-V source code.
+  ///
+  /// Shader modules are used to define programmable stages of a pipeline.
   ShaderModule createShaderModule(const byte[] spv) @trusted {
     // TODO: assert SPIR-V magic number is at the beginning of the stream
     // TODO: assert input is not longer than `size_t.max`
@@ -940,7 +951,8 @@ class Device {
 /// A handle to a presentable surface.
 ///
 /// A Surface represents a platform-specific surface (e.g. a window) to which rendered images may be presented.
-/// A Surface may be created with `Surface.create`.
+///
+/// A Surface may be created with `Surface.fromMetalLayer`, `Surface.fromWindowsHwnd`, or `Surface.fromXlib`.
 /// See_Also: <a href="https://docs.rs/wgpu/0.10.2/wgpu/struct.Surface.html">wgpu::Surface</a>
 struct Surface {
   /// Handle identifier.
@@ -1153,7 +1165,7 @@ class Texture {
     this.label = descriptor.label is null ? null : descriptor.label.fromStringz.to!string;
   }
 
-  ///
+  /// Size and depth/layer count of this texture.
   Extent3d size() @property const {
     return descriptor.size;
   }
@@ -1166,7 +1178,7 @@ class Texture {
     return descriptor.size.height;
   }
 
-  /// Bytes per “block” of this texture, in bytes.
+  /// Bytes per “block” of this texture.
   ///
   /// A “block” is one pixel or compressed block of a texture.
   ///
@@ -1256,7 +1268,11 @@ class Texture {
     }
   }
 
-  /// See_Also: <a href="https://docs.rs/wgpu/0.10.2/wgpu/struct.ImageDataLayout.html">wgpu::ImageDataLayout</a>
+  /// See_Also:
+  /// $(UL
+  ///   $(LI `Texture.bytesPerBlock` )
+  ///   $(LI <a href="https://docs.rs/wgpu/0.10.2/wgpu/struct.ImageDataLayout.html">wgpu::ImageDataLayout</a> )
+  /// )
   uint pixelsPerBlock() @property const {
     final switch (descriptor.format) {
       case TextureFormat.r8Snorm:
@@ -1363,7 +1379,6 @@ class Texture {
   }
 
   /// Make a `TextureDataLayout` given this texture's `size` and `TextureFormat`.
-  ///
   /// Returns: A result suitable for use in Buffer-Texture copies, e.g. `CommandEncoder.copyTextureToBuffer`.
   TextureDataLayout dataLayout() @property const {
     return TextureDataLayout(
@@ -1524,10 +1539,10 @@ struct CommandBuffer {
   const CommandBufferDescriptor descriptor;
 }
 
-/// A handle to a compiled shader module.
+/// A handle to a compiled shader module on the GPU.
 ///
-/// A `ShaderModule` represents a compiled shader module on the GPU. It can be created by passing valid SPIR-V source code to `Device.createShaderModule`.
-/// Shader modules are used to define programmable stages of a pipeline.
+/// A `ShaderModule` can be created by passing valid SPIR-V source code to `Device.createShaderModule`.
+/// Remarks: Shader modules are used to define programmable stages of a pipeline.
 /// See_Also: <a href="https://docs.rs/wgpu/0.10.2/wgpu/struct.ShaderModule.html">wgpu::ShaderModule</a>
 // TODO: Add docs akin to https://veldrid.dev/articles/specialization-constants.html
 struct ShaderModule {
@@ -1672,7 +1687,7 @@ struct CommandEncoder {
 struct BindGroup {
   /// Handle identifier.
   WGPUBindGroup id;
-  /// Describes this `BindGroup`.
+  /// Describes this binding group.
   BindGroupDescriptor descriptor;
 }
 
