@@ -1,0 +1,49 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+    {
+      "type": "shell",
+      "label": "dub: Lint wgpu-d",
+      "command": "dub lint",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": [
+        "$dmd",
+        {
+          "source": "dscanner",
+          "fileLocation":"absolute",
+          "severity": "warning",
+          "pattern": {
+            "regexp": "^(.*)\\((\\d+):(\\d+)\\)\\[(warn)\\]:\\s+(.*)$",
+            "file": 1,
+            "line": 2,
+            "column": 3,
+            "message": 5
+          },
+        }
+      ],
+      "group": "test",
+      "presentation": {
+        "reveal": "silent",
+        "panel": "shared",
+        "focus": true,
+        "clear": true
+      },
+      "detail": "dub lint"
+    },
+		{
+      "type": "dub",
+      "label": "dub: Test wgpu-d",
+			"test": true,
+			"cwd": "${workspaceFolder}",
+			"compiler": "$current",
+			"archType": "$current",
+			"buildType": "$current",
+			"configuration": "$current",
+			"problemMatcher": ["$dmd"],
+			"group": "test",
+			"detail": "dub test -b=debug -c=library"
+		},
+	]
+}

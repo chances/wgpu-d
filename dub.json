@@ -7,7 +7,8 @@
   "license": "MIT",
   "copyright": "Copyright © 2020-2022, Chance Snow",
   "subPackages": [
-    "examples/headless"
+    "examples/headless",
+    "examples/triangle"
   ],
   "targetType": "sourceLibrary",
   "targetPath": "bin",
@@ -17,6 +18,9 @@
 		"gdc": "no",
 		"ldc": ">=1.28.0"
 	},
+  "systemDependencies-linux": "vulkan >= 1.1.0",
+  "systemDependencies-osx": "metal >= 2",
+  "systemDependencies-windows": "DirectX >= 11",
   "configurations": [
     {
       "name": "library",

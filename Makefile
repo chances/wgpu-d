@@ -41,13 +41,17 @@ $(LIB_WGPU): $(LIB_WGPU_SOURCE)
 #################################################
 # Examples
 #################################################
-EXAMPLES := bin/headless
+EXAMPLES := bin/headless bin/triangle
 examples: $(EXAMPLES)
 .PHONY: examples
 
 HEADLESS_SOURCES := $(shell find examples/headless/source -name '*.d')
 bin/headless: $(SOURCES) $(HEADLESS_SOURCES) examples/headless/dub.json
 	cd examples/headless && dub build
+
+TRIANGLE_SOURCES := $(shell find examples/triangle/source -name '*.d')
+bin/triangle: $(SOURCES) $(TRIANGLE_SOURCES) examples/triangle/dub.json
+	cd examples/triangle && dub build
 
 cover: $(SOURCES)
 	dub test --build=unittest-cov
