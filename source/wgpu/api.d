@@ -679,15 +679,13 @@ class Device {
   }
 
   /// Creates a shader module from SPIR-V source code.
-  ShaderModule createShaderModule(const byte[] spv) {
-    import std.algorithm.iteration : map;
-    import std.array : array;
-
-    const bytes = spv.map!(byte_ => byte_.to!(const uint)).array;
+  ShaderModule createShaderModule(const byte[] spv) @trusted {
+    // TODO: assert SPIR-V magic number is at the beginning of the stream
+    // TODO: assert input is not longer than `size_t.max`
     ShaderModuleSPIRVDescriptor spirv = {
       chain: WGPUChainedStruct(null, cast(WGPUSType) SType.shaderModuleSPIRVDescriptor),
       codeSize: spv.length.to!uint,
-      code: bytes.ptr
+      code: spv.to!(uint[]).ptr,
     };
     auto desc = ShaderModuleDescriptor(cast(const(WGPUChainedStruct)*) &spirv);
     return ShaderModule(wgpuDeviceCreateShaderModule(id, &desc));
