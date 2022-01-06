@@ -1,6 +1,31 @@
 <!-- https://keepachangelog.com/en/1.0.0/ -->
 # Changelog
 
+## v0.1.0-alpha.3
+
+Improve ergonomics of the idiomatic API.
+
+### Added
+
+- Method overloads for:
+  - [`Device.createBuffer`](https://chances.github.io/wgpu-d/wgpu/api/Device.createBuffer.html)
+  - [`Device.createCommandEncoder`](https://chances.github.io/wgpu-d/wgpu/api/Device.createCommandEncoder.html)
+  - [`Device.createTexture`](https://chances.github.io/wgpu-d/wgpu/api/Device.createTexture.html)
+  - [`CommandEncoder.beginRenderPass`](https://chances.github.io/wgpu-d/wgpu/api/CommandEncoder.beginRenderPass.html)
+  - [`CommandEncoder.copyTextureToBuffer`](https://chances.github.io/wgpu-d/wgpu/api/CommandEncoder.copyTextureToBuffer.html)
+- [`RenderPass.colorAttachment`](https://chances.github.io/wgpu-d/wgpu/api/RenderPass.colorAttachment.html) static initializer
+- Utility [module](https://chances.github.io/wgpu-d/wgpu/limits.html) to help manage GPU limitations
+- Properties to `Texture`, several of which are useful to maintain alignment with Texture-Buffer copies:
+  - [`size`](https://chances.github.io/wgpu-d/wgpu/api/Texture.size.html)
+  - [`width`](https://chances.github.io/wgpu-d/wgpu/api/Texture.width.html)
+  - [`height`](https://chances.github.io/wgpu-d/wgpu/api/Texture.height.html)
+  - [`bytesPerBlock`](https://chances.github.io/wgpu-d/wgpu/api/Texture.bytesPerBlock.html)
+  - [`pixelsPerBlock`](https://chances.github.io/wgpu-d/wgpu/api/Texture.pixelsPerBlock.html)
+  - [`bytesPerRow`](https://chances.github.io/wgpu-d/wgpu/api/Texture.bytesPerRow.html)
+  - [`paddedBytesPerRow`](https://chances.github.io/wgpu-d/wgpu/api/Texture.paddedBytesPerRow.html)
+  - [`asImageCopy`](https://chances.github.io/wgpu-d/wgpu/api/Texture.asImageCopy.html)
+  - [`dataLayout`](https://chances.github.io/wgpu-d/wgpu/api/Texture.dataLayout.html)
+
 ## v0.1.0-alpha.2
 
 Upgraded to [`wgpu-native`@0.10.4.1](https://github.com/gfx-rs/wgpu-native/releases/tag/v0.10.4.1).
