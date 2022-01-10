@@ -1,0 +1,15 @@
+.dub
+docs.json
+__dummy.html
+docs/
+/cube
+cube.so
+cube.dylib
+cube.dll
+cube.a
+cube.lib
+cube-test-*
+*.exe
+*.o
+*.obj
+*.lst

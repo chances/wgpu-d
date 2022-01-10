@@ -41,16 +41,21 @@ $(LIB_WGPU): $(LIB_WGPU_SOURCE)
 #################################################
 # Examples
 #################################################
-EXAMPLES := bin/headless bin/triangle
+example_utils_SOURCES := $(shell find examples/utils/source -name '*.d')
+EXAMPLES := bin/cube bin/headless bin/triangle
 examples: $(EXAMPLES)
 .PHONY: examples
 
-HEADLESS_SOURCES := $(shell find examples/headless/source -name '*.d')
-bin/headless: $(SOURCES) $(HEADLESS_SOURCES) examples/headless/dub.json
+cube_SOURCES := $(example_utils_SOURCES) $(shell find examples/cube/source -name '*.d')
+bin/cube: $(SOURCES) $(cube_SOURCES) examples/cube/dub.json
+	cd examples/cube && dub build
+
+headless_SOURCES := $(shell find examples/headless/source -name '*.d')
+bin/headless: $(SOURCES) $(headless_SOURCES) examples/headless/dub.json
 	cd examples/headless && dub build
 
-TRIANGLE_SOURCES := $(shell find examples/triangle/source -name '*.d')
-bin/triangle: $(SOURCES) $(TRIANGLE_SOURCES) examples/triangle/dub.json
+triangle_SOURCES := $(shell find examples/triangle/source -name '*.d')
+bin/triangle: $(SOURCES) $(triangle_SOURCES) examples/triangle/dub.json
 	cd examples/triangle && dub build
 
 cover: $(SOURCES)
