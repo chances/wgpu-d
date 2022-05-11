@@ -1,0 +1,34 @@
+{
+  "name": "utils",
+  "description": "Windowing and other utilities for WGPU D examples",
+	"authors": [
+		"Chance Snow"
+	],
+	"license": "MIT",
+  "copyright": "Copyright © 2022, Chance Snow",
+  "targetType": "sourceLibrary",
+  "targetPath": "bin",
+  "dependencies": {
+    "bindbc-glfw": "~>1.0.0",
+    "wgpu-d": {
+      "path": "../.."
+    }
+  },
+  "versions": ["GLFW_32"],
+  "subConfigurations": {
+    "bindbc-glfw": "static"
+  },
+  "preGenerateCommands-posix": [
+    "make -C subprojects -f glfw.Makefile"
+  ],
+  "libs": ["glfw3"],
+  "libs-linux": [
+    "X11"
+  ],
+  "lflags-posix": ["-L$PACKAGE_DIR/subprojects/glfw/src"],
+  "lflags-osx": [
+    "-framework", "AppKit",
+    "-framework", "Metal",
+    "-framework", "QuartzCore"
+  ]
+}
