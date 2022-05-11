@@ -1121,7 +1121,9 @@ class SwapChain {
   }
 
   /// Returns the next texture to be presented by the swapchain for drawing.
-  TextureView getNextTexture() @trusted const {
+  const(TextureView) getNextTexture() @trusted const {
+    import std.exception : enforce;
+
     TextureViewDescriptor viewDesc = {
       label: descriptor.label,
       format: descriptor.format,
@@ -1129,7 +1131,9 @@ class SwapChain {
       aspect: TextureAspect.all,
     };
     assert(id !is null);
-    return TextureView(wgpuSwapChainGetCurrentTextureView(cast(WGPUSwapChain) id), viewDesc, No.multisampled);
+    const view = TextureView(wgpuSwapChainGetCurrentTextureView(cast(WGPUSwapChain) id), viewDesc, No.multisampled);
+    enforce(view.id !is null, "Cannot acquire next swap chain texture");
+    return view;
   }
 
   ///

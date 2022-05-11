@@ -149,7 +149,6 @@ class Cube : Window {
 
     assert(swapChain !is null);
     auto swapChainTexture = swapChain.getNextTexture();
-    // FIXME: enforce(swapChainTexture.id !is null, "Cannot acquire next swap chain texture");
 
     // Render a cube
     auto encoder = device.createCommandEncoder();

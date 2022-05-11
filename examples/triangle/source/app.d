@@ -229,7 +229,6 @@ void main() {
     // Render
 
     auto swapChainTexture = swapChain.getNextTexture();
-    // FIXME: enforce(swapChainTexture.id !is null, "Cannot acquire next swap chain texture");
 
     // Render a triangle
     auto encoder = device.createCommandEncoder();
