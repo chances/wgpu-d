@@ -64,7 +64,8 @@ Mesh unitCube() {
   return Mesh(vertices, indices);
 }
 
-enum string cubeShader = `struct CameraUniform {
+enum string cubeShader = `[[block]]
+struct CameraUniform {
     view_proj: mat4x4<f32>;
 };
 [[group(0), binding(0)]]
@@ -156,6 +157,7 @@ class Cube : Window {
       RenderPass.colorAttachment(swapChainTexture, /* Black */ Color(0, 0, 0, 1))
     );
     renderPass.setPipeline(pipeline);
+    renderPass.setBindGroup(0, bindings);
     renderPass.setVertexBuffer(0, vertexBuffer);
     renderPass.setIndexBuffer!ushort(indexBuffer);
     renderPass.draw(cube.vertices.length.to!uint, 1);
