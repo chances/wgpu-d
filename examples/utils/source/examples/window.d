@@ -92,6 +92,13 @@ abstract class Window {
     glfwSetWindowIconifyCallback(_window, ((GLFWwindow*, int iconified) nothrow {
       paused = iconified != 0;
     }).toDelegate.bindDelegate);
+    glfwSetFramebufferSizeCallback(_window, ((GLFWwindow*, int width, int height) nothrow {
+      import std.conv : ConvException;
+      import std.exception : assumeWontThrow, ifThrown;
+
+      _size.width = width.to!uint.ifThrown!ConvException(_size.width).assumeWontThrow;
+      _size.height = height.to!uint.ifThrown!ConvException(_size.height).assumeWontThrow;
+    }).toDelegate.bindDelegate);
   }
   ~this() {
     glfwTerminate();
@@ -108,12 +115,13 @@ abstract class Window {
     import std.typecons : tuple;
     assert(_window !is null);
 
-    int* w, h;
-    glfwGetFramebufferSize(cast(GLFWwindow*) _window, w, h);
-    assert(w !is null && h !is null, lastError);
+    int w, h;
+    glfwGetFramebufferSize(cast(GLFWwindow*) _window, &w, &h);
+    assert((w != 0 && h != 0) || paused, lastError);
+    if (paused) return _size;
 
-    _size.width = (*w).to!uint;
-    _size.height = (*h).to!uint;
+    _size.width = w.to!uint;
+    _size.height = h.to!uint;
     return _size;
   }
 
