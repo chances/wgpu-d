@@ -442,7 +442,9 @@ struct VertexState {
     else if (buffers.length == 0)
       state = WGPUVertexState(null, shader.id, entryPoint.toStringz, constants.length.to!uint, constants.ptr, 0, null);
     else
-      state = WGPUVertexState(null, shader.id, entryPoint.toStringz, 0, null, bufferLayout.length.to!uint, bufferLayout.ptr);
+      state = WGPUVertexState(
+        null, shader.id, entryPoint.toStringz, 0, null, bufferLayout.length.to!uint, bufferLayout.ptr
+      );
   }
 }
 /// Describes the fragment process in a render pipeline.
@@ -791,7 +793,10 @@ class Device {
   /// ditto
   BindGroup createBindGroup(BindGroupDescriptor descriptor) @trusted const {
     assert(id !is null);
-    return BindGroup(wgpuDeviceCreateBindGroup(cast(WGPUDevice) id, cast(BindGroupDescriptor*) &descriptor), descriptor);
+    return BindGroup(
+      wgpuDeviceCreateBindGroup(cast(WGPUDevice) id, cast(BindGroupDescriptor*) &descriptor),
+      descriptor
+    );
   }
 
   /// Creates an empty `PipelineLayout` that has no bindings.
@@ -1893,7 +1898,9 @@ struct RenderPass {
   ///
   /// Remarks: The render target is cleared its content is loaded, i.e. `LoadOp.clear` is used.
   /// SeeAlso: `CommandEncoder.beginRenderPass`
-  static RenderPassColorAttachment colorAttachment(const TextureView view, Color clearColor, Flag!"store" store = Yes.store) {
+  static RenderPassColorAttachment colorAttachment(
+    const TextureView view, Color clearColor, Flag!"store" store = Yes.store
+  ) {
     return colorAttachment(view, null, LoadOp.clear, clearColor, store);
   }
   /// Create a color attachment for a render pass.
