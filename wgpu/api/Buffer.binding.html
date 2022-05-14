@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8"/>
-		<title>Function RenderEncoder.setIndexBuffer - wgpu-d</title>
+		<title>Buffer.binding - multiple declarations - wgpu-d</title>
 		<link rel="stylesheet" type="text/css" href="../../styles/ddox.css"/>
 		<link rel="stylesheet" href="../../prettify/prettify.css" type="text/css"/>
 		<script type="text/javascript" src="../../scripts/jquery.js">/**/</script><script type="text/javascript" src="../../scripts/ddox.js">/**/</script>
@@ -54,7 +54,7 @@ $('#symbolSearchPane').show();</script>
 					</div>
 			<ul class="tree-view">
 				<li>
-					<div class="module ">
+					<div class="module selected">
 						<a href="../../wgpu/api.html">api</a>
 					</div>
 				</li>
@@ -64,7 +64,7 @@ $('#symbolSearchPane').show();</script>
 					</div>
 				</li>
 				<li>
-					<div class="module selected">
+					<div class="module ">
 						<a href="../../wgpu/utils.html">utils</a>
 					</div>
 				</li>
@@ -73,16 +73,50 @@ $('#symbolSearchPane').show();</script>
 			</ul>
 		</nav>
 		<div id="main-contents">
-			<h1>Function RenderEncoder.setIndexBuffer</h1><p></p>
+			<h1>Buffer.binding - multiple declarations</h1>
+			<nav class="page-nav">
+				<ul>
+					<li>
+						<a href="#0">
+							Function <code>Buffer.binding</code>
+						</a>
+					</li>
+					<li>
+						<a href="#1">
+							Function <code>Buffer.binding</code>
+						</a>
+					</li>
+				</ul>
+			</nav><h2 id="0">Function Buffer.binding</h2><p>Creates a buffer binding starting at <code class="lang-d"><a href="../../wgpu/api/Buffer.binding.html#offset"><span class="pln">offset</span></a></code> and ending at the end of the buffer.
+</p>
 			<div class="prototype">
 				<code class="lang-d">
 					<div class="single-prototype">
-			<span class="kwd">abstract </span><span class="typ">void</span> <span class="pln">setIndexBuffer</span>
+			<span class="pln">bindings<wbr/></span><span class="pun">.</span><span class="typ">WGPUBindGroupEntry</span> <span class="pln">binding</span>
 			<span class="pun">(</span>
 			<br/>
-			&nbsp;&nbsp;<span class="typ">ubyte</span><span class="pun">[]</span> <span class="pln">bufferSlice</span><span class="pun">,</span>
+			&nbsp;&nbsp;<span class="typ">uint</span> <span class="pln">location</span><span class="pun">,</span>
 			<br/>
-			&nbsp;&nbsp;<span class="pln">wgpu<wbr/></span><span class="pun">.</span><span class="pln">api<wbr/></span><span class="pun">.</span><span class="pln">__mixin127<wbr/></span><span class="pun">.</span><span class="typ">IndexFormat</span> <span class="pln">indexFormat</span>
+			&nbsp;&nbsp;<span class="typ">uint</span> <span class="pln">offset</span> <span class="pun">=</span> <span class="lit">0u</span>
+			<br/>
+			<span class="pun">)</span><span class="pun">;</span>
+					</div>
+				</code>
+			</div>
+			
+			<h2 id="1">Function Buffer.binding</h2><p>Creates a buffer binding starting at <code class="lang-d"><a href="../../wgpu/api/Buffer.binding.html#offset"><span class="pln">offset</span></a></code> and ending at <code class="lang-d"><a href="../../wgpu/api/Buffer.binding.html#offset"><span class="pln">offset</span></a><span class="pun">+<a href="../../wgpu/api/Buffer.binding.html#size"></span><span class="pln">size</span></a></code>.
+</p>
+			<div class="prototype">
+				<code class="lang-d">
+					<div class="single-prototype">
+			<span class="pln">bindings<wbr/></span><span class="pun">.</span><span class="typ">WGPUBindGroupEntry</span> <span class="pln">binding</span>
+			<span class="pun">(</span>
+			<br/>
+			&nbsp;&nbsp;<span class="typ">uint</span> <span class="pln">location</span><span class="pun">,</span>
+			<br/>
+			&nbsp;&nbsp;<span class="typ">uint</span> <span class="pln">offset</span><span class="pun">,</span>
+			<br/>
+			&nbsp;&nbsp;<span class="typ">uint</span> <span class="pln">size</span>
 			<br/>
 			<span class="pun">)</span><span class="pun">;</span>
 					</div>
@@ -103,7 +137,7 @@ $('#symbolSearchPane').show();</script>
 					<tr>
 						<th>Copyright</th>
 						<td>
-							<p>Copyright © 2022 Chance Snow. All rights reserved.
+							<p>Copyright © 2020-2022 Chance Snow. All rights reserved.
 </p>
 
 						</td>

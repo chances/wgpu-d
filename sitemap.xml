@@ -23,6 +23,9 @@
 <url><loc>http://127.0.0.1/wgpu/api/BindGroupLayoutEntry.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/BlendMode.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/Buffer.html</loc></url>
+<url><loc>http://127.0.0.1/wgpu/api/Buffer.binding.html</loc></url>
+<url><loc>http://127.0.0.1/wgpu/api/Buffer.binding.html</loc></url>
+<url><loc>http://127.0.0.1/wgpu/api/Buffer.bindingLayout.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/Buffer.descriptor.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/Buffer.destroy.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/Buffer.getMappedRange.html</loc></url>
@@ -33,6 +36,8 @@
 <url><loc>http://127.0.0.1/wgpu/api/Buffer.unmap.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/BufferDescriptor.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/BufferMapAsyncStatus.html</loc></url>
+<url><loc>http://127.0.0.1/wgpu/api/BufferPair.html</loc></url>
+<url><loc>http://127.0.0.1/wgpu/api/bufferPair.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/Color.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/ColorTargetState.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/ColorTargetState.blend.html</loc></url>
@@ -69,6 +74,7 @@
 <url><loc>http://127.0.0.1/wgpu/api/ComputePipeline.destroy.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/ComputePipeline.id.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/ComputePipelineDescriptor.html</loc></url>
+<url><loc>http://127.0.0.1/wgpu/api/COPY_BUFFER_ALIGNMENT.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/COPY_BYTES_PER_ROW_ALIGNMENT.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/DepthStencilState.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/DepthStencilState.this.html</loc></url>
@@ -77,6 +83,7 @@
 <url><loc>http://127.0.0.1/wgpu/api/Device.createBindGroup.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/Device.createBindGroupLayout.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/Device.createBindGroupLayout.html</loc></url>
+<url><loc>http://127.0.0.1/wgpu/api/Device.createBuffer.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/Device.createBuffer.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/Device.createBuffer.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/Device.createCommandEncoder.html</loc></url>
@@ -151,9 +158,12 @@
 <url><loc>http://127.0.0.1/wgpu/api/RenderPass.setBindGroup.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/RenderPass.setBlendConstant.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/RenderPass.setIndexBuffer.html</loc></url>
+<url><loc>http://127.0.0.1/wgpu/api/RenderPass.setIndexBuffer.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/RenderPass.setPipeline.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/RenderPass.setScissorRect.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/RenderPass.setStencilReference.html</loc></url>
+<url><loc>http://127.0.0.1/wgpu/api/RenderPass.setVertexBuffer.html</loc></url>
+<url><loc>http://127.0.0.1/wgpu/api/RenderPass.setVertexBuffer.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/RenderPass.setVertexBuffers.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/RenderPass.setViewport.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/RenderPassColorAttachment.html</loc></url>
@@ -182,6 +192,7 @@
 <url><loc>http://127.0.0.1/wgpu/api/Surface.preferredFormat.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/SwapChain.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/SwapChain.descriptor.html</loc></url>
+<url><loc>http://127.0.0.1/wgpu/api/SwapChain.format.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/SwapChain.getNextTexture.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/SwapChain.label.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/SwapChain.present.html</loc></url>
@@ -217,6 +228,9 @@
 <url><loc>http://127.0.0.1/wgpu/api/TextureViewDescriptor.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/VERSION.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/VertexBufferLayout.html</loc></url>
+<url><loc>http://127.0.0.1/wgpu/api/VertexBufferLayout.arrayStride.html</loc></url>
+<url><loc>http://127.0.0.1/wgpu/api/VertexBufferLayout.attributes.html</loc></url>
+<url><loc>http://127.0.0.1/wgpu/api/VertexBufferLayout.stepMode.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/VertexState.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/VertexState.this.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/VertexState.this.html</loc></url>
@@ -227,6 +241,7 @@
 <url><loc>http://127.0.0.1/wgpu/utils.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/utils/BufferAddress.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/utils/BufferSlice.html</loc></url>
+<url><loc>http://127.0.0.1/wgpu/utils/createBuffer.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/utils/isResource.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/utils/RenderEncoder.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/utils/RenderEncoder.draw.html</loc></url>

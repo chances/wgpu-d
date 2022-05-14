@@ -78,6 +78,24 @@ $('#symbolSearchPane').show();</script>
 
 			<section></section>
 			<section>
+				<h2>Functions</h2>
+				<table>
+					<col class="caption"/>
+					<tr>
+						<th>Name</th><th>Description</th>
+					</tr>
+					<tr>
+						<td>
+							<code>
+								<a id="bufferPair" class="public" href="../wgpu/api/bufferPair.html">bufferPair</a><span class="tableEntryAnnotation">(buffer, offset)</span>
+							</code>
+						</td>
+						<td>Creates a tuple that describes a vertex buffer and an offset in bytes into that buffer.
+</td>
+					</tr>
+				</table>
+			</section>
+			<section>
 				<h2>Classes</h2>
 				<table>
 					<col class="caption"/>
@@ -321,6 +339,15 @@ $('#symbolSearchPane').show();</script>
 					<tr>
 						<td>
 							<code>
+								<a id="VertexBufferLayout" class="public" href="../wgpu/api/VertexBufferLayout.html">VertexBufferLayout</a>
+							</code>
+						</td>
+						<td>Describes how the vertex buffer is interpreted.
+</td>
+					</tr>
+					<tr>
+						<td>
+							<code>
 								<a id="VertexState" class="public" href="../wgpu/api/VertexState.html">VertexState</a>
 							</code>
 						</td>
@@ -373,6 +400,18 @@ $('#symbolSearchPane').show();</script>
 							<code class="prettyprint lang-d"><span class="kwd">const</span><span class="pun">(</span><span class="typ">uint</span><span class="pun">)</span></code>
 						</td>
 						<td>Bound uniform/storage buffer offsets must be aligned to this number.
+</td>
+					</tr>
+					<tr>
+						<td>
+							<a id="COPY_BUFFER_ALIGNMENT" class="public" href="../wgpu/api/COPY_BUFFER_ALIGNMENT.html">
+								<code>COPY_BUFFER_ALIGNMENT</code>
+							</a>
+						</td>
+						<td>
+							<code class="prettyprint lang-d"><span class="kwd">const</span><span class="pun">(</span><span class="typ">uint</span><span class="pun">)</span></code>
+						</td>
+						<td>Buffer-to-buffer copy, buffer clear offsets, and sizes must be aligned to this number.
 </td>
 					</tr>
 					<tr>
@@ -525,6 +564,18 @@ $('#symbolSearchPane').show();</script>
 							<code class="prettyprint lang-d"><span class="pln">bindings<wbr/></span><span class="pun">.</span><span class="typ">WGPUBufferDescriptor</span></code>
 						</td>
 						<td>Describes a <code class="lang-d"><a href="../wgpu/api/Buffer.html"><span class="typ">Buffer</span></a></code>.
+</td>
+					</tr>
+					<tr>
+						<td>
+							<a id="BufferPair" class="public" href="../wgpu/api/BufferPair.html">
+								<code>BufferPair</code>
+							</a>
+						</td>
+						<td>
+							<code class="prettyprint lang-d"><span class="pln">std<wbr/></span><span class="pun">.</span><span class="pln">typecons<wbr/></span><span class="pun">.</span><span class="typ">Tuple</span>!(wgpu.api.Buffer,uint)</code>
+						</td>
+						<td>Describes a vertex buffer and an offset in bytes into that buffer.
 </td>
 					</tr>
 					<tr>
@@ -765,18 +816,6 @@ $('#symbolSearchPane').show();</script>
 							<code class="prettyprint lang-d"><span class="pln">bindings<wbr/></span><span class="pun">.</span><span class="typ">WGPUTextureViewDescriptor</span></code>
 						</td>
 						<td>Describes a <code class="lang-d"><a href="../wgpu/api/TextureView.html"><span class="typ">TextureView</span></a></code>.
-</td>
-					</tr>
-					<tr>
-						<td>
-							<a id="VertexBufferLayout" class="public" href="../wgpu/api/VertexBufferLayout.html">
-								<code>VertexBufferLayout</code>
-							</a>
-						</td>
-						<td>
-							<code class="prettyprint lang-d"><span class="pln">bindings<wbr/></span><span class="pun">.</span><span class="typ">WGPUVertexBufferLayout</span></code>
-						</td>
-						<td>Describes how the vertex buffer is interpreted.
 </td>
 					</tr>
 				</table>

@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8"/>
-		<title>Function RenderEncoder.setIndexBuffer - wgpu-d</title>
+		<title>Alias BufferPair - wgpu-d</title>
 		<link rel="stylesheet" type="text/css" href="../../styles/ddox.css"/>
 		<link rel="stylesheet" href="../../prettify/prettify.css" type="text/css"/>
 		<script type="text/javascript" src="../../scripts/jquery.js">/**/</script><script type="text/javascript" src="../../scripts/ddox.js">/**/</script>
@@ -54,7 +54,7 @@ $('#symbolSearchPane').show();</script>
 					</div>
 			<ul class="tree-view">
 				<li>
-					<div class="module ">
+					<div class="module selected">
 						<a href="../../wgpu/api.html">api</a>
 					</div>
 				</li>
@@ -64,7 +64,7 @@ $('#symbolSearchPane').show();</script>
 					</div>
 				</li>
 				<li>
-					<div class="module selected">
+					<div class="module ">
 						<a href="../../wgpu/utils.html">utils</a>
 					</div>
 				</li>
@@ -73,23 +73,22 @@ $('#symbolSearchPane').show();</script>
 			</ul>
 		</nav>
 		<div id="main-contents">
-			<h1>Function RenderEncoder.setIndexBuffer</h1><p></p>
+			<h1>Alias BufferPair</h1><p>Describes a vertex buffer and an offset in bytes into that buffer.
+</p>
 			<div class="prototype">
 				<code class="lang-d">
 					<div class="single-prototype">
-			<span class="kwd">abstract </span><span class="typ">void</span> <span class="pln">setIndexBuffer</span>
-			<span class="pun">(</span>
-			<br/>
-			&nbsp;&nbsp;<span class="typ">ubyte</span><span class="pun">[]</span> <span class="pln">bufferSlice</span><span class="pun">,</span>
-			<br/>
-			&nbsp;&nbsp;<span class="pln">wgpu<wbr/></span><span class="pun">.</span><span class="pln">api<wbr/></span><span class="pun">.</span><span class="pln">__mixin127<wbr/></span><span class="pun">.</span><span class="typ">IndexFormat</span> <span class="pln">indexFormat</span>
-			<br/>
-			<span class="pun">)</span><span class="pun">;</span>
+			<span class="kwd">alias</span> <span class="pln">BufferPair</span>
+			 <span class="pun">=</span> <span class="pln">std<wbr/></span><span class="pun">.</span><span class="pln">typecons<wbr/></span><span class="pun">.</span><span class="typ">Tuple</span>!(wgpu.api.Buffer,uint)<span class="pun">;</span>
 					</div>
 				</code>
 			</div>
 			
-			
+			<section><h2>See Also</h2>
+<p><code class="lang-d"><a href="../../wgpu/api/RenderPass.setVertexBuffers.html"><span class="typ">RenderPass<wbr/></span><span class="pun">.</span><span class="pln">setVertexBuffers</span></a></code>
+</p>
+</section>
+
 			<footer>
 				<table class="license-info">
 					<tr>
@@ -103,7 +102,7 @@ $('#symbolSearchPane').show();</script>
 					<tr>
 						<th>Copyright</th>
 						<td>
-							<p>Copyright © 2022 Chance Snow. All rights reserved.
+							<p>Copyright © 2020-2022 Chance Snow. All rights reserved.
 </p>
 
 						</td>
