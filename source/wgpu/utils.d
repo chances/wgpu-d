@@ -8,7 +8,7 @@
 /// License: MIT License
 module wgpu.utils;
 
-import wgpu.api : Buffer, Device, SwapChain, Texture, TextureDimension, TextureViewDimension;
+import wgpu.api : Buffer, BufferUsage, Device, SwapChain, Texture, TextureDimension, TextureViewDimension;
 
 /// Integral type used for buffer offsets.
 /// See_Also: <a href="https://docs.rs/wgpu/0.10.2/wgpu/type.BufferAddress.html">wgpu::BufferAddress</a>
@@ -42,6 +42,37 @@ interface RenderEncoder {
   void drawIndexedIndirect(Buffer indirectBuffer, ulong indirectOffset);
   ///
   void setPushConstants(ShaderStage stages, uint offset, ubyte[] data);
+}
+
+/// Creates a buffer in wich `data` is loaded.
+/// See_Also:
+/// $(UL
+///   $(LI `Device.createBuffer` )
+///   $(LI <a href="https://docs.rs/wgpu/0.10.2/wgpu/util/trait.DeviceExt.html#tymethod.create_buffer_init">DeviceExt::createBufferInit</a> )
+/// )
+Buffer createBuffer(const Device device, BufferUsage usage, ubyte[] data, string label = null) {
+  import std.algorithm : copy;
+  import std.conv : to;
+  import std.typecons : No, Yes;
+  import wgpu.api : COPY_BUFFER_ALIGNMENT;
+
+  // Skip mapping if the buffer is empty
+  if (data.length == 0) return device.createBuffer(usage, data.length.to!uint, label);
+
+  const unpaddedSize = data.length;
+  // Valid vulkan usage:
+  // 1. buffer size must be a multiple of COPY_BUFFER_ALIGNMENT.
+  // 2. buffer size must be greater than 0.
+  // Therefore, size is rounded up to the nearest multiple of COPY_BUFFER_ALIGNMENT, where the multiple is at least one.
+  const paddedSize = unpaddedSize + (unpaddedSize % COPY_BUFFER_ALIGNMENT);
+  auto buffer = device.createBuffer(usage, paddedSize.to!uint, Yes.mappedAtCreation, label);
+
+  // Copy data into buffer
+  auto buf = buffer.getMappedRange(0, unpaddedSize);
+  assert(data.copy(buf).length == 0, "Data was not copied into buffer evenly, i.e. buffer was not filled");
+  buffer.unmap();
+
+  return buffer;
 }
 
 /// Convert the given texture `dimension` into a texture view dimension.
@@ -81,7 +112,7 @@ bool valid(T)(T resource) if (isResource!T) {
 /// Recreates a new swap chain given an `extant` swap chain and a new size.
 ///
 /// Usually called as the result of a swap chain's underlying `wgpu.api.Surface` having been resized, e.g. the user resized your app's window.
-SwapChain resize(const SwapChain extant, Device device, uint width, uint height) @trusted {
+SwapChain resize(const SwapChain extant, const Device device, uint width, uint height) @trusted {
   import wgpu.api : PresentMode, TextureFormat, TextureUsage;
 
   assert(extant.valid, "Extant swap chain is invalid");
@@ -94,7 +125,7 @@ SwapChain resize(const SwapChain extant, Device device, uint width, uint height)
 
 /// Recreates a new texture given an `extant` texture and a new size.
 /// Remarks: Be aware this operation does $(B not) copy any data from the `extant` texture.
-Texture resize(Texture extant, Device device, uint width, uint height) @trusted {
+Texture resize(Texture extant, const Device device, uint width, uint height) @trusted {
   import wgpu.api : TextureDimension, TextureFormat, TextureUsage;
 
   assert(extant.valid, "Extant texture is invalid");
@@ -109,7 +140,7 @@ Texture resize(Texture extant, Device device, uint width, uint height) @trusted 
 
 /// Recreates a new buffer given an `extant` buffer and a new size.
 /// Remarks: Be aware this operation does $(B not) copy any data from the `extant` buffer.
-Buffer resize(Buffer extant, Device device, uint size) @trusted {
+Buffer resize(Buffer extant, const Device device, uint size) @trusted {
   import std.conv : to;
   import std.typecons : Flag;
   import wgpu.api : BufferUsage;

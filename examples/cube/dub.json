@@ -1,0 +1,28 @@
+{
+  "name": "cube",
+  "description": "Cube (windowed) example",
+	"authors": [
+		"Chance Snow"
+	],
+	"license": "MIT",
+  "copyright": "Copyright © 2022, Chance Snow",
+  "targetType": "executable",
+  "targetPath": "../../bin",
+  "dependencies": {
+    "bindbc-glfw": "~>1.0.0",
+    "gfm:math": "~>8.0",
+    "wgpu-d": {
+      "path": "../.."
+    },
+    "utils": {
+      "path": "../utils"
+    }
+  },
+  "preBuildCommands-osx": [
+    "rm -f `find $PACKAGE_DIR/../../bin -name '*cube'`"
+  ],
+  "postBuildCommands-osx": [
+    "echo Fixing up libwgpu dylib path...",
+    "install_name_tool -change /Users/runner/work/wgpu-native/wgpu-native/target/x86_64-apple-darwin/debug/deps/libwgpu_native.dylib @executable_path/lib/libwgpu.dylib `find $PACKAGE_DIR/../../bin -name '*cube'`"
+  ]
+}

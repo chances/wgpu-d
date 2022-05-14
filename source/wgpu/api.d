@@ -5,10 +5,9 @@
 /// License: MIT License
 module wgpu.api;
 
-import core.stdc.config : c_ulong;
 import std.conv : asOriginalType, to;
 import std.string : fromStringz, toStringz;
-import std.typecons : Flag, No, Yes;
+import std.typecons : Flag, No, Tuple, Yes;
 
 import wgpu.bindings;
 public import wgpu.limits;
@@ -17,6 +16,8 @@ public import wgpu.limits;
 /// See_Also: <a href="https://github.com/gfx-rs/wgpu-native/releases/tag/v0.10.4.1">github.com/gfx-rs/wgpu-native/releases/tag/v0.10.4.1</a>
 static const VERSION = "0.10.4.1";
 
+/// Buffer-to-buffer copy, buffer clear offsets, and sizes must be aligned to this number.
+static const uint COPY_BUFFER_ALIGNMENT = 4;
 /// Bound uniform/storage buffer offsets must be aligned to this number.
 static const uint BIND_BUFFER_ALIGNMENT = 256;
 
@@ -145,9 +146,6 @@ alias ImageCopyTexture = WGPUImageCopyTexture;
 alias RenderPassColorAttachment = WGPURenderPassColorAttachment;
 /// Describes a `Texture`.
 alias TextureDescriptor = WGPUTextureDescriptor;
-/// Describes how the vertex buffer is interpreted.
-/// See_Also: <a href="https://docs.rs/wgpu/0.10.2/wgpu/struct.VertexBufferLayout.html">wgpu::VertexBufferLayout</a>
-alias VertexBufferLayout = WGPUVertexBufferLayout;
 /// Describes a `BindGroupLayout`.
 alias BindGroupLayoutDescriptor = WGPUBindGroupLayoutDescriptor;
 /// Describes a `ComputePipeline`.
@@ -222,6 +220,7 @@ mixin EnumAlias!WGPUCreatePipelineAsyncStatus;
 mixin EnumAlias!WGPUCullMode;
 mixin EnumAlias!WGPUDeviceLostReason;
 mixin EnumAlias!WGPUErrorFilter;
+///
 mixin EnumAlias!WGPUErrorType;
 /// Features that are not guaranteed to be supported.
 ///
@@ -399,6 +398,16 @@ class ColorTargetState {
     return WGPUColorTargetState(null, cast(WGPUTextureFormat) format, &blend, writeMask);
   }
 }
+/// Describes how the vertex buffer is interpreted.
+/// See_Also: <a href="https://docs.rs/wgpu/0.10.2/wgpu/struct.VertexBufferLayout.html">wgpu::VertexBufferLayout</a>
+struct VertexBufferLayout {
+  /// Stride, in bytes, between elements of this buffer.
+  ulong arrayStride;
+  /// How often this vertex buffer is “stepped” forward.
+  VertexStepMode stepMode;
+  /// List of attributes which comprise a single vertex.
+  VertexAttribute[] attributes;
+}
 /// Describes the vertex process in a render pipeline.
 /// See_Also: <a href="https://docs.rs/wgpu/0.10.2/wgpu/struct.VertexState.html">wgpu::VertexState</a>
 struct VertexState {
@@ -418,12 +427,24 @@ struct VertexState {
   /// constants = The push constants provided to the compiled shader for this stage.
   /// buffers = The format of any vertex buffers used with this pipeline.
   this(ShaderModule shader, string entryPoint, ConstantEntry[] constants, VertexBufferLayout[] buffers = []) {
+    import std.algorithm : map;
+    import std.array : array;
+
+    auto bufferLayout = buffers.map!(b => WGPUVertexBufferLayout(
+      b.arrayStride,
+      b.stepMode,
+      b.attributes.length.to!uint,
+      b.attributes.ptr,
+    )).array;
+
     if (constants.length == 0 && buffers.length == 0)
       state = WGPUVertexState(null, shader.id, entryPoint.toStringz, 0, null, 0, null);
     else if (buffers.length == 0)
       state = WGPUVertexState(null, shader.id, entryPoint.toStringz, constants.length.to!uint, constants.ptr, 0, null);
     else
-      state = WGPUVertexState(null, shader.id, entryPoint.toStringz, 0, null, buffers.length.to!uint, buffers.ptr);
+      state = WGPUVertexState(
+        null, shader.id, entryPoint.toStringz, 0, null, bufferLayout.length.to!uint, bufferLayout.ptr
+      );
   }
 }
 /// Describes the fragment process in a render pipeline.
@@ -466,7 +487,7 @@ class FragmentState {
     this.targets = renderTargets.map!(t => t.state).array;
   }
 
-  package const(WGPUFragmentState) state() @trusted @property const {
+  package WGPUFragmentState state() @trusted @property const {
     return WGPUFragmentState(
       null, cast(WGPUShaderModule) shader.id, entryPoint.toStringz,
       constants.length.to!uint, constants.length == 0 ? null : constants.ptr,
@@ -547,11 +568,13 @@ struct Instance {
   }
   /// ditto
   static Adapter requestAdapter(
-    Surface compatibleSurface, PowerPreference powerPreference = PowerPreference.highPerformance,
+    const Surface compatibleSurface, PowerPreference powerPreference = PowerPreference.highPerformance,
     Flag!"forceFallbackAdapter" forceFallbackAdapter = No.forceFallbackAdapter
-  ) {
+  ) @trusted {
     assert(compatibleSurface.id !is null, "Given compatible surface is not valid");
-    return requestAdapter(RequestAdapterOptions(null, compatibleSurface.id, powerPreference, forceFallbackAdapter));
+    return requestAdapter(
+      RequestAdapterOptions(null, cast(WGPUSurface) compatibleSurface.id, powerPreference, forceFallbackAdapter)
+    );
   }
   /// ditto
   static Adapter requestAdapter(RequestAdapterOptions options) @trusted {
@@ -669,8 +692,16 @@ class Device {
     return id !is null;
   }
 
+  // https://microsoft.github.io/Win2D/WinUI3/html/HandlingDeviceLost.htm
   // TODO: void wgpuDeviceSetDeviceLostCallback(WGPUDevice device, WGPUDeviceLostCallback callback, void * userdata);
-  // TODO: void wgpuDeviceSetUncapturedErrorCallback(WGPUDevice device, WGPUErrorCallback callback, void * userdata);
+
+  // TODO: setUncapturedErrorCallback
+  // alias ErrorCallback = extern (C) void function(ErrorType type, const(char*) message, void* userdata);
+  // ///
+  // void setUncapturedErrorCallback(ErrorCallback callback, void* userData = null) const {
+  //   assert(id !is null);
+  //   wgpuDeviceSetUncapturedErrorCallback(cast(WGPUDevice) id, cast(WGPUErrorCallback) callback, userData);
+  // }
 
   /// List all limits that were requested of this device.
   ///
@@ -684,15 +715,17 @@ class Device {
   }
 
   /// Obtains a queue which can accept `CommandBuffer` submissions.
-  Queue queue() {
-    return Queue(wgpuDeviceGetQueue(id));
+  Queue queue() @trusted const {
+    assert(id !is null);
+    return Queue(wgpuDeviceGetQueue(cast(WGPUDevice) id));
   }
 
   /// Check for resource cleanups and mapping callbacks.
   /// Params:
   /// forceWait = Whether or not the call should block.
-  void poll(Flag!"forceWait" forceWait = No.forceWait) {
-    wgpuDevicePoll(id, forceWait);
+  void poll(Flag!"forceWait" forceWait = No.forceWait) @trusted const {
+    assert(id !is null);
+    wgpuDevicePoll(cast(WGPUDevice) id, forceWait);
   }
 
   /// Creates a shader module from SPIR-V source code.
@@ -701,41 +734,43 @@ class Device {
   ShaderModule createShaderModule(const byte[] spv) @trusted {
     // TODO: assert SPIR-V magic number is at the beginning of the stream
     // TODO: assert input is not longer than `size_t.max`
-    ShaderModuleSPIRVDescriptor spirv = {
+    const ShaderModuleSPIRVDescriptor spirv = {
       chain: WGPUChainedStruct(null, cast(WGPUSType) SType.shaderModuleSPIRVDescriptor),
       codeSize: spv.length.to!uint,
       code: spv.to!(uint[]).ptr,
     };
-    auto desc = ShaderModuleDescriptor(cast(const(WGPUChainedStruct)*) &spirv);
+    auto desc = ShaderModuleDescriptor(&spirv.chain);
     return ShaderModule(wgpuDeviceCreateShaderModule(id, &desc));
   }
 
   /// Creates a shader module from WGSL source code.
   ///
   /// Shader modules are used to define programmable stages of a pipeline.
-  ShaderModule createShaderModule(string wgsl) @trusted {
-    ShaderModuleWGSLDescriptor wgslDesc = {
+  ShaderModule createShaderModule(string wgsl) @trusted const {
+    const ShaderModuleWGSLDescriptor wgslDesc = {
       chain: WGPUChainedStruct(null, cast(WGPUSType) SType.shaderModuleWGSLDescriptor),
       source: wgsl.toStringz,
     };
-    auto desc = ShaderModuleDescriptor(cast(const(WGPUChainedStruct)*) &wgslDesc);
-    return ShaderModule(wgpuDeviceCreateShaderModule(id, &desc));
+    auto desc = ShaderModuleDescriptor(&wgslDesc.chain);
+    assert(id !is null);
+    return ShaderModule(wgpuDeviceCreateShaderModule(cast(WGPUDevice) id, &desc));
   }
 
   /// Creates an empty `CommandEncoder`.
   ///
   /// Params:
   /// label = Optional, human-readable debug label for the command encoder.
-  CommandEncoder createCommandEncoder(string label = null) {
+  CommandEncoder createCommandEncoder(string label = null) const {
     return createCommandEncoder(CommandEncoderDescriptor(null, label is null ? null : label.toStringz));
   }
   /// Creates an empty `CommandEncoder`.
-  CommandEncoder createCommandEncoder(const CommandEncoderDescriptor descriptor) {
-    return CommandEncoder(wgpuDeviceCreateCommandEncoder(id, &descriptor), descriptor);
+  CommandEncoder createCommandEncoder(const CommandEncoderDescriptor descriptor) @trusted const {
+    assert(id !is null);
+    return CommandEncoder(wgpuDeviceCreateCommandEncoder(cast(WGPUDevice) id, &descriptor), descriptor);
   }
 
   /// Creates a bind group layout.
-  BindGroupLayout createBindGroupLayout(BindGroupLayoutEntry[] entries, string label = null) {
+  BindGroupLayout createBindGroupLayout(BindGroupLayoutEntry[] entries, string label = null) const {
     // See https://docs.rs/wgpu/0.10.2/wgpu/struct.BindGroupLayoutDescriptor.html
     return createBindGroupLayout(BindGroupLayoutDescriptor(
       null, label is null ? null : label.toStringz,
@@ -743,29 +778,34 @@ class Device {
     ));
   }
   /// ditto
-  BindGroupLayout createBindGroupLayout(const BindGroupLayoutDescriptor descriptor) {
-    return BindGroupLayout(wgpuDeviceCreateBindGroupLayout(id, &descriptor), descriptor);
+  BindGroupLayout createBindGroupLayout(const BindGroupLayoutDescriptor descriptor) @trusted const {
+    assert(id !is null);
+    return BindGroupLayout(wgpuDeviceCreateBindGroupLayout(cast(WGPUDevice) id, &descriptor), descriptor);
   }
 
   /// Creates a new bind group.
-  BindGroup createBindGroup(BindGroupLayout layout, BindGroupEntry[] entries, string label = null) {
+  BindGroup createBindGroup(BindGroupLayout layout, BindGroupEntry[] entries, string label = null) const {
     assert(entries.length);
     return createBindGroup(
       BindGroupDescriptor(null, label is null ? null : label.toStringz, layout.id, entries.length.to!uint, entries.ptr)
     );
   }
   /// ditto
-  BindGroup createBindGroup(BindGroupDescriptor descriptor) {
-    return BindGroup(wgpuDeviceCreateBindGroup(id, cast(BindGroupDescriptor*) &descriptor), descriptor);
+  BindGroup createBindGroup(BindGroupDescriptor descriptor) @trusted const {
+    assert(id !is null);
+    return BindGroup(
+      wgpuDeviceCreateBindGroup(cast(WGPUDevice) id, cast(BindGroupDescriptor*) &descriptor),
+      descriptor
+    );
   }
 
   /// Creates an empty `PipelineLayout` that has no bindings.
-  PipelineLayout emptyPipelineLayout(string label = null) {
+  PipelineLayout emptyPipelineLayout(string label = null) const {
     return createPipelineLayout([], label);
   }
 
   /// Creates a bind group `PipelineLayout`.
-  PipelineLayout createPipelineLayout(const BindGroupLayout[] bindGroups, string label = null) {
+  PipelineLayout createPipelineLayout(const BindGroupLayout[] bindGroups, string label = null) const {
     import std.algorithm : map;
     import std.array : array;
 
@@ -777,8 +817,9 @@ class Device {
     return createPipelineLayout(desc);
   }
   /// ditto
-  PipelineLayout createPipelineLayout(const PipelineLayoutDescriptor descriptor) {
-    return PipelineLayout(wgpuDeviceCreatePipelineLayout(id, &descriptor), descriptor);
+  PipelineLayout createPipelineLayout(const PipelineLayoutDescriptor descriptor) @trusted const {
+    assert(id !is null);
+    return PipelineLayout(wgpuDeviceCreatePipelineLayout(cast(WGPUDevice) id, &descriptor), descriptor);
   }
 
   /// Creates a render pipeline.
@@ -789,7 +830,7 @@ class Device {
     VertexState vertexState, PrimitiveState primitiveState,
     MultisampleState multisampleState, FragmentState fragmentState,
     string label = null,
-  ) {
+  ) const {
     auto fragment = fragmentState.state;
     auto descriptor = RenderPipelineDescriptor(
       null,
@@ -806,7 +847,7 @@ class Device {
     const DepthStencilState depthStencilState,
     MultisampleState multisampleState, FragmentState fragmentState,
     string label = null,
-  ) {
+  ) const {
     auto fragment = fragmentState.state;
     auto descriptor = RenderPipelineDescriptor(
       null,
@@ -830,17 +871,26 @@ class Device {
   /// Params:
   /// usage = How the buffer shall be used.
   /// size = Size of the buffer, in bytes.
+  /// label = Optional, human-readable debug label for the buffer.
+  Buffer createBuffer(BufferUsage usage, uint size, const string label) const {
+    return createBuffer(usage, size, No.mappedAtCreation, label);
+  }
+  /// Creates a new buffer.
+  ///
+  /// Params:
+  /// usage = How the buffer shall be used.
+  /// size = Size of the buffer, in bytes.
   /// mappedAtCreation = Whether the buffer is mapped to local memory upon creation.
   /// label = Optional, human-readable debug label for the buffer.
   Buffer createBuffer(
     BufferUsage usage, uint size,
     Flag!"mappedAtCreation" mappedAtCreation = No.mappedAtCreation,
     const string label = null
-  ) {
+  ) const {
     return createBuffer(BufferDescriptor(null, label is null ? null : label.toStringz, usage, size, mappedAtCreation));
   }
   /// Creates a new buffer.
-  Buffer createBuffer(const BufferDescriptor descriptor) {
+  Buffer createBuffer(const BufferDescriptor descriptor) const {
     return new Buffer(this, descriptor);
   }
 
@@ -866,7 +916,7 @@ class Device {
     uint sampleCount = 1,
     uint depthOrArrayLayers = 1,
     const string label = null
-  ) {
+  ) const {
     return createTexture(TextureDescriptor(
       null,
       label is null ? null : label.toStringz,
@@ -893,7 +943,7 @@ class Device {
     uint mipLevelCount = 1,
     uint sampleCount = 1,
     const string label = null
-  ) {
+  ) const {
     assert(extent.depthOrArrayLayers > 0, "Textures must have at least one texel/array layer");
     assert(mipLevelCount > 0, "Textures must have at least one mipmap level");
     assert(sampleCount > 0, "Textures must have a non-zero sample count");
@@ -907,7 +957,7 @@ class Device {
   ///
   /// Params:
   /// descriptor = Specifies the general format of the texture.
-  Texture createTexture(const TextureDescriptor descriptor) {
+  Texture createTexture(const TextureDescriptor descriptor) const {
     return new Texture(this, descriptor);
   }
 
@@ -944,14 +994,14 @@ class Device {
     const Surface surface, uint width, uint height,
     const TextureFormat format, const TextureUsage usage,
     const PresentMode presentMode, const string label = null
-  ) {
+  ) const {
     return createSwapChain(surface, SwapChainDescriptor(
       null, label is null ? null : label.toStringz,
       usage, format, width, height, presentMode
     ));
   }
   /// ditto
-  SwapChain createSwapChain(const Surface surface, const SwapChainDescriptor descriptor) {
+  SwapChain createSwapChain(const Surface surface, const SwapChainDescriptor descriptor) const {
     return new SwapChain(this, surface, descriptor);
   }
 }
@@ -1044,10 +1094,10 @@ struct Surface {
   // TODO: Support Wayland with a `linux-wayland` version config once upstream wgpu-native supports it
 
   /// Retreive an optimal texture format for this `Surface`.
-  TextureFormat preferredFormat(Adapter adapter) {
+  TextureFormat preferredFormat(Adapter adapter) @trusted const {
     assert(id !is null);
     assert(adapter.ready);
-    return wgpuSurfaceGetPreferredFormat(id, adapter.id).asOriginalType.to!TextureFormat;
+    return wgpuSurfaceGetPreferredFormat(cast(WGPUSurface) id, adapter.id).asOriginalType.to!TextureFormat;
   }
 }
 
@@ -1065,27 +1115,39 @@ class SwapChain {
   /// Optional, human-readable debug label for this swap chain.
   const string label;
 
-  package this(Device device, const Surface surface, const SwapChainDescriptor descriptor) {
-    id = wgpuDeviceCreateSwapChain(device.id, cast(WGPUSurface) surface.id, &descriptor);
+  package this(const Device device, const Surface surface, const SwapChainDescriptor descriptor) {
+    id = wgpuDeviceCreateSwapChain(cast(WGPUDevice) device.id, cast(WGPUSurface) surface.id, &descriptor);
     this.surface = surface;
     this.descriptor = descriptor;
     this.label = descriptor.label is null ? null : descriptor.label.fromStringz.to!string;
   }
 
+  /// Texture format of this swap chain.
+  /// Remarks: The only guaranteed formats are `TextureFormat.bgra8Unorm` and `TextureFormat.bgra8UnormSrgb`;
+  TextureFormat format() @property inout {
+    return descriptor.format.asOriginalType.to!(inout TextureFormat);
+  }
+
   /// Returns the next texture to be presented by the swapchain for drawing.
-  TextureView getNextTexture() {
+  const(TextureView) getNextTexture() @trusted const {
+    import std.exception : enforce;
+
     TextureViewDescriptor viewDesc = {
       label: descriptor.label,
       format: descriptor.format,
       dimension: TextureViewDimension.undefined,
       aspect: TextureAspect.all,
     };
-    return TextureView(wgpuSwapChainGetCurrentTextureView(id), viewDesc, No.multisampled);
+    assert(id !is null);
+    const view = TextureView(wgpuSwapChainGetCurrentTextureView(cast(WGPUSwapChain) id), viewDesc, No.multisampled);
+    enforce(view.id !is null, "Cannot acquire next swap chain texture");
+    return view;
   }
 
   ///
-  void present() {
-    wgpuSwapChainPresent(id);
+  void present() @trusted inout {
+    assert(id !is null);
+    wgpuSwapChainPresent(cast(WGPUSwapChain) id);
   }
 }
 
@@ -1118,8 +1180,10 @@ class Buffer {
   /// Result of a call to `Buffer.mapReadAsync` or `Buffer.mapWriteAsync`.
   BufferMapAsyncStatus status = BufferMapAsyncStatus.unknown;
 
-  package this(Device device, const BufferDescriptor descriptor) {
-    id = wgpuDeviceCreateBuffer(device.id, &descriptor);
+  package this(const Device device, const BufferDescriptor descriptor) @trusted {
+    assert(device !is null && device.id !is null);
+    id = wgpuDeviceCreateBuffer(cast(WGPUDevice) device.id, &descriptor);
+    if (id !is null && descriptor.mappedAtCreation) status = BufferMapAsyncStatus.success;
     this.descriptor = descriptor;
     label = descriptor.label is null ? null : descriptor.label.fromStringz.to!string;
   }
@@ -1132,7 +1196,7 @@ class Buffer {
 
   /// Get the sliced `Buffer` data requested by either `Buffer.mapReadAsync` or `Buffer.mapWriteAsync`.
   ubyte[] getMappedRange(size_t start, size_t size) @trusted {
-    assert(start + size <= descriptor.size);
+    assert(start + size <= descriptor.size, "Attempted to map buffer out-of-bounds");
     assert(status == BufferMapAsyncStatus.success);
 
     auto data = wgpuBufferGetMappedRange(id, start, size);
@@ -1156,6 +1220,57 @@ class Buffer {
   /// Flushes any pending write operations and unmaps the buffer from host memory.
   void unmap() {
     wgpuBufferUnmap(id);
+    status = BufferMapAsyncStatus.unknown;
+  }
+
+  /// Params:
+  /// location = Unique binding location, equal to that of the corresponding `BindGroupEntry` and shader location.
+  /// visibility = Bitset of `ShaderStage` members. Each set bit indicates that a resource is accessible from the associated shader stage.
+  /// type = Required type of the buffer bound to the binding. Defaults to `BufferBindingType.uniform`.
+  /// hasDynamicOffset = Whether the binding has a dynamic offset.
+  /// minBindingSize = Minimum size of the binding, validated during `Device.createBindGroup`. Defaults to `0`.
+  ///
+  ///   If this is $(I not) `0`, pipeline creation validates that this value is large enough for the bindings declared in the shader.
+  ///
+  ///   If this is `0`, draw/dispatch commands validate that each binding in the group is large enough for the bindings declared in the shader.
+  BindGroupLayoutEntry bindingLayout(
+    uint location, ShaderStage visibility, BufferBindingType type = BufferBindingType.uniform,
+    Flag!"hasDynamicOffset" hasDynamicOffset = No.hasDynamicOffset, uint minBindingSize = 0
+  ) {
+    debug final switch (type) {
+      case BufferBindingType.uniform:
+        assert(
+          (descriptor.usage & BufferUsage.uniform) == BufferUsage.uniform,
+          "Buffer usage does not include `" ~ BufferUsage.uniform.stringof ~ "`"
+        );
+        break;
+      case BufferBindingType.storage:
+      case BufferBindingType.readOnlyStorage:
+        assert(
+          (descriptor.usage & BufferUsage.storage) == BufferUsage.storage,
+          "Buffer usage does not include `" ~ BufferUsage.storage.stringof ~ "`"
+        );
+        break;
+      case BufferBindingType.undefined:
+      case BufferBindingType.force32:
+    }
+    return BindGroupLayoutEntry(
+      null, location, visibility, BufferBindingLayout(null, type, hasDynamicOffset, minBindingSize)
+    );
+  }
+
+  /// Creates a buffer binding starting at `offset` and ending at the end of the buffer.
+  BindGroupEntry binding(uint location, uint offset = 0) {
+    import std.algorithm : max;
+    // See https://gpuweb.github.io/gpuweb/#abstract-opdef-effective-buffer-binding-size
+    return binding(location, offset, max(0, descriptor.size - offset).to!uint);
+  }
+  /// Creates a buffer binding starting at `offset` and ending at `offset+size`.
+  BindGroupEntry binding(uint location, uint offset, uint size) {
+    assert(size > 0, "Attempted to bind an empty buffer");
+    assert(offset + size <= descriptor.size, "Attempted to bind a buffer out-of-bounds");
+    BindGroupEntry binding = { binding: location, buffer: id, offset: offset, size: size };
+    return binding;
   }
 }
 
@@ -1169,8 +1284,9 @@ class Texture {
   /// Optional, human-readable debug label for this texture.
   const string label;
 
-  package this(Device device, TextureDescriptor descriptor) {
-    id = wgpuDeviceCreateTexture(device.id, &descriptor);
+  package this(const Device device, TextureDescriptor descriptor) @trusted {
+    assert(device !is null && device.id !is null);
+    id = wgpuDeviceCreateTexture(cast(WGPUDevice) device.id, &descriptor);
     this.descriptor = descriptor;
     this.label = descriptor.label is null ? null : descriptor.label.fromStringz.to!string;
   }
@@ -1738,12 +1854,13 @@ class RenderPipeline {
   /// Describes the fragment process in this render pipeline.
   const FragmentState fragmentState;
 
-  package this(Device device, RenderPipelineDescriptor descriptor, const FragmentState fragmentState) {
+  package this(const Device device, RenderPipelineDescriptor descriptor, const FragmentState fragmentState) {
     this.fragmentState = fragmentState;
     const fragment = this.fragmentState.state;
     descriptor.fragment = &fragment;
 
-    id = wgpuDeviceCreateRenderPipeline(device.id, &descriptor);
+    assert(device.id !is null);
+    id = wgpuDeviceCreateRenderPipeline(cast(WGPUDevice) device.id, &descriptor);
     this.descriptor = descriptor;
   }
 
@@ -1754,11 +1871,20 @@ class RenderPipeline {
   }
 }
 
+/// Describes a vertex buffer and an offset in bytes into that buffer.
+/// See_Also: `RenderPass.setVertexBuffers`
+alias BufferPair = Tuple!(Buffer, uint);
+
+/// Creates a tuple that describes a vertex buffer and an offset in bytes into that buffer.
+/// See_Also: `RenderPass.setVertexBuffers`
+Tuple!(Buffer, uint) bufferPair(Buffer buffer, uint offset = 0) {
+  import std.typecons : tuple;
+  return tuple(buffer, offset);
+}
+
 /// An in-progress recording of a render pass.
 /// See_Also: <a href="https://docs.rs/wgpu/0.10.2/wgpu/struct.RenderPass.html">wgpu::RenderPass</a>
 struct RenderPass {
-  import std.typecons : Tuple;
-
   package WGPURenderPassEncoder instance;
   /// Describes this `RenderPass`.
   RenderPassDescriptor descriptor;
@@ -1772,7 +1898,9 @@ struct RenderPass {
   ///
   /// Remarks: The render target is cleared its content is loaded, i.e. `LoadOp.clear` is used.
   /// SeeAlso: `CommandEncoder.beginRenderPass`
-  static RenderPassColorAttachment colorAttachment(TextureView view, Color clearColor, Flag!"store" store = Yes.store) {
+  static RenderPassColorAttachment colorAttachment(
+    const TextureView view, Color clearColor, Flag!"store" store = Yes.store
+  ) {
     return colorAttachment(view, null, LoadOp.clear, clearColor, store);
   }
   /// Create a color attachment for a render pass.
@@ -1786,7 +1914,7 @@ struct RenderPass {
   /// Remarks: The render target must be cleared at least once before its content is loaded.
   /// SeeAlso: `CommandEncoder.beginRenderPass`
   static RenderPassColorAttachment colorAttachment(
-    TextureView view, LoadOp loadOp, Color clearColor, Flag!"store" store = Yes.store
+    const TextureView view, LoadOp loadOp, Color clearColor, Flag!"store" store = Yes.store
   ) {
     return colorAttachment(view, null, loadOp, clearColor, store);
   }
@@ -1799,10 +1927,11 @@ struct RenderPass {
   /// clearColor = Value with which to fill the given `view` if `loadOp` equals `LoadOp.clear`.
   /// store = Whether data will be written to through this attachment. Defaults to `true`.
   static RenderPassColorAttachment colorAttachment(
-    TextureView view, TextureView* resolveTarget, LoadOp loadOp, Color clearColor, Flag!"store" store = Yes.store
-  ) {
+    const TextureView view, TextureView* resolveTarget, LoadOp loadOp, Color clearColor, Flag!"store" store = Yes.store
+  ) @trusted {
+    assert(view.id !is null);
     return RenderPassColorAttachment(
-      view.id,
+      cast(WGPUTextureView) view.id,
       resolveTarget is null ? null : resolveTarget.id,
       loadOp,
       store ? StoreOp.store : StoreOp.discard,
@@ -1852,7 +1981,14 @@ struct RenderPass {
   /// Sets the active index buffer.
   ///
   /// Subsequent calls to `drawIndexed` on this `RenderPass` will use buffer as the source index buffer.
-  void setIndexBuffer(Buffer buffer, IndexFormat format, const size_t offset) {
+  void setIndexBuffer(T)(Buffer buffer, uint offset = 0) if (is(T == ushort) || is(T == uint)) {
+    IndexFormat format;
+    static if(is(T == ushort)) format = IndexFormat.uint16;
+    else format = IndexFormat.uint32;
+    setIndexBuffer(buffer, format, offset);
+  }
+  /// ditto
+  void setIndexBuffer(Buffer buffer, IndexFormat format, uint offset = 0) {
     wgpuRenderPassEncoderSetIndexBuffer(instance, buffer.id, format, offset, buffer.descriptor.size.to!uint);
   }
 
@@ -1860,13 +1996,28 @@ struct RenderPass {
   ///
   /// Each element of `bufferPairs` describes a vertex buffer and an offset in bytes into that buffer.
   /// The offset must be aligned to a multiple of 4 bytes.
-  void setVertexBuffers(uint startSlot, Tuple!(Buffer, size_t)[] bufferPairs) {
+  /// See_Also: You can use `bufferPair` to create pairs.
+  void setVertexBuffers(uint startSlot, BufferPair[] bufferPairs) {
     // void wgpuRenderPassEncoderSetVertexBuffer(WGPURenderPassEncoder renderPassEncoder, uint32_t slot, WGPUBuffer buffer, uint64_t offset, uint64_t size);
     foreach (bufferPair; bufferPairs) {
       auto buffer = bufferPair[0];
       auto bufferAddress = bufferPair[1];
-      wgpuRenderPassEncoderSetVertexBuffer(instance, startSlot, buffer.id, bufferAddress, buffer.descriptor.size);
+      setVertexBuffer(startSlot, buffer, bufferAddress, buffer.descriptor.size.to!uint);
     }
+  }
+
+  /// Sets an active vertex buffer at `slot`.
+  ///
+  /// If `size` is `0`, size becomes `Buffer.descriptor.size`.
+  void setVertexBuffer(uint slot, Buffer buffer, uint size = 0) {
+    setVertexBuffer(slot, buffer, 0, size);
+  }
+  /// ditto
+  void setVertexBuffer(uint slot, Buffer buffer, uint offset = 0, uint size = 0) @trusted {
+    assert(size >= 0);
+    if (size == 0) size = buffer.descriptor.size.to!uint;
+    assert(offset + size <= buffer.descriptor.size);
+    wgpuRenderPassEncoderSetVertexBuffer(instance, slot, buffer.id, offset, size);
   }
 
   /// Sets the scissor region.

@@ -7,6 +7,18 @@
     {
       "type": "lldb",
       "request": "launch",
+      "name": "Debug Cube Example",
+      "program": "${workspaceFolder}/bin/cube",
+      "args": [],
+      "cwd": "${workspaceFolder}",
+      "env": {
+        "LD_LIBRARY_PATH": "${workspaceFolder}/lib",
+        "RUST_BACKTRACE": "1"
+      }
+    },
+    {
+      "type": "lldb",
+      "request": "launch",
       "name": "Debug Headless Example",
       "program": "${workspaceFolder}/bin/headless",
       "args": [],
