@@ -401,8 +401,11 @@ class ColorTargetState {
 /// Describes how the vertex buffer is interpreted.
 /// See_Also: <a href="https://docs.rs/wgpu/0.10.2/wgpu/struct.VertexBufferLayout.html">wgpu::VertexBufferLayout</a>
 struct VertexBufferLayout {
+  /// Stride, in bytes, between elements of this buffer.
   ulong arrayStride;
+  /// How often this vertex buffer is “stepped” forward.
   VertexStepMode stepMode;
+  /// List of attributes which comprise a single vertex.
   VertexAttribute[] attributes;
 }
 /// Describes the vertex process in a render pipeline.
