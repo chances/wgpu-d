@@ -45,7 +45,10 @@
   "preGenerateCommands-posix": [
     "make wgpu"
   ],
-  "copyFiles": [
-    "lib"
+  "copyFiles-posix": [
+    "lib/libwgpu.so"
+  ],
+  "copyFiles-osx": [
+    "lib/libwgpu.dylib"
   ]
 }
