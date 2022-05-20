@@ -175,7 +175,7 @@ private mixin template EnumAlias(T) if (is(T == enum)) {
       : unprefixedMember[0].toLower ~ unprefixedMember[1..$];
     // Guard against D keywords
     idiomaticMember = idiomaticMember == "null" || idiomaticMember == "float" || idiomaticMember == "uint"
-      ? idiomaticMember ~ "_"
+      ? '_' ~ idiomaticMember
       : idiomaticMember;
     // Fix case of "BC", "RG", "CW", "CCW", "RGB", "RGBA", and "BGRA" prefixes
     if (idiomaticMember.length > 4) {
@@ -207,6 +207,191 @@ private mixin template EnumAlias(T) if (is(T == enum)) {
   mixin(_enumMixin());
 }
 
+version (D_Ddoc) {
+  /// Features that are not guaranteed to be supported.
+  ///
+  /// These are either part of the webgpu standard, or are extension features supported by wgpu when targeting native.
+  ///
+  /// If you want to use a feature, you need to first verify that the adapter supports the feature. If the adapter
+  /// does not support the feature, requesting a device with it enabled will panic.
+  /// See_Also: <a href="https://docs.rs/wgpu/0.10.2/wgpu/struct.Features.html">wgpu::Features</a>
+  enum FeatureName {
+    ///
+    undefined,
+    ///
+    depthClamping,
+    ///
+    depth24UnormStencil8,
+    ///
+    depth32FloatStencil8,
+    ///
+    timestampQuery,
+    ///
+    pipelineStatisticsQuery,
+    ///
+    textureCompressionBc,
+  }
+
+  /// The primitive topology used to interpret vertices.
+  /// See_Also: <a href="https://docs.rs/wgpu/0.10.2/wgpu/enum.PrimitiveTopology.html">wgpu::PrimitiveTopology</a>
+  enum PrimitiveTopology : WGPUPrimitiveTopology {
+    /// Vertex data is a list of points. Each vertex is a new point.
+    pointList,
+    /// Vertex data is a list of lines. Each pair of vertices composes a new line.
+    ///
+    /// Vertices `0 1 2 3` create two lines: `0-1` and `2-3`.
+    lineList,
+    /// Vertex data is a strip of lines. Each set of two adjacent vertices form a line.
+    ///
+    /// Vertices `0 1 2 3` create three lines: `0-1`, `1-2`, and `2-3`.
+    lineStrip,
+    /// Vertex data is a list of triangles. Each set of 3 vertices composes a new triangle.
+    ///
+    /// Vertices `0 1 2 3 4 5` create two triangles: `0 1 2` and `3 4 5`.
+    triangleList,
+    /// Vertex data is a triangle strip. Each set of three adjacent vertices form a triangle.
+    ///
+    /// Vertices `0 1 2 3 4 5` creates four triangles: `0 1 2`, `2 1 3`, `3 2 4`, and `4 3 5`.
+    triangleStrip,
+  }
+
+  /// When drawing strip topologies with indices, this is the required format for the index buffer.
+  /// This has no effect on non-indexed or non-strip draws.
+  /// See_Also: <a href="https://docs.rs/wgpu/0.10.2/wgpu/enum.IndexFormat.html">wgpu::IndexFormat</a>
+  enum IndexFormat : WGPUIndexFormat {
+    ///
+    undefined,
+    ///
+    uint16,
+    ///
+    uint32,
+  }
+
+  /// Type of <a href="https://en.wikipedia.org/wiki/Back-face_culling">face culling</a> to use during graphic pipeline rasterization.
+  /// See_Also: <a href="https://docs.rs/wgpu/0.10.2/wgpu/enum.Face.html">wgpu::Face</a>
+  enum CullMode : WGPUCullMode {
+    /// Disable face culling.
+    none,
+    /// Cull front faces.
+    front,
+    /// Cull back faces.
+    back,
+  }
+
+  /// Specifies the vertex order for faces to be considered front-facing.
+  enum FrontFace : WGPUFrontFace {
+    /// Clockwise ordered faces will be considered front-facing.
+    cw,
+    /// Counter-clockwise ordered faces will be considered front-facing.
+    ccw,
+  }
+
+  /// Specific type of a sample in a texture binding.
+  /// See_Also: <a href="https://docs.rs/wgpu/0.10.2/wgpu/enum.TextureSampleType.html">wgpu::TextureSampleType</a>
+  enum TextureSampleType : WGPUTextureSampleType {
+    ///
+    undefined,
+    ///
+    _float,
+    ///
+    unfilterableFloat,
+    ///
+    depth,
+    ///
+    sint,
+    ///
+    _uint,
+  }
+
+  /// Different ways that you can use a buffer.
+  ///
+  /// The usages determine what kind of memory the buffer is allocated from and what actions the buffer can partake in.
+  ///
+  /// These can be combined in a bitwise combination.
+  /// See_Also: <a href="https://docs.rs/wgpu/0.10.2/wgpu/struct.BufferUsages.html">wgpu::BufferUsages</a>
+  enum BufferUsage {
+    ///
+    none,
+    ///
+    mapRead,
+    ///
+    mapWrite,
+    ///
+    copySrc,
+    ///
+    copyDst,
+    ///
+    index,
+    ///
+    vertex,
+    ///
+    uniform,
+    ///
+    storage,
+    ///
+    indirect,
+    ///
+    queryResolve,
+  }
+
+  /// Mask which enables/disables writes to different color/alpha channel.
+  /// Disabled color channels will not be written to.
+  enum ColorWriteMask {
+    ///
+    none,
+    ///
+    red,
+    ///
+    green,
+    ///
+    blue,
+    ///
+    alpha,
+    ///
+    all,
+  }
+
+  /// Describes the shader stages that a binding will be visible from.
+  ///
+  /// These can be combined in a bitwise combination.
+  ///
+  /// For example, something that is visible from both vertex and fragment shaders can be defined as:
+  ///
+  /// `ShaderStage.vertex | ShaderStage.fragment`
+  /// See_Also: <a href="https://docs.rs/wgpu/0.10.2/wgpu/struct.ShaderStages.html">wgpu::ShaderStages</a>
+  enum ShaderStage {
+    ///
+    none,
+    ///
+    vertex,
+    ///
+    fragment,
+    ///
+    compute,
+  }
+
+  /// Different ways that you can use a texture.
+  ///
+  /// The usages determine what kind of memory the texture is allocated from and what actions the texture can partake in.
+  ///
+  /// These can be combined in a bitwise combination.
+  /// See_Also: <a href="https://docs.rs/wgpu/0.10.2/wgpu/struct.TextureUsages.html">wgpu::TextureUsages</a>
+  enum TextureUsage {
+    ///
+    none,
+    ///
+    copySrc,
+    ///
+    copyDst,
+    ///
+    textureBinding,
+    ///
+    storageBinding,
+    ///
+    renderAttachment,
+  }
+}
+
 mixin EnumAlias!WGPUAdapterType;
 mixin EnumAlias!WGPUAddressMode;
 mixin EnumAlias!WGPUBackendType;
@@ -220,15 +405,7 @@ mixin EnumAlias!WGPUCreatePipelineAsyncStatus;
 mixin EnumAlias!WGPUCullMode;
 mixin EnumAlias!WGPUDeviceLostReason;
 mixin EnumAlias!WGPUErrorFilter;
-///
 mixin EnumAlias!WGPUErrorType;
-/// Features that are not guaranteed to be supported.
-///
-/// These are either part of the webgpu standard, or are extension features supported by wgpu when targeting native.
-///
-/// If you want to use a feature, you need to first verify that the adapter supports the feature. If the adapter
-/// does not support the feature, requesting a device with it enabled will panic.
-/// See_Also: <a href="https://docs.rs/wgpu/0.10.2/wgpu/struct.Features.html">wgpu::Features</a>
 mixin EnumAlias!WGPUFeatureName;
 mixin EnumAlias!WGPUFilterMode;
 mixin EnumAlias!WGPUFrontFace;
@@ -251,38 +428,14 @@ mixin EnumAlias!WGPUTextureAspect;
 mixin EnumAlias!WGPUTextureComponentType;
 mixin EnumAlias!WGPUTextureDimension;
 mixin EnumAlias!WGPUTextureFormat;
-/// Specific type of a sample in a texture binding.
-/// See_Also: <a href="https://docs.rs/wgpu/0.10.2/wgpu/struct.TextureSampleType.html">wgpu::TextureSampleType</a>
 mixin EnumAlias!WGPUTextureSampleType;
 mixin EnumAlias!WGPUTextureViewDimension;
 mixin EnumAlias!WGPUVertexFormat;
 mixin EnumAlias!WGPUVertexStepMode;
-/// Different ways that you can use a buffer.
-///
-/// The usages determine what kind of memory the buffer is allocated from and what actions the buffer can partake in.
-///
-/// These can be combined in a bitwise combination.
-/// See_Also: <a href="https://docs.rs/wgpu/0.10.2/wgpu/struct.BufferUsages.html">wgpu::BufferUsages</a>
 mixin EnumAlias!WGPUBufferUsage;
-/// Mask which enables/disables writes to different color/alpha channel.
-/// Disabled color channels will not be written to.
 mixin EnumAlias!WGPUColorWriteMask;
 mixin EnumAlias!WGPUMapMode;
-/// Describes the shader stages that a binding will be visible from.
-///
-/// These can be combined in a bitwise combination.
-///
-/// For example, something that is visible from both vertex and fragment shaders can be defined as:
-///
-/// `ShaderStage.vertex | ShaderStage.fragment`
-/// See_Also: <a href="https://docs.rs/wgpu/0.10.2/wgpu/struct.ShaderStages.html">wgpu::ShaderStages</a>
 mixin EnumAlias!WGPUShaderStage;
-/// Different ways that you can use a texture.
-///
-/// The usages determine what kind of memory the texture is allocated from and what actions the texture can partake in.
-///
-/// These can be combined in a bitwise combination.
-/// See_Also: <a href="https://docs.rs/wgpu/0.10.2/wgpu/struct.TextureUsages.html">wgpu::TextureUsages</a>
 mixin EnumAlias!WGPUTextureUsage;
 
 /// Constant blending modes usable when constructing a `ColorTargetState`'s `BlendState`.
@@ -337,6 +490,7 @@ struct MultisampleState {
     return MultisampleState(1, ~0, No.alphaToCoverageEnabled);
   }
 }
+
 /// Describes the state of primitive assembly and rasterization in a render pipeline.
 /// See_Also: <a href="https://docs.rs/wgpu/0.10.2/wgpu/struct.PrimitiveState.html">wgpu::PrimitiveState</a>
 struct PrimitiveState {
@@ -344,10 +498,11 @@ struct PrimitiveState {
   alias state this;
 
   ///
-  this(WGPUPrimitiveTopology topology, WGPUIndexFormat indexFormat, WGPUFrontFace frontFace, WGPUCullMode cullMode) {
+  this(PrimitiveTopology topology, IndexFormat indexFormat, FrontFace frontFace, CullMode cullMode) {
     state = WGPUPrimitiveState(null, topology, indexFormat, frontFace, cullMode);
   }
 }
+
 /// Describes the depth/stencil state in a render pipeline.
 /// See_Also: <a href="https://docs.rs/wgpu/0.10.2/wgpu/struct.DepthStencilState.html">wgpu::DepthStencilState</a>
 struct DepthStencilState {
@@ -371,6 +526,7 @@ struct DepthStencilState {
     );
   }
 }
+
 /// Describes the color state of a render pipeline.
 /// See_Also: <a href="https://docs.rs/wgpu/0.10.2/wgpu/struct.ColorTargetState.html">wgpu::ColorTargetState</a>
 class ColorTargetState {
@@ -398,6 +554,7 @@ class ColorTargetState {
     return WGPUColorTargetState(null, cast(WGPUTextureFormat) format, &blend, writeMask);
   }
 }
+
 /// Describes how the vertex buffer is interpreted.
 /// See_Also: <a href="https://docs.rs/wgpu/0.10.2/wgpu/struct.VertexBufferLayout.html">wgpu::VertexBufferLayout</a>
 struct VertexBufferLayout {
@@ -408,6 +565,7 @@ struct VertexBufferLayout {
   /// List of attributes which comprise a single vertex.
   VertexAttribute[] attributes;
 }
+
 /// Describes the vertex process in a render pipeline.
 /// See_Also: <a href="https://docs.rs/wgpu/0.10.2/wgpu/struct.VertexState.html">wgpu::VertexState</a>
 struct VertexState {
@@ -447,6 +605,7 @@ struct VertexState {
       );
   }
 }
+
 /// Describes the fragment process in a render pipeline.
 /// See_Also: <a href="https://docs.rs/wgpu/0.10.2/wgpu/struct.FragmentState.html">wgpu::FragmentState</a>
 class FragmentState {
@@ -546,7 +705,7 @@ struct Instance {
   ///
   /// Params:
   /// backends = Backends from which to enumerate adapters.
-  static @property Adapter[] adapters(BackendType backends = BackendType.null_) {
+  static @property Adapter[] adapters(BackendType backends = BackendType._null) {
     assert(backends >= 0);
     assert(0, "Unimplemented!");
     // TODO: Implement adapter enumerator as a custom range
@@ -1596,7 +1755,7 @@ struct TextureView {
   ) const {
     auto texture = BindGroupLayoutEntry(null, location, visibility);
     texture.texture = TextureBindingLayout(
-      null, filtering ? TextureSampleType.float_ : TextureSampleType.unfilterableFloat,
+      null, filtering ? TextureSampleType._float : TextureSampleType.unfilterableFloat,
       descriptor.dimension,
       multisampled
     );
