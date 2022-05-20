@@ -33,7 +33,7 @@
       "lflags-posix": [
         "-Llib"
       ],
-      "postBuildCommands-posix": [
+      "postBuildCommands-linux": [
         "patchelf --set-rpath '$$ORIGIN' bin/wgpu-d-test-unittest"
       ],
       "postBuildCommands-osx": [
@@ -48,7 +48,7 @@
   "preGenerateCommands-posix": [
     "make wgpu"
   ],
-  "copyFiles-posix": [
+  "copyFiles-linux": [
     "lib/libwgpu.so"
   ],
   "copyFiles-osx": [
