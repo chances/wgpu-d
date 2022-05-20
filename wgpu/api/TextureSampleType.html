@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8"/>
-		<title>Class ColorTargetState - wgpu-d</title>
+		<title>Enum TextureSampleType - wgpu-d</title>
 		<link rel="stylesheet" type="text/css" href="../../styles/ddox.css"/>
 		<link rel="stylesheet" href="../../prettify/prettify.css" type="text/css"/>
 		<script type="text/javascript" src="../../scripts/jquery.js">/**/</script><script type="text/javascript" src="../../scripts/ddox.js">/**/</script>
@@ -73,66 +73,63 @@ $('#symbolSearchPane').show();</script>
 			</ul>
 		</nav>
 		<div id="main-contents">
-			<h1>Class ColorTargetState</h1><p>Describes the color state of a render pipeline.
+			<h1>Enum TextureSampleType</h1><p>Specific type of a sample in a texture binding.
 </p>
 			<div class="prototype">
 				<code class="lang-d">
 					<div class="single-prototype">
-			<span class="kwd">class</span> <span class="typ">ColorTargetState</span>
-			<span class="pun">;</span>
+			<span class="kwd">enum</span> <span class="typ">TextureSampleType</span>
+			 <span class="pun">:</span> <span class="pln">bindings<wbr/></span><span class="pun">.</span><span class="typ">WGPUTextureSampleType</span> <span class="pun">{ ... }</span>
 					</div>
 				</code>
 			</div>
 			
-			<section><h2>Constructors</h2>
+			<section><h2>Enum members</h2>
 				<table>
 					<col class="caption"/>
 					<tr>
 						<th>Name</th><th>Description</th>
 					</tr>
 					<tr>
-						<td>
-							<a href="../../wgpu/api/ColorTargetState.this.html" class="public">
-								<code>this</code>
-							</a>
-							<span class="tableEntryAnnotation">(format, blend, writeMask)</span>
+						<td id="_float">
+							<code>_float</code>
+						</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td id="_uint">
+							<code>_uint</code>
+						</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td id="depth">
+							<code>depth</code>
+						</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td id="sint">
+							<code>sint</code>
+						</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td id="undefined">
+							<code>undefined</code>
+						</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td id="unfilterableFloat">
+							<code>unfilterableFloat</code>
 						</td>
 						<td></td>
 					</tr>
 				</table>
 			</section>
-			<section><h2>Fields</h2>
-				<table>
-					<col class="caption"/>
-					<tr>
-						<th>Name</th><th>Type</th><th>Description</th>
-					</tr>
-					<tr>
-						<td>
-							<a href="../../wgpu/api/ColorTargetState.blend.html" class="public"><code>blend</code></a>
-						</td>
-						<td class="typecol"><code class="prettyprint lang-d"><span class="pln">bindings<wbr/></span><span class="pun">.</span><span class="typ">WGPUBlendState</span></code></td><td>Blending used when compositing colors in this target's associated pipeline.
-</td>
-					</tr>
-					<tr>
-						<td>
-							<a href="../../wgpu/api/ColorTargetState.format.html" class="public"><code>format</code></a>
-						</td>
-						<td class="typecol"><code class="prettyprint lang-d"><span class="pln">wgpu<wbr/></span><span class="pun">.</span><span class="pln">api<wbr/></span><span class="pun">.</span><span class="pln">__mixin155<wbr/></span><span class="pun">.</span><span class="typ">TextureFormat</span></code></td><td>The texture format of the image that this target's associated pipeline will render to.
-Must match the the format of the corresponding color attachment in <code class="lang-d"><a href="../../wgpu/api/CommandEncoder.beginRenderPass.html"><span class="typ">CommandEncoder<wbr/></span><span class="pun">.</span><span class="pln">beginRenderPass</span></a></code>.
-</td>
-					</tr>
-					<tr>
-						<td>
-							<a href="../../wgpu/api/ColorTargetState.writeMask.html" class="public"><code>writeMask</code></a>
-						</td>
-						<td class="typecol"><code class="prettyprint lang-d"><span class="typ">uint</span></code></td><td>Mask which enables/disables writes to different color/alpha channel.
-</td>
-					</tr>
-				</table>
-			</section>
 			<section><h2>See Also</h2>
-<p><a href="https://docs.rs/wgpu/0.10.2/wgpu/struct.ColorTargetState.html">wgpu::ColorTargetState</a>
+<p><a href="https://docs.rs/wgpu/0.10.2/wgpu/enum.TextureSampleType.html">wgpu::TextureSampleType</a>
 </p>
 </section>
 

@@ -58,6 +58,16 @@ $('#symbolSearchPane').show();</script>
 						<a href="../../wgpu/api.html">api</a>
 					</div>
 				</li>
+				<li>
+					<div class="module ">
+						<a href="../../wgpu/limits.html">limits</a>
+					</div>
+				</li>
+				<li>
+					<div class="module ">
+						<a href="../../wgpu/utils.html">utils</a>
+					</div>
+				</li>
 			</ul>
 				</li>
 			</ul>
@@ -69,7 +79,7 @@ $('#symbolSearchPane').show();</script>
 				<code class="lang-d">
 					<div class="single-prototype">
 			<span class="kwd">enum</span> <span class="typ">TextureUsage</span>
-			 <span class="pun">:</span> <span class="typ">uint</span> <span class="pun">{ ... }</span>
+			 <span class="pun">:</span> <span class="typ">int</span> <span class="pun">{ ... }</span>
 					</div>
 				</code>
 			</div>
@@ -86,10 +96,46 @@ $('#symbolSearchPane').show();</script>
 					<tr>
 						<th>Name</th><th>Description</th>
 					</tr>
+					<tr>
+						<td id="copyDst">
+							<code>copyDst</code>
+						</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td id="copySrc">
+							<code>copySrc</code>
+						</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td id="none">
+							<code>none</code>
+						</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td id="renderAttachment">
+							<code>renderAttachment</code>
+						</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td id="storageBinding">
+							<code>storageBinding</code>
+						</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td id="textureBinding">
+							<code>textureBinding</code>
+						</td>
+						<td></td>
+					</tr>
 				</table>
 			</section>
 			<section><h2>See Also</h2>
-<p><a href="https://docs.rs/wgpu/0.6.0/wgpu/struct.TextureUsage.html">wgpu::TextureUsage</a>
+<p><a href="https://docs.rs/wgpu/0.10.2/wgpu/struct.TextureUsages.html">wgpu::TextureUsages</a>
 </p>
 </section>
 
@@ -106,7 +152,7 @@ $('#symbolSearchPane').show();</script>
 					<tr>
 						<th>Copyright</th>
 						<td>
-							<p>Copyright © 2020 Chance Snow. All rights reserved.
+							<p>Copyright © 2020-2022 Chance Snow. All rights reserved.
 </p>
 
 						</td>

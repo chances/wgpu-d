@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8"/>
-		<title>Class ColorTargetState - wgpu-d</title>
+		<title>Enum PrimitiveTopology - wgpu-d</title>
 		<link rel="stylesheet" type="text/css" href="../../styles/ddox.css"/>
 		<link rel="stylesheet" href="../../prettify/prettify.css" type="text/css"/>
 		<script type="text/javascript" src="../../scripts/jquery.js">/**/</script><script type="text/javascript" src="../../scripts/ddox.js">/**/</script>
@@ -73,66 +73,74 @@ $('#symbolSearchPane').show();</script>
 			</ul>
 		</nav>
 		<div id="main-contents">
-			<h1>Class ColorTargetState</h1><p>Describes the color state of a render pipeline.
+			<h1>Enum PrimitiveTopology</h1><p>The primitive topology used to interpret vertices.
 </p>
 			<div class="prototype">
 				<code class="lang-d">
 					<div class="single-prototype">
-			<span class="kwd">class</span> <span class="typ">ColorTargetState</span>
-			<span class="pun">;</span>
+			<span class="kwd">enum</span> <span class="typ">PrimitiveTopology</span>
+			 <span class="pun">:</span> <span class="pln">bindings<wbr/></span><span class="pun">.</span><span class="typ">WGPUPrimitiveTopology</span> <span class="pun">{ ... }</span>
 					</div>
 				</code>
 			</div>
 			
-			<section><h2>Constructors</h2>
+			<section><h2>Enum members</h2>
 				<table>
 					<col class="caption"/>
 					<tr>
 						<th>Name</th><th>Description</th>
 					</tr>
 					<tr>
-						<td>
-							<a href="../../wgpu/api/ColorTargetState.this.html" class="public">
-								<code>this</code>
-							</a>
-							<span class="tableEntryAnnotation">(format, blend, writeMask)</span>
+						<td id="lineList">
+							<code>lineList</code>
 						</td>
-						<td></td>
-					</tr>
-				</table>
-			</section>
-			<section><h2>Fields</h2>
-				<table>
-					<col class="caption"/>
-					<tr>
-						<th>Name</th><th>Type</th><th>Description</th>
-					</tr>
-					<tr>
-						<td>
-							<a href="../../wgpu/api/ColorTargetState.blend.html" class="public"><code>blend</code></a>
-						</td>
-						<td class="typecol"><code class="prettyprint lang-d"><span class="pln">bindings<wbr/></span><span class="pun">.</span><span class="typ">WGPUBlendState</span></code></td><td>Blending used when compositing colors in this target's associated pipeline.
+						<td>Vertex data is a list of lines. Each pair of vertices composes a new line.
+<section><p>Vertices <code class="lang-d"><span class="lit">0 1 2 3</span></code> create two lines: <code class="lang-d"><span class="lit">0</span><span class="pun">-</span><span class="lit">1</span></code> and <code class="lang-d"><span class="lit">2</span><span class="pun">-</span><span class="lit">3</span></code>.
+</p>
+</section>
 </td>
 					</tr>
 					<tr>
-						<td>
-							<a href="../../wgpu/api/ColorTargetState.format.html" class="public"><code>format</code></a>
+						<td id="lineStrip">
+							<code>lineStrip</code>
 						</td>
-						<td class="typecol"><code class="prettyprint lang-d"><span class="pln">wgpu<wbr/></span><span class="pun">.</span><span class="pln">api<wbr/></span><span class="pun">.</span><span class="pln">__mixin155<wbr/></span><span class="pun">.</span><span class="typ">TextureFormat</span></code></td><td>The texture format of the image that this target's associated pipeline will render to.
-Must match the the format of the corresponding color attachment in <code class="lang-d"><a href="../../wgpu/api/CommandEncoder.beginRenderPass.html"><span class="typ">CommandEncoder<wbr/></span><span class="pun">.</span><span class="pln">beginRenderPass</span></a></code>.
+						<td>Vertex data is a strip of lines. Each set of two adjacent vertices form a line.
+<section><p>Vertices <code class="lang-d"><span class="lit">0 1 2 3</span></code> create three lines: <code class="lang-d"><span class="lit">0</span><span class="pun">-</span><span class="lit">1</span></code>, <code class="lang-d"><span class="lit">1</span><span class="pun">-</span><span class="lit">2</span></code>, and <code class="lang-d"><span class="lit">2</span><span class="pun">-</span><span class="lit">3</span></code>.
+</p>
+</section>
 </td>
 					</tr>
 					<tr>
-						<td>
-							<a href="../../wgpu/api/ColorTargetState.writeMask.html" class="public"><code>writeMask</code></a>
+						<td id="pointList">
+							<code>pointList</code>
 						</td>
-						<td class="typecol"><code class="prettyprint lang-d"><span class="typ">uint</span></code></td><td>Mask which enables/disables writes to different color/alpha channel.
+						<td>Vertex data is a list of points. Each vertex is a new point.
+</td>
+					</tr>
+					<tr>
+						<td id="triangleList">
+							<code>triangleList</code>
+						</td>
+						<td>Vertex data is a list of triangles. Each set of 3 vertices composes a new triangle.
+<section><p>Vertices <code class="lang-d"><span class="lit">0 1 2 3 4 5</span></code> create two triangles: <code class="lang-d"><span class="lit">0 1 2</span></code> and <code class="lang-d"><span class="lit">3 4 5</span></code>.
+</p>
+</section>
+</td>
+					</tr>
+					<tr>
+						<td id="triangleStrip">
+							<code>triangleStrip</code>
+						</td>
+						<td>Vertex data is a triangle strip. Each set of three adjacent vertices form a triangle.
+<section><p>Vertices <code class="lang-d"><span class="lit">0 1 2 3 4 5</span></code> creates four triangles: <code class="lang-d"><span class="lit">0 1 2</span></code>, <code class="lang-d"><span class="lit">2 1 3</span></code>, <code class="lang-d"><span class="lit">3 2 4</span></code>, and <code class="lang-d"><span class="lit">4 3 5</span></code>.
+</p>
+</section>
 </td>
 					</tr>
 				</table>
 			</section>
 			<section><h2>See Also</h2>
-<p><a href="https://docs.rs/wgpu/0.10.2/wgpu/struct.ColorTargetState.html">wgpu::ColorTargetState</a>
+<p><a href="https://docs.rs/wgpu/0.10.2/wgpu/enum.PrimitiveTopology.html">wgpu::PrimitiveTopology</a>
 </p>
 </section>
 

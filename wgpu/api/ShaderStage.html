@@ -58,6 +58,16 @@ $('#symbolSearchPane').show();</script>
 						<a href="../../wgpu/api.html">api</a>
 					</div>
 				</li>
+				<li>
+					<div class="module ">
+						<a href="../../wgpu/limits.html">limits</a>
+					</div>
+				</li>
+				<li>
+					<div class="module ">
+						<a href="../../wgpu/utils.html">utils</a>
+					</div>
+				</li>
 			</ul>
 				</li>
 			</ul>
@@ -69,7 +79,7 @@ $('#symbolSearchPane').show();</script>
 				<code class="lang-d">
 					<div class="single-prototype">
 			<span class="kwd">enum</span> <span class="typ">ShaderStage</span>
-			 <span class="pun">:</span> <span class="typ">uint</span> <span class="pun">{ ... }</span>
+			 <span class="pun">:</span> <span class="typ">int</span> <span class="pun">{ ... }</span>
 					</div>
 				</code>
 			</div>
@@ -93,34 +103,30 @@ $('#symbolSearchPane').show();</script>
 						<td id="compute">
 							<code>compute</code>
 						</td>
-						<td>Binding is visible from the compute shader of a compute pipeline.
-</td>
+						<td></td>
 					</tr>
 					<tr>
 						<td id="fragment">
 							<code>fragment</code>
 						</td>
-						<td>Binding is visible from the fragment shader of a render pipeline.
-</td>
+						<td></td>
 					</tr>
 					<tr>
 						<td id="none">
 							<code>none</code>
 						</td>
-						<td>Binding is not visible from any shader stage.
-</td>
+						<td></td>
 					</tr>
 					<tr>
 						<td id="vertex">
 							<code>vertex</code>
 						</td>
-						<td>Binding is visible from the vertex shader of a render pipeline.
-</td>
+						<td></td>
 					</tr>
 				</table>
 			</section>
 			<section><h2>See Also</h2>
-<p><a href="https://docs.rs/wgpu/0.6.0/wgpu/struct.ShaderStage.html">wgpu::ShaderStage</a>
+<p><a href="https://docs.rs/wgpu/0.10.2/wgpu/struct.ShaderStages.html">wgpu::ShaderStages</a>
 </p>
 </section>
 
@@ -137,7 +143,7 @@ $('#symbolSearchPane').show();</script>
 					<tr>
 						<th>Copyright</th>
 						<td>
-							<p>Copyright © 2020 Chance Snow. All rights reserved.
+							<p>Copyright © 2020-2022 Chance Snow. All rights reserved.
 </p>
 
 						</td>

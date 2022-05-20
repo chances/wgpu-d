@@ -38,12 +38,14 @@
 <url><loc>http://127.0.0.1/wgpu/api/BufferMapAsyncStatus.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/BufferPair.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/bufferPair.html</loc></url>
+<url><loc>http://127.0.0.1/wgpu/api/BufferUsage.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/Color.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/ColorTargetState.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/ColorTargetState.blend.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/ColorTargetState.format.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/ColorTargetState.this.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/ColorTargetState.writeMask.html</loc></url>
+<url><loc>http://127.0.0.1/wgpu/api/ColorWriteMask.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/CommandBuffer.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/CommandBuffer.descriptor.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/CommandBuffer.id.html</loc></url>
@@ -76,6 +78,7 @@
 <url><loc>http://127.0.0.1/wgpu/api/ComputePipelineDescriptor.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/COPY_BUFFER_ALIGNMENT.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/COPY_BYTES_PER_ROW_ALIGNMENT.html</loc></url>
+<url><loc>http://127.0.0.1/wgpu/api/CullMode.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/DepthStencilState.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/DepthStencilState.this.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/Device.html</loc></url>
@@ -110,6 +113,7 @@
 <url><loc>http://127.0.0.1/wgpu/api/Device.queue.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/Device.ready.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/Extent3d.html</loc></url>
+<url><loc>http://127.0.0.1/wgpu/api/FeatureName.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/FragmentState.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/FragmentState.constants.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/FragmentState.entryPoint.html</loc></url>
@@ -117,8 +121,10 @@
 <url><loc>http://127.0.0.1/wgpu/api/FragmentState.shader.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/FragmentState.this.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/FragmentState.this.html</loc></url>
+<url><loc>http://127.0.0.1/wgpu/api/FrontFace.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/ImageCopyBuffer.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/ImageCopyTexture.html</loc></url>
+<url><loc>http://127.0.0.1/wgpu/api/IndexFormat.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/Instance.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/Instance.adapters.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/Instance.create.html</loc></url>
@@ -141,6 +147,7 @@
 <url><loc>http://127.0.0.1/wgpu/api/PipelineLayoutDescriptor.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/PrimitiveState.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/PrimitiveState.this.html</loc></url>
+<url><loc>http://127.0.0.1/wgpu/api/PrimitiveTopology.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/QUERY_SIZE.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/Queue.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/Queue.id.html</loc></url>
@@ -181,6 +188,7 @@
 <url><loc>http://127.0.0.1/wgpu/api/ShaderModule.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/ShaderModule.destroy.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/ShaderModule.id.html</loc></url>
+<url><loc>http://127.0.0.1/wgpu/api/ShaderStage.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/Surface.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/Surface.fromMetalLayer.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/Surface.fromMetalLayer.html</loc></url>
@@ -219,6 +227,8 @@
 <url><loc>http://127.0.0.1/wgpu/api/Texture.width.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/TextureDataLayout.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/TextureDescriptor.html</loc></url>
+<url><loc>http://127.0.0.1/wgpu/api/TextureSampleType.html</loc></url>
+<url><loc>http://127.0.0.1/wgpu/api/TextureUsage.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/TextureView.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/TextureView.binding.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/api/TextureView.descriptor.html</loc></url>
