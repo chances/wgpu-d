@@ -67,9 +67,20 @@ enum Limits downlevelDefaultLimits = {
 /// This is useful because the swap chain might need to be larger than any other image in the application.
 /// For example, if your application only needs 512x512 textures, but it might be running on a 4k display.
 /// See_Also: <a href="https://docs.rs/wgpu/0.10.2/wgpu/struct.Limits.html#method.using_resolution">wgpu::Limits.using_resolution</a>
-Limits usingResolution(Limits target, Limits other) {
-  target.maxTextureDimension1D = other.maxTextureDimension1D;
-  target.maxTextureDimension2D = other.maxTextureDimension2D;
-  target.maxTextureDimension3D = other.maxTextureDimension3D;
-  return target;
+Limits usingResolution(const Limits source, const Limits target) @trusted {
+  auto targetUsingRes = cast(Limits) target;
+  targetUsingRes.maxTextureDimension1D = source.maxTextureDimension1D;
+  targetUsingRes.maxTextureDimension2D = source.maxTextureDimension2D;
+  targetUsingRes.maxTextureDimension3D = source.maxTextureDimension3D;
+  return targetUsingRes;
+}
+
+unittest {
+  const limits = defaultLimits;
+  const source = downlevelDefaultLimits;
+  const resized = source.usingResolution(limits);
+
+  assert(resized.maxTextureDimension1D == source.maxTextureDimension1D);
+  assert(resized.maxTextureDimension2D == source.maxTextureDimension2D);
+  assert(resized.maxTextureDimension3D == source.maxTextureDimension3D);
 }
