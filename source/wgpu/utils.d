@@ -89,6 +89,14 @@ TextureViewDimension viewDimension(const TextureDimension dimension, uint depthO
   }
 }
 
+unittest {
+  assert(TextureDimension._1D.viewDimension == TextureViewDimension._1D);
+  assert(TextureDimension._2D.viewDimension == TextureViewDimension._2D);
+  assert(TextureDimension._2D.viewDimension(5) == TextureViewDimension._2DArray);
+  assert(TextureDimension._3D.viewDimension == TextureViewDimension._3D);
+  assert(TextureDimension.force32.viewDimension == TextureViewDimension.undefined);
+}
+
 /// Detects whether `T` is a handle to a `wgpu`-managed resource.
 enum isResource(T) = isMemberPointer!(T, "id");
 
