@@ -113,8 +113,13 @@ private template isMemberPointer(T, alias string name) {
 /// Whether a handle to a `wgpu`-managed `resource` is valid, i.e. `resource` is not `null` and it's currently initialized.
 bool valid(T)(T resource) if (isResource!T) {
   import std.traits : isPointer, PointerTarget;
-  if ((isPointer!T || is (T == class)) && resource is null) return false;
-  return resource.id !is null;
+  static if ((isPointer!T || is (T == class))) return resource !is null;
+  else return resource.id !is null;
+}
+
+unittest {
+  import wgpu.api : ShaderModule;
+  assert(!valid(ShaderModule(null)));
 }
 
 /// Recreates a new swap chain given an `extant` swap chain and a new size.
