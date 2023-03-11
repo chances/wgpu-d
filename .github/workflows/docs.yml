@@ -15,7 +15,7 @@ jobs:
       - name: Setup Homebrew
         uses: Homebrew/actions/setup-homebrew@master
       - name: Install Dependencies
-        runs-on: macos-latest
+        if: runner.os == 'macOS'
         run: brew install gnu-sed
       - name: Install D compiler
         uses: dlang-community/setup-dlang@v1
