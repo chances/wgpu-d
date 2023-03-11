@@ -70,7 +70,7 @@ docs/sitemap.xml: $(SOURCES)
 	dub build -b ddox
 	@echo "Performing cosmetic changes..."
 	# Navigation Sidebar
-	@sed -i '' -e "/<nav id=\"main-nav\">/r views/nav.html" -e "/<nav id=\"main-nav\">/d" `find docs -name '*.html'`
+	@sed -i -e "/<nav id=\"main-nav\">/r views/nav.html" -e "/<nav id=\"main-nav\">/d" `find docs -name '*.html'`
 	# Page Titles
 	@sed -i '' "s/<\/title>/ - wgpu-d<\/title>/" `find docs -name '*.html'`
 	# Index
