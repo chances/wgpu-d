@@ -11,7 +11,7 @@ Targets wgpu-native [`v0.10.4.1`](https://github.com/gfx-rs/wgpu-native/releases
 
 ```json
 "dependencies": {
-    "wgpu-d": "0.1.1"
+    "wgpu-d": "0.1.2"
 }
 ```
 
@@ -44,7 +44,7 @@ See this [StackOverflow answer](https://stackoverflow.com/a/54723461/1363247).
 ### Upgrading wgpu-native
 
 1. `make clean`
-2. Bump the version constraint in [subprojects/wgpu.Makefile](https://github.com/chances/wgpu-d/blob/v0.1.1/subprojects/wgpu.Makefile#L1).
+2. Bump the version constraint in [subprojects/wgpu.Makefile](https://github.com/chances/wgpu-d/blob/master/subprojects/wgpu.Makefile#L1).
 3. `dub test`
 4. Ensure the examples compile:
     - `dub build wgpu-d:headless`
