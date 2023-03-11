@@ -120,9 +120,6 @@ void main() {
     swapChainFormat,
     TextureUsage.renderAttachment | TextureUsage.copySrc | TextureUsage.textureBinding,
   );
-  auto textureSampler = device.createSampler(
-    AddressMode.clampToEdge, /* mag filter */ FilterMode.linear, /* min filter */ FilterMode.nearest
-  );
 
   RenderPipeline createPipeline(
     string shaderSource, PipelineLayout layout, MultisampleState multisample, ColorTargetState[] renderTargets
@@ -139,15 +136,6 @@ void main() {
   auto trianglePipeline = createPipeline(triangleShader, device.emptyPipelineLayout, texture.multisampleState, [
     texture.asRenderTarget(BlendMode.replace)
   ]);
-  auto fullScreenQuadLayout = device.createBindGroupLayout(texture.defaultView.textureSampler(0, ShaderStage.fragment));
-  auto fullScreenQuadBindings = device.createBindGroup(fullScreenQuadLayout, [
-    texture.defaultView.binding(0), textureSampler.binding(1)
-  ], "fullscreen quad");
-  auto fullScreenQuadPipeline = createPipeline(
-    fullScreenQuadShader, device.createPipelineLayout([fullScreenQuadLayout]),
-    MultisampleState.singleSample,
-    [new ColorTargetState(swapChainFormat, BlendMode.alphaBlending.to!BlendState)]
-  );
 
   // The output buffer lets us retrieve data as an array
   auto outputBuffer = device.createBuffer(

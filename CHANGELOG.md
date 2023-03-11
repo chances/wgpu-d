@@ -1,6 +1,12 @@
 <!-- https://keepachangelog.com/en/1.0.0/ -->
 # Changelog
 
+## v0.1.2
+
+### Fixed
+
+- Fixed CI tests by pinning LDC version in workflows
+
 ## v0.1.1
 
 Add a windowed cube example.

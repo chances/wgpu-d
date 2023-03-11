@@ -15,7 +15,7 @@ jobs:
     - name: Install D compiler
       uses: dlang-community/setup-dlang@v1
       with:
-        compiler: ldc-latest
+        compiler: ldc-1.28.0
     # - name: Install *nix Dependencies
     #   if: runner.os == 'Linux'
     #   run: sudo apt-get install --quiet -y libglfw3 libglfw3-dev
