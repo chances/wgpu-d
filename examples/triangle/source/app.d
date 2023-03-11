@@ -246,9 +246,8 @@ void main() {
     renderPass = encoder.beginRenderPass(
       RenderPass.colorAttachment(swapChainTexture, /* Black */ Color(0, 0, 0, 1))
     );
-    renderPass.setPipeline(fullScreenQuadPipeline);
-    renderPass.setBindGroup(0, fullScreenQuadBindings);
-    renderPass.draw(6, 1);
+    renderPass.setPipeline(trianglePipeline);
+    renderPass.draw(3, 1);
     renderPass.end();
 
     auto commandBuffer = encoder.finish();
