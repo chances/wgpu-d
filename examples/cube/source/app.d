@@ -5,6 +5,7 @@ import std.typecons : Tuple;
 import bindbc.glfw;
 import gfm.math;
 import wgpu.api;
+import examples.math;
 import examples.window;
 
 // Adapted from https://github.com/gfx-rs/wgpu-rs/blob/8aaab84c5b27f0382be7dbced5b178b4e219edd3/examples/cube/main.rs
@@ -96,6 +97,9 @@ class Cube : Window {
   this(string title) {
     super(title);
     this.cube = unitCube();
+    const projection = mat4f.perspective(45f.rad, size.width / size.height, 1, 10);
+    const view = mat4f.lookAt(vec3f(1.5, -5, 3), vec3f(0, 0, 0), vec3f(0, 0, 1));
+    this.mvp = openGlToWgpuCorrection * projection * view;
   }
 
   override void initialize(const Device device) {
@@ -114,7 +118,11 @@ class Cube : Window {
       cast(ubyte[]) cube.indices.ptr[0..(ushort.sizeof * cube.indices.length)],
       "cube index buffer"
     );
-    uniformBuffer = device.createBuffer(BufferUsage.uniform | BufferUsage.copyDst, mat4f.sizeof, "uniform buffer");
+    uniformBuffer = wgpu.utils.createBuffer(
+      device, BufferUsage.uniform | BufferUsage.copyDst,
+      cast(ubyte[]) mvp.ptr[0..(mat4f.sizeof)],
+      "uniform buffer (camera)"
+    );
 
     auto bindingLayout = device.createBindGroupLayout([
       uniformBuffer.bindingLayout(0, ShaderStage.vertex)
@@ -142,6 +150,12 @@ class Cube : Window {
     auto extantSwapChain = swapChain;
     swapChain = swapChain.resize(device, size.width, size.height);
     extantSwapChain.destroy();
+
+    // Adjust the camera's perspective
+    const projection = mat4f.perspective(45f.rad, size.width / size.height, 1, 10);
+    const view = mat4f.lookAt(vec3f(1.5, -5, 3), vec3f(0, 0, 0), vec3f(0, 0, 1));
+    this.mvp = openGlToWgpuCorrection * projection * view;
+    // TODO: Update the camera uniform buffer
   }
 
   override void render(const Device device) {

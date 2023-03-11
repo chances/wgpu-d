@@ -10,6 +10,7 @@
   "targetPath": "bin",
   "dependencies": {
     "bindbc-glfw": "~>1.0.0",
+    "gfm:math": "~>8.0",
     "wgpu-d": {
       "path": "../.."
     }

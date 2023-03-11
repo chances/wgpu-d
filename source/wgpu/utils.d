@@ -44,7 +44,7 @@ interface RenderEncoder {
   void setPushConstants(ShaderStage stages, uint offset, ubyte[] data);
 }
 
-/// Creates a buffer in wich `data` is loaded.
+/// Creates a buffer in which `data` is loaded.
 /// See_Also:
 /// $(UL
 ///   $(LI `Device.createBuffer` )
