@@ -21,15 +21,13 @@ jobs:
     #   run: sudo apt-get install --quiet -y libglfw3 libglfw3-dev
     - name: Lint
       run: dub lint
-    - name: Test
-      run: env LD_LIBRARY_PATH=lib dub test --parallel
     # - name: Integration Test
     #   run: make headless
-    # - name: Test
-    #   run: make cover
-    # - name: Upload Coverage to Codecov
-    #   if: success()
-    #   run: bash <(curl -s https://codecov.io/bash)
+    - name: Test
+      run: env LD_LIBRARY_PATH=lib make cover
+    - name: Upload Coverage to Codecov
+      if: success()
+      run: bash <(curl -s https://codecov.io/bash)
     # - name: Upload Test Log Artifact on Failure
     #   uses: actions/upload-artifact@v1
     #   if: failure()

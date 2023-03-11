@@ -3,6 +3,8 @@ name: Documentation
 on:
   push:
     branches: [ master ]
+  pull_request:
+    branches: [ master ]
 
 jobs:
   build:
@@ -10,6 +12,11 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+      - name: Setup Homebrew
+        uses: Homebrew/actions/setup-homebrew@master
+      - name: Install Dependencies
+        runs-on: macos-latest
+        run: brew install gnu-sed
       - name: Install D compiler
         uses: dlang-community/setup-dlang@v1
         with:
@@ -18,7 +25,7 @@ jobs:
         run: make docs
 
       - name: GitHub Pages
-        if: success()
+        if: success() && github.ref == 'refs/heads/master'
         uses: crazy-max/ghaction-github-pages@v2.1.2
         with:
           target_branch: gh-pages

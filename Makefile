@@ -1,12 +1,16 @@
 OS := $(shell uname -s)
 ifeq ($(OS),Darwin)
 CC := clang
+SED := gsed
 endif
 ifeq ($(OS),Linux)
 CC := gcc
 endif
 ifndef CC
 $(error Unsupported target OS '$(OS)')
+endif
+ifndef SED
+SED := sed
 endif
 SOURCES := $(shell find source -name '*.d')
 LIBS_PATH := lib
@@ -70,31 +74,35 @@ docs/sitemap.xml: $(SOURCES)
 	dub build -b ddox
 	@echo "Performing cosmetic changes..."
 	# Navigation Sidebar
-	@sed -i '' -e "/<nav id=\"main-nav\">/r views/nav.html" -e "/<nav id=\"main-nav\">/d" `find docs -name '*.html'`
+	@$(SED) -i -e "/<nav id=\"main-nav\">/r views/nav.html" -e "/<nav id=\"main-nav\">/d" `find docs -name '*.html'`
 	# Page Titles
-	@sed -i '' "s/<\/title>/ - wgpu-d<\/title>/" `find docs -name '*.html'`
+	@$(SED) -i "s/<\/title>/ - wgpu-d<\/title>/" `find docs -name '*.html'`
 	# Index
-	@sed -i '' "s/API documentation/API Reference/g" docs/index.html
-	@sed -i '' -e "/<h1>API Reference<\/h1>/r views/index.html" -e "/<h1>API Reference<\/h1>/d" docs/index.html
+	@$(SED) -i "s/API documentation/API Reference/g" docs/index.html
+	@$(SED) -i -e "/<h1>API Reference<\/h1>/r views/index.html" -e "/<h1>API Reference<\/h1>/d" docs/index.html
 	# License Link
-	@sed -i '' "s/3-Clause BSD License/<a href=\"https:\/\/opensource.org\/licenses\/BSD-3-Clause\">3-Clause BSD License<\/a>/" `find docs -name '*.html'`
+	@$(SED) -i "s/3-Clause BSD License/<a href=\"https:\/\/opensource.org\/licenses\/BSD-3-Clause\">3-Clause BSD License<\/a>/" `find docs -name '*.html'`
 	# Footer
-	@sed -i '' -e "/<p class=\"faint\">Generated using the DDOX documentation generator<\/p>/r views/footer.html" -e "/<p class=\"faint\">Generated using the DDOX documentation generator<\/p>/d" `find docs -name '*.html'`
+	@$(SED) -i -e "/<p class=\"faint\">Generated using the DDOX documentation generator<\/p>/r views/footer.html" -e "/<p class=\"faint\">Generated using the DDOX documentation generator<\/p>/d" `find docs -name '*.html'`
 	# Dub Package Version
 	@echo `git describe --tags --abbrev=0`
-	@sed -i '' "s/DUB_VERSION/$(PACKAGE_VERSION)/g" `find docs -name '*.html'`
+	@$(SED) -i "s/DUB_VERSION/$(PACKAGE_VERSION)/g" `find docs -name '*.html'`
 	@echo Done
 
 docs: docs/sitemap.xml
 .PHONY: docs
 
-clean:
+clean: clean-docs
 	rm -rf bin lib
 	dub clean
 	rm -f source/wgpu/bindings.i
+	@echo "Cleaning code coverage reports..."
+	rm -f -- *.lst
+.PHONY: clean
+
+clean-docs:
 	@echo "Cleaning generated documentation..."
 	@rm -f docs.json
 	@rm -f docs/sitemap.xml docs/file_hashes.json
 	@rm -rf `find docs -name '*.html'`
-	rm -f -- *.lst
-.PHONY: clean
+.PHONY: clean-docs
