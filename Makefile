@@ -38,6 +38,8 @@ subprojects/wgpu/wgpu.h: subprojects/wgpu.Makefile
 	@make -C subprojects -f wgpu.Makefile
 source/wgpu/bindings.i: subprojects/wgpu/wgpu.h
 	@$(CC) -E subprojects/wgpu/wgpu.h > source/wgpu/bindings.i
+# Prevent "illegal combination of type specifiers" from D frontend
+	@$(SED) -i "s/__signed char/char/" source/wgpu/bindings.i
 $(LIB_WGPU): $(LIB_WGPU_SOURCE)
 	@mkdir -p lib
 	@cp $(LIB_WGPU_SOURCE) lib/.
