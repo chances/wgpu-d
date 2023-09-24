@@ -17,13 +17,20 @@
   "targetPath": "bin",
   "toolchainRequirements": {
     "frontend": ">=2.105.0",
-		"dmd": ">=2.100.0",
+		"dmd": ">=2.105.0",
 		"gdc": "no",
-		"ldc": ">=1.28.0"
+		"ldc": ">=1.35.0-beta1"
 	},
   "systemDependencies-linux": "vulkan >= 1.1.0, patchelf",
   "systemDependencies-osx": "metal >= 2",
   "systemDependencies-windows": "DirectX >= 11",
+  "preGenerateCommands-posix": [
+    "make wgpu"
+  ],
+  "dflags": [
+    "-P-Isource/wgpu",
+    "-P-Isubprojects/wgpu"
+  ],
   "configurations": [
     {
       "name": "library",
@@ -37,6 +44,7 @@
         "-Llib"
       ],
       "postBuildCommands-linux": [
+        "echo Fixing up libwgpu so path...",
         "patchelf --set-rpath '$$ORIGIN' bin/wgpu-d-test-unittest"
       ],
       "postBuildCommands-osx": [
@@ -47,13 +55,6 @@
   ],
   "libs": [
     "wgpu"
-  ],
-  "preGenerateCommands-posix": [
-    "make wgpu"
-  ],
-  "dflags": [
-    "-P-Isource/wgpu",
-    "-P-Isubprojects/wgpu"
   ],
   "copyFiles-linux": [
     "lib/libwgpu.so"

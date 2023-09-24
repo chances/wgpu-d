@@ -34,7 +34,7 @@ LIB_WGPU_SOURCE := subprojects/wgpu/libwgpu.$(LIB_WGPU_EXT)
 LIB_WGPU := lib/libwgpu.$(LIB_WGPU_EXT)
 wgpu: $(LIB_WGPU)
 .PHONY: wgpu
-subprojects/wgpu/wgpu.h: subprojects/wgpu.Makefile
+$(LIB_WGPU_SOURCE): subprojects/wgpu.Makefile
 	@make -C subprojects -f wgpu.Makefile
 $(LIB_WGPU): $(LIB_WGPU_SOURCE)
 	@mkdir -p lib
