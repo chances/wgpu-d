@@ -1,7 +1,7 @@
 /// An idiomatic D wrapper for <a href="https://github.com/gfx-rs/wgpu-native">wgpu-native</a>.
 ///
 /// Authors: Chance Snow
-/// Copyright: Copyright © 2020-2022 Chance Snow. All rights reserved.
+/// Copyright: Copyright © 2020-2023 Chance Snow. All rights reserved.
 /// License: MIT License
 module wgpu.api;
 
@@ -10,6 +10,7 @@ import std.string : fromStringz, toStringz;
 import std.typecons : Flag, No, Tuple, Yes;
 
 import wgpu.bindings;
+public import wgpu.enums;
 public import wgpu.limits;
 
 /// Version of <a href="https://github.com/gfx-rs/wgpu-native">wgpu-native</a> this library binds.
@@ -98,28 +99,46 @@ alias Limits = WGPULimits;
 alias Origin3d = WGPUOrigin3D;
 /// Describes a `PipelineLayout`.
 alias PipelineLayoutDescriptor = WGPUPipelineLayoutDescriptor;
+///
 alias PrimitiveDepthClampingState = WGPUPrimitiveDepthClampingState;
+///
 alias QuerySetDescriptor = WGPUQuerySetDescriptor;
+///
 alias RenderBundleDescriptor = WGPURenderBundleDescriptor;
+///
 alias RenderBundleEncoderDescriptor = WGPURenderBundleEncoderDescriptor;
 /// Describes a depth stencil attachment to a `RenderPass`.
 alias RenderPassDepthStencilAttachment = WGPURenderPassDepthStencilAttachment;
+/// Additional information required when requesting an adapter.
+/// See_Also: <a href="https://docs.rs/wgpu/0.10.2/wgpu/type.RequestAdapterOptions.html">wgpu::RequestAdapterOptions</a>
 alias RequestAdapterOptions = WGPURequestAdapterOptions;
+///
 alias SamplerBindingLayout = WGPUSamplerBindingLayout;
 /// Describes a `Sampler`.
 alias SamplerDescriptor = WGPUSamplerDescriptor;
+///
 alias ShaderModuleDescriptor = WGPUShaderModuleDescriptor;
+///
 alias ShaderModuleSPIRVDescriptor = WGPUShaderModuleSPIRVDescriptor;
+///
 alias ShaderModuleWGSLDescriptor = WGPUShaderModuleWGSLDescriptor;
+///
 alias StencilFaceState = WGPUStencilFaceState;
+///
 alias StorageTextureBindingLayout = WGPUStorageTextureBindingLayout;
+///
 alias SurfaceDescriptor = WGPUSurfaceDescriptor;
+///
 alias SurfaceDescriptorFromCanvasHTMLSelector = WGPUSurfaceDescriptorFromCanvasHTMLSelector;
+///
 alias SurfaceDescriptorFromMetalLayer = WGPUSurfaceDescriptorFromMetalLayer;
+///
 alias SurfaceDescriptorFromWindowsHWND = WGPUSurfaceDescriptorFromWindowsHWND;
+///
 alias SurfaceDescriptorFromXlib = WGPUSurfaceDescriptorFromXlib;
 /// Describes a `SwapChain`.
 alias SwapChainDescriptor = WGPUSwapChainDescriptor;
+///
 alias TextureBindingLayout = WGPUTextureBindingLayout;
 /// Layout of a texture in a buffer's memory.
 /// See_Also:
@@ -130,12 +149,15 @@ alias TextureBindingLayout = WGPUTextureBindingLayout;
 alias TextureDataLayout = WGPUTextureDataLayout;
 /// Describes a `TextureView`.
 alias TextureViewDescriptor = WGPUTextureViewDescriptor;
+///
 alias VertexAttribute = WGPUVertexAttribute;
 /// Describes a `BindGroup`.
 alias BindGroupDescriptor = WGPUBindGroupDescriptor;
 /// Describes a single binding inside a bind group.
 alias BindGroupLayoutEntry = WGPUBindGroupLayoutEntry;
+///
 alias BlendState = WGPUBlendState;
+///
 alias CompilationInfo = WGPUCompilationInfo;
 // TODO: View of a buffer which can be used to copy to/from a texture.
 /// View of a texture which can be used to copy to/from a buffer.
@@ -157,318 +179,10 @@ alias RenderPassDescriptor = WGPURenderPassDescriptor;
 /// See_Also: <a href="https://docs.rs/wgpu/0.10.2/wgpu/struct.RenderPipelineDescriptor.html">wgpu::RenderPipelineDescriptor</a>
 alias RenderPipelineDescriptor = WGPURenderPipelineDescriptor;
 // TODO: Wrap this into `Instance.requestAdapter`
+///
 alias AdapterExtras = WGPUAdapterExtras;
 
-// Enumerations
-private mixin template EnumAlias(T) if (is(T == enum)) {
-  enum wgpuPrefix = "WGPU";
-  enum baseName = __traits(identifier, T);
-  enum name = baseName[wgpuPrefix.length .. $];
-  enum memberPrefix = baseName ~ "_";
-
-  private static string _memberMixin(string member) {
-    import std.ascii : isDigit, toLower;
-    const unprefixedMember = member[memberPrefix.length .. $];
-    // Guard against invalid identifiers
-    string idiomaticMember = unprefixedMember[0].isDigit
-      ? "_" ~ unprefixedMember
-      : unprefixedMember[0].toLower ~ unprefixedMember[1..$];
-    // Guard against D keywords
-    idiomaticMember = idiomaticMember == "null" || idiomaticMember == "float" || idiomaticMember == "uint"
-      ? '_' ~ idiomaticMember
-      : idiomaticMember;
-    // Fix case of "BC", "RG", "CW", "CCW", "RGB", "RGBA", and "BGRA" prefixes
-    if (idiomaticMember.length > 4) {
-      if (idiomaticMember[0..4] == "bGRA") idiomaticMember = "bgra" ~ idiomaticMember[4..$];
-      else if (idiomaticMember[0..4] == "rGBA") idiomaticMember = "rgba" ~ idiomaticMember[4..$];
-      else if (idiomaticMember[0..3] == "rGB") idiomaticMember = "rgb" ~ idiomaticMember[3..$];
-      else if (idiomaticMember[0..2] == "rG") idiomaticMember = "rg" ~ idiomaticMember[2..$];
-      else if (idiomaticMember[0..2] == "bC") idiomaticMember = "bc" ~ idiomaticMember[2..$];
-    } else if (idiomaticMember == "cCW") {
-      idiomaticMember = "ccw";
-    } else if (idiomaticMember == "cW") {
-      idiomaticMember = "cw";
-    }
-    return "  " ~ idiomaticMember ~ " = cast(" ~ name ~ ") " ~ member ~ `,`;
-  }
-
-  private static string _enumMixin() {
-    import std.array : join;
-
-    string[] enumeration;
-    enumeration ~= "enum " ~ name ~ " : " ~ baseName ~ " {";
-    static foreach (member; __traits(allMembers, T)) {
-      enumeration ~= _memberMixin(member);
-    }
-    enumeration ~= "}";
-    return enumeration.join("\n");
-  }
-
-  mixin(_enumMixin());
-}
-
-version (D_Ddoc) {
-  /// Features that are not guaranteed to be supported.
-  ///
-  /// These are either part of the webgpu standard, or are extension features supported by wgpu when targeting native.
-  ///
-  /// If you want to use a feature, you need to first verify that the adapter supports the feature. If the adapter
-  /// does not support the feature, requesting a device with it enabled will panic.
-  /// See_Also: <a href="https://docs.rs/wgpu/0.10.2/wgpu/struct.Features.html">wgpu::Features</a>
-  enum FeatureName {
-    ///
-    undefined,
-    ///
-    depthClamping,
-    ///
-    depth24UnormStencil8,
-    ///
-    depth32FloatStencil8,
-    ///
-    timestampQuery,
-    ///
-    pipelineStatisticsQuery,
-    ///
-    textureCompressionBc,
-  }
-
-  /// The primitive topology used to interpret vertices.
-  /// See_Also: <a href="https://docs.rs/wgpu/0.10.2/wgpu/enum.PrimitiveTopology.html">wgpu::PrimitiveTopology</a>
-  enum PrimitiveTopology : WGPUPrimitiveTopology {
-    /// Vertex data is a list of points. Each vertex is a new point.
-    pointList,
-    /// Vertex data is a list of lines. Each pair of vertices composes a new line.
-    ///
-    /// Vertices `0 1 2 3` create two lines: `0-1` and `2-3`.
-    lineList,
-    /// Vertex data is a strip of lines. Each set of two adjacent vertices form a line.
-    ///
-    /// Vertices `0 1 2 3` create three lines: `0-1`, `1-2`, and `2-3`.
-    lineStrip,
-    /// Vertex data is a list of triangles. Each set of 3 vertices composes a new triangle.
-    ///
-    /// Vertices `0 1 2 3 4 5` create two triangles: `0 1 2` and `3 4 5`.
-    triangleList,
-    /// Vertex data is a triangle strip. Each set of three adjacent vertices form a triangle.
-    ///
-    /// Vertices `0 1 2 3 4 5` creates four triangles: `0 1 2`, `2 1 3`, `3 2 4`, and `4 3 5`.
-    triangleStrip,
-  }
-
-  /// When drawing strip topologies with indices, this is the required format for the index buffer.
-  /// This has no effect on non-indexed or non-strip draws.
-  /// See_Also: <a href="https://docs.rs/wgpu/0.10.2/wgpu/enum.IndexFormat.html">wgpu::IndexFormat</a>
-  enum IndexFormat : WGPUIndexFormat {
-    ///
-    undefined,
-    ///
-    uint16,
-    ///
-    uint32,
-  }
-
-  /// Type of <a href="https://en.wikipedia.org/wiki/Back-face_culling">face culling</a> to use during graphic pipeline rasterization.
-  /// See_Also: <a href="https://docs.rs/wgpu/0.10.2/wgpu/enum.Face.html">wgpu::Face</a>
-  enum CullMode : WGPUCullMode {
-    /// Disable face culling.
-    none,
-    /// Cull front faces.
-    front,
-    /// Cull back faces.
-    back,
-  }
-
-  /// Specifies the vertex order for faces to be considered front-facing.
-  enum FrontFace : WGPUFrontFace {
-    /// Clockwise ordered faces will be considered front-facing.
-    cw,
-    /// Counter-clockwise ordered faces will be considered front-facing.
-    ccw,
-  }
-
-  /// Specific type of a sample in a texture binding.
-  /// See_Also: <a href="https://docs.rs/wgpu/0.10.2/wgpu/enum.TextureSampleType.html">wgpu::TextureSampleType</a>
-  enum TextureSampleType : WGPUTextureSampleType {
-    ///
-    undefined,
-    ///
-    _float,
-    ///
-    unfilterableFloat,
-    ///
-    depth,
-    ///
-    sint,
-    ///
-    _uint,
-  }
-
-  /// Different ways that you can use a buffer.
-  ///
-  /// The usages determine what kind of memory the buffer is allocated from and what actions the buffer can partake in.
-  ///
-  /// These can be combined in a bitwise combination.
-  /// See_Also: <a href="https://docs.rs/wgpu/0.10.2/wgpu/struct.BufferUsages.html">wgpu::BufferUsages</a>
-  enum BufferUsage {
-    ///
-    none,
-    ///
-    mapRead,
-    ///
-    mapWrite,
-    ///
-    copySrc,
-    ///
-    copyDst,
-    ///
-    index,
-    ///
-    vertex,
-    ///
-    uniform,
-    ///
-    storage,
-    ///
-    indirect,
-    ///
-    queryResolve,
-  }
-
-  /// Mask which enables/disables writes to different color/alpha channel.
-  /// Disabled color channels will not be written to.
-  enum ColorWriteMask {
-    ///
-    none,
-    ///
-    red,
-    ///
-    green,
-    ///
-    blue,
-    ///
-    alpha,
-    ///
-    all,
-  }
-
-  /// Describes the shader stages that a binding will be visible from.
-  ///
-  /// These can be combined in a bitwise combination.
-  ///
-  /// For example, something that is visible from both vertex and fragment shaders can be defined as:
-  ///
-  /// `ShaderStage.vertex | ShaderStage.fragment`
-  /// See_Also: <a href="https://docs.rs/wgpu/0.10.2/wgpu/struct.ShaderStages.html">wgpu::ShaderStages</a>
-  enum ShaderStage {
-    ///
-    none,
-    ///
-    vertex,
-    ///
-    fragment,
-    ///
-    compute,
-  }
-
-  /// Different ways that you can use a texture.
-  ///
-  /// The usages determine what kind of memory the texture is allocated from and what actions the texture can partake in.
-  ///
-  /// These can be combined in a bitwise combination.
-  /// See_Also: <a href="https://docs.rs/wgpu/0.10.2/wgpu/struct.TextureUsages.html">wgpu::TextureUsages</a>
-  enum TextureUsage {
-    ///
-    none,
-    ///
-    copySrc,
-    ///
-    copyDst,
-    ///
-    textureBinding,
-    ///
-    storageBinding,
-    ///
-    renderAttachment,
-  }
-}
-
-mixin EnumAlias!WGPUAdapterType;
-mixin EnumAlias!WGPUAddressMode;
-mixin EnumAlias!WGPUBackendType;
-mixin EnumAlias!WGPUBlendFactor;
-mixin EnumAlias!WGPUBlendOperation;
-mixin EnumAlias!WGPUBufferBindingType;
-mixin EnumAlias!WGPUBufferMapAsyncStatus;
-mixin EnumAlias!WGPUCompareFunction;
-mixin EnumAlias!WGPUCompilationMessageType;
-mixin EnumAlias!WGPUCreatePipelineAsyncStatus;
-mixin EnumAlias!WGPUCullMode;
-mixin EnumAlias!WGPUDeviceLostReason;
-mixin EnumAlias!WGPUErrorFilter;
-mixin EnumAlias!WGPUErrorType;
-mixin EnumAlias!WGPUFeatureName;
-mixin EnumAlias!WGPUFilterMode;
-mixin EnumAlias!WGPUFrontFace;
-mixin EnumAlias!WGPUIndexFormat;
-mixin EnumAlias!WGPULoadOp;
-mixin EnumAlias!WGPUPipelineStatisticName;
-mixin EnumAlias!WGPUPowerPreference;
-mixin EnumAlias!WGPUPresentMode;
-mixin EnumAlias!WGPUPrimitiveTopology;
-mixin EnumAlias!WGPUQueryType;
-mixin EnumAlias!WGPUQueueWorkDoneStatus;
-mixin EnumAlias!WGPURequestAdapterStatus;
-mixin EnumAlias!WGPURequestDeviceStatus;
-mixin EnumAlias!WGPUSType;
-mixin EnumAlias!WGPUSamplerBindingType;
-mixin EnumAlias!WGPUStencilOperation;
-mixin EnumAlias!WGPUStorageTextureAccess;
-mixin EnumAlias!WGPUStoreOp;
-mixin EnumAlias!WGPUTextureAspect;
-mixin EnumAlias!WGPUTextureComponentType;
-mixin EnumAlias!WGPUTextureDimension;
-mixin EnumAlias!WGPUTextureFormat;
-mixin EnumAlias!WGPUTextureSampleType;
-mixin EnumAlias!WGPUTextureViewDimension;
-mixin EnumAlias!WGPUVertexFormat;
-mixin EnumAlias!WGPUVertexStepMode;
-mixin EnumAlias!WGPUBufferUsage;
-mixin EnumAlias!WGPUColorWriteMask;
-mixin EnumAlias!WGPUMapMode;
-mixin EnumAlias!WGPUShaderStage;
-mixin EnumAlias!WGPUTextureUsage;
-
-/// Constant blending modes usable when constructing a `ColorTargetState`'s `BlendState`.
-/// See_Also:
-/// $(UL
-///   $(LI `Texture.asRenderTarget` )
-///   $(LI <a href="https://docs.rs/wgpu/0.10.2/wgpu/struct.BlendState.html">wgpu::BlendState</a> )
-///   $(LI See the OpenGL or Vulkan spec for more information. )
-/// )
-enum BlendMode : BlendState {
-  /// Performs `(1 * src) + (0 * dst)` for both color and alpha components.
-  /// See_Also: `BlendMode.replace`
-  srcOneDstZeroAdd = BlendState(
-    BlendComponent(BlendOperation.add, BlendFactor.one, BlendFactor.zero),
-    BlendComponent(BlendOperation.add, BlendFactor.one, BlendFactor.zero)
-  ),
-  /// Blend mode that does no color blending, just overwrites the output with the contents of the shader.
-  /// See_Also: `BlendMode.srcOneDstZeroAdd`
-  replace = BlendState(
-    BlendComponent(BlendOperation.add, BlendFactor.one, BlendFactor.zero), // Replace, (1 * src) + (0 * dst)
-    BlendComponent(BlendOperation.add, BlendFactor.one, BlendFactor.zero), // Replace, (1 * src) + (0 * dst)
-  ),
-  /// Blend mode that does standard alpha blending with non-premultiplied alpha.
-  alphaBlending = BlendState(
-    BlendComponent(BlendOperation.add, BlendFactor.srcAlpha, BlendFactor.oneMinusSrcAlpha),
-    BlendComponent(BlendOperation.add, BlendFactor.one, BlendFactor.oneMinusSrcAlpha) // Over, (1 * src) + ((1 - src_alpha) * dst)
-  ),
-  /// Blend mode that does standard alpha blending with premultiplied alpha.
-  premultipliedAlphaBlending = BlendState(
-    BlendComponent(BlendOperation.add, BlendFactor.one, BlendFactor.oneMinusSrcAlpha), // Over, (1 * src) + ((1 - src_alpha) * dst)
-    BlendComponent(BlendOperation.add, BlendFactor.one, BlendFactor.oneMinusSrcAlpha), // Over, (1 * src) + ((1 - src_alpha) * dst)
-  ),
-}
+//static assert(false, std.traits.fullyQualifiedName!WGPUAdapterType);
 
 // Structures
 
@@ -551,7 +265,7 @@ class ColorTargetState {
   }
 
   package auto state() @trusted @property const {
-    return WGPUColorTargetState(null, cast(WGPUTextureFormat) format, &blend, writeMask);
+    return WGPUColorTargetState(null, cast(TextureFormat) format, cast(BlendState*) &blend, writeMask);
   }
 }
 
@@ -649,8 +363,8 @@ class FragmentState {
   package WGPUFragmentState state() @trusted @property const {
     return WGPUFragmentState(
       null, cast(WGPUShaderModule) shader.id, entryPoint.toStringz,
-      constants.length.to!uint, constants.length == 0 ? null : constants.ptr,
-      targets.length.to!uint, targets.ptr
+      constants.length.to!uint, cast(ConstantEntry*) (constants.length == 0 ? null : constants.ptr),
+      targets.length.to!uint, cast(WGPUColorTargetState*) targets.ptr
     );
   }
 }
@@ -816,7 +530,7 @@ struct Adapter {
     };
     WGPURequiredLimits requiredLimits = { limits: limits };
     WGPUDeviceDescriptor desc = {
-      nextInChain: cast(const(WGPUChainedStruct)*) &extras,
+      nextInChain: cast(ChainedStruct*) &extras,
       requiredLimits: &requiredLimits
     };
     wgpuAdapterRequestDevice(id, &desc, &wgpu_request_device_callback, cast(void*) device);
@@ -894,11 +608,11 @@ class Device {
     // TODO: assert SPIR-V magic number is at the beginning of the stream
     // TODO: assert input is not longer than `size_t.max`
     const ShaderModuleSPIRVDescriptor spirv = {
-      chain: WGPUChainedStruct(null, cast(WGPUSType) SType.shaderModuleSPIRVDescriptor),
+      chain: WGPUChainedStruct(null, cast(WGPUSType) SType.shaderModuleSpirvDescriptor),
       codeSize: spv.length.to!uint,
       code: spv.to!(uint[]).ptr,
     };
-    auto desc = ShaderModuleDescriptor(&spirv.chain);
+    auto desc = ShaderModuleDescriptor(cast(ChainedStruct*) &spirv.chain);
     return ShaderModule(wgpuDeviceCreateShaderModule(id, &desc));
   }
 
@@ -907,10 +621,10 @@ class Device {
   /// Shader modules are used to define programmable stages of a pipeline.
   ShaderModule createShaderModule(string wgsl) @trusted const {
     const ShaderModuleWGSLDescriptor wgslDesc = {
-      chain: WGPUChainedStruct(null, cast(WGPUSType) SType.shaderModuleWGSLDescriptor),
+      chain: WGPUChainedStruct(null, cast(WGPUSType) SType.shaderModuleWgslDescriptor),
       source: wgsl.toStringz,
     };
-    auto desc = ShaderModuleDescriptor(&wgslDesc.chain);
+    auto desc = ShaderModuleDescriptor(cast(ChainedStruct*) &wgslDesc.chain);
     assert(id !is null);
     return ShaderModule(wgpuDeviceCreateShaderModule(cast(WGPUDevice) id, &desc));
   }
@@ -925,7 +639,10 @@ class Device {
   /// Creates an empty `CommandEncoder`.
   CommandEncoder createCommandEncoder(const CommandEncoderDescriptor descriptor) @trusted const {
     assert(id !is null);
-    return CommandEncoder(wgpuDeviceCreateCommandEncoder(cast(WGPUDevice) id, &descriptor), descriptor);
+    return CommandEncoder(
+      wgpuDeviceCreateCommandEncoder(cast(WGPUDevice) id, cast(CommandEncoderDescriptor*) &descriptor),
+      descriptor
+    );
   }
 
   /// Creates a bind group layout.
@@ -939,7 +656,10 @@ class Device {
   /// ditto
   BindGroupLayout createBindGroupLayout(const BindGroupLayoutDescriptor descriptor) @trusted const {
     assert(id !is null);
-    return BindGroupLayout(wgpuDeviceCreateBindGroupLayout(cast(WGPUDevice) id, &descriptor), descriptor);
+    return BindGroupLayout(
+      wgpuDeviceCreateBindGroupLayout(cast(WGPUDevice) id, cast(BindGroupLayoutDescriptor*) &descriptor),
+      cast(BindGroupLayoutDescriptor) descriptor
+    );
   }
 
   /// Creates a new bind group.
@@ -968,17 +688,21 @@ class Device {
     import std.algorithm : map;
     import std.array : array;
 
-    PipelineLayoutDescriptor desc = {
-      label: label is null ? null : label.toStringz,
-      bindGroupLayoutCount: bindGroups.length.to!uint,
-      bindGroupLayouts: bindGroups.length == 0 ? null : bindGroups.map!(b => b.id).array.ptr,
-    };
+    PipelineLayoutDescriptor desc;
+    desc.label = label is null ? null : label.toStringz;
+    desc.bindGroupLayoutCount = bindGroups.length.to!uint;
+    desc.bindGroupLayouts = bindGroups.length == 0
+      ? null
+      : cast(WGPUBindGroupLayoutImpl**) bindGroups.map!(b => b.id).array.ptr;
     return createPipelineLayout(desc);
   }
   /// ditto
   PipelineLayout createPipelineLayout(const PipelineLayoutDescriptor descriptor) @trusted const {
     assert(id !is null);
-    return PipelineLayout(wgpuDeviceCreatePipelineLayout(cast(WGPUDevice) id, &descriptor), descriptor);
+    return PipelineLayout(
+      wgpuDeviceCreatePipelineLayout(cast(WGPUDevice) id, cast(PipelineLayoutDescriptor*) &descriptor),
+      cast(PipelineLayoutDescriptor) descriptor
+    );
   }
 
   /// Creates a render pipeline.
@@ -1012,7 +736,8 @@ class Device {
       null,
       label is null ? null : label.toStringz,
       layout.id, vertexState.state, primitiveState.state,
-      &depthStencilState.state, multisampleState.state,
+      cast(WGPUDepthStencilState*) &depthStencilState.state,
+      multisampleState.state,
       &fragment,
     );
     return new RenderPipeline(this, descriptor, fragmentState);
@@ -1070,7 +795,7 @@ class Device {
   Texture createTexture(
     uint width, uint height,
     const TextureFormat format, const TextureUsage usage,
-    const TextureDimension dimension = TextureDimension._2D,
+    const TextureDimension dimension = TextureDimension._2d,
     uint mipLevelCount = 1,
     uint sampleCount = 1,
     uint depthOrArrayLayers = 1,
@@ -1098,7 +823,7 @@ class Device {
   /// label = Optional, human-readable debug label for the texture.
   Texture createTexture(
     const Extent3d extent, const TextureFormat format, const TextureUsage usage,
-    const TextureDimension dimension = TextureDimension._2D,
+    const TextureDimension dimension = TextureDimension._2d,
     uint mipLevelCount = 1,
     uint sampleCount = 1,
     const string label = null
@@ -1144,8 +869,8 @@ class Device {
   ///
   /// Params:
   /// descriptor = Specifies the behavior of the sampler.
-  Sampler createSampler(const SamplerDescriptor descriptor) {
-    return Sampler(wgpuDeviceCreateSampler(id, &descriptor), descriptor);
+  Sampler createSampler(const SamplerDescriptor descriptor) @trusted {
+    return Sampler(wgpuDeviceCreateSampler(id, cast(SamplerDescriptor*) &descriptor), descriptor);
   }
 
   /// Create a new `SwapChain` which targets `surface`.
@@ -1274,8 +999,10 @@ class SwapChain {
   /// Optional, human-readable debug label for this swap chain.
   const string label;
 
-  package this(const Device device, const Surface surface, const SwapChainDescriptor descriptor) {
-    id = wgpuDeviceCreateSwapChain(cast(WGPUDevice) device.id, cast(WGPUSurface) surface.id, &descriptor);
+  package this(const Device device, const Surface surface, const SwapChainDescriptor descriptor) @trusted {
+    id = wgpuDeviceCreateSwapChain(
+      cast(WGPUDevice) device.id, cast(WGPUSurface) surface.id, cast(SwapChainDescriptor*) &descriptor
+    );
     this.surface = surface;
     this.descriptor = descriptor;
     this.label = descriptor.label is null ? null : descriptor.label.fromStringz.to!string;
@@ -1310,14 +1037,6 @@ class SwapChain {
   }
 }
 
-/// Result of a call to `Buffer.mapReadAsync` or `Buffer.mapWriteAsync`.
-enum BufferMapAsyncStatus {
-  success = 0,
-  error = 1,
-  unknown = 2,
-  contextLost = 3
-}
-
 extern (C) private void wgpuBufferMapCallback(WGPUBufferMapAsyncStatus status, void* data) {
   assert(data !is null);
   auto buffer = cast(Buffer) data;
@@ -1341,7 +1060,7 @@ class Buffer {
 
   package this(const Device device, const BufferDescriptor descriptor) @trusted {
     assert(device !is null && device.id !is null);
-    id = wgpuDeviceCreateBuffer(cast(WGPUDevice) device.id, &descriptor);
+    id = wgpuDeviceCreateBuffer(cast(WGPUDevice) device.id, cast(BufferDescriptor*) &descriptor);
     if (id !is null && descriptor.mappedAtCreation) status = BufferMapAsyncStatus.success;
     this.descriptor = descriptor;
     label = descriptor.label is null ? null : descriptor.label.fromStringz.to!string;
@@ -1443,9 +1162,9 @@ class Texture {
   /// Optional, human-readable debug label for this texture.
   const string label;
 
-  package this(const Device device, TextureDescriptor descriptor) @trusted {
+  package this(const Device device, const TextureDescriptor descriptor) @trusted {
     assert(device !is null && device.id !is null);
-    id = wgpuDeviceCreateTexture(cast(WGPUDevice) device.id, &descriptor);
+    id = wgpuDeviceCreateTexture(cast(WGPUDevice) device.id, cast(TextureDescriptor*) &descriptor);
     this.descriptor = descriptor;
     this.label = descriptor.label is null ? null : descriptor.label.fromStringz.to!string;
   }
@@ -1524,24 +1243,24 @@ class Texture {
       case TextureFormat.rgba32Uint:
       case TextureFormat.rgba32Sint:
       // Compressed, 4 pixels per block
-      case TextureFormat.bc3RGBAUnorm:
-      case TextureFormat.bc3RGBAUnormSrgb:
+      case TextureFormat.bc3rgbaUnorm:
+      case TextureFormat.bc3rgbaUnormSrgb:
         return 16;
-      case TextureFormat.rgb10A2Unorm:
-      case TextureFormat.rg11B10Ufloat:
-      case TextureFormat.rgb9E5Ufloat:
-      case TextureFormat.bc1RGBAUnorm:
-      case TextureFormat.bc1RGBAUnormSrgb:
-      case TextureFormat.bc2RGBAUnorm:
-      case TextureFormat.bc2RGBAUnormSrgb:
-      case TextureFormat.bc4RUnorm:
-      case TextureFormat.bc4RSnorm:
-      case TextureFormat.bc5RGUnorm:
-      case TextureFormat.bc5RGSnorm:
-      case TextureFormat.bc6HRGBUfloat:
-      case TextureFormat.bc6HRGBFloat:
-      case TextureFormat.bc7RGBAUnorm:
-      case TextureFormat.bc7RGBAUnormSrgb:
+      case TextureFormat.rgb10a2Unorm:
+      case TextureFormat.rg11b10Ufloat:
+      case TextureFormat.rgb9e5Ufloat:
+      case TextureFormat.bc1rgbaUnorm:
+      case TextureFormat.bc1rgbaUnormSrgb:
+      case TextureFormat.bc2rgbaUnorm:
+      case TextureFormat.bc2rgbaUnormSrgb:
+      case TextureFormat.bc4rUnorm:
+      case TextureFormat.bc4rSnorm:
+      case TextureFormat.bc5rgUnorm:
+      case TextureFormat.bc5rgSnorm:
+      case TextureFormat.bc6hrgbUfloat:
+      case TextureFormat.bc6hrgbFloat:
+      case TextureFormat.bc7rgbaUnorm:
+      case TextureFormat.bc7rgbaUnormSrgb:
         // FIXME: Supply block sizes for these texture formats
         assert(0, "Unknown block size in bytes of " ~ descriptor.format.stringof);
       // QUESTION: Depth formats of _at least_ 24 bits, therefore there's no guarenteed block size?
@@ -1594,26 +1313,26 @@ class Texture {
       case TextureFormat.rgba32Float:
       case TextureFormat.rgba32Uint:
       case TextureFormat.rgba32Sint:
-      case TextureFormat.rgb10A2Unorm:
-      case TextureFormat.rg11B10Ufloat:
-      case TextureFormat.rgb9E5Ufloat:
+      case TextureFormat.rgb10a2Unorm:
+      case TextureFormat.rg11b10Ufloat:
+      case TextureFormat.rgb9e5Ufloat:
         return 1;
       // BC3 compression, 4 pixels per block
-      case TextureFormat.bc3RGBAUnorm:
-      case TextureFormat.bc3RGBAUnormSrgb:
+      case TextureFormat.bc3rgbaUnorm:
+      case TextureFormat.bc3rgbaUnormSrgb:
         return 4;
-      case TextureFormat.bc1RGBAUnorm:
-      case TextureFormat.bc1RGBAUnormSrgb:
-      case TextureFormat.bc2RGBAUnorm:
-      case TextureFormat.bc2RGBAUnormSrgb:
-      case TextureFormat.bc4RUnorm:
-      case TextureFormat.bc4RSnorm:
-      case TextureFormat.bc5RGUnorm:
-      case TextureFormat.bc5RGSnorm:
-      case TextureFormat.bc6HRGBUfloat:
-      case TextureFormat.bc6HRGBFloat:
-      case TextureFormat.bc7RGBAUnorm:
-      case TextureFormat.bc7RGBAUnormSrgb:
+      case TextureFormat.bc1rgbaUnorm:
+      case TextureFormat.bc1rgbaUnormSrgb:
+      case TextureFormat.bc2rgbaUnorm:
+      case TextureFormat.bc2rgbaUnormSrgb:
+      case TextureFormat.bc4rUnorm:
+      case TextureFormat.bc4rSnorm:
+      case TextureFormat.bc5rgUnorm:
+      case TextureFormat.bc5rgSnorm:
+      case TextureFormat.bc6hrgbUfloat:
+      case TextureFormat.bc6hrgbFloat:
+      case TextureFormat.bc7rgbaUnorm:
+      case TextureFormat.bc7rgbaUnormSrgb:
         // FIXME: Supply pixel compression ratios for these texture formats
         assert(0, "Unknown compression ratio of " ~ descriptor.format.stringof);
       // QUESTION: Depth formats of _at least_ 24 bits, therefore there's no guarenteed block size?
@@ -1684,7 +1403,7 @@ class Texture {
   TextureView createView(const TextureViewDescriptor descriptor) inout @trusted {
     assert(id !is null);
     return TextureView(
-      wgpuTextureCreateView(cast(WGPUTexture) id, &descriptor),
+      wgpuTextureCreateView(cast(WGPUTexture) id, cast(TextureViewDescriptor*) &descriptor),
       descriptor,
       this.descriptor.sampleCount > 1 ? Yes.multisampled : No.multisampled
     );
@@ -1783,7 +1502,7 @@ struct TextureView {
 struct Sampler {
   package WGPUSampler id;
   /// Describes this `Sampler`.
-  SamplerDescriptor descriptor;
+  const SamplerDescriptor descriptor;
 
   /// Creates a sampler binding.
   BindGroupEntry binding(uint location) {
@@ -1803,12 +1522,12 @@ struct Queue {
     submit([commands]);
   }
   /// Submits a series of finished command buffers for execution.
-  void submit(CommandBuffer[] commandBuffers) {
+  void submit(CommandBuffer[] commandBuffers) @trusted {
     import std.algorithm.iteration : map;
     import std.array : array;
 
     const commandBufferIds = commandBuffers.map!(c => c.id).array;
-    wgpuQueueSubmit(id, commandBuffers.length.to!uint, commandBufferIds.ptr);
+    wgpuQueueSubmit(id, commandBuffers.length.to!uint, cast(WGPUCommandBufferImpl**) commandBufferIds.ptr);
   }
 }
 
@@ -1913,15 +1632,15 @@ struct CommandEncoder {
   /// Begins recording of a render pass.
   ///
   /// This function returns a `RenderPass` object which records a single render pass.
-  RenderPass beginRenderPass(const RenderPassDescriptor descriptor) {
-    return RenderPass(wgpuCommandEncoderBeginRenderPass(id, &descriptor));
+  RenderPass beginRenderPass(const RenderPassDescriptor descriptor) @trusted {
+    return RenderPass(wgpuCommandEncoderBeginRenderPass(id, cast(RenderPassDescriptor*) &descriptor));
   }
 
   /// Begins recording of a compute pass.
   ///
   /// This function returns a `ComputePass` object which records a single compute pass.
-  ComputePass beginComputePass(const ComputePassDescriptor descriptor) {
-    return ComputePass(wgpuCommandEncoderBeginComputePass(id, &descriptor));
+  ComputePass beginComputePass(const ComputePassDescriptor descriptor) @trusted {
+    return ComputePass(wgpuCommandEncoderBeginComputePass(id, cast(ComputePassDescriptor*) &descriptor));
   }
 
   // TODO: void wgpuCommandEncoderCopyBufferToBuffer(WGPUCommandEncoder commandEncoder, WGPUBuffer source, uint64_t sourceOffset, WGPUBuffer destination, uint64_t destinationOffset, uint64_t size);
@@ -1937,8 +1656,12 @@ struct CommandEncoder {
     );
   }
   /// Copy data from a buffer to a texture.
-  void copyBufferToTexture(const ImageCopyBuffer source, const ImageCopyTexture destination, const Extent3d copySize) {
-    wgpuCommandEncoderCopyBufferToTexture(id, &source, &destination, &copySize);
+  void copyBufferToTexture(
+    const ImageCopyBuffer source, const ImageCopyTexture destination, const Extent3d copySize
+  ) @trusted {
+    wgpuCommandEncoderCopyBufferToTexture(
+      id, cast(ImageCopyBuffer*) &source, cast(ImageCopyTexture*) &destination, cast(Extent3d*) &copySize
+    );
   }
 
   /// Copy data from a `Texture` to a `Buffer`.
@@ -1956,8 +1679,12 @@ struct CommandEncoder {
     );
   }
   /// Copy data from a texture to a buffer.
-  void copyTextureToBuffer(const ImageCopyTexture source, const ImageCopyBuffer destination, const Extent3d copySize) {
-    wgpuCommandEncoderCopyTextureToBuffer(id, &source, &destination, &copySize);
+  void copyTextureToBuffer(
+    const ImageCopyTexture source, const ImageCopyBuffer destination, const Extent3d copySize
+  ) @trusted {
+    wgpuCommandEncoderCopyTextureToBuffer(
+      id, cast(ImageCopyTexture*) &source, cast(ImageCopyBuffer*) &destination, cast(Extent3d*) &copySize
+    );
   }
 
   // TODO: void wgpuCommandEncoderCopyTextureToTexture(WGPUCommandEncoder commandEncoder, WGPUImageCopyTexture const * source, WGPUImageCopyTexture const * destination, WGPUExtent3D const * copySize);
@@ -2013,10 +1740,9 @@ class RenderPipeline {
   /// Describes the fragment process in this render pipeline.
   const FragmentState fragmentState;
 
-  package this(const Device device, RenderPipelineDescriptor descriptor, const FragmentState fragmentState) {
-    this.fragmentState = fragmentState;
-    const fragment = this.fragmentState.state;
-    descriptor.fragment = &fragment;
+  package this(const Device device, RenderPipelineDescriptor descriptor, const FragmentState fragmentState) @trusted {
+    const fragment = (this.fragmentState = fragmentState).state;
+    descriptor.fragment = cast(WGPUFragmentState*) &fragment;
 
     assert(device.id !is null);
     id = wgpuDeviceCreateRenderPipeline(cast(WGPUDevice) device.id, &descriptor);
