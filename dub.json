@@ -10,6 +10,9 @@
     "examples/headless",
     "examples/triangle"
   ],
+  "excludedSourceFiles": [
+    "examples/triangle/subprojects/glfw/**/*.d"
+  ],
   "targetType": "sourceLibrary",
   "targetPath": "bin",
   "toolchainRequirements": {

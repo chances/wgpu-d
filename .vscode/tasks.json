@@ -4,7 +4,7 @@
     {
       "type": "shell",
       "label": "dub: Lint wgpu-d",
-      "command": "dub lint",
+      "command": "make -C examples/triangle/subprojects/glfw/src clean && dub lint",
       "options": {
         "cwd": "${workspaceFolder}"
       },

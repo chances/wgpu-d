@@ -348,6 +348,8 @@ version (D_Ddoc) {
 
 //static assert(false, std.traits.fullyQualifiedName!WGPUAdapterType);
 
+
+///
 enum AdapterType : WGPUAdapterType {
   discreteGpu,
   integratedGpu,
@@ -355,12 +357,16 @@ enum AdapterType : WGPUAdapterType {
   unknown,
   force32 = cast(WGPUAdapterType) 0x7FFFFFFF
 }
+
+///
 enum AddressMode : WGPUAddressMode {
   repeat,
   mirrorRepeat,
   clampToEdge,
   force32 = cast(WGPUAddressMode) 0x7FFFFFFF
 }
+
+///
 enum BackendType : WGPUBackendType {
   _null,
   webGPU,
@@ -372,6 +378,8 @@ enum BackendType : WGPUBackendType {
   openGLES,
   force32 = cast(WGPUBackendType) 0x7FFFFFFF
 }
+
+///
 enum BlendFactor : WGPUBlendFactor {
   zero,
   one,
@@ -388,6 +396,8 @@ enum BlendFactor : WGPUBlendFactor {
   oneMinusConstant,
   force32 = cast(WGPUBlendFactor) 0x7FFFFFFF
 }
+
+///
 enum BlendOperation : WGPUBlendOperation {
   add,
   subtract,
@@ -396,6 +406,8 @@ enum BlendOperation : WGPUBlendOperation {
   max,
   force32 = cast(WGPUBlendOperation) 0x7FFFFFFF
 }
+
+///
 enum BufferBindingType : WGPUBufferBindingType {
   undefined,
   uniform,
@@ -403,6 +415,7 @@ enum BufferBindingType : WGPUBufferBindingType {
   readOnlyStorage,
   force32 = cast(WGPUBufferBindingType) 0x7FFFFFFF
 }
+
 /// Result of a call to `Buffer.mapReadAsync` or `Buffer.mapWriteAsync`.
 enum BufferMapAsyncStatus : WGPUBufferMapAsyncStatus {
   success,
@@ -413,6 +426,8 @@ enum BufferMapAsyncStatus : WGPUBufferMapAsyncStatus {
   unmappedBeforeCallback,
   force32 = cast(WGPUBufferMapAsyncStatus) 0x7FFFFFFF
 }
+
+///
 enum CompareFunction : WGPUCompareFunction {
   undefined,
   never,
@@ -425,12 +440,16 @@ enum CompareFunction : WGPUCompareFunction {
   always,
   force32 = cast(WGPUCompareFunction) 0x7FFFFFFF
 }
+
+///
 enum CompilationMessageType : WGPUCompilationMessageType {
   error,
   warning,
   info,
   force32 = cast(WGPUCompilationMessageType) 0x7FFFFFFF
 }
+
+///
 enum CreatePipelineAsyncStatus : WGPUCreatePipelineAsyncStatus {
   success,
   error,
@@ -439,23 +458,31 @@ enum CreatePipelineAsyncStatus : WGPUCreatePipelineAsyncStatus {
   unknown,
   force32 = cast(WGPUCreatePipelineAsyncStatus) 0x7FFFFFFF
 }
+
+///
 enum CullMode : WGPUCullMode {
   none,
   front,
   back,
   force32 = cast(WGPUCullMode) 0x7FFFFFFF
 }
+
+///
 enum DeviceLostReason : WGPUDeviceLostReason {
   undefined,
   destroyed,
   force32 = cast(WGPUDeviceLostReason) 0x7FFFFFFF
 }
+
+///
 enum ErrorFilter : WGPUErrorFilter {
   none,
   validation,
   outOfMemory,
   force32 = cast(WGPUErrorFilter) 0x7FFFFFFF
 }
+
+///
 enum ErrorType : WGPUErrorType {
   noError,
   validation,
@@ -464,6 +491,8 @@ enum ErrorType : WGPUErrorType {
   deviceLost,
   force32 = cast(WGPUErrorType) 0x7FFFFFFF
 }
+
+///
 enum FeatureName : WGPUFeatureName {
   undefined,
   depthClamping,
@@ -474,27 +503,37 @@ enum FeatureName : WGPUFeatureName {
   textureCompressionBc,
   force32 = cast(WGPUFeatureName) 0x7FFFFFFF
 }
+
+///
 enum FilterMode : WGPUFilterMode {
   nearest,
   linear,
   force32 = cast(WGPUFilterMode) 0x7FFFFFFF
 }
+
+///
 enum FrontFace : WGPUFrontFace {
   ccw,
   cw,
   force32 = cast(WGPUFrontFace) 0x7FFFFFFF
 }
+
+///
 enum IndexFormat : WGPUIndexFormat {
   undefined,
   uint16,
   uint32,
   force32 = cast(WGPUIndexFormat) 0x7FFFFFFF
 }
+
+///
 enum LoadOp : WGPULoadOp {
   clear,
   load,
   force32 = cast(WGPULoadOp) 0x7FFFFFFF
 }
+
+///
 enum PipelineStatisticName : WGPUPipelineStatisticName {
   vertexShaderInvocations,
   clipperInvocations,
@@ -503,17 +542,23 @@ enum PipelineStatisticName : WGPUPipelineStatisticName {
   computeShaderInvocations,
   force32 = cast(WGPUPipelineStatisticName) 0x7FFFFFFF
 }
+
+///
 enum PowerPreference : WGPUPowerPreference {
   lowPower,
   highPerformance,
   force32 = cast(WGPUPowerPreference) 0x7FFFFFFF
 }
+
+///
 enum PresentMode : WGPUPresentMode {
   immediate,
   mailbox,
   fifo,
   force32 = cast(WGPUPresentMode) 0x7FFFFFFF
 }
+
+///
 enum PrimitiveTopology : WGPUPrimitiveTopology {
   pointList,
   lineList,
@@ -522,12 +567,16 @@ enum PrimitiveTopology : WGPUPrimitiveTopology {
   triangleStrip,
   force32 = cast(WGPUPrimitiveTopology) 0x7FFFFFFF
 }
+
+///
 enum QueryType : WGPUQueryType {
   occlusion,
   pipelineStatistics,
   timestamp,
   force32 = cast(WGPUQueryType) 0x7FFFFFFF
 }
+
+///
 enum QueueWorkDoneStatus : WGPUQueueWorkDoneStatus {
   success,
   error,
@@ -535,6 +584,8 @@ enum QueueWorkDoneStatus : WGPUQueueWorkDoneStatus {
   deviceLost,
   force32 = cast(WGPUQueueWorkDoneStatus) 0x7FFFFFFF
 }
+
+///
 enum RequestAdapterStatus : WGPURequestAdapterStatus {
   success,
   unavailable,
@@ -542,12 +593,16 @@ enum RequestAdapterStatus : WGPURequestAdapterStatus {
   unknown,
   force32 = cast(WGPURequestAdapterStatus) 0x7FFFFFFF
 }
+
+///
 enum RequestDeviceStatus : WGPURequestDeviceStatus {
   success,
   error,
   unknown,
   force32 = cast(WGPURequestDeviceStatus) 0x7FFFFFFF
 }
+
+///
 enum SType : WGPUSType {
   invalid,
   surfaceDescriptorFromMetalLayer,
@@ -559,6 +614,8 @@ enum SType : WGPUSType {
   primitiveDepthClampingState,
   force32 = cast(WGPUSType) 0x7FFFFFFF
 }
+
+///
 enum SamplerBindingType : WGPUSamplerBindingType {
   undefined,
   filtering,
@@ -566,6 +623,8 @@ enum SamplerBindingType : WGPUSamplerBindingType {
   comparison,
   force32 = cast(WGPUSamplerBindingType) 0x7FFFFFFF
 }
+
+///
 enum StencilOperation : WGPUStencilOperation {
   keep,
   zero,
@@ -577,22 +636,30 @@ enum StencilOperation : WGPUStencilOperation {
   decrementWrap,
   force32 = cast(WGPUStencilOperation) 0x7FFFFFFF
 }
+
+///
 enum StorageTextureAccess : WGPUStorageTextureAccess {
   undefined,
   writeOnly,
   force32 = cast(WGPUStorageTextureAccess) 0x7FFFFFFF
 }
+
+///
 enum StoreOp : WGPUStoreOp {
   store,
   discard,
   force32 = cast(WGPUStoreOp) 0x7FFFFFFF
 }
+
+///
 enum TextureAspect : WGPUTextureAspect {
   all,
   stencilOnly,
   depthOnly,
   force32 = cast(WGPUTextureAspect) 0x7FFFFFFF
 }
+
+///
 enum TextureComponentType : WGPUTextureComponentType {
   _float,
   sint,
@@ -600,12 +667,16 @@ enum TextureComponentType : WGPUTextureComponentType {
   depthComparison,
   force32 = cast(WGPUTextureComponentType) 0x7FFFFFFF
 }
+
+///
 enum TextureDimension : WGPUTextureDimension {
   _1d,
   _2d,
   _3d,
   force32 = cast(WGPUTextureDimension) 0x7FFFFFFF
 }
+
+///
 enum TextureFormat : WGPUTextureFormat {
   undefined,
   r8Unorm,
@@ -665,6 +736,8 @@ enum TextureFormat : WGPUTextureFormat {
   bc7rgbaUnormSrgb,
   force32 = cast(WGPUTextureFormat) 0x7FFFFFFF
 }
+
+///
 enum TextureSampleType : WGPUTextureSampleType {
   undefined,
   _float,
@@ -674,6 +747,8 @@ enum TextureSampleType : WGPUTextureSampleType {
   _uint,
   force32 = cast(WGPUTextureSampleType) 0x7FFFFFFF
 }
+
+///
 enum TextureViewDimension : WGPUTextureViewDimension {
   undefined,
   _1d,
@@ -684,6 +759,8 @@ enum TextureViewDimension : WGPUTextureViewDimension {
   _3d,
   force32 = cast(WGPUTextureViewDimension) 0x7FFFFFFF
 }
+
+///
 enum VertexFormat : WGPUVertexFormat {
   undefined,
   uint8x2,
@@ -718,11 +795,15 @@ enum VertexFormat : WGPUVertexFormat {
   sint32x4,
   force32 = cast(WGPUVertexFormat) 0x7FFFFFFF
 }
+
+///
 enum VertexStepMode : WGPUVertexStepMode {
   vertex,
   instance,
   force32 = cast(WGPUVertexStepMode) 0x7FFFFFFF
 }
+
+///
 enum BufferUsage : WGPUBufferUsage {
   none,
   mapRead,
@@ -737,6 +818,8 @@ enum BufferUsage : WGPUBufferUsage {
   queryResolve,
   force32 = cast(WGPUBufferUsage) 0x7FFFFFFF
 }
+
+///
 enum ColorWriteMask : WGPUColorWriteMask {
   none,
   red,
@@ -746,12 +829,16 @@ enum ColorWriteMask : WGPUColorWriteMask {
   all,
   force32 = cast(WGPUColorWriteMask) 0x7FFFFFFF
 }
+
+///
 enum MapMode : WGPUMapMode {
   none,
   read,
   write,
   force32 = cast(WGPUMapMode) 0x7FFFFFFF
 }
+
+///
 enum ShaderStage : WGPUShaderStage {
   none,
   vertex,
@@ -759,6 +846,8 @@ enum ShaderStage : WGPUShaderStage {
   compute,
   force32 = cast(WGPUShaderStage) 0x7FFFFFFF
 }
+
+///
 enum TextureUsage : WGPUTextureUsage {
   none,
   copySrc,
