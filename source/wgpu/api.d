@@ -99,28 +99,46 @@ alias Limits = WGPULimits;
 alias Origin3d = WGPUOrigin3D;
 /// Describes a `PipelineLayout`.
 alias PipelineLayoutDescriptor = WGPUPipelineLayoutDescriptor;
+///
 alias PrimitiveDepthClampingState = WGPUPrimitiveDepthClampingState;
+///
 alias QuerySetDescriptor = WGPUQuerySetDescriptor;
+///
 alias RenderBundleDescriptor = WGPURenderBundleDescriptor;
+///
 alias RenderBundleEncoderDescriptor = WGPURenderBundleEncoderDescriptor;
 /// Describes a depth stencil attachment to a `RenderPass`.
 alias RenderPassDepthStencilAttachment = WGPURenderPassDepthStencilAttachment;
+/// Additional information required when requesting an adapter.
+/// See_Also: <a href="https://docs.rs/wgpu/0.10.2/wgpu/type.RequestAdapterOptions.html">wgpu::RequestAdapterOptions</a>
 alias RequestAdapterOptions = WGPURequestAdapterOptions;
+///
 alias SamplerBindingLayout = WGPUSamplerBindingLayout;
 /// Describes a `Sampler`.
 alias SamplerDescriptor = WGPUSamplerDescriptor;
+///
 alias ShaderModuleDescriptor = WGPUShaderModuleDescriptor;
+///
 alias ShaderModuleSPIRVDescriptor = WGPUShaderModuleSPIRVDescriptor;
+///
 alias ShaderModuleWGSLDescriptor = WGPUShaderModuleWGSLDescriptor;
+///
 alias StencilFaceState = WGPUStencilFaceState;
+///
 alias StorageTextureBindingLayout = WGPUStorageTextureBindingLayout;
+///
 alias SurfaceDescriptor = WGPUSurfaceDescriptor;
+///
 alias SurfaceDescriptorFromCanvasHTMLSelector = WGPUSurfaceDescriptorFromCanvasHTMLSelector;
+///
 alias SurfaceDescriptorFromMetalLayer = WGPUSurfaceDescriptorFromMetalLayer;
+///
 alias SurfaceDescriptorFromWindowsHWND = WGPUSurfaceDescriptorFromWindowsHWND;
+///
 alias SurfaceDescriptorFromXlib = WGPUSurfaceDescriptorFromXlib;
 /// Describes a `SwapChain`.
 alias SwapChainDescriptor = WGPUSwapChainDescriptor;
+///
 alias TextureBindingLayout = WGPUTextureBindingLayout;
 /// Layout of a texture in a buffer's memory.
 /// See_Also:
@@ -131,12 +149,15 @@ alias TextureBindingLayout = WGPUTextureBindingLayout;
 alias TextureDataLayout = WGPUTextureDataLayout;
 /// Describes a `TextureView`.
 alias TextureViewDescriptor = WGPUTextureViewDescriptor;
+///
 alias VertexAttribute = WGPUVertexAttribute;
 /// Describes a `BindGroup`.
 alias BindGroupDescriptor = WGPUBindGroupDescriptor;
 /// Describes a single binding inside a bind group.
 alias BindGroupLayoutEntry = WGPUBindGroupLayoutEntry;
+///
 alias BlendState = WGPUBlendState;
+///
 alias CompilationInfo = WGPUCompilationInfo;
 // TODO: View of a buffer which can be used to copy to/from a texture.
 /// View of a texture which can be used to copy to/from a buffer.
@@ -158,6 +179,7 @@ alias RenderPassDescriptor = WGPURenderPassDescriptor;
 /// See_Also: <a href="https://docs.rs/wgpu/0.10.2/wgpu/struct.RenderPipelineDescriptor.html">wgpu::RenderPipelineDescriptor</a>
 alias RenderPipelineDescriptor = WGPURenderPipelineDescriptor;
 // TODO: Wrap this into `Instance.requestAdapter`
+///
 alias AdapterExtras = WGPUAdapterExtras;
 
 //static assert(false, std.traits.fullyQualifiedName!WGPUAdapterType);
