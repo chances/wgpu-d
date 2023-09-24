@@ -48,6 +48,10 @@
   "preGenerateCommands-posix": [
     "make wgpu"
   ],
+  "dflags": [
+    "-P-Isource/wgpu",
+    "-P-Isubprojects/wgpu"
+  ],
   "copyFiles-linux": [
     "lib/libwgpu.so"
   ],

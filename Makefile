@@ -32,14 +32,10 @@ $(error Unsupported target OS '$(OS)')
 endif
 LIB_WGPU_SOURCE := subprojects/wgpu/libwgpu.$(LIB_WGPU_EXT)
 LIB_WGPU := lib/libwgpu.$(LIB_WGPU_EXT)
-wgpu: source/wgpu/bindings.i $(LIB_WGPU)
+wgpu: $(LIB_WGPU)
 .PHONY: wgpu
 subprojects/wgpu/wgpu.h: subprojects/wgpu.Makefile
 	@make -C subprojects -f wgpu.Makefile
-source/wgpu/bindings.i: subprojects/wgpu/wgpu.h
-	@$(CC) -E subprojects/wgpu/wgpu.h > source/wgpu/bindings.i
-# Prevent "illegal combination of type specifiers" from D frontend
-	@$(SED) -i "s/__signed char/char/" source/wgpu/bindings.i
 $(LIB_WGPU): $(LIB_WGPU_SOURCE)
 	@mkdir -p lib
 	@cp $(LIB_WGPU_SOURCE) lib/.
@@ -97,7 +93,6 @@ docs: docs/sitemap.xml
 clean: clean-docs
 	rm -rf bin lib
 	dub clean
-	rm -f source/wgpu/bindings.i
 	@echo "Cleaning code coverage reports..."
 	rm -f -- *.lst
 .PHONY: clean
