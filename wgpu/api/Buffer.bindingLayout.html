@@ -60,6 +60,11 @@ $('#symbolSearchPane').show();</script>
 				</li>
 				<li>
 					<div class="module ">
+						<a href="../../wgpu/enums.html">enums</a>
+					</div>
+				</li>
+				<li>
+					<div class="module ">
 						<a href="../../wgpu/limits.html">limits</a>
 					</div>
 				</li>
@@ -77,14 +82,14 @@ $('#symbolSearchPane').show();</script>
 			<div class="prototype">
 				<code class="lang-d">
 					<div class="single-prototype">
-			<span class="pln">bindings<wbr/></span><span class="pun">.</span><span class="typ">WGPUBindGroupLayoutEntry</span> <span class="pln">bindingLayout</span>
+			<span class="pln">__C<wbr/></span><span class="pun">.</span><span class="typ">WGPUBindGroupLayoutEntry</span> <span class="pln">bindingLayout</span>
 			<span class="pun">(</span>
 			<br/>
 			&nbsp;&nbsp;<span class="typ">uint</span> <span class="pln">location</span><span class="pun">,</span>
 			<br/>
-			&nbsp;&nbsp;<a href="../../wgpu/api/ShaderStage.html"><span class="typ">ShaderStage</span></a> <span class="pln">visibility</span><span class="pun">,</span>
+			&nbsp;&nbsp;<a href="../../wgpu/enums/ShaderStage.html"><span class="typ">ShaderStage</span></a> <span class="pln">visibility</span><span class="pun">,</span>
 			<br/>
-			&nbsp;&nbsp;<span class="pln">wgpu<wbr/></span><span class="pun">.</span><span class="pln">api<wbr/></span><span class="pun">.</span><span class="pln">__mixin125<wbr/></span><span class="pun">.</span><span class="typ">BufferBindingType</span> <span class="pln">type</span> <span class="pun">=</span> <span class="typ">BufferBindingType<wbr/></span><span class="pun">.</span><span class="pln">uniform</span><span class="pun">,</span>
+			&nbsp;&nbsp;<a href="../../wgpu/enums/BufferBindingType.html"><span class="typ">BufferBindingType</span></a> <span class="pln">type</span> <span class="pun">=</span> <span class="typ">BufferBindingType<wbr/></span><span class="pun">.</span><span class="pln">uniform</span><span class="pun">,</span>
 			<br/>
 			&nbsp;&nbsp;<span class="pln">std<wbr/></span><span class="pun">.</span><span class="pln">typecons<wbr/></span><span class="pun">.</span><span class="typ">Flag</span>!("hasDynamicOffset") <span class="pln">hasDynamicOffset</span> <span class="pun">=</span> <span class="typ">Flag<wbr/></span><span class="pun">.</span><span class="pln">no</span><span class="pun">,</span>
 			<br/>
@@ -98,7 +103,7 @@ $('#symbolSearchPane').show();</script>
 			<section><h2>Parameters</h2>
 <table><col class="caption"><tr><th>Name</th><th>Description</th></tr>
 <tr><td id="location">location</td><td> Unique binding location, equal to that of the corresponding <code class="lang-d"><a href="../../wgpu/api/BindGroupEntry.html"><span class="typ">BindGroupEntry</span></a></code> and shader location.</td></tr>
-<tr><td id="visibility">visibility</td><td> Bitset of <code class="lang-d"><a href="../../wgpu/api/ShaderStage.html"><span class="typ">ShaderStage</span></a></code> members. Each set bit indicates that a resource is accessible from the associated shader stage.</td></tr>
+<tr><td id="visibility">visibility</td><td> Bitset of <code class="lang-d"><span class="typ">ShaderStage</span></code> members. Each set bit indicates that a resource is accessible from the associated shader stage.</td></tr>
 <tr><td id="type">type</td><td> Required type of the buffer bound to the binding. Defaults to <code class="lang-d"><span class="typ">BufferBindingType<wbr/></span><span class="pun">.</span><span class="pln">uniform</span></code>.</td></tr>
 <tr><td id="hasDynamicOffset">hasDynamicOffset</td><td> Whether the binding has a dynamic offset.</td></tr>
 <tr><td id="minBindingSize">minBindingSize</td><td> Minimum size of the binding, validated during <code class="lang-d"><a href="../../wgpu/api/Device.createBindGroup.html"><span class="typ">Device<wbr/></span><span class="pun">.</span><span class="pln">createBindGroup</span></a></code>. Defaults to <code class="lang-d"><span class="lit">0</span></code>.
@@ -122,7 +127,7 @@ If this is <code class="lang-d"><span class="lit">0</span></code>, draw/dispatch
 					<tr>
 						<th>Copyright</th>
 						<td>
-							<p>Copyright © 2020-2022 Chance Snow. All rights reserved.
+							<p>Copyright © 2020-2023 Chance Snow. All rights reserved.
 </p>
 
 						</td>

@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8"/>
+		<title>Module wgpu.enums - wgpu-d</title>
+		<link rel="stylesheet" type="text/css" href="../styles/ddox.css"/>
+		<link rel="stylesheet" href="../prettify/prettify.css" type="text/css"/>
+		<script type="text/javascript" src="../scripts/jquery.js">/**/</script><script type="text/javascript" src="../scripts/ddox.js">/**/</script>
+	</head>
+	<body onload="setupDdox();">
+<style>
+#main-nav > h1 {
+  display: flex;
+  align-items: flex-end;
+}
+#main-nav > h1 > span {
+  padding-bottom: 0.25em;
+}
+#logo {
+  margin-right: 0.5rem;
+  max-width: 4rem;
+}
+</style>
+<nav id="main-nav">
+  <h1>
+    <img id="logo" src="https://chances.github.io/wgpu-d/images/logo.png" alt="wgpu Logo">
+    <span>D Bindings</span>
+  </h1>
+  <ul style="list-style: none; padding: 0;">
+    <li>
+      <a href="https://chances.github.io/wgpu-d">API Reference</a>
+    </li>
+    <li>
+      <a href="https://code.dlang.org/packages/wgpu-d">Download</a>
+    </li>
+    <li>
+      <a href="https://github.com/chances/wgpu-d#readme">Open Source on GitHub</a>
+    </li>
+  </ul>
+  <h2>API Reference</h2>
+			<noscript>
+				<p style="color: red">The search functionality needs JavaScript enabled</p>
+			</noscript>
+			<div id="symbolSearchPane" style="display: none">
+				<form action="#" method="GET">
+					<input id="symbolSearch" type="text" name="q" placeholder="Search for symbols" autocomplete="off" onchange="performSymbolSearch(40);" onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();"/>
+				</form>
+				<ul id="symbolSearchResults" class="symbolList" style="display: none"></ul><script type="application/javascript" src="../symbols.js"></script><script type="application/javascript">var symbolSearchRootDir = "../";
+$('#symbolSearchPane').show();</script>
+			</div>
+			<ul class="tree-view">
+				<li class="tree-view ">
+					<div class="package ">wgpu
+					</div>
+			<ul class="tree-view">
+				<li>
+					<div class="module ">
+						<a href="../wgpu/api.html">api</a>
+					</div>
+				</li>
+				<li>
+					<div class="module selected">
+						<a href="../wgpu/enums.html">enums</a>
+					</div>
+				</li>
+				<li>
+					<div class="module ">
+						<a href="../wgpu/limits.html">limits</a>
+					</div>
+				</li>
+				<li>
+					<div class="module ">
+						<a href="../wgpu/utils.html">utils</a>
+					</div>
+				</li>
+			</ul>
+				</li>
+			</ul>
+		</nav>
+		<div id="main-contents">
+			<h1>Module wgpu.enums</h1><p></p>
+			<section></section>
+			<section>
+				<h2>Enums</h2>
+				<table>
+					<col class="caption"/>
+					<tr>
+						<th>Name</th><th>Description</th>
+					</tr>
+					<tr>
+						<td>
+							<code>
+								<a id="AdapterType" class="public" href="../wgpu/enums/AdapterType.html">AdapterType</a>
+							</code>
+						</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>
+							<code>
+								<a id="AddressMode" class="public" href="../wgpu/enums/AddressMode.html">AddressMode</a>
+							</code>
+						</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>
+							<code>
+								<a id="BackendType" class="public" href="../wgpu/enums/BackendType.html">BackendType</a>
+							</code>
+						</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>
+							<code>
+								<a id="BlendFactor" class="public" href="../wgpu/enums/BlendFactor.html">BlendFactor</a>
+							</code>
+						</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>
+							<code>
+								<a id="BlendMode" class="public" href="../wgpu/enums/BlendMode.html">BlendMode</a>
+							</code>
+						</td>
+						<td>Constant blending modes usable when constructing a <code class="lang-d"><span class="typ">ColorTargetState</span></code>'s <code class="lang-d"><span class="typ">BlendState</span></code>.
+</td>
+					</tr>
+					<tr>
+						<td>
+							<code>
+								<a id="BlendOperation" class="public" href="../wgpu/enums/BlendOperation.html">BlendOperation</a>
+							</code>
+						</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>
+							<code>
+								<a id="BufferBindingType" class="public" href="../wgpu/enums/BufferBindingType.html">BufferBindingType</a>
+							</code>
+						</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>
+							<code>
+								<a id="BufferMapAsyncStatus" class="public" href="../wgpu/enums/BufferMapAsyncStatus.html">BufferMapAsyncStatus</a>
+							</code>
+						</td>
+						<td>Result of a call to <code class="lang-d"><span class="typ">Buffer<wbr/></span><span class="pun">.</span><span class="pln">mapReadAsync</span></code> or <code class="lang-d"><span class="typ">Buffer<wbr/></span><span class="pun">.</span><span class="pln">mapWriteAsync</span></code>.
+</td>
+					</tr>
+					<tr>
+						<td>
+							<code>
+								<a id="BufferUsage" class="public" href="../wgpu/enums/BufferUsage.html">BufferUsage</a>
+							</code>
+						</td>
+						<td>Different ways that you can use a buffer.
+</td>
+					</tr>
+					<tr>
+						<td>
+							<code>
+								<a id="ColorWriteMask" class="public" href="../wgpu/enums/ColorWriteMask.html">ColorWriteMask</a>
+							</code>
+						</td>
+						<td>Mask which enables/disables writes to different color/alpha channel.
+Disabled color channels will not be written to.
+</td>
+					</tr>
+					<tr>
+						<td>
+							<code>
+								<a id="CompareFunction" class="public" href="../wgpu/enums/CompareFunction.html">CompareFunction</a>
+							</code>
+						</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>
+							<code>
+								<a id="CompilationMessageType" class="public" href="../wgpu/enums/CompilationMessageType.html">CompilationMessageType</a>
+							</code>
+						</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>
+							<code>
+								<a id="CreatePipelineAsyncStatus" class="public" href="../wgpu/enums/CreatePipelineAsyncStatus.html">CreatePipelineAsyncStatus</a>
+							</code>
+						</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>
+							<code>
+								<a id="CullMode" class="public" href="../wgpu/enums/CullMode.html">CullMode</a>
+							</code>
+						</td>
+						<td>Type of <a href="https://en.wikipedia.org/wiki/Back-face_culling">face culling</a> to use during graphic pipeline rasterization.
+</td>
+					</tr>
+					<tr>
+						<td>
+							<code>
+								<a id="DeviceLostReason" class="public" href="../wgpu/enums/DeviceLostReason.html">DeviceLostReason</a>
+							</code>
+						</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>
+							<code>
+								<a id="ErrorFilter" class="public" href="../wgpu/enums/ErrorFilter.html">ErrorFilter</a>
+							</code>
+						</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>
+							<code>
+								<a id="ErrorType" class="public" href="../wgpu/enums/ErrorType.html">ErrorType</a>
+							</code>
+						</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>
+							<code>
+								<a id="FeatureName" class="public" href="../wgpu/enums/FeatureName.html">FeatureName</a>
+							</code>
+						</td>
+						<td>Features that are not guaranteed to be supported.
+</td>
+					</tr>
+					<tr>
+						<td>
+							<code>
+								<a id="FilterMode" class="public" href="../wgpu/enums/FilterMode.html">FilterMode</a>
+							</code>
+						</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>
+							<code>
+								<a id="FrontFace" class="public" href="../wgpu/enums/FrontFace.html">FrontFace</a>
+							</code>
+						</td>
+						<td>Specifies the vertex order for faces to be considered front-facing.
+</td>
+					</tr>
+					<tr>
+						<td>
+							<code>
+								<a id="IndexFormat" class="public" href="../wgpu/enums/IndexFormat.html">IndexFormat</a>
+							</code>
+						</td>
+						<td>When drawing strip topologies with indices, this is the required format for the index buffer.
+This has no effect on non-indexed or non-strip draws.
+</td>
+					</tr>
+					<tr>
+						<td>
+							<code>
+								<a id="LoadOp" class="public" href="../wgpu/enums/LoadOp.html">LoadOp</a>
+							</code>
+						</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>
+							<code>
+								<a id="MapMode" class="public" href="../wgpu/enums/MapMode.html">MapMode</a>
+							</code>
+						</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>
+							<code>
+								<a id="PipelineStatisticName" class="public" href="../wgpu/enums/PipelineStatisticName.html">PipelineStatisticName</a>
+							</code>
+						</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>
+							<code>
+								<a id="PowerPreference" class="public" href="../wgpu/enums/PowerPreference.html">PowerPreference</a>
+							</code>
+						</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>
+							<code>
+								<a id="PresentMode" class="public" href="../wgpu/enums/PresentMode.html">PresentMode</a>
+							</code>
+						</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>
+							<code>
+								<a id="PrimitiveTopology" class="public" href="../wgpu/enums/PrimitiveTopology.html">PrimitiveTopology</a>
+							</code>
+						</td>
+						<td>The primitive topology used to interpret vertices.
+</td>
+					</tr>
+					<tr>
+						<td>
+							<code>
+								<a id="QueryType" class="public" href="../wgpu/enums/QueryType.html">QueryType</a>
+							</code>
+						</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>
+							<code>
+								<a id="QueueWorkDoneStatus" class="public" href="../wgpu/enums/QueueWorkDoneStatus.html">QueueWorkDoneStatus</a>
+							</code>
+						</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>
+							<code>
+								<a id="RequestAdapterStatus" class="public" href="../wgpu/enums/RequestAdapterStatus.html">RequestAdapterStatus</a>
+							</code>
+						</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>
+							<code>
+								<a id="RequestDeviceStatus" class="public" href="../wgpu/enums/RequestDeviceStatus.html">RequestDeviceStatus</a>
+							</code>
+						</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>
+							<code>
+								<a id="SamplerBindingType" class="public" href="../wgpu/enums/SamplerBindingType.html">SamplerBindingType</a>
+							</code>
+						</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>
+							<code>
+								<a id="ShaderStage" class="public" href="../wgpu/enums/ShaderStage.html">ShaderStage</a>
+							</code>
+						</td>
+						<td>Describes the shader stages that a binding will be visible from.
+</td>
+					</tr>
+					<tr>
+						<td>
+							<code>
+								<a id="StencilOperation" class="public" href="../wgpu/enums/StencilOperation.html">StencilOperation</a>
+							</code>
+						</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>
+							<code>
+								<a id="StorageTextureAccess" class="public" href="../wgpu/enums/StorageTextureAccess.html">StorageTextureAccess</a>
+							</code>
+						</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>
+							<code>
+								<a id="StoreOp" class="public" href="../wgpu/enums/StoreOp.html">StoreOp</a>
+							</code>
+						</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>
+							<code>
+								<a id="SType" class="public" href="../wgpu/enums/SType.html">SType</a>
+							</code>
+						</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>
+							<code>
+								<a id="TextureAspect" class="public" href="../wgpu/enums/TextureAspect.html">TextureAspect</a>
+							</code>
+						</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>
+							<code>
+								<a id="TextureComponentType" class="public" href="../wgpu/enums/TextureComponentType.html">TextureComponentType</a>
+							</code>
+						</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>
+							<code>
+								<a id="TextureDimension" class="public" href="../wgpu/enums/TextureDimension.html">TextureDimension</a>
+							</code>
+						</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>
+							<code>
+								<a id="TextureFormat" class="public" href="../wgpu/enums/TextureFormat.html">TextureFormat</a>
+							</code>
+						</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>
+							<code>
+								<a id="TextureSampleType" class="public" href="../wgpu/enums/TextureSampleType.html">TextureSampleType</a>
+							</code>
+						</td>
+						<td>Specific type of a sample in a texture binding.
+</td>
+					</tr>
+					<tr>
+						<td>
+							<code>
+								<a id="TextureUsage" class="public" href="../wgpu/enums/TextureUsage.html">TextureUsage</a>
+							</code>
+						</td>
+						<td>Different ways that you can use a texture.
+</td>
+					</tr>
+					<tr>
+						<td>
+							<code>
+								<a id="TextureViewDimension" class="public" href="../wgpu/enums/TextureViewDimension.html">TextureViewDimension</a>
+							</code>
+						</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>
+							<code>
+								<a id="VertexFormat" class="public" href="../wgpu/enums/VertexFormat.html">VertexFormat</a>
+							</code>
+						</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>
+							<code>
+								<a id="VertexStepMode" class="public" href="../wgpu/enums/VertexStepMode.html">VertexStepMode</a>
+							</code>
+						</td>
+						<td></td>
+					</tr>
+				</table>
+			</section>
+			<footer>
+				<table class="license-info">
+					<tr>
+						<th>Authors</th>
+						<td>
+							<p>Chance Snow
+</p>
+
+						</td>
+					</tr>
+					<tr>
+						<th>Copyright</th>
+						<td>
+							<p>Copyright © 2020-2023 Chance Snow. All rights reserved.
+</p>
+
+						</td>
+					</tr>
+					<tr>
+						<th>License</th>
+						<td>
+							<p>MIT License
+</p>
+
+						</td>
+					</tr>
+				</table>
+<div style="display: flex; justify-content: space-between; margin-top: 2em;">
+  <a href="https://github.com/chances/wgpu-d#readme">GitHub</a>
+  <span class="faint" style="float: right;">Generated using <a href="https://code.dlang.org/packages/ddox">DDOX</a></span>
+</div>
+			</footer>
+		</div>
+	</body>
+</html>

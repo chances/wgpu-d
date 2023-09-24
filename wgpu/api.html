@@ -60,6 +60,11 @@ $('#symbolSearchPane').show();</script>
 				</li>
 				<li>
 					<div class="module ">
+						<a href="../wgpu/enums.html">enums</a>
+					</div>
+				</li>
+				<li>
+					<div class="module ">
 						<a href="../wgpu/limits.html">limits</a>
 					</div>
 				</li>
@@ -357,125 +362,6 @@ $('#symbolSearchPane').show();</script>
 				</table>
 			</section>
 			<section>
-				<h2>Enums</h2>
-				<table>
-					<col class="caption"/>
-					<tr>
-						<th>Name</th><th>Description</th>
-					</tr>
-					<tr>
-						<td>
-							<code>
-								<a id="BlendMode" class="public" href="../wgpu/api/BlendMode.html">BlendMode</a>
-							</code>
-						</td>
-						<td>Constant blending modes usable when constructing a <code class="lang-d"><a href="../wgpu/api/ColorTargetState.html"><span class="typ">ColorTargetState</span></a></code>'s <code class="lang-d"><span class="typ">BlendState</span></code>.
-</td>
-					</tr>
-					<tr>
-						<td>
-							<code>
-								<a id="BufferMapAsyncStatus" class="public" href="../wgpu/api/BufferMapAsyncStatus.html">BufferMapAsyncStatus</a>
-							</code>
-						</td>
-						<td>Result of a call to <code class="lang-d"><a href="../wgpu/api/Buffer.mapReadAsync.html"><span class="typ">Buffer<wbr/></span><span class="pun">.</span><span class="pln">mapReadAsync</span></a></code> or <code class="lang-d"><a href="../wgpu/api/Buffer.mapWriteAsync.html"><span class="typ">Buffer<wbr/></span><span class="pun">.</span><span class="pln">mapWriteAsync</span></a></code>.
-</td>
-					</tr>
-					<tr>
-						<td>
-							<code>
-								<a id="BufferUsage" class="public" href="../wgpu/api/BufferUsage.html">BufferUsage</a>
-							</code>
-						</td>
-						<td>Different ways that you can use a buffer.
-</td>
-					</tr>
-					<tr>
-						<td>
-							<code>
-								<a id="ColorWriteMask" class="public" href="../wgpu/api/ColorWriteMask.html">ColorWriteMask</a>
-							</code>
-						</td>
-						<td>Mask which enables/disables writes to different color/alpha channel.
-Disabled color channels will not be written to.
-</td>
-					</tr>
-					<tr>
-						<td>
-							<code>
-								<a id="CullMode" class="public" href="../wgpu/api/CullMode.html">CullMode</a>
-							</code>
-						</td>
-						<td>Type of <a href="https://en.wikipedia.org/wiki/Back-face_culling">face culling</a> to use during graphic pipeline rasterization.
-</td>
-					</tr>
-					<tr>
-						<td>
-							<code>
-								<a id="FeatureName" class="public" href="../wgpu/api/FeatureName.html">FeatureName</a>
-							</code>
-						</td>
-						<td>Features that are not guaranteed to be supported.
-</td>
-					</tr>
-					<tr>
-						<td>
-							<code>
-								<a id="FrontFace" class="public" href="../wgpu/api/FrontFace.html">FrontFace</a>
-							</code>
-						</td>
-						<td>Specifies the vertex order for faces to be considered front-facing.
-</td>
-					</tr>
-					<tr>
-						<td>
-							<code>
-								<a id="IndexFormat" class="public" href="../wgpu/api/IndexFormat.html">IndexFormat</a>
-							</code>
-						</td>
-						<td>When drawing strip topologies with indices, this is the required format for the index buffer.
-This has no effect on non-indexed or non-strip draws.
-</td>
-					</tr>
-					<tr>
-						<td>
-							<code>
-								<a id="PrimitiveTopology" class="public" href="../wgpu/api/PrimitiveTopology.html">PrimitiveTopology</a>
-							</code>
-						</td>
-						<td>The primitive topology used to interpret vertices.
-</td>
-					</tr>
-					<tr>
-						<td>
-							<code>
-								<a id="ShaderStage" class="public" href="../wgpu/api/ShaderStage.html">ShaderStage</a>
-							</code>
-						</td>
-						<td>Describes the shader stages that a binding will be visible from.
-</td>
-					</tr>
-					<tr>
-						<td>
-							<code>
-								<a id="TextureSampleType" class="public" href="../wgpu/api/TextureSampleType.html">TextureSampleType</a>
-							</code>
-						</td>
-						<td>Specific type of a sample in a texture binding.
-</td>
-					</tr>
-					<tr>
-						<td>
-							<code>
-								<a id="TextureUsage" class="public" href="../wgpu/api/TextureUsage.html">TextureUsage</a>
-							</code>
-						</td>
-						<td>Different ways that you can use a texture.
-</td>
-					</tr>
-				</table>
-			</section>
-			<section>
 				<h2>Global variables</h2>
 				<table>
 					<col class="caption"/>
@@ -601,12 +487,23 @@ This has no effect on non-indexed or non-strip draws.
 					</tr>
 					<tr>
 						<td>
+							<a id="AdapterExtras" class="public" href="../wgpu/api/AdapterExtras.html">
+								<code>AdapterExtras</code>
+							</a>
+						</td>
+						<td>
+							<code class="prettyprint lang-d"><span class="pln">__C<wbr/></span><span class="pun">.</span><span class="typ">WGPUAdapterExtras</span></code>
+						</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>
 							<a id="BindGroupDescriptor" class="public" href="../wgpu/api/BindGroupDescriptor.html">
 								<code>BindGroupDescriptor</code>
 							</a>
 						</td>
 						<td>
-							<code class="prettyprint lang-d"><span class="pln">bindings<wbr/></span><span class="pun">.</span><span class="typ">WGPUBindGroupDescriptor</span></code>
+							<code class="prettyprint lang-d"><span class="pln">__C<wbr/></span><span class="pun">.</span><span class="typ">WGPUBindGroupDescriptor</span></code>
 						</td>
 						<td>Describes a <code class="lang-d"><a href="../wgpu/api/BindGroup.html"><span class="typ">BindGroup</span></a></code>.
 </td>
@@ -618,7 +515,7 @@ This has no effect on non-indexed or non-strip draws.
 							</a>
 						</td>
 						<td>
-							<code class="prettyprint lang-d"><span class="pln">bindings<wbr/></span><span class="pun">.</span><span class="typ">WGPUBindGroupEntry</span></code>
+							<code class="prettyprint lang-d"><span class="pln">__C<wbr/></span><span class="pun">.</span><span class="typ">WGPUBindGroupEntry</span></code>
 						</td>
 						<td></td>
 					</tr>
@@ -629,7 +526,7 @@ This has no effect on non-indexed or non-strip draws.
 							</a>
 						</td>
 						<td>
-							<code class="prettyprint lang-d"><span class="pln">bindings<wbr/></span><span class="pun">.</span><span class="typ">WGPUBindGroupLayoutDescriptor</span></code>
+							<code class="prettyprint lang-d"><span class="pln">__C<wbr/></span><span class="pun">.</span><span class="typ">WGPUBindGroupLayoutDescriptor</span></code>
 						</td>
 						<td>Describes a <code class="lang-d"><a href="../wgpu/api/BindGroupLayout.html"><span class="typ">BindGroupLayout</span></a></code>.
 </td>
@@ -641,10 +538,21 @@ This has no effect on non-indexed or non-strip draws.
 							</a>
 						</td>
 						<td>
-							<code class="prettyprint lang-d"><span class="pln">bindings<wbr/></span><span class="pun">.</span><span class="typ">WGPUBindGroupLayoutEntry</span></code>
+							<code class="prettyprint lang-d"><span class="pln">__C<wbr/></span><span class="pun">.</span><span class="typ">WGPUBindGroupLayoutEntry</span></code>
 						</td>
 						<td>Describes a single binding inside a bind group.
 </td>
+					</tr>
+					<tr>
+						<td>
+							<a id="BlendState" class="public" href="../wgpu/api/BlendState.html">
+								<code>BlendState</code>
+							</a>
+						</td>
+						<td>
+							<code class="prettyprint lang-d"><span class="pln">__C<wbr/></span><span class="pun">.</span><span class="typ">WGPUBlendState</span></code>
+						</td>
+						<td></td>
 					</tr>
 					<tr>
 						<td>
@@ -653,7 +561,7 @@ This has no effect on non-indexed or non-strip draws.
 							</a>
 						</td>
 						<td>
-							<code class="prettyprint lang-d"><span class="pln">bindings<wbr/></span><span class="pun">.</span><span class="typ">WGPUBufferDescriptor</span></code>
+							<code class="prettyprint lang-d"><span class="pln">__C<wbr/></span><span class="pun">.</span><span class="typ">WGPUBufferDescriptor</span></code>
 						</td>
 						<td>Describes a <code class="lang-d"><a href="../wgpu/api/Buffer.html"><span class="typ">Buffer</span></a></code>.
 </td>
@@ -677,7 +585,7 @@ This has no effect on non-indexed or non-strip draws.
 							</a>
 						</td>
 						<td>
-							<code class="prettyprint lang-d"><span class="pln">bindings<wbr/></span><span class="pun">.</span><span class="typ">WGPUColor</span></code>
+							<code class="prettyprint lang-d"><span class="pln">__C<wbr/></span><span class="pun">.</span><span class="typ">WGPUColor</span></code>
 						</td>
 						<td>RGBA double precision color.
 </td>
@@ -689,7 +597,7 @@ This has no effect on non-indexed or non-strip draws.
 							</a>
 						</td>
 						<td>
-							<code class="prettyprint lang-d"><span class="pln">bindings<wbr/></span><span class="pun">.</span><span class="typ">WGPUCommandBufferDescriptor</span></code>
+							<code class="prettyprint lang-d"><span class="pln">__C<wbr/></span><span class="pun">.</span><span class="typ">WGPUCommandBufferDescriptor</span></code>
 						</td>
 						<td>Describes a <code class="lang-d"><a href="../wgpu/api/CommandBuffer.html"><span class="typ">CommandBuffer</span></a></code>.
 </td>
@@ -701,10 +609,21 @@ This has no effect on non-indexed or non-strip draws.
 							</a>
 						</td>
 						<td>
-							<code class="prettyprint lang-d"><span class="pln">bindings<wbr/></span><span class="pun">.</span><span class="typ">WGPUCommandEncoderDescriptor</span></code>
+							<code class="prettyprint lang-d"><span class="pln">__C<wbr/></span><span class="pun">.</span><span class="typ">WGPUCommandEncoderDescriptor</span></code>
 						</td>
 						<td>Describes a <code class="lang-d"><a href="../wgpu/api/CommandEncoder.html"><span class="typ">CommandEncoder</span></a></code>.
 </td>
+					</tr>
+					<tr>
+						<td>
+							<a id="CompilationInfo" class="public" href="../wgpu/api/CompilationInfo.html">
+								<code>CompilationInfo</code>
+							</a>
+						</td>
+						<td>
+							<code class="prettyprint lang-d"><span class="pln">__C<wbr/></span><span class="pun">.</span><span class="typ">WGPUCompilationInfo</span></code>
+						</td>
+						<td></td>
 					</tr>
 					<tr>
 						<td>
@@ -713,7 +632,7 @@ This has no effect on non-indexed or non-strip draws.
 							</a>
 						</td>
 						<td>
-							<code class="prettyprint lang-d"><span class="pln">bindings<wbr/></span><span class="pun">.</span><span class="typ">WGPUComputePassDescriptor</span></code>
+							<code class="prettyprint lang-d"><span class="pln">__C<wbr/></span><span class="pun">.</span><span class="typ">WGPUComputePassDescriptor</span></code>
 						</td>
 						<td>Describes a <code class="lang-d"><a href="../wgpu/api/ComputePass.html"><span class="typ">ComputePass</span></a></code>.
 </td>
@@ -725,7 +644,7 @@ This has no effect on non-indexed or non-strip draws.
 							</a>
 						</td>
 						<td>
-							<code class="prettyprint lang-d"><span class="pln">bindings<wbr/></span><span class="pun">.</span><span class="typ">WGPUComputePipelineDescriptor</span></code>
+							<code class="prettyprint lang-d"><span class="pln">__C<wbr/></span><span class="pun">.</span><span class="typ">WGPUComputePipelineDescriptor</span></code>
 						</td>
 						<td>Describes a <code class="lang-d"><a href="../wgpu/api/ComputePipeline.html"><span class="typ">ComputePipeline</span></a></code>.
 </td>
@@ -737,7 +656,7 @@ This has no effect on non-indexed or non-strip draws.
 							</a>
 						</td>
 						<td>
-							<code class="prettyprint lang-d"><span class="pln">bindings<wbr/></span><span class="pun">.</span><span class="typ">WGPUExtent3D</span></code>
+							<code class="prettyprint lang-d"><span class="pln">__C<wbr/></span><span class="pun">.</span><span class="typ">WGPUExtent3D</span></code>
 						</td>
 						<td>Extent of a texture related operation.
 </td>
@@ -749,7 +668,7 @@ This has no effect on non-indexed or non-strip draws.
 							</a>
 						</td>
 						<td>
-							<code class="prettyprint lang-d"><span class="pln">bindings<wbr/></span><span class="pun">.</span><span class="typ">WGPUImageCopyBuffer</span></code>
+							<code class="prettyprint lang-d"><span class="pln">__C<wbr/></span><span class="pun">.</span><span class="typ">WGPUImageCopyBuffer</span></code>
 						</td>
 						<td>View of a texture which can be used to copy to/from a buffer.
 </td>
@@ -761,7 +680,7 @@ This has no effect on non-indexed or non-strip draws.
 							</a>
 						</td>
 						<td>
-							<code class="prettyprint lang-d"><span class="pln">bindings<wbr/></span><span class="pun">.</span><span class="typ">WGPUImageCopyTexture</span></code>
+							<code class="prettyprint lang-d"><span class="pln">__C<wbr/></span><span class="pun">.</span><span class="typ">WGPUImageCopyTexture</span></code>
 						</td>
 						<td>View of a texture which can be used to copy to/from a texture.
 </td>
@@ -773,7 +692,7 @@ This has no effect on non-indexed or non-strip draws.
 							</a>
 						</td>
 						<td>
-							<code class="prettyprint lang-d"><span class="pln">bindings<wbr/></span><span class="pun">.</span><span class="typ">WGPULimits</span></code>
+							<code class="prettyprint lang-d"><span class="pln">__C<wbr/></span><span class="pun">.</span><span class="typ">WGPULimits</span></code>
 						</td>
 						<td>Represents the sets of limits an adapter/device supports.
 </td>
@@ -785,7 +704,7 @@ This has no effect on non-indexed or non-strip draws.
 							</a>
 						</td>
 						<td>
-							<code class="prettyprint lang-d"><span class="pln">bindings<wbr/></span><span class="pun">.</span><span class="typ">WGPUOrigin3D</span></code>
+							<code class="prettyprint lang-d"><span class="pln">__C<wbr/></span><span class="pun">.</span><span class="typ">WGPUOrigin3D</span></code>
 						</td>
 						<td>Origin of a copy to/from a texture.
 </td>
@@ -797,10 +716,54 @@ This has no effect on non-indexed or non-strip draws.
 							</a>
 						</td>
 						<td>
-							<code class="prettyprint lang-d"><span class="pln">bindings<wbr/></span><span class="pun">.</span><span class="typ">WGPUPipelineLayoutDescriptor</span></code>
+							<code class="prettyprint lang-d"><span class="pln">__C<wbr/></span><span class="pun">.</span><span class="typ">WGPUPipelineLayoutDescriptor</span></code>
 						</td>
 						<td>Describes a <code class="lang-d"><a href="../wgpu/api/PipelineLayout.html"><span class="typ">PipelineLayout</span></a></code>.
 </td>
+					</tr>
+					<tr>
+						<td>
+							<a id="PrimitiveDepthClampingState" class="public" href="../wgpu/api/PrimitiveDepthClampingState.html">
+								<code>PrimitiveDepthClampingState</code>
+							</a>
+						</td>
+						<td>
+							<code class="prettyprint lang-d"><span class="pln">__C<wbr/></span><span class="pun">.</span><span class="typ">WGPUPrimitiveDepthClampingState</span></code>
+						</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>
+							<a id="QuerySetDescriptor" class="public" href="../wgpu/api/QuerySetDescriptor.html">
+								<code>QuerySetDescriptor</code>
+							</a>
+						</td>
+						<td>
+							<code class="prettyprint lang-d"><span class="pln">__C<wbr/></span><span class="pun">.</span><span class="typ">WGPUQuerySetDescriptor</span></code>
+						</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>
+							<a id="RenderBundleDescriptor" class="public" href="../wgpu/api/RenderBundleDescriptor.html">
+								<code>RenderBundleDescriptor</code>
+							</a>
+						</td>
+						<td>
+							<code class="prettyprint lang-d"><span class="pln">__C<wbr/></span><span class="pun">.</span><span class="typ">WGPURenderBundleDescriptor</span></code>
+						</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>
+							<a id="RenderBundleEncoderDescriptor" class="public" href="../wgpu/api/RenderBundleEncoderDescriptor.html">
+								<code>RenderBundleEncoderDescriptor</code>
+							</a>
+						</td>
+						<td>
+							<code class="prettyprint lang-d"><span class="pln">__C<wbr/></span><span class="pun">.</span><span class="typ">WGPURenderBundleEncoderDescriptor</span></code>
+						</td>
+						<td></td>
 					</tr>
 					<tr>
 						<td>
@@ -809,7 +772,7 @@ This has no effect on non-indexed or non-strip draws.
 							</a>
 						</td>
 						<td>
-							<code class="prettyprint lang-d"><span class="pln">bindings<wbr/></span><span class="pun">.</span><span class="typ">WGPURenderPassColorAttachment</span></code>
+							<code class="prettyprint lang-d"><span class="pln">__C<wbr/></span><span class="pun">.</span><span class="typ">WGPURenderPassColorAttachment</span></code>
 						</td>
 						<td>Describes a color attachment to a <code class="lang-d"><a href="../wgpu/api/RenderPass.html"><span class="typ">RenderPass</span></a></code>.
 </td>
@@ -821,7 +784,7 @@ This has no effect on non-indexed or non-strip draws.
 							</a>
 						</td>
 						<td>
-							<code class="prettyprint lang-d"><span class="pln">bindings<wbr/></span><span class="pun">.</span><span class="typ">WGPURenderPassDepthStencilAttachment</span></code>
+							<code class="prettyprint lang-d"><span class="pln">__C<wbr/></span><span class="pun">.</span><span class="typ">WGPURenderPassDepthStencilAttachment</span></code>
 						</td>
 						<td>Describes a depth stencil attachment to a <code class="lang-d"><a href="../wgpu/api/RenderPass.html"><span class="typ">RenderPass</span></a></code>.
 </td>
@@ -833,7 +796,7 @@ This has no effect on non-indexed or non-strip draws.
 							</a>
 						</td>
 						<td>
-							<code class="prettyprint lang-d"><span class="pln">bindings<wbr/></span><span class="pun">.</span><span class="typ">WGPURenderPassDescriptor</span></code>
+							<code class="prettyprint lang-d"><span class="pln">__C<wbr/></span><span class="pun">.</span><span class="typ">WGPURenderPassDescriptor</span></code>
 						</td>
 						<td>Describes the attachments of a <code class="lang-d"><a href="../wgpu/api/RenderPass.html"><span class="typ">RenderPass</span></a></code>.
 </td>
@@ -845,10 +808,33 @@ This has no effect on non-indexed or non-strip draws.
 							</a>
 						</td>
 						<td>
-							<code class="prettyprint lang-d"><span class="pln">bindings<wbr/></span><span class="pun">.</span><span class="typ">WGPURenderPipelineDescriptor</span></code>
+							<code class="prettyprint lang-d"><span class="pln">__C<wbr/></span><span class="pun">.</span><span class="typ">WGPURenderPipelineDescriptor</span></code>
 						</td>
 						<td>Describes a <code class="lang-d"><a href="../wgpu/api/RenderPipeline.html"><span class="typ">RenderPipeline</span></a></code>.
 </td>
+					</tr>
+					<tr>
+						<td>
+							<a id="RequestAdapterOptions" class="public" href="../wgpu/api/RequestAdapterOptions.html">
+								<code>RequestAdapterOptions</code>
+							</a>
+						</td>
+						<td>
+							<code class="prettyprint lang-d"><span class="pln">__C<wbr/></span><span class="pun">.</span><span class="typ">WGPURequestAdapterOptions</span></code>
+						</td>
+						<td>Additional information required when requesting an adapter.
+</td>
+					</tr>
+					<tr>
+						<td>
+							<a id="SamplerBindingLayout" class="public" href="../wgpu/api/SamplerBindingLayout.html">
+								<code>SamplerBindingLayout</code>
+							</a>
+						</td>
+						<td>
+							<code class="prettyprint lang-d"><span class="pln">__C<wbr/></span><span class="pun">.</span><span class="typ">WGPUSamplerBindingLayout</span></code>
+						</td>
+						<td></td>
 					</tr>
 					<tr>
 						<td>
@@ -857,10 +843,120 @@ This has no effect on non-indexed or non-strip draws.
 							</a>
 						</td>
 						<td>
-							<code class="prettyprint lang-d"><span class="pln">bindings<wbr/></span><span class="pun">.</span><span class="typ">WGPUSamplerDescriptor</span></code>
+							<code class="prettyprint lang-d"><span class="pln">__C<wbr/></span><span class="pun">.</span><span class="typ">WGPUSamplerDescriptor</span></code>
 						</td>
 						<td>Describes a <code class="lang-d"><a href="../wgpu/api/Sampler.html"><span class="typ">Sampler</span></a></code>.
 </td>
+					</tr>
+					<tr>
+						<td>
+							<a id="ShaderModuleDescriptor" class="public" href="../wgpu/api/ShaderModuleDescriptor.html">
+								<code>ShaderModuleDescriptor</code>
+							</a>
+						</td>
+						<td>
+							<code class="prettyprint lang-d"><span class="pln">__C<wbr/></span><span class="pun">.</span><span class="typ">WGPUShaderModuleDescriptor</span></code>
+						</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>
+							<a id="ShaderModuleSPIRVDescriptor" class="public" href="../wgpu/api/ShaderModuleSPIRVDescriptor.html">
+								<code>ShaderModuleSPIRVDescriptor</code>
+							</a>
+						</td>
+						<td>
+							<code class="prettyprint lang-d"><span class="pln">__C<wbr/></span><span class="pun">.</span><span class="typ">WGPUShaderModuleSPIRVDescriptor</span></code>
+						</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>
+							<a id="ShaderModuleWGSLDescriptor" class="public" href="../wgpu/api/ShaderModuleWGSLDescriptor.html">
+								<code>ShaderModuleWGSLDescriptor</code>
+							</a>
+						</td>
+						<td>
+							<code class="prettyprint lang-d"><span class="pln">__C<wbr/></span><span class="pun">.</span><span class="typ">WGPUShaderModuleWGSLDescriptor</span></code>
+						</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>
+							<a id="StencilFaceState" class="public" href="../wgpu/api/StencilFaceState.html">
+								<code>StencilFaceState</code>
+							</a>
+						</td>
+						<td>
+							<code class="prettyprint lang-d"><span class="pln">__C<wbr/></span><span class="pun">.</span><span class="typ">WGPUStencilFaceState</span></code>
+						</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>
+							<a id="StorageTextureBindingLayout" class="public" href="../wgpu/api/StorageTextureBindingLayout.html">
+								<code>StorageTextureBindingLayout</code>
+							</a>
+						</td>
+						<td>
+							<code class="prettyprint lang-d"><span class="pln">__C<wbr/></span><span class="pun">.</span><span class="typ">WGPUStorageTextureBindingLayout</span></code>
+						</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>
+							<a id="SurfaceDescriptor" class="public" href="../wgpu/api/SurfaceDescriptor.html">
+								<code>SurfaceDescriptor</code>
+							</a>
+						</td>
+						<td>
+							<code class="prettyprint lang-d"><span class="pln">__C<wbr/></span><span class="pun">.</span><span class="typ">WGPUSurfaceDescriptor</span></code>
+						</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>
+							<a id="SurfaceDescriptorFromCanvasHTMLSelector" class="public" href="../wgpu/api/SurfaceDescriptorFromCanvasHTMLSelector.html">
+								<code>SurfaceDescriptorFromCanvasHTMLSelector</code>
+							</a>
+						</td>
+						<td>
+							<code class="prettyprint lang-d"><span class="pln">__C<wbr/></span><span class="pun">.</span><span class="typ">WGPUSurfaceDescriptorFromCanvasHTMLSelector</span></code>
+						</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>
+							<a id="SurfaceDescriptorFromMetalLayer" class="public" href="../wgpu/api/SurfaceDescriptorFromMetalLayer.html">
+								<code>SurfaceDescriptorFromMetalLayer</code>
+							</a>
+						</td>
+						<td>
+							<code class="prettyprint lang-d"><span class="pln">__C<wbr/></span><span class="pun">.</span><span class="typ">WGPUSurfaceDescriptorFromMetalLayer</span></code>
+						</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>
+							<a id="SurfaceDescriptorFromWindowsHWND" class="public" href="../wgpu/api/SurfaceDescriptorFromWindowsHWND.html">
+								<code>SurfaceDescriptorFromWindowsHWND</code>
+							</a>
+						</td>
+						<td>
+							<code class="prettyprint lang-d"><span class="pln">__C<wbr/></span><span class="pun">.</span><span class="typ">WGPUSurfaceDescriptorFromWindowsHWND</span></code>
+						</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>
+							<a id="SurfaceDescriptorFromXlib" class="public" href="../wgpu/api/SurfaceDescriptorFromXlib.html">
+								<code>SurfaceDescriptorFromXlib</code>
+							</a>
+						</td>
+						<td>
+							<code class="prettyprint lang-d"><span class="pln">__C<wbr/></span><span class="pun">.</span><span class="typ">WGPUSurfaceDescriptorFromXlib</span></code>
+						</td>
+						<td></td>
 					</tr>
 					<tr>
 						<td>
@@ -869,10 +965,21 @@ This has no effect on non-indexed or non-strip draws.
 							</a>
 						</td>
 						<td>
-							<code class="prettyprint lang-d"><span class="pln">bindings<wbr/></span><span class="pun">.</span><span class="typ">WGPUSwapChainDescriptor</span></code>
+							<code class="prettyprint lang-d"><span class="pln">__C<wbr/></span><span class="pun">.</span><span class="typ">WGPUSwapChainDescriptor</span></code>
 						</td>
 						<td>Describes a <code class="lang-d"><a href="../wgpu/api/SwapChain.html"><span class="typ">SwapChain</span></a></code>.
 </td>
+					</tr>
+					<tr>
+						<td>
+							<a id="TextureBindingLayout" class="public" href="../wgpu/api/TextureBindingLayout.html">
+								<code>TextureBindingLayout</code>
+							</a>
+						</td>
+						<td>
+							<code class="prettyprint lang-d"><span class="pln">__C<wbr/></span><span class="pun">.</span><span class="typ">WGPUTextureBindingLayout</span></code>
+						</td>
+						<td></td>
 					</tr>
 					<tr>
 						<td>
@@ -881,7 +988,7 @@ This has no effect on non-indexed or non-strip draws.
 							</a>
 						</td>
 						<td>
-							<code class="prettyprint lang-d"><span class="pln">bindings<wbr/></span><span class="pun">.</span><span class="typ">WGPUTextureDataLayout</span></code>
+							<code class="prettyprint lang-d"><span class="pln">__C<wbr/></span><span class="pun">.</span><span class="typ">WGPUTextureDataLayout</span></code>
 						</td>
 						<td>Layout of a texture in a buffer's memory.
 </td>
@@ -893,7 +1000,7 @@ This has no effect on non-indexed or non-strip draws.
 							</a>
 						</td>
 						<td>
-							<code class="prettyprint lang-d"><span class="pln">bindings<wbr/></span><span class="pun">.</span><span class="typ">WGPUTextureDescriptor</span></code>
+							<code class="prettyprint lang-d"><span class="pln">__C<wbr/></span><span class="pun">.</span><span class="typ">WGPUTextureDescriptor</span></code>
 						</td>
 						<td>Describes a <code class="lang-d"><a href="../wgpu/api/Texture.html"><span class="typ">Texture</span></a></code>.
 </td>
@@ -905,10 +1012,21 @@ This has no effect on non-indexed or non-strip draws.
 							</a>
 						</td>
 						<td>
-							<code class="prettyprint lang-d"><span class="pln">bindings<wbr/></span><span class="pun">.</span><span class="typ">WGPUTextureViewDescriptor</span></code>
+							<code class="prettyprint lang-d"><span class="pln">__C<wbr/></span><span class="pun">.</span><span class="typ">WGPUTextureViewDescriptor</span></code>
 						</td>
 						<td>Describes a <code class="lang-d"><a href="../wgpu/api/TextureView.html"><span class="typ">TextureView</span></a></code>.
 </td>
+					</tr>
+					<tr>
+						<td>
+							<a id="VertexAttribute" class="public" href="../wgpu/api/VertexAttribute.html">
+								<code>VertexAttribute</code>
+							</a>
+						</td>
+						<td>
+							<code class="prettyprint lang-d"><span class="pln">__C<wbr/></span><span class="pun">.</span><span class="typ">WGPUVertexAttribute</span></code>
+						</td>
+						<td></td>
 					</tr>
 				</table>
 			</section>
@@ -925,7 +1043,7 @@ This has no effect on non-indexed or non-strip draws.
 					<tr>
 						<th>Copyright</th>
 						<td>
-							<p>Copyright © 2020-2022 Chance Snow. All rights reserved.
+							<p>Copyright © 2020-2023 Chance Snow. All rights reserved.
 </p>
 
 						</td>
