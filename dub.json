@@ -13,7 +13,7 @@
   "targetType": "sourceLibrary",
   "targetPath": "bin",
   "toolchainRequirements": {
-    "frontend": ">=2.098.0",
+    "frontend": ">=2.105.0",
 		"dmd": ">=2.100.0",
 		"gdc": "no",
 		"ldc": ">=1.28.0"
