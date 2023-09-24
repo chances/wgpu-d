@@ -1,6 +1,12 @@
 <!-- https://keepachangelog.com/en/1.0.0/ -->
 # Changelog
 
+## v0.1.3
+
+- Fixed compilation on mac OS 10.14
+- Refactored enumerations
+- Added documentation for more aliases
+
 ## v0.1.2
 
 ### Fixed
