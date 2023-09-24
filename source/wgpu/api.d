@@ -159,53 +159,7 @@ alias RenderPipelineDescriptor = WGPURenderPipelineDescriptor;
 // TODO: Wrap this into `Instance.requestAdapter`
 alias AdapterExtras = WGPUAdapterExtras;
 
-// Enumerations
-private mixin template EnumAlias(T) if (is(T == enum)) {
-  enum wgpuPrefix = "WGPU";
-  enum baseName = __traits(identifier, T);
-  enum name = baseName[wgpuPrefix.length .. $];
-  enum memberPrefix = baseName ~ "_";
-
-  private static string _memberMixin(string member) {
-    import std.ascii : isDigit, toLower;
-    const unprefixedMember = member[memberPrefix.length .. $];
-    // Guard against invalid identifiers
-    string idiomaticMember = unprefixedMember[0].isDigit
-      ? "_" ~ unprefixedMember
-      : unprefixedMember[0].toLower ~ unprefixedMember[1..$];
-    // Guard against D keywords
-    idiomaticMember = idiomaticMember == "null" || idiomaticMember == "float" || idiomaticMember == "uint"
-      ? '_' ~ idiomaticMember
-      : idiomaticMember;
-    // Fix case of "BC", "RG", "CW", "CCW", "RGB", "RGBA", and "BGRA" prefixes
-    if (idiomaticMember.length > 4) {
-      if (idiomaticMember[0..4] == "bGRA") idiomaticMember = "bgra" ~ idiomaticMember[4..$];
-      else if (idiomaticMember[0..4] == "rGBA") idiomaticMember = "rgba" ~ idiomaticMember[4..$];
-      else if (idiomaticMember[0..3] == "rGB") idiomaticMember = "rgb" ~ idiomaticMember[3..$];
-      else if (idiomaticMember[0..2] == "rG") idiomaticMember = "rg" ~ idiomaticMember[2..$];
-      else if (idiomaticMember[0..2] == "bC") idiomaticMember = "bc" ~ idiomaticMember[2..$];
-    } else if (idiomaticMember == "cCW") {
-      idiomaticMember = "ccw";
-    } else if (idiomaticMember == "cW") {
-      idiomaticMember = "cw";
-    }
-    return "  " ~ idiomaticMember ~ " = cast(" ~ name ~ ") " ~ member ~ `,`;
-  }
-
-  private static string _enumMixin() {
-    import std.array : join;
-
-    string[] enumeration;
-    enumeration ~= "enum " ~ name ~ " : " ~ baseName ~ " {";
-    static foreach (member; __traits(allMembers, T)) {
-      enumeration ~= _memberMixin(member);
-    }
-    enumeration ~= "}";
-    return enumeration.join("\n");
-  }
-
-  mixin(_enumMixin());
-}
+// Section: Enumerations
 
 version (D_Ddoc) {
   /// Features that are not guaranteed to be supported.
@@ -392,51 +346,428 @@ version (D_Ddoc) {
   }
 }
 
-mixin EnumAlias!WGPUAdapterType;
-mixin EnumAlias!WGPUAddressMode;
-mixin EnumAlias!WGPUBackendType;
-mixin EnumAlias!WGPUBlendFactor;
-mixin EnumAlias!WGPUBlendOperation;
-mixin EnumAlias!WGPUBufferBindingType;
-mixin EnumAlias!WGPUBufferMapAsyncStatus;
-mixin EnumAlias!WGPUCompareFunction;
-mixin EnumAlias!WGPUCompilationMessageType;
-mixin EnumAlias!WGPUCreatePipelineAsyncStatus;
-mixin EnumAlias!WGPUCullMode;
-mixin EnumAlias!WGPUDeviceLostReason;
-mixin EnumAlias!WGPUErrorFilter;
-mixin EnumAlias!WGPUErrorType;
-mixin EnumAlias!WGPUFeatureName;
-mixin EnumAlias!WGPUFilterMode;
-mixin EnumAlias!WGPUFrontFace;
-mixin EnumAlias!WGPUIndexFormat;
-mixin EnumAlias!WGPULoadOp;
-mixin EnumAlias!WGPUPipelineStatisticName;
-mixin EnumAlias!WGPUPowerPreference;
-mixin EnumAlias!WGPUPresentMode;
-mixin EnumAlias!WGPUPrimitiveTopology;
-mixin EnumAlias!WGPUQueryType;
-mixin EnumAlias!WGPUQueueWorkDoneStatus;
-mixin EnumAlias!WGPURequestAdapterStatus;
-mixin EnumAlias!WGPURequestDeviceStatus;
-mixin EnumAlias!WGPUSType;
-mixin EnumAlias!WGPUSamplerBindingType;
-mixin EnumAlias!WGPUStencilOperation;
-mixin EnumAlias!WGPUStorageTextureAccess;
-mixin EnumAlias!WGPUStoreOp;
-mixin EnumAlias!WGPUTextureAspect;
-mixin EnumAlias!WGPUTextureComponentType;
-mixin EnumAlias!WGPUTextureDimension;
-mixin EnumAlias!WGPUTextureFormat;
-mixin EnumAlias!WGPUTextureSampleType;
-mixin EnumAlias!WGPUTextureViewDimension;
-mixin EnumAlias!WGPUVertexFormat;
-mixin EnumAlias!WGPUVertexStepMode;
-mixin EnumAlias!WGPUBufferUsage;
-mixin EnumAlias!WGPUColorWriteMask;
-mixin EnumAlias!WGPUMapMode;
-mixin EnumAlias!WGPUShaderStage;
-mixin EnumAlias!WGPUTextureUsage;
+//static assert(false, std.traits.fullyQualifiedName!WGPUAdapterType);
+
+enum AdapterType : WGPUAdapterType {
+  discreteGpu,
+  integratedGpu,
+  cpu,
+  unknown,
+  force32 = cast(WGPUAdapterType) 0x7FFFFFFF
+}
+enum AddressMode : WGPUAddressMode {
+  repeat,
+  mirrorRepeat,
+  clampToEdge,
+  force32 = cast(WGPUAddressMode) 0x7FFFFFFF
+}
+enum BackendType : WGPUBackendType {
+  _null,
+  webGPU,
+  d3d11,
+  d3d12,
+  metal,
+  vulkan,
+  openGL,
+  openGLES,
+  force32 = cast(WGPUBackendType) 0x7FFFFFFF
+}
+enum BlendFactor : WGPUBlendFactor {
+  zero,
+  one,
+  src,
+  oneMinusSrc,
+  srcAlpha,
+  oneMinusSrcAlpha,
+  dst,
+  oneMinusDst,
+  dstAlpha,
+  oneMinusDstAlpha,
+  srcAlphaSaturated,
+  constant,
+  oneMinusConstant,
+  force32 = cast(WGPUBlendFactor) 0x7FFFFFFF
+}
+enum BlendOperation : WGPUBlendOperation {
+  add,
+  subtract,
+  reverseSubtract,
+  min,
+  max,
+  force32 = cast(WGPUBlendOperation) 0x7FFFFFFF
+}
+enum BufferBindingType : WGPUBufferBindingType {
+  undefined,
+  uniform,
+  storage,
+  readOnlyStorage,
+  force32 = cast(WGPUBufferBindingType) 0x7FFFFFFF
+}
+/// Result of a call to `Buffer.mapReadAsync` or `Buffer.mapWriteAsync`.
+enum BufferMapAsyncStatus : WGPUBufferMapAsyncStatus {
+  success,
+  error,
+  unknown,
+  deviceLost,
+  destroyedBeforeCallback,
+  unmappedBeforeCallback,
+  force32 = cast(WGPUBufferMapAsyncStatus) 0x7FFFFFFF
+}
+enum CompareFunction : WGPUCompareFunction {
+  undefined,
+  never,
+  less,
+  lessEqual,
+  greater,
+  greaterEqual,
+  equal,
+  notEqual,
+  always,
+  force32 = cast(WGPUCompareFunction) 0x7FFFFFFF
+}
+enum CompilationMessageType : WGPUCompilationMessageType {
+  error,
+  warning,
+  info,
+  force32 = cast(WGPUCompilationMessageType) 0x7FFFFFFF
+}
+enum CreatePipelineAsyncStatus : WGPUCreatePipelineAsyncStatus {
+  success,
+  error,
+  deviceLost,
+  deviceDestroyed,
+  unknown,
+  force32 = cast(WGPUCreatePipelineAsyncStatus) 0x7FFFFFFF
+}
+enum CullMode : WGPUCullMode {
+  none,
+  front,
+  back,
+  force32 = cast(WGPUCullMode) 0x7FFFFFFF
+}
+enum DeviceLostReason : WGPUDeviceLostReason {
+  undefined,
+  destroyed,
+  force32 = cast(WGPUDeviceLostReason) 0x7FFFFFFF
+}
+enum ErrorFilter : WGPUErrorFilter {
+  none,
+  validation,
+  outOfMemory,
+  force32 = cast(WGPUErrorFilter) 0x7FFFFFFF
+}
+enum ErrorType : WGPUErrorType {
+  noError,
+  validation,
+  outOfMemory,
+  unknown,
+  deviceLost,
+  force32 = cast(WGPUErrorType) 0x7FFFFFFF
+}
+enum FeatureName : WGPUFeatureName {
+  undefined,
+  depthClamping,
+  depth24UnormStencil8,
+  depth32FloatStencil8,
+  timestampQuery,
+  pipelineStatisticsQuery,
+  textureCompressionBc,
+  force32 = cast(WGPUFeatureName) 0x7FFFFFFF
+}
+enum FilterMode : WGPUFilterMode {
+  nearest,
+  linear,
+  force32 = cast(WGPUFilterMode) 0x7FFFFFFF
+}
+enum FrontFace : WGPUFrontFace {
+  ccw,
+  cw,
+  force32 = cast(WGPUFrontFace) 0x7FFFFFFF
+}
+enum IndexFormat : WGPUIndexFormat {
+  undefined,
+  uint16,
+  uint32,
+  force32 = cast(WGPUIndexFormat) 0x7FFFFFFF
+}
+enum LoadOp : WGPULoadOp {
+  clear,
+  load,
+  force32 = cast(WGPULoadOp) 0x7FFFFFFF
+}
+enum PipelineStatisticName : WGPUPipelineStatisticName {
+  vertexShaderInvocations,
+  clipperInvocations,
+  clipperPrimitivesOut,
+  fragmentShaderInvocations,
+  computeShaderInvocations,
+  force32 = cast(WGPUPipelineStatisticName) 0x7FFFFFFF
+}
+enum PowerPreference : WGPUPowerPreference {
+  lowPower,
+  highPerformance,
+  force32 = cast(WGPUPowerPreference) 0x7FFFFFFF
+}
+enum PresentMode : WGPUPresentMode {
+  immediate,
+  mailbox,
+  fifo,
+  force32 = cast(WGPUPresentMode) 0x7FFFFFFF
+}
+enum PrimitiveTopology : WGPUPrimitiveTopology {
+  pointList,
+  lineList,
+  lineStrip,
+  triangleList,
+  triangleStrip,
+  force32 = cast(WGPUPrimitiveTopology) 0x7FFFFFFF
+}
+enum QueryType : WGPUQueryType {
+  occlusion,
+  pipelineStatistics,
+  timestamp,
+  force32 = cast(WGPUQueryType) 0x7FFFFFFF
+}
+enum QueueWorkDoneStatus : WGPUQueueWorkDoneStatus {
+  success,
+  error,
+  unknown,
+  deviceLost,
+  force32 = cast(WGPUQueueWorkDoneStatus) 0x7FFFFFFF
+}
+enum RequestAdapterStatus : WGPURequestAdapterStatus {
+  success,
+  unavailable,
+  error,
+  unknown,
+  force32 = cast(WGPURequestAdapterStatus) 0x7FFFFFFF
+}
+enum RequestDeviceStatus : WGPURequestDeviceStatus {
+  success,
+  error,
+  unknown,
+  force32 = cast(WGPURequestDeviceStatus) 0x7FFFFFFF
+}
+enum SType : WGPUSType {
+  invalid,
+  surfaceDescriptorFromMetalLayer,
+  surfaceDescriptorFromWindowsHWND,
+  surfaceDescriptorFromXlib,
+  surfaceDescriptorFromCanvasHtmlSelector,
+  shaderModuleSpirvDescriptor,
+  shaderModuleWgslDescriptor,
+  primitiveDepthClampingState,
+  force32 = cast(WGPUSType) 0x7FFFFFFF
+}
+enum SamplerBindingType : WGPUSamplerBindingType {
+  undefined,
+  filtering,
+  nonFiltering,
+  comparison,
+  force32 = cast(WGPUSamplerBindingType) 0x7FFFFFFF
+}
+enum StencilOperation : WGPUStencilOperation {
+  keep,
+  zero,
+  replace,
+  invert,
+  incrementClamp,
+  decrementClamp,
+  incrementWrap,
+  decrementWrap,
+  force32 = cast(WGPUStencilOperation) 0x7FFFFFFF
+}
+enum StorageTextureAccess : WGPUStorageTextureAccess {
+  undefined,
+  writeOnly,
+  force32 = cast(WGPUStorageTextureAccess) 0x7FFFFFFF
+}
+enum StoreOp : WGPUStoreOp {
+  store,
+  discard,
+  force32 = cast(WGPUStoreOp) 0x7FFFFFFF
+}
+enum TextureAspect : WGPUTextureAspect {
+  all,
+  stencilOnly,
+  depthOnly,
+  force32 = cast(WGPUTextureAspect) 0x7FFFFFFF
+}
+enum TextureComponentType : WGPUTextureComponentType {
+  _float,
+  sint,
+  _uint,
+  depthComparison,
+  force32 = cast(WGPUTextureComponentType) 0x7FFFFFFF
+}
+enum TextureDimension : WGPUTextureDimension {
+  _1d,
+  _2d,
+  _3d,
+  force32 = cast(WGPUTextureDimension) 0x7FFFFFFF
+}
+enum TextureFormat : WGPUTextureFormat {
+  undefined,
+  r8Unorm,
+  r8Snorm,
+  r8Uint,
+  r8Sint,
+  r16Uint,
+  r16Sint,
+  r16Float,
+  rg8Unorm,
+  rg8Snorm,
+  rg8Uint,
+  rg8Sint,
+  r32Float,
+  r32Uint,
+  r32Sint,
+  rg16Uint,
+  rg16Sint,
+  rg16Float,
+  rgba8Unorm,
+  rgba8UnormSrgb,
+  rgba8Snorm,
+  rgba8Uint,
+  rgba8Sint,
+  bgra8Unorm,
+  bgra8UnormSrgb,
+  rgb10a2Unorm,
+  rg11b10Ufloat,
+  rgb9e5Ufloat,
+  rg32Float,
+  rg32Uint,
+  rg32Sint,
+  rgba16Uint,
+  rgba16Sint,
+  rgba16Float,
+  rgba32Float,
+  rgba32Uint,
+  rgba32Sint,
+  stencil8,
+  depth16Unorm,
+  depth24Plus,
+  depth24PlusStencil8,
+  depth32Float,
+  bc1rgbaUnorm,
+  bc1rgbaUnormSrgb,
+  bc2rgbaUnorm,
+  bc2rgbaUnormSrgb,
+  bc3rgbaUnorm,
+  bc3rgbaUnormSrgb,
+  bc4rUnorm,
+  bc4rSnorm,
+  bc5rgUnorm,
+  bc5rgSnorm,
+  bc6hrgbUfloat,
+  bc6hrgbFloat,
+  bc7rgbaUnorm,
+  bc7rgbaUnormSrgb,
+  force32 = cast(WGPUTextureFormat) 0x7FFFFFFF
+}
+enum TextureSampleType : WGPUTextureSampleType {
+  undefined,
+  _float,
+  unfilterableFloat,
+  depth,
+  sint,
+  _uint,
+  force32 = cast(WGPUTextureSampleType) 0x7FFFFFFF
+}
+enum TextureViewDimension : WGPUTextureViewDimension {
+  undefined,
+  _1d,
+  _2d,
+  _2dArray,
+  cube,
+  cubeArray,
+  _3d,
+  force32 = cast(WGPUTextureViewDimension) 0x7FFFFFFF
+}
+enum VertexFormat : WGPUVertexFormat {
+  undefined,
+  uint8x2,
+  uint8x4,
+  sint8x2,
+  sint8x4,
+  unorm8x2,
+  unorm8x4,
+  snorm8x2,
+  snorm8x4,
+  uint16x2,
+  uint16x4,
+  sint16x2,
+  sint16x4,
+  unorm16x2,
+  unorm16x4,
+  snorm16x2,
+  snorm16x4,
+  float16x2,
+  float16x4,
+  float32,
+  float32x2,
+  float32x3,
+  float32x4,
+  uint32,
+  uint32x2,
+  uint32x3,
+  uint32x4,
+  sint32,
+  sint32x2,
+  sint32x3,
+  sint32x4,
+  force32 = cast(WGPUVertexFormat) 0x7FFFFFFF
+}
+enum VertexStepMode : WGPUVertexStepMode {
+  vertex,
+  instance,
+  force32 = cast(WGPUVertexStepMode) 0x7FFFFFFF
+}
+enum BufferUsage : WGPUBufferUsage {
+  none,
+  mapRead,
+  mapWrite,
+  copySrc,
+  copyDst,
+  index,
+  vertex,
+  uniform,
+  storage,
+  indirect,
+  queryResolve,
+  force32 = cast(WGPUBufferUsage) 0x7FFFFFFF
+}
+enum ColorWriteMask : WGPUColorWriteMask {
+  none,
+  red,
+  green,
+  blue,
+  alpha,
+  all,
+  force32 = cast(WGPUColorWriteMask) 0x7FFFFFFF
+}
+enum MapMode : WGPUMapMode {
+  none,
+  read,
+  write,
+  force32 = cast(WGPUMapMode) 0x7FFFFFFF
+}
+enum ShaderStage : WGPUShaderStage {
+  none,
+  vertex,
+  fragment,
+  compute,
+  force32 = cast(WGPUShaderStage) 0x7FFFFFFF
+}
+enum TextureUsage : WGPUTextureUsage {
+  none,
+  copySrc,
+  copyDst,
+  textureBinding,
+  storageBinding,
+  renderAttachment,
+  force32 = cast(WGPUTextureUsage) 0x7FFFFFFF
+}
 
 /// Constant blending modes usable when constructing a `ColorTargetState`'s `BlendState`.
 /// See_Also:
@@ -551,7 +882,7 @@ class ColorTargetState {
   }
 
   package auto state() @trusted @property const {
-    return WGPUColorTargetState(null, cast(WGPUTextureFormat) format, &blend, writeMask);
+    return WGPUColorTargetState(null, cast(TextureFormat) format, cast(BlendState*) &blend, writeMask);
   }
 }
 
@@ -649,8 +980,8 @@ class FragmentState {
   package WGPUFragmentState state() @trusted @property const {
     return WGPUFragmentState(
       null, cast(WGPUShaderModule) shader.id, entryPoint.toStringz,
-      constants.length.to!uint, constants.length == 0 ? null : constants.ptr,
-      targets.length.to!uint, targets.ptr
+      constants.length.to!uint, cast(ConstantEntry*) (constants.length == 0 ? null : constants.ptr),
+      targets.length.to!uint, cast(WGPUColorTargetState*) targets.ptr
     );
   }
 }
@@ -816,7 +1147,7 @@ struct Adapter {
     };
     WGPURequiredLimits requiredLimits = { limits: limits };
     WGPUDeviceDescriptor desc = {
-      nextInChain: cast(const(WGPUChainedStruct)*) &extras,
+      nextInChain: cast(ChainedStruct*) &extras,
       requiredLimits: &requiredLimits
     };
     wgpuAdapterRequestDevice(id, &desc, &wgpu_request_device_callback, cast(void*) device);
@@ -894,11 +1225,11 @@ class Device {
     // TODO: assert SPIR-V magic number is at the beginning of the stream
     // TODO: assert input is not longer than `size_t.max`
     const ShaderModuleSPIRVDescriptor spirv = {
-      chain: WGPUChainedStruct(null, cast(WGPUSType) SType.shaderModuleSPIRVDescriptor),
+      chain: WGPUChainedStruct(null, cast(WGPUSType) SType.shaderModuleSpirvDescriptor),
       codeSize: spv.length.to!uint,
       code: spv.to!(uint[]).ptr,
     };
-    auto desc = ShaderModuleDescriptor(&spirv.chain);
+    auto desc = ShaderModuleDescriptor(cast(ChainedStruct*) &spirv.chain);
     return ShaderModule(wgpuDeviceCreateShaderModule(id, &desc));
   }
 
@@ -907,10 +1238,10 @@ class Device {
   /// Shader modules are used to define programmable stages of a pipeline.
   ShaderModule createShaderModule(string wgsl) @trusted const {
     const ShaderModuleWGSLDescriptor wgslDesc = {
-      chain: WGPUChainedStruct(null, cast(WGPUSType) SType.shaderModuleWGSLDescriptor),
+      chain: WGPUChainedStruct(null, cast(WGPUSType) SType.shaderModuleWgslDescriptor),
       source: wgsl.toStringz,
     };
-    auto desc = ShaderModuleDescriptor(&wgslDesc.chain);
+    auto desc = ShaderModuleDescriptor(cast(ChainedStruct*) &wgslDesc.chain);
     assert(id !is null);
     return ShaderModule(wgpuDeviceCreateShaderModule(cast(WGPUDevice) id, &desc));
   }
@@ -925,7 +1256,10 @@ class Device {
   /// Creates an empty `CommandEncoder`.
   CommandEncoder createCommandEncoder(const CommandEncoderDescriptor descriptor) @trusted const {
     assert(id !is null);
-    return CommandEncoder(wgpuDeviceCreateCommandEncoder(cast(WGPUDevice) id, &descriptor), descriptor);
+    return CommandEncoder(
+      wgpuDeviceCreateCommandEncoder(cast(WGPUDevice) id, cast(CommandEncoderDescriptor*) &descriptor),
+      descriptor
+    );
   }
 
   /// Creates a bind group layout.
@@ -939,7 +1273,10 @@ class Device {
   /// ditto
   BindGroupLayout createBindGroupLayout(const BindGroupLayoutDescriptor descriptor) @trusted const {
     assert(id !is null);
-    return BindGroupLayout(wgpuDeviceCreateBindGroupLayout(cast(WGPUDevice) id, &descriptor), descriptor);
+    return BindGroupLayout(
+      wgpuDeviceCreateBindGroupLayout(cast(WGPUDevice) id, cast(BindGroupLayoutDescriptor*) &descriptor),
+      cast(BindGroupLayoutDescriptor) descriptor
+    );
   }
 
   /// Creates a new bind group.
@@ -968,17 +1305,21 @@ class Device {
     import std.algorithm : map;
     import std.array : array;
 
-    PipelineLayoutDescriptor desc = {
-      label: label is null ? null : label.toStringz,
-      bindGroupLayoutCount: bindGroups.length.to!uint,
-      bindGroupLayouts: bindGroups.length == 0 ? null : bindGroups.map!(b => b.id).array.ptr,
-    };
+    PipelineLayoutDescriptor desc;
+    desc.label = label is null ? null : label.toStringz;
+    desc.bindGroupLayoutCount = bindGroups.length.to!uint;
+    desc.bindGroupLayouts = bindGroups.length == 0
+      ? null
+      : cast(WGPUBindGroupLayoutImpl**) bindGroups.map!(b => b.id).array.ptr;
     return createPipelineLayout(desc);
   }
   /// ditto
   PipelineLayout createPipelineLayout(const PipelineLayoutDescriptor descriptor) @trusted const {
     assert(id !is null);
-    return PipelineLayout(wgpuDeviceCreatePipelineLayout(cast(WGPUDevice) id, &descriptor), descriptor);
+    return PipelineLayout(
+      wgpuDeviceCreatePipelineLayout(cast(WGPUDevice) id, cast(PipelineLayoutDescriptor*) &descriptor),
+      cast(PipelineLayoutDescriptor) descriptor
+    );
   }
 
   /// Creates a render pipeline.
@@ -1012,7 +1353,8 @@ class Device {
       null,
       label is null ? null : label.toStringz,
       layout.id, vertexState.state, primitiveState.state,
-      &depthStencilState.state, multisampleState.state,
+      cast(WGPUDepthStencilState*) &depthStencilState.state,
+      multisampleState.state,
       &fragment,
     );
     return new RenderPipeline(this, descriptor, fragmentState);
@@ -1070,7 +1412,7 @@ class Device {
   Texture createTexture(
     uint width, uint height,
     const TextureFormat format, const TextureUsage usage,
-    const TextureDimension dimension = TextureDimension._2D,
+    const TextureDimension dimension = TextureDimension._2d,
     uint mipLevelCount = 1,
     uint sampleCount = 1,
     uint depthOrArrayLayers = 1,
@@ -1098,7 +1440,7 @@ class Device {
   /// label = Optional, human-readable debug label for the texture.
   Texture createTexture(
     const Extent3d extent, const TextureFormat format, const TextureUsage usage,
-    const TextureDimension dimension = TextureDimension._2D,
+    const TextureDimension dimension = TextureDimension._2d,
     uint mipLevelCount = 1,
     uint sampleCount = 1,
     const string label = null
@@ -1144,8 +1486,8 @@ class Device {
   ///
   /// Params:
   /// descriptor = Specifies the behavior of the sampler.
-  Sampler createSampler(const SamplerDescriptor descriptor) {
-    return Sampler(wgpuDeviceCreateSampler(id, &descriptor), descriptor);
+  Sampler createSampler(const SamplerDescriptor descriptor) @trusted {
+    return Sampler(wgpuDeviceCreateSampler(id, cast(SamplerDescriptor*) &descriptor), descriptor);
   }
 
   /// Create a new `SwapChain` which targets `surface`.
@@ -1274,8 +1616,10 @@ class SwapChain {
   /// Optional, human-readable debug label for this swap chain.
   const string label;
 
-  package this(const Device device, const Surface surface, const SwapChainDescriptor descriptor) {
-    id = wgpuDeviceCreateSwapChain(cast(WGPUDevice) device.id, cast(WGPUSurface) surface.id, &descriptor);
+  package this(const Device device, const Surface surface, const SwapChainDescriptor descriptor) @trusted {
+    id = wgpuDeviceCreateSwapChain(
+      cast(WGPUDevice) device.id, cast(WGPUSurface) surface.id, cast(SwapChainDescriptor*) &descriptor
+    );
     this.surface = surface;
     this.descriptor = descriptor;
     this.label = descriptor.label is null ? null : descriptor.label.fromStringz.to!string;
@@ -1310,14 +1654,6 @@ class SwapChain {
   }
 }
 
-/// Result of a call to `Buffer.mapReadAsync` or `Buffer.mapWriteAsync`.
-enum BufferMapAsyncStatus {
-  success = 0,
-  error = 1,
-  unknown = 2,
-  contextLost = 3
-}
-
 extern (C) private void wgpuBufferMapCallback(WGPUBufferMapAsyncStatus status, void* data) {
   assert(data !is null);
   auto buffer = cast(Buffer) data;
@@ -1341,7 +1677,7 @@ class Buffer {
 
   package this(const Device device, const BufferDescriptor descriptor) @trusted {
     assert(device !is null && device.id !is null);
-    id = wgpuDeviceCreateBuffer(cast(WGPUDevice) device.id, &descriptor);
+    id = wgpuDeviceCreateBuffer(cast(WGPUDevice) device.id, cast(BufferDescriptor*) &descriptor);
     if (id !is null && descriptor.mappedAtCreation) status = BufferMapAsyncStatus.success;
     this.descriptor = descriptor;
     label = descriptor.label is null ? null : descriptor.label.fromStringz.to!string;
@@ -1443,9 +1779,9 @@ class Texture {
   /// Optional, human-readable debug label for this texture.
   const string label;
 
-  package this(const Device device, TextureDescriptor descriptor) @trusted {
+  package this(const Device device, const TextureDescriptor descriptor) @trusted {
     assert(device !is null && device.id !is null);
-    id = wgpuDeviceCreateTexture(cast(WGPUDevice) device.id, &descriptor);
+    id = wgpuDeviceCreateTexture(cast(WGPUDevice) device.id, cast(TextureDescriptor*) &descriptor);
     this.descriptor = descriptor;
     this.label = descriptor.label is null ? null : descriptor.label.fromStringz.to!string;
   }
@@ -1524,24 +1860,24 @@ class Texture {
       case TextureFormat.rgba32Uint:
       case TextureFormat.rgba32Sint:
       // Compressed, 4 pixels per block
-      case TextureFormat.bc3RGBAUnorm:
-      case TextureFormat.bc3RGBAUnormSrgb:
+      case TextureFormat.bc3rgbaUnorm:
+      case TextureFormat.bc3rgbaUnormSrgb:
         return 16;
-      case TextureFormat.rgb10A2Unorm:
-      case TextureFormat.rg11B10Ufloat:
-      case TextureFormat.rgb9E5Ufloat:
-      case TextureFormat.bc1RGBAUnorm:
-      case TextureFormat.bc1RGBAUnormSrgb:
-      case TextureFormat.bc2RGBAUnorm:
-      case TextureFormat.bc2RGBAUnormSrgb:
-      case TextureFormat.bc4RUnorm:
-      case TextureFormat.bc4RSnorm:
-      case TextureFormat.bc5RGUnorm:
-      case TextureFormat.bc5RGSnorm:
-      case TextureFormat.bc6HRGBUfloat:
-      case TextureFormat.bc6HRGBFloat:
-      case TextureFormat.bc7RGBAUnorm:
-      case TextureFormat.bc7RGBAUnormSrgb:
+      case TextureFormat.rgb10a2Unorm:
+      case TextureFormat.rg11b10Ufloat:
+      case TextureFormat.rgb9e5Ufloat:
+      case TextureFormat.bc1rgbaUnorm:
+      case TextureFormat.bc1rgbaUnormSrgb:
+      case TextureFormat.bc2rgbaUnorm:
+      case TextureFormat.bc2rgbaUnormSrgb:
+      case TextureFormat.bc4rUnorm:
+      case TextureFormat.bc4rSnorm:
+      case TextureFormat.bc5rgUnorm:
+      case TextureFormat.bc5rgSnorm:
+      case TextureFormat.bc6hrgbUfloat:
+      case TextureFormat.bc6hrgbFloat:
+      case TextureFormat.bc7rgbaUnorm:
+      case TextureFormat.bc7rgbaUnormSrgb:
         // FIXME: Supply block sizes for these texture formats
         assert(0, "Unknown block size in bytes of " ~ descriptor.format.stringof);
       // QUESTION: Depth formats of _at least_ 24 bits, therefore there's no guarenteed block size?
@@ -1594,26 +1930,26 @@ class Texture {
       case TextureFormat.rgba32Float:
       case TextureFormat.rgba32Uint:
       case TextureFormat.rgba32Sint:
-      case TextureFormat.rgb10A2Unorm:
-      case TextureFormat.rg11B10Ufloat:
-      case TextureFormat.rgb9E5Ufloat:
+      case TextureFormat.rgb10a2Unorm:
+      case TextureFormat.rg11b10Ufloat:
+      case TextureFormat.rgb9e5Ufloat:
         return 1;
       // BC3 compression, 4 pixels per block
-      case TextureFormat.bc3RGBAUnorm:
-      case TextureFormat.bc3RGBAUnormSrgb:
+      case TextureFormat.bc3rgbaUnorm:
+      case TextureFormat.bc3rgbaUnormSrgb:
         return 4;
-      case TextureFormat.bc1RGBAUnorm:
-      case TextureFormat.bc1RGBAUnormSrgb:
-      case TextureFormat.bc2RGBAUnorm:
-      case TextureFormat.bc2RGBAUnormSrgb:
-      case TextureFormat.bc4RUnorm:
-      case TextureFormat.bc4RSnorm:
-      case TextureFormat.bc5RGUnorm:
-      case TextureFormat.bc5RGSnorm:
-      case TextureFormat.bc6HRGBUfloat:
-      case TextureFormat.bc6HRGBFloat:
-      case TextureFormat.bc7RGBAUnorm:
-      case TextureFormat.bc7RGBAUnormSrgb:
+      case TextureFormat.bc1rgbaUnorm:
+      case TextureFormat.bc1rgbaUnormSrgb:
+      case TextureFormat.bc2rgbaUnorm:
+      case TextureFormat.bc2rgbaUnormSrgb:
+      case TextureFormat.bc4rUnorm:
+      case TextureFormat.bc4rSnorm:
+      case TextureFormat.bc5rgUnorm:
+      case TextureFormat.bc5rgSnorm:
+      case TextureFormat.bc6hrgbUfloat:
+      case TextureFormat.bc6hrgbFloat:
+      case TextureFormat.bc7rgbaUnorm:
+      case TextureFormat.bc7rgbaUnormSrgb:
         // FIXME: Supply pixel compression ratios for these texture formats
         assert(0, "Unknown compression ratio of " ~ descriptor.format.stringof);
       // QUESTION: Depth formats of _at least_ 24 bits, therefore there's no guarenteed block size?
@@ -1684,7 +2020,7 @@ class Texture {
   TextureView createView(const TextureViewDescriptor descriptor) inout @trusted {
     assert(id !is null);
     return TextureView(
-      wgpuTextureCreateView(cast(WGPUTexture) id, &descriptor),
+      wgpuTextureCreateView(cast(WGPUTexture) id, cast(TextureViewDescriptor*) &descriptor),
       descriptor,
       this.descriptor.sampleCount > 1 ? Yes.multisampled : No.multisampled
     );
@@ -1783,7 +2119,7 @@ struct TextureView {
 struct Sampler {
   package WGPUSampler id;
   /// Describes this `Sampler`.
-  SamplerDescriptor descriptor;
+  const SamplerDescriptor descriptor;
 
   /// Creates a sampler binding.
   BindGroupEntry binding(uint location) {
@@ -1803,12 +2139,12 @@ struct Queue {
     submit([commands]);
   }
   /// Submits a series of finished command buffers for execution.
-  void submit(CommandBuffer[] commandBuffers) {
+  void submit(CommandBuffer[] commandBuffers) @trusted {
     import std.algorithm.iteration : map;
     import std.array : array;
 
     const commandBufferIds = commandBuffers.map!(c => c.id).array;
-    wgpuQueueSubmit(id, commandBuffers.length.to!uint, commandBufferIds.ptr);
+    wgpuQueueSubmit(id, commandBuffers.length.to!uint, cast(WGPUCommandBufferImpl**) commandBufferIds.ptr);
   }
 }
 
@@ -1913,15 +2249,15 @@ struct CommandEncoder {
   /// Begins recording of a render pass.
   ///
   /// This function returns a `RenderPass` object which records a single render pass.
-  RenderPass beginRenderPass(const RenderPassDescriptor descriptor) {
-    return RenderPass(wgpuCommandEncoderBeginRenderPass(id, &descriptor));
+  RenderPass beginRenderPass(const RenderPassDescriptor descriptor) @trusted {
+    return RenderPass(wgpuCommandEncoderBeginRenderPass(id, cast(RenderPassDescriptor*) &descriptor));
   }
 
   /// Begins recording of a compute pass.
   ///
   /// This function returns a `ComputePass` object which records a single compute pass.
-  ComputePass beginComputePass(const ComputePassDescriptor descriptor) {
-    return ComputePass(wgpuCommandEncoderBeginComputePass(id, &descriptor));
+  ComputePass beginComputePass(const ComputePassDescriptor descriptor) @trusted {
+    return ComputePass(wgpuCommandEncoderBeginComputePass(id, cast(ComputePassDescriptor*) &descriptor));
   }
 
   // TODO: void wgpuCommandEncoderCopyBufferToBuffer(WGPUCommandEncoder commandEncoder, WGPUBuffer source, uint64_t sourceOffset, WGPUBuffer destination, uint64_t destinationOffset, uint64_t size);
@@ -1937,8 +2273,12 @@ struct CommandEncoder {
     );
   }
   /// Copy data from a buffer to a texture.
-  void copyBufferToTexture(const ImageCopyBuffer source, const ImageCopyTexture destination, const Extent3d copySize) {
-    wgpuCommandEncoderCopyBufferToTexture(id, &source, &destination, &copySize);
+  void copyBufferToTexture(
+    const ImageCopyBuffer source, const ImageCopyTexture destination, const Extent3d copySize
+  ) @trusted {
+    wgpuCommandEncoderCopyBufferToTexture(
+      id, cast(ImageCopyBuffer*) &source, cast(ImageCopyTexture*) &destination, cast(Extent3d*) &copySize
+    );
   }
 
   /// Copy data from a `Texture` to a `Buffer`.
@@ -1956,8 +2296,12 @@ struct CommandEncoder {
     );
   }
   /// Copy data from a texture to a buffer.
-  void copyTextureToBuffer(const ImageCopyTexture source, const ImageCopyBuffer destination, const Extent3d copySize) {
-    wgpuCommandEncoderCopyTextureToBuffer(id, &source, &destination, &copySize);
+  void copyTextureToBuffer(
+    const ImageCopyTexture source, const ImageCopyBuffer destination, const Extent3d copySize
+  ) @trusted {
+    wgpuCommandEncoderCopyTextureToBuffer(
+      id, cast(ImageCopyTexture*) &source, cast(ImageCopyBuffer*) &destination, cast(Extent3d*) &copySize
+    );
   }
 
   // TODO: void wgpuCommandEncoderCopyTextureToTexture(WGPUCommandEncoder commandEncoder, WGPUImageCopyTexture const * source, WGPUImageCopyTexture const * destination, WGPUExtent3D const * copySize);
@@ -2013,10 +2357,9 @@ class RenderPipeline {
   /// Describes the fragment process in this render pipeline.
   const FragmentState fragmentState;
 
-  package this(const Device device, RenderPipelineDescriptor descriptor, const FragmentState fragmentState) {
-    this.fragmentState = fragmentState;
-    const fragment = this.fragmentState.state;
-    descriptor.fragment = &fragment;
+  package this(const Device device, RenderPipelineDescriptor descriptor, const FragmentState fragmentState) @trusted {
+    const fragment = (this.fragmentState = fragmentState).state;
+    descriptor.fragment = cast(WGPUFragmentState*) &fragment;
 
     assert(device.id !is null);
     id = wgpuDeviceCreateRenderPipeline(cast(WGPUDevice) device.id, &descriptor);

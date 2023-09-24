@@ -79,21 +79,21 @@ Buffer createBuffer(const Device device, BufferUsage usage, ubyte[] data, string
 TextureViewDimension viewDimension(const TextureDimension dimension, uint depthOrArrayLayers = 1) {
   assert(depthOrArrayLayers > 0);
   final switch (dimension) {
-    case TextureDimension._1D: return TextureViewDimension._1D;
-    case TextureDimension._2D:
-      if (depthOrArrayLayers > 1) return TextureViewDimension._2DArray;
-      return TextureViewDimension._2D;
+    case TextureDimension._1d: return TextureViewDimension._1d;
+    case TextureDimension._2d:
+      if (depthOrArrayLayers > 1) return TextureViewDimension._2dArray;
+      return TextureViewDimension._2d;
     // TODO: What of `.cube` and `.cubeArray`?
-    case TextureDimension._3D: return TextureViewDimension._3D;
+    case TextureDimension._3d: return TextureViewDimension._3d;
     case TextureDimension.force32: return TextureViewDimension.undefined;
   }
 }
 
 unittest {
-  assert(TextureDimension._1D.viewDimension == TextureViewDimension._1D);
-  assert(TextureDimension._2D.viewDimension == TextureViewDimension._2D);
-  assert(TextureDimension._2D.viewDimension(5) == TextureViewDimension._2DArray);
-  assert(TextureDimension._3D.viewDimension == TextureViewDimension._3D);
+  assert(TextureDimension._1d.viewDimension == TextureViewDimension._1d);
+  assert(TextureDimension._2d.viewDimension == TextureViewDimension._2d);
+  assert(TextureDimension._2d.viewDimension(5) == TextureViewDimension._2dArray);
+  assert(TextureDimension._3d.viewDimension == TextureViewDimension._3d);
   assert(TextureDimension.force32.viewDimension == TextureViewDimension.undefined);
 }
 

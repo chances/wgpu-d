@@ -1,3 +1,4 @@
+# See https://github.com/gfx-rs/wgpu-native/tree/v0.10.4.1
 VERSION := v0.10.4.1
 OS := $(shell uname -s)
 ARCH := $(shell uname -m)
