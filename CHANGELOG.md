@@ -1,6 +1,10 @@
 <!-- https://keepachangelog.com/en/1.0.0/ -->
 # Changelog
 
+## v0.1.4
+
+- Fixed bit-flag enumerations, e.g. [`BufferUsage`](https://chances.github.io/wgpu-d/wgpu/enums/BufferUsage.html), [`ShaderStage`](https://chances.github.io/wgpu-d/wgpu/enums/ShaderStage.html), and [`TextureUsage`](https://chances.github.io/wgpu-d/wgpu/enums/TextureUsage.html).
+
 ## v0.1.3
 
 - Fixed compilation on mac OS 10.14
