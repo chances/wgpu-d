@@ -58,6 +58,7 @@ void main() {
   auto data = paddedBuffer.chunks(texture.paddedBytesPerRow)
     .map!(paddedRow => paddedRow[0 .. texture.bytesPerRow]).joiner.array;
 
+  // TODO: Switch to https://code.dlang.org/packages/imagefmt
   import imageformats : ColFmt, write_image;
   write_image("bin/headless.png", width, height, data, ColFmt.RGBA);
 
