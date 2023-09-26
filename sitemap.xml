@@ -263,7 +263,9 @@
 <url><loc>http://127.0.0.1/wgpu/enums/BufferBindingType.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/enums/BufferMapAsyncStatus.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/enums/BufferUsage.html</loc></url>
+<url><loc>http://127.0.0.1/wgpu/enums/BufferUsageFlags.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/enums/ColorWriteMask.html</loc></url>
+<url><loc>http://127.0.0.1/wgpu/enums/ColorWriteMaskFlags.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/enums/CompareFunction.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/enums/CompilationMessageType.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/enums/CreatePipelineAsyncStatus.html</loc></url>
@@ -287,6 +289,7 @@
 <url><loc>http://127.0.0.1/wgpu/enums/RequestDeviceStatus.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/enums/SamplerBindingType.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/enums/ShaderStage.html</loc></url>
+<url><loc>http://127.0.0.1/wgpu/enums/ShaderStageFlags.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/enums/StencilOperation.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/enums/StorageTextureAccess.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/enums/StoreOp.html</loc></url>
@@ -297,6 +300,7 @@
 <url><loc>http://127.0.0.1/wgpu/enums/TextureFormat.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/enums/TextureSampleType.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/enums/TextureUsage.html</loc></url>
+<url><loc>http://127.0.0.1/wgpu/enums/TextureUsageFlags.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/enums/TextureViewDimension.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/enums/VertexFormat.html</loc></url>
 <url><loc>http://127.0.0.1/wgpu/enums/VertexStepMode.html</loc></url>

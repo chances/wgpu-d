@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8"/>
-		<title>Function ColorTargetState.this - wgpu-d</title>
+		<title>Alias ColorWriteMaskFlags - wgpu-d</title>
 		<link rel="stylesheet" type="text/css" href="../../styles/ddox.css"/>
 		<link rel="stylesheet" href="../../prettify/prettify.css" type="text/css"/>
 		<script type="text/javascript" src="../../scripts/jquery.js">/**/</script><script type="text/javascript" src="../../scripts/ddox.js">/**/</script>
@@ -54,12 +54,12 @@ $('#symbolSearchPane').show();</script>
 					</div>
 			<ul class="tree-view">
 				<li>
-					<div class="module selected">
+					<div class="module ">
 						<a href="../../wgpu/api.html">api</a>
 					</div>
 				</li>
 				<li>
-					<div class="module ">
+					<div class="module selected">
 						<a href="../../wgpu/enums.html">enums</a>
 					</div>
 				</li>
@@ -78,40 +78,17 @@ $('#symbolSearchPane').show();</script>
 			</ul>
 		</nav>
 		<div id="main-contents">
-			<h1>Function ColorTargetState.this</h1><p></p>
+			<h1>Alias ColorWriteMaskFlags</h1><p></p>
 			<div class="prototype">
 				<code class="lang-d">
 					<div class="single-prototype">
-			<span class="pln">this</span>
-			<span class="pun">(</span>
-			<br/>
-			&nbsp;&nbsp;<a href="../../wgpu/enums/TextureFormat.html"><span class="typ">TextureFormat</span></a> <span class="pln">format</span><span class="pun">,</span>
-			<br/>
-			&nbsp;&nbsp;<span class="pln">__C<wbr/></span><span class="pun">.</span><span class="typ">WGPUBlendState</span> <span class="pln">blend</span><span class="pun">,</span>
-			<br/>
-			&nbsp;&nbsp;<span class="typ">uint</span> <span class="pln">writeMask</span> <span class="pun">=</span> <span class="lit">15u</span>
-			<br/>
-			<span class="pun">)</span><span class="pun">;</span>
+			<span class="kwd">alias</span> <span class="pln">ColorWriteMaskFlags</span>
+			 <span class="pun">=</span> <span class="pln">std<wbr/></span><span class="pun">.</span><span class="pln">typecons<wbr/></span><span class="pun">.</span><span class="typ">BitFlags</span>!(wgpu.enums.ColorWriteMask,1)<span class="pun">;</span>
 					</div>
 				</code>
 			</div>
 			
-			<section><h2>Parameters</h2>
-<table><col class="caption"><tr><th>Name</th><th>Description</th></tr>
-<tr><td id="format">format</td><td> The texture format of the image that this target's associated pipeline will render to.</td></tr>
-<tr><td id="blend">blend</td><td> Blending used when rendering fragments in this target's <code class="lang-d"><a href="../../wgpu/api/RenderPipeline.html"><span class="typ">RenderPipeline</span></a></code>.</td></tr>
-<tr><td id="writeMask">writeMask</td><td> Mask which enables/disables writes to different color/alpha channel. See <code class="lang-d"><span class="typ">ColorWriteMask</span></code>.</td></tr>
-</table>
-</section>
-<section><h2>Returns</h2>
-<p>A result suitable for use as a pipeline's fragment stage. See <code class="lang-d"><a href="../../wgpu/api/RenderPipeline.fragmentState.html"><span class="typ">RenderPipeline<wbr/></span><span class="pun">.</span><span class="pln">fragmentState</span></a></code>.
-</p>
-</section>
-<section><h2>See Also</h2>
-<p><code class="lang-d"><a href="../../wgpu/api/RenderPipeline.html"><span class="typ">RenderPipeline</span></a></code>
-</p>
-</section>
-
+			
 			<footer>
 				<table class="license-info">
 					<tr>
