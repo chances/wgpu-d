@@ -258,6 +258,15 @@ enum FilterMode : WGPUFilterMode {
   force32 = cast(WGPUFilterMode) 0x7FFFFFFF
 }
 
+///
+enum MipmapFilterMode : WGPUMipmapFilterMode {
+  ///
+  nearest,
+  ///
+  linear,
+  force32 = cast(WGPUMipmapFilterMode) 0x7FFFFFFF
+}
+
 /// Specifies the vertex order for faces to be considered front-facing.
 enum FrontFace : WGPUFrontFace {
   /// Clockwise ordered faces will be considered front-facing.
@@ -482,19 +491,6 @@ enum TextureAspect : WGPUTextureAspect {
 }
 
 ///
-enum TextureComponentType : WGPUTextureComponentType {
-  ///
-  _float,
-  ///
-  sint,
-  ///
-  _uint,
-  ///
-  depthComparison,
-  force32 = cast(WGPUTextureComponentType) 0x7FFFFFFF
-}
-
-///
 enum TextureDimension : WGPUTextureDimension {
   ///
   _1d,
@@ -592,6 +588,8 @@ enum TextureFormat : WGPUTextureFormat {
   ///
   depth32Float,
   ///
+  depth32FloatStencil8,
+  ///
   bc1rgbaUnorm,
   ///
   bc1rgbaUnormSrgb,
@@ -619,6 +617,82 @@ enum TextureFormat : WGPUTextureFormat {
   bc7rgbaUnorm,
   ///
   bc7rgbaUnormSrgb,
+  ///
+  etc2Rgb8Unorm,
+  ///
+  etc2Rgb8UnormSrgb,
+  ///
+  etc2Rgb8A1Unorm,
+  ///
+  etc2Rgb8A1UnormSrgb,
+  ///
+  etc2Rgba8Unorm,
+  ///
+  etc2Rgba8UnormSrgb,
+  ///
+  eacR11Unorm,
+  ///
+  eacR11Snorm,
+  ///
+  eacRg11Unorm,
+  ///
+  eacRg11Snorm,
+  ///
+  astc4x4Unorm,
+  ///
+  astc4x4UnormSrgb,
+  ///
+  astc5x4Unorm,
+  ///
+  astc5x4UnormSrgb,
+  ///
+  astc5x5Unorm,
+  ///
+  astc5x5UnormSrgb,
+  ///
+  astc6x5Unorm,
+  ///
+  astc6x5UnormSrgb,
+  ///
+  astc6x6Unorm,
+  ///
+  astc6x6UnormSrgb,
+  ///
+  astc8x5Unorm,
+  ///
+  astc8x5UnormSrgb,
+  ///
+  astc8x6Unorm,
+  ///
+  astc8x6UnormSrgb,
+  ///
+  astc8x8Unorm,
+  ///
+  astc8x8UnormSrgb,
+  ///
+  astc10x5Unorm,
+  ///
+  astc10x5UnormSrgb,
+  ///
+  astc10x6Unorm,
+  ///
+  astc10x6UnormSrgb,
+  ///
+  astc10x8Unorm,
+  ///
+  astc10x8UnormSrgb,
+  ///
+  astc10x10Unorm,
+  ///
+  astc10x10UnormSrgb,
+  ///
+  astc12x10Unorm,
+  ///
+  astc12x10UnormSrgb,
+  ///
+  astc12x12Unorm,
+  ///
+  astc12x12UnormSrgb,
   force32 = cast(WGPUTextureFormat) 0x7FFFFFFF
 }
 

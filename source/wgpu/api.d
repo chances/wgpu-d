@@ -41,19 +41,25 @@ static const uint MAX_MIP_LEVELS = 16;
 /// Maximum number of vertex buffers.
 static const uint MAX_VERTEX_BUFFERS = 16;
 
-// Opaque Pointers
+// Section: Opaque Pointers
+
 // TODO: Implement a wrapper around `WGPUQuerySet`
 alias QuerySet = WGPUQuerySet;
 
 // TODO: Because dealing with, "What if this debug label goes out of scope and gets GC'd?" is becoming a headache, convert offending `struct`ures (those with complex wrappers that aren't simply opaque pointers) to classes to reap those reference semantics: https://forum.dlang.org/post/ixfpxfdmnahtytftwald@forum.dlang.org
 // TODO: Also, for the aforementioned class conversions, ensure `id` handles and constructors whose types with `Device`-only member initializers are `package` private.
 
+///
 alias ChainedStruct = WGPUChainedStruct;
+///
 alias ChainedStructOut = WGPUChainedStructOut;
+///
 alias AdapterProperties = WGPUAdapterProperties;
 /// See_Also: <a href="https://docs.rs/wgpu/0.10.2/wgpu/struct.BindGroupEntry.html">wgpu::BindGroupEntry</a>
 alias BindGroupEntry = WGPUBindGroupEntry;
+///
 alias BlendComponent = WGPUBlendComponent;
+///
 alias BufferBindingLayout = WGPUBufferBindingLayout;
 /// Describes a `Buffer`.
 alias BufferDescriptor = WGPUBufferDescriptor;
@@ -66,12 +72,15 @@ alias Color = WGPUColor;
 alias CommandBufferDescriptor = WGPUCommandBufferDescriptor;
 /// Describes a `CommandEncoder`.
 alias CommandEncoderDescriptor = WGPUCommandEncoderDescriptor;
+///
 alias CompilationMessage = WGPUCompilationMessage;
-/// Describes a `ComputePass`.
-alias ComputePassDescriptor = WGPUComputePassDescriptor;
+///
+alias ComputePassTimestampWrite = WGPUComputePassTimestampWrite;
+///
 alias ConstantEntry = WGPUConstantEntry;
 /// Extent of a texture related operation.
 alias Extent3d = WGPUExtent3D;
+///
 alias InstanceDescriptor = WGPUInstanceDescriptor;
 /// Represents the sets of limits an adapter/device supports.
 ///
@@ -100,15 +109,21 @@ alias Origin3d = WGPUOrigin3D;
 /// Describes a `PipelineLayout`.
 alias PipelineLayoutDescriptor = WGPUPipelineLayoutDescriptor;
 ///
-alias PrimitiveDepthClampingState = WGPUPrimitiveDepthClampingState;
+alias PrimitiveDepthClipControl = WGPUPrimitiveDepthClipControl;
 ///
 alias QuerySetDescriptor = WGPUQuerySetDescriptor;
+///
+alias QueueDescriptor = WGPUQueueDescriptor;
 ///
 alias RenderBundleDescriptor = WGPURenderBundleDescriptor;
 ///
 alias RenderBundleEncoderDescriptor = WGPURenderBundleEncoderDescriptor;
 /// Describes a depth stencil attachment to a `RenderPass`.
 alias RenderPassDepthStencilAttachment = WGPURenderPassDepthStencilAttachment;
+///
+alias RenderPassDescriptorMaxDrawCount = WGPURenderPassDescriptorMaxDrawCount;
+///
+alias RenderPassTimestampWrite = WGPURenderPassTimestampWrite;
 /// Additional information required when requesting an adapter.
 /// See_Also: <a href="https://docs.rs/wgpu/0.10.2/wgpu/type.RequestAdapterOptions.html">wgpu::RequestAdapterOptions</a>
 alias RequestAdapterOptions = WGPURequestAdapterOptions;
@@ -117,11 +132,13 @@ alias SamplerBindingLayout = WGPUSamplerBindingLayout;
 /// Describes a `Sampler`.
 alias SamplerDescriptor = WGPUSamplerDescriptor;
 ///
+alias ShaderModuleCompilationHint = WGPUShaderModuleCompilationHint;
+///
 alias ShaderModuleDescriptor = WGPUShaderModuleDescriptor;
 ///
-alias ShaderModuleSPIRVDescriptor = WGPUShaderModuleSPIRVDescriptor;
+alias ShaderModuleSpirvDescriptor = WGPUShaderModuleSPIRVDescriptor;
 ///
-alias ShaderModuleWGSLDescriptor = WGPUShaderModuleWGSLDescriptor;
+alias ShaderModuleWgslDescriptor = WGPUShaderModuleWGSLDescriptor;
 ///
 alias StencilFaceState = WGPUStencilFaceState;
 ///
@@ -129,13 +146,19 @@ alias StorageTextureBindingLayout = WGPUStorageTextureBindingLayout;
 ///
 alias SurfaceDescriptor = WGPUSurfaceDescriptor;
 ///
+alias SurfaceDescriptorFromAndroidNativeWindow = WGPUSurfaceDescriptorFromAndroidNativeWindow;
+///
 alias SurfaceDescriptorFromCanvasHTMLSelector = WGPUSurfaceDescriptorFromCanvasHTMLSelector;
 ///
 alias SurfaceDescriptorFromMetalLayer = WGPUSurfaceDescriptorFromMetalLayer;
 ///
+alias SurfaceDescriptorFromWaylandSurface = WGPUSurfaceDescriptorFromWaylandSurface;
+///
 alias SurfaceDescriptorFromWindowsHWND = WGPUSurfaceDescriptorFromWindowsHWND;
 ///
-alias SurfaceDescriptorFromXlib = WGPUSurfaceDescriptorFromXlib;
+alias SurfaceDescriptorFromXcbWindow = WGPUSurfaceDescriptorFromXcbWindow;
+///
+alias SurfaceDescriptorFromXlibWindow = WGPUSurfaceDescriptorFromXlibWindow;
 /// Describes a `SwapChain`.
 alias SwapChainDescriptor = WGPUSwapChainDescriptor;
 ///
@@ -159,11 +182,15 @@ alias BindGroupLayoutEntry = WGPUBindGroupLayoutEntry;
 alias BlendState = WGPUBlendState;
 ///
 alias CompilationInfo = WGPUCompilationInfo;
+/// Describes a `ComputePass`.
+alias ComputePassDescriptor = WGPUComputePassDescriptor;
 // TODO: View of a buffer which can be used to copy to/from a texture.
 /// View of a texture which can be used to copy to/from a buffer.
 alias ImageCopyBuffer = WGPUImageCopyBuffer;
 /// View of a texture which can be used to copy to/from a texture.
 alias ImageCopyTexture = WGPUImageCopyTexture;
+///
+alias ProgrammableStageDescriptor = WGPUProgrammableStageDescriptor;
 /// Describes a color attachment to a `RenderPass`.
 alias RenderPassColorAttachment = WGPURenderPassColorAttachment;
 /// Describes a `Texture`.
@@ -178,9 +205,6 @@ alias RenderPassDescriptor = WGPURenderPassDescriptor;
 /// Describes a `RenderPipeline`.
 /// See_Also: <a href="https://docs.rs/wgpu/0.10.2/wgpu/struct.RenderPipelineDescriptor.html">wgpu::RenderPipelineDescriptor</a>
 alias RenderPipelineDescriptor = WGPURenderPipelineDescriptor;
-// TODO: Wrap this into `Instance.requestAdapter`
-///
-alias AdapterExtras = WGPUAdapterExtras;
 
 //static assert(false, std.traits.fullyQualifiedName!WGPUAdapterType);
 
@@ -433,21 +457,23 @@ struct Instance {
   /// Use `Adapter.ready` to determine whether an Adapter was successfully requested.
   static Adapter requestAdapter(
     PowerPreference powerPreference = PowerPreference.highPerformance,
+    BackendType backendType = BackendType._null,
     Flag!"forceFallbackAdapter" forceFallbackAdapter = No.forceFallbackAdapter
   ) {
     return requestAdapter(
-      RequestAdapterOptions(null, /* compatibleSurface: */ null, powerPreference, forceFallbackAdapter)
+      RequestAdapterOptions(null, /* compatibleSurface: */ null, powerPreference, backendType, forceFallbackAdapter)
     );
   }
   /// ditto
   static Adapter requestAdapter(
     const Surface compatibleSurface, PowerPreference powerPreference = PowerPreference.highPerformance,
+    BackendType backendType = BackendType._null,
     Flag!"forceFallbackAdapter" forceFallbackAdapter = No.forceFallbackAdapter
   ) @trusted {
     assert(compatibleSurface.id !is null, "Given compatible surface is not valid");
-    return requestAdapter(
-      RequestAdapterOptions(null, cast(WGPUSurface) compatibleSurface.id, powerPreference, forceFallbackAdapter)
-    );
+    return requestAdapter(RequestAdapterOptions(
+      null, cast(WGPUSurface) compatibleSurface.id, powerPreference, backendType, forceFallbackAdapter
+    ));
   }
   /// ditto
   static Adapter requestAdapter(RequestAdapterOptions options) @trusted {
@@ -525,12 +551,12 @@ struct Adapter {
     auto device = new Device(label);
     const WGPUDeviceExtras extras = {
       chain: WGPUChainedStruct(null, cast(WGPUSType) WGPUNativeSType.WGPUSType_DeviceExtras),
-      label: device.label.toStringz,
       tracePath: tracePath is null ? null : tracePath.toStringz
     };
     WGPURequiredLimits requiredLimits = { limits: limits };
     WGPUDeviceDescriptor desc = {
       nextInChain: cast(ChainedStruct*) &extras,
+      label: device.label.toStringz,
       requiredLimits: &requiredLimits
     };
     wgpuAdapterRequestDevice(id, &desc, &wgpu_request_device_callback, cast(void*) device);
@@ -554,7 +580,7 @@ class Device {
 
   /// Release the given handle.
   void destroy() {
-    if (ready) wgpuDeviceDrop(id);
+    if (ready) wgpuDeviceRelease(id);
     id = null;
   }
 
@@ -595,10 +621,14 @@ class Device {
 
   /// Check for resource cleanups and mapping callbacks.
   /// Params:
+  /// queue = The `Queue` to poll.
+  /// submissionIndex
   /// forceWait = Whether or not the call should block.
-  void poll(Flag!"forceWait" forceWait = No.forceWait) @trusted const {
+  /// Returns: `true` if the queue is empty, or `false` if there are more queue submissions still in flight.
+  bool poll(Queue queue, ulong submissionIndex, Flag!"forceWait" forceWait = No.forceWait) @trusted const {
     assert(id !is null);
-    wgpuDevicePoll(cast(WGPUDevice) id, forceWait);
+    auto wrappedSubmissionIndex = WGPUWrappedSubmissionIndex(queue.id, submissionIndex);
+    return wgpuDevicePoll(cast(WGPUDevice) id, forceWait, &wrappedSubmissionIndex);
   }
 
   /// Creates a shader module from SPIR-V source code.
@@ -607,7 +637,7 @@ class Device {
   ShaderModule createShaderModule(const byte[] spv) @trusted {
     // TODO: assert SPIR-V magic number is at the beginning of the stream
     // TODO: assert input is not longer than `size_t.max`
-    const ShaderModuleSPIRVDescriptor spirv = {
+    const ShaderModuleSpirvDescriptor spirv = {
       chain: WGPUChainedStruct(null, cast(WGPUSType) SType.shaderModuleSpirvDescriptor),
       codeSize: spv.length.to!uint,
       code: spv.to!(uint[]).ptr,
@@ -620,9 +650,9 @@ class Device {
   ///
   /// Shader modules are used to define programmable stages of a pipeline.
   ShaderModule createShaderModule(string wgsl) @trusted const {
-    const ShaderModuleWGSLDescriptor wgslDesc = {
+    const ShaderModuleWgslDescriptor wgslDesc = {
       chain: WGPUChainedStruct(null, cast(WGPUSType) SType.shaderModuleWgslDescriptor),
-      source: wgsl.toStringz,
+      code: wgsl.toStringz,
     };
     auto desc = ShaderModuleDescriptor(cast(ChainedStruct*) &wgslDesc.chain);
     assert(id !is null);
@@ -853,7 +883,8 @@ class Device {
   /// minFilter = How to filter the texture when it needs to be minified/made smaller.
   /// mipmapFilter = How to filter between mip map levels.
   Sampler createSampler(
-    AddressMode addressMode, FilterMode magFilter, FilterMode minFilter, FilterMode mipmapFilter = FilterMode.nearest
+    AddressMode addressMode, FilterMode magFilter, FilterMode minFilter,
+    MipmapFilterMode mipmapFilter = MipmapFilterMode.nearest
   ) {
     SamplerDescriptor desc = {
       addressModeU: addressMode,
@@ -1333,12 +1364,51 @@ class Texture {
       case TextureFormat.bc6hrgbFloat:
       case TextureFormat.bc7rgbaUnorm:
       case TextureFormat.bc7rgbaUnormSrgb:
+      case TextureFormat.etc2Rgb8Unorm:
+      case TextureFormat.etc2Rgb8UnormSrgb:
+      case TextureFormat.etc2Rgb8A1Unorm:
+      case TextureFormat.etc2Rgb8A1UnormSrgb:
+      case TextureFormat.etc2Rgba8Unorm:
+      case TextureFormat.etc2Rgba8UnormSrgb:
+      case TextureFormat.eacR11Unorm:
+      case TextureFormat.eacR11Snorm:
+      case TextureFormat.eacRg11Unorm:
+      case TextureFormat.eacRg11Snorm:
+      case TextureFormat.astc4x4Unorm:
+      case TextureFormat.astc4x4UnormSrgb:
+      case TextureFormat.astc5x4Unorm:
+      case TextureFormat.astc5x4UnormSrgb:
+      case TextureFormat.astc5x5Unorm:
+      case TextureFormat.astc5x5UnormSrgb:
+      case TextureFormat.astc6x5Unorm:
+      case TextureFormat.astc6x5UnormSrgb:
+      case TextureFormat.astc6x6Unorm:
+      case TextureFormat.astc6x6UnormSrgb:
+      case TextureFormat.astc8x5Unorm:
+      case TextureFormat.astc8x5UnormSrgb:
+      case TextureFormat.astc8x6Unorm:
+      case TextureFormat.astc8x6UnormSrgb:
+      case TextureFormat.astc8x8Unorm:
+      case TextureFormat.astc8x8UnormSrgb:
+      case TextureFormat.astc10x5Unorm:
+      case TextureFormat.astc10x5UnormSrgb:
+      case TextureFormat.astc10x6Unorm:
+      case TextureFormat.astc10x6UnormSrgb:
+      case TextureFormat.astc10x8Unorm:
+      case TextureFormat.astc10x8UnormSrgb:
+      case TextureFormat.astc10x10Unorm:
+      case TextureFormat.astc10x10UnormSrgb:
+      case TextureFormat.astc12x10Unorm:
+      case TextureFormat.astc12x10UnormSrgb:
+      case TextureFormat.astc12x12Unorm:
+      case TextureFormat.astc12x12UnormSrgb:
         // FIXME: Supply pixel compression ratios for these texture formats
         assert(0, "Unknown compression ratio of " ~ descriptor.format.stringof);
-      // QUESTION: Depth formats of _at least_ 24 bits, therefore there's no guarenteed block size?
+      // QUESTION: Depth formats of _at least_ 24 bits, therefore there's no guaranteed block size?
       case TextureFormat.undefined:
       case TextureFormat.depth16Unorm:
       case TextureFormat.depth32Float:
+      case TextureFormat.depth32FloatStencil8:
       case TextureFormat.depth24Plus:
       case TextureFormat.depth24PlusStencil8:
       case TextureFormat.force32:
@@ -1463,7 +1533,7 @@ struct TextureView {
 
   /// Release the handle to this texture view.
   void destroy() {
-    if (id !is null) wgpuTextureViewDrop(id);
+    if (id !is null) wgpuTextureViewRelease(id);
     id = null;
   }
 
@@ -1555,7 +1625,7 @@ struct ShaderModule {
 
   /// Release the handle to this shader.
   void destroy() {
-    if (id !is null) wgpuShaderModuleDrop(id);
+    if (id !is null) wgpuShaderModuleRelease(id);
     id = null;
   }
 }
@@ -1751,7 +1821,7 @@ class RenderPipeline {
 
   /// Release the given handle.
   void destroy() {
-    if (id !is null) wgpuRenderPipelineDrop(id);
+    if (id !is null) wgpuRenderPipelineRelease(id);
     id = null;
   }
 }
@@ -1826,7 +1896,7 @@ struct RenderPass {
 
   ///
   void end() {
-    wgpuRenderPassEncoderEndPass(instance);
+    wgpuRenderPassEncoderEnd(instance);
   }
 
   // TODO: void wgpuRenderPassEncoderBeginOcclusionQuery(WGPURenderPassEncoder renderPassEncoder, uint32_t queryIndex);
@@ -1965,7 +2035,7 @@ struct ComputePipeline {
 
   /// Release the given handle.
   void destroy() {
-    if (id !is null) wgpuComputePipelineDrop(id);
+    if (id !is null) wgpuComputePipelineRelease(id);
     id = null;
   }
 
@@ -1996,7 +2066,7 @@ struct ComputePass {
   ///
   /// x, y and z denote the number of work groups to dispatch in each dimension.
   void dispatch(const uint x, const uint y, const uint z) {
-    wgpuComputePassEncoderDispatch(instance, x, y, z);
+    wgpuComputePassEncoderDispatchWorkgroups(instance, x, y, z);
   }
 
   // TODO: void wgpuComputePassEncoderDispatchIndirect(WGPUComputePassEncoder computePassEncoder, WGPUBuffer indirectBuffer, uint64_t indirectOffset);

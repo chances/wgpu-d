@@ -50,7 +50,7 @@
       ],
       "postBuildCommands-osx": [
         "echo Fixing up libwgpu dylib path...",
-        "install_name_tool -change /Users/runner/work/wgpu-native/wgpu-native/target/x86_64-apple-darwin/debug/deps/libwgpu_native.dylib @executable_path/libwgpu.dylib bin/wgpu-d-test-unittest"
+        "install_name_tool -change /Users/runner/work/wgpu-native/wgpu-native/target/x86_64-apple-darwin/debug/deps/libwgpu_native.dylib @executable_path/libwgpu_native.dylib bin/wgpu-d-test-unittest"
       ]
     }
   ],
