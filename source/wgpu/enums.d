@@ -3,6 +3,8 @@
 /// License: MIT License
 module wgpu.enums;
 
+import std.typecons : BitFlags, Yes;
+
 import wgpu.bindings;
 
 ///
@@ -741,47 +743,53 @@ enum VertexStepMode : WGPUVertexStepMode {
 /// See_Also: <a href="https://docs.rs/wgpu/0.10.2/wgpu/struct.BufferUsages.html">wgpu::BufferUsages</a>
 enum BufferUsage : WGPUBufferUsage {
   ///
-  none,
+  none = WGPUBufferUsage_None,
   ///
-  mapRead,
+  mapRead = WGPUBufferUsage_MapRead,
   ///
-  mapWrite,
+  mapWrite = WGPUBufferUsage_MapWrite,
   ///
-  copySrc,
+  copySrc = WGPUBufferUsage_CopySrc,
   ///
-  copyDst,
+  copyDst = WGPUBufferUsage_CopyDst,
   ///
-  index,
+  index = WGPUBufferUsage_Index,
   ///
-  vertex,
+  vertex = WGPUBufferUsage_Vertex,
   ///
-  uniform,
+  uniform = WGPUBufferUsage_Uniform,
   ///
-  storage,
+  storage = WGPUBufferUsage_Storage,
   ///
-  indirect,
+  indirect = WGPUBufferUsage_Indirect,
   ///
-  queryResolve,
+  queryResolve = WGPUBufferUsage_QueryResolve,
   force32 = cast(WGPUBufferUsage) 0x7FFFFFFF
 }
+
+///
+alias BufferUsageFlags = BitFlags!(BufferUsage, Yes.unsafe);
 
 /// Mask which enables/disables writes to different color/alpha channel.
 /// Disabled color channels will not be written to.
 enum ColorWriteMask : WGPUColorWriteMask {
   ///
-  none,
+  none = WGPUColorWriteMask_None,
   ///
-  red,
+  red = WGPUColorWriteMask_Red,
   ///
-  green,
+  green = WGPUColorWriteMask_Green,
   ///
-  blue,
+  blue = WGPUColorWriteMask_Blue,
   ///
-  alpha,
+  alpha = WGPUColorWriteMask_Alpha,
   ///
-  all,
+  all = WGPUColorWriteMask_All,
   force32 = cast(WGPUColorWriteMask) 0x7FFFFFFF
 }
+
+///
+alias ColorWriteMaskFlags = BitFlags!(ColorWriteMask, Yes.unsafe);
 
 ///
 enum MapMode : WGPUMapMode {
@@ -804,15 +812,18 @@ enum MapMode : WGPUMapMode {
 /// See_Also: <a href="https://docs.rs/wgpu/0.10.2/wgpu/struct.ShaderStages.html">wgpu::ShaderStages</a>
 enum ShaderStage : WGPUShaderStage {
   ///
-  none,
+  none = WGPUShaderStage_None,
   ///
-  vertex,
+  vertex = WGPUShaderStage_Vertex,
   ///
-  fragment,
+  fragment = WGPUShaderStage_Fragment,
   ///
-  compute,
+  compute = WGPUShaderStage_Compute,
   force32 = cast(WGPUShaderStage) 0x7FFFFFFF
 }
+
+///
+alias ShaderStageFlags = BitFlags!(ShaderStage, Yes.unsafe);
 
 /// Different ways that you can use a texture.
 ///
@@ -822,19 +833,22 @@ enum ShaderStage : WGPUShaderStage {
 /// See_Also: <a href="https://docs.rs/wgpu/0.10.2/wgpu/struct.TextureUsages.html">wgpu::TextureUsages</a>
 enum TextureUsage : WGPUTextureUsage {
   ///
-  none,
+  none = WGPUTextureUsage_None,
   ///
-  copySrc,
+  copySrc = WGPUTextureUsage_CopySrc,
   ///
-  copyDst,
+  copyDst = WGPUTextureUsage_CopyDst,
   ///
-  textureBinding,
+  textureBinding = WGPUTextureUsage_TextureBinding,
   ///
-  storageBinding,
+  storageBinding = WGPUTextureUsage_StorageBinding,
   ///
-  renderAttachment,
+  renderAttachment = WGPUTextureUsage_RenderAttachment,
   force32 = cast(WGPUTextureUsage) 0x7FFFFFFF
 }
+
+///
+alias TextureUsageFlags = BitFlags!(TextureUsage, Yes.unsafe);
 
 import wgpu.api : BlendComponent, BlendState;
 
