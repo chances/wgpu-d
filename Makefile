@@ -30,15 +30,18 @@ endif
 ifndef LIB_WGPU_EXT
 $(error Unsupported target OS '$(OS)')
 endif
-LIB_WGPU_SOURCE := subprojects/wgpu/libwgpu.$(LIB_WGPU_EXT)
-LIB_WGPU := lib/libwgpu.$(LIB_WGPU_EXT)
-wgpu: $(LIB_WGPU)
+LIB_WGPU_SOURCE := subprojects/wgpu
+LIB_WGPU := lib/libwgpu_native
+wgpu: $(LIB_WGPU).a $(LIB_WGPU).$(LIB_WGPU_EXT)
 .PHONY: wgpu
 $(LIB_WGPU_SOURCE): subprojects/wgpu.Makefile
 	@make -C subprojects -f wgpu.Makefile
-$(LIB_WGPU): $(LIB_WGPU_SOURCE)
+$(LIB_WGPU).a: $(LIB_WGPU_SOURCE)/libwgpu_native.a
 	@mkdir -p lib
-	@cp $(LIB_WGPU_SOURCE) lib/.
+	@cp $(LIB_WGPU_SOURCE)/libwgpu_native.a lib/.
+$(LIB_WGPU).$(LIB_WGPU_EXT): $(LIB_WGPU_SOURCE)/libwgpu_native.$(LIB_WGPU_EXT)
+	@mkdir -p lib
+	@cp $(LIB_WGPU_SOURCE)/libwgpu_native.$(LIB_WGPU_EXT) lib/.
 
 #################################################
 # Examples

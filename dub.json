@@ -55,12 +55,12 @@
     }
   ],
   "libs": [
-    "wgpu"
+    "wgpu_native"
   ],
   "copyFiles-linux": [
-    "lib/libwgpu.so"
+    "lib/libwgpu_native.so"
   ],
   "copyFiles-osx": [
-    "lib/libwgpu.dylib"
+    "lib/libwgpu_native.dylib"
   ]
 }

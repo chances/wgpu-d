@@ -6,7 +6,7 @@
 
 D bindings to [wgpu-native](https://github.com/gfx-rs/wgpu-native) as an idiomatic wrapper around the library.
 
-Targets wgpu-native [`v0.10.4.1`](https://github.com/gfx-rs/wgpu-native/releases/tag/v0.10.4.1).
+Targets wgpu-native [`v0.17.0.2`](https://github.com/gfx-rs/wgpu-native/releases/tag/v0.17.0.2).
 
 ## Usage
 
