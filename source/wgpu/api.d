@@ -396,25 +396,33 @@ class FragmentState {
 extern (C) private void wgpu_request_adapter_callback(
   WGPURequestAdapterStatus status, WGPUAdapter id, const char* message, void* data
 ) {
-  assert(status == RequestAdapterStatus.success.asOriginalType);
-  assert(data !is null);
+  debug import std.stdio : write;
+
+  assert(data !is null, "No adapter handle!");
   auto adapter = cast(Adapter*) data;
+  adapter.status = cast(RequestAdapterStatus) status;
+  // TODO: Use the user-registered wgpu logging method instead
+  debug if (message !is null) message.fromStringz.to!string.write;
+
+  if (status != RequestAdapterStatus.success.asOriginalType) return;
   assert(id !is null);
   adapter.id = id;
-  debug import std.stdio : writeln;
-  debug if (message !is null) message.fromStringz.to!string.writeln;
 }
 
 extern (C) private void wgpu_request_device_callback(
   WGPURequestDeviceStatus status, WGPUDevice id, const char* message, void* data
 ) {
-  assert(status == RequestDeviceStatus.success.asOriginalType);
-  assert(data !is null);
+  debug import std.stdio : write;
+
+  assert(data !is null, "No device handle!");
   auto device = cast(Device) data;
+  device.status = cast(RequestDeviceStatus) status;
+  // TODO: Use the user-registered wgpu logging method instead
+  debug if (message !is null) message.fromStringz.to!string.write;
+
+  if (status != RequestDeviceStatus.success.asOriginalType) return;
   assert(id !is null);
   device.id = id;
-  debug import std.stdio : writeln;
-  debug if (message !is null) message.fromStringz.to!string.writeln;
 }
 
 /// Context for all other wgpu objects. Instance of wgpu.
@@ -432,11 +440,18 @@ struct Instance {
     this.id = id;
   }
 
+  /// Release the given handle.
+  void destroy() {
+    if (id !is null) wgpuInstanceRelease(id);
+    id = null;
+  }
+
   /// Create a new instance of wgpu.
-  static Instance create() {
-    assert(0, "Unimplemented in wgpu-native!");
-    // auto desc = InstanceDescriptor();
-    // return Instance(wgpuCreateInstance(&desc));
+  /// Params:
+  /// backands = Controls from which backends wgpu will choose during instantiation.
+  static Instance create(BackendType backends = BackendType.primary) {
+    auto desc = InstanceDescriptor();
+    return Instance(wgpuCreateInstance(&desc));
   }
 
   /// Retrieves all available `Adapter`s that match the given `Backends`.
@@ -455,9 +470,9 @@ struct Instance {
   ///
   /// Remarks:
   /// Use `Adapter.ready` to determine whether an Adapter was successfully requested.
-  static Adapter requestAdapter(
-    PowerPreference powerPreference = PowerPreference.highPerformance,
-    BackendType backendType = BackendType._null,
+  Adapter requestAdapter(
+    PowerPreference powerPreference = PowerPreference.undefined,
+    BackendType backendType = BackendType.primary,
     Flag!"forceFallbackAdapter" forceFallbackAdapter = No.forceFallbackAdapter
   ) {
     return requestAdapter(
@@ -465,9 +480,9 @@ struct Instance {
     );
   }
   /// ditto
-  static Adapter requestAdapter(
-    const Surface compatibleSurface, PowerPreference powerPreference = PowerPreference.highPerformance,
-    BackendType backendType = BackendType._null,
+  Adapter requestAdapter(
+    const Surface compatibleSurface, PowerPreference powerPreference = PowerPreference.undefined,
+    BackendType backendType = BackendType.primary,
     Flag!"forceFallbackAdapter" forceFallbackAdapter = No.forceFallbackAdapter
   ) @trusted {
     assert(compatibleSurface.id !is null, "Given compatible surface is not valid");
@@ -476,10 +491,9 @@ struct Instance {
     ));
   }
   /// ditto
-  static Adapter requestAdapter(RequestAdapterOptions options) @trusted {
+  Adapter requestAdapter(RequestAdapterOptions options) @trusted {
     Adapter adapter;
-    wgpuInstanceRequestAdapter(null, &options, &wgpu_request_adapter_callback, &adapter);
-    assert(adapter.ready);
+    wgpuInstanceRequestAdapter(this.id, &options, &wgpu_request_adapter_callback, &adapter);
     return adapter;
   }
 }
@@ -492,6 +506,8 @@ struct Adapter {
 
   /// Handle identifier.
   WGPUAdapter id;
+  ///
+  RequestAdapterStatus status = RequestAdapterStatus.unknown;
 
   /// Whether this Adapter handle has finished being requested and is ready for use.
   bool ready() @property const {
@@ -570,6 +586,8 @@ struct Adapter {
 /// See_Also: <a href="https://docs.rs/wgpu/0.10.2/wgpu/struct.Device.html">wgpu::Device</a>
 class Device {
   package WGPUDevice id;
+  ///
+  RequestDeviceStatus status = RequestDeviceStatus.unknown;
   /// Label for this Device.
   string label;
 
