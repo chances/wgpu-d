@@ -305,7 +305,7 @@ auto bindDelegate(Func, string file = __FILE__, size_t line = __LINE__)(Func f) 
 }
 
 version (Windows) {
-  import core.sys.windows.windows : GetModuleHandleA, HWND;
+  import core.sys.windows.windows : HWND;
   // FIXME: What's wrong with https://github.com/BindBC/bindbc-glfw/blob/6529ce4f67f69839a93de5e0bbe1150fab30d633/source/bindbc/glfw/bindstatic.d#L172
   extern(C) @nogc nothrow HWND glfwGetWin32Window(GLFWwindow* window);
 }
