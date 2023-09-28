@@ -104,6 +104,47 @@ alias InstanceDescriptor = WGPUInstanceDescriptor;
 ///   $(LI <a href="https://docs.rs/wgpu/0.10.2/wgpu/struct.Limits.html">wgpu::Limits</a> )
 /// )
 alias Limits = WGPULimits;
+
+string toString(Limits limits) {
+  import std.algorithm : joiner;
+  import std.array : array;
+  import std.format : format;
+
+  return [
+    "max texture dimension 1D: %u".format(limits.maxTextureDimension1D),
+    "max texture dimension 2D: %u".format(limits.maxTextureDimension2D),
+    "max texture dimension 3D: %u".format(limits.maxTextureDimension3D),
+    "max texture array layers: %u".format(limits.maxTextureArrayLayers),
+    "max bind groups: %u".format(limits.maxBindGroups),
+    "max bindings per bind group: %u".format(limits.maxBindingsPerBindGroup),
+    "max dynamic uniform buffers per pipeline layout: %u".format(limits.maxDynamicUniformBuffersPerPipelineLayout),
+    "max dynamic storage buffers per pipeline layout: %u".format(limits.maxDynamicStorageBuffersPerPipelineLayout),
+    "max sampled textures per shader stage: %u".format(limits.maxSampledTexturesPerShaderStage),
+    "max samplers per shader stage: %u".format(limits.maxSamplersPerShaderStage),
+    "max storage buffers per shader stage: %u".format(limits.maxStorageBuffersPerShaderStage),
+    "max storage textures per shader stage: %u".format(limits.maxStorageTexturesPerShaderStage),
+    "max uniform buffers per shader stage: %u".format(limits.maxUniformBuffersPerShaderStage),
+    "max uniform buffer binding size: %u bytes".format(limits.maxUniformBufferBindingSize),
+    "max storage buffer binding size: %u bytes".format(limits.maxStorageBufferBindingSize),
+    "min uniform buffer offset alignment: %u bytes".format(limits.minUniformBufferOffsetAlignment),
+    "min storage buffer offset alignment: %u bytes".format(limits.minStorageBufferOffsetAlignment),
+    "max vertex buffers: %u".format(limits.maxVertexBuffers),
+    "max buffer size: %u bytes".format(limits.maxBufferSize),
+    "max vertex attributes: %u".format(limits.maxVertexAttributes),
+    "max vertex buffer array stride: %u bytes".format(limits.maxVertexBufferArrayStride),
+    "max inter stage shader components: %u".format(limits.maxInterStageShaderComponents),
+    "max inter stage shader variables: %u".format(limits.maxInterStageShaderVariables),
+    "max color attachments: %u".format(limits.maxColorAttachments),
+    "max color attachment bytes per sample: %u".format(limits.maxColorAttachmentBytesPerSample),
+    "max compute workgroup storage size: %u bytes".format(limits.maxComputeWorkgroupStorageSize),
+    "max compute invocations per workgroup: %u".format(limits.maxComputeInvocationsPerWorkgroup),
+    "max compute workgroup size x: %u".format(limits.maxComputeWorkgroupSizeX),
+    "max compute workgroup size y: %u".format(limits.maxComputeWorkgroupSizeY),
+    "max compute workgroup size z: %u".format(limits.maxComputeWorkgroupSizeZ),
+    "max compute workgroups per dimension: %u".format(limits.maxComputeWorkgroupsPerDimension),
+  ].joiner("\n").array.to!string;
+}
+
 /// Origin of a copy to/from a texture.
 alias Origin3d = WGPUOrigin3D;
 /// Describes a `PipelineLayout`.
@@ -461,21 +502,29 @@ struct Instance {
     return Instance(wgpuCreateInstance(&desc));
   }
 
+  ///
+  auto @property report() {
+    WGPUGlobalReport report;
+    wgpuGenerateReport(this.id, &report);
+    return report;
+  }
+
   /// Retrieves all available `Adapter`s that match the given `Backends`.
   ///
   /// Params:
   /// backends = Backends from which to enumerate adapters.
   /// See_Also: <a href="https://docs.rs/wgpu/latest/wgpu/struct.Instance.html#method.enumerate_adapters">wgpu::Instance.enumerate_adapters</a>
-  @property Adapter[] adapters(BackendType backends = BackendType.primary) {
+  @property Adapter[] adapters(InstanceBackend backends = InstanceBackend.all) {
     import std.algorithm : map;
     import std.array : array;
 
     assert(backends >= 0);
     auto options = WGPUInstanceEnumerateAdapterOptions(null, backends);
-    WGPUAdapter* adaptersPtr = null;
-    size_t count = wgpuInstanceEnumerateAdapters(this.id, &options, adaptersPtr);
-    if (adaptersPtr == null) return [];
-    return adaptersPtr[0 .. count].map!(x => (cast(Adapter) x)).array;
+
+    size_t count = wgpuInstanceEnumerateAdapters(this.id, &options, null);
+    auto adapters = new WGPUAdapter[count];
+    wgpuInstanceEnumerateAdapters(this.id, &options, cast(WGPUAdapter*) adapters.ptr);
+    return adapters.map!(id => Adapter(id)).array;
   }
 
   /// Retrieves a new Adapter, asynchronously.

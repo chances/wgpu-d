@@ -1,0 +1,15 @@
+.dub
+docs.json
+__dummy.html
+docs/
+/headless
+headless.so
+headless.dylib
+headless.dll
+headless.a
+headless.lib
+headless-test-*
+*.exe
+*.o
+*.obj
+*.lst
