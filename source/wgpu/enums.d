@@ -31,24 +31,35 @@ enum AddressMode : WGPUAddressMode {
   force32 = cast(WGPUAddressMode) 0x7FFFFFFF
 }
 
-///
+/// Represents the graphics backends that wgpu can use.
+/// See_Also: <a href="https://docs.rs/wgpu/0.10.2/wgpu/struct.Backends.html">wgpu::Backends</a>
 enum BackendType : WGPUBackendType {
   ///
-  _null,
+  undefined = WGPUBackendType_Undefined,
   ///
-  webGPU,
+  _null = WGPUBackendType_Null,
   ///
-  d3d11,
+  webGPU = WGPUBackendType_WebGPU,
   ///
-  d3d12,
+  d3d11 = WGPUBackendType_D3D11,
   ///
-  metal,
+  d3d12 = WGPUBackendType_D3D12,
   ///
-  vulkan,
+  metal = WGPUBackendType_Metal,
   ///
-  openGL,
+  vulkan = WGPUBackendType_Vulkan,
   ///
-  openGLES,
+  openGL = WGPUBackendType_OpenGL,
+  ///
+  openGLES = WGPUBackendType_OpenGLES,
+  /// All the graphics APIs that for which wgpu offers first tier support.
+  ///
+  /// Vulkan, Metal, DirectX 12, and Browser WebGPU
+  primary = cast(WGPUBackendType) (BackendType.vulkan | BackendType.metal | BackendType.d3d12 | BackendType.webGPU),
+  /// All the graphics APIs that for which wgpu offers second tier support.
+  ///
+  /// That is, OpenGL and DirectX 11. These may be unsupported or are still experimental.
+  secondary = cast(WGPUBackendType) (BackendType.openGL | BackendType.openGLES | BackendType.d3d11),
   force32 = cast(WGPUBackendType) 0x7FFFFFFF
 }
 
@@ -315,6 +326,8 @@ enum PipelineStatisticName : WGPUPipelineStatisticName {
 
 ///
 enum PowerPreference : WGPUPowerPreference {
+  ///
+  undefined,
   ///
   lowPower,
   ///
