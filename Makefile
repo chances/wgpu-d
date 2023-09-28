@@ -38,13 +38,13 @@ ifndef LIB_WGPU
   $(error Unsupported target OS '$(OS)')
 endif
 LIB_WGPU_SOURCE := subprojects/wgpu
-wgpu: $(LIB_WGPU_SOURCE) lib/$(LIB_WGPU)
+wgpu: lib/$(LIB_WGPU)
 .PHONY: wgpu
-$(LIB_WGPU_SOURCE): subprojects/wgpu.Makefile
+$(LIB_WGPU_SOURCE)/$(LIB_WGPU): subprojects/wgpu.Makefile
 	@make -C subprojects -f wgpu.Makefile
 ifneq ($(OS),Windows_NT)
-wgpu: $(LIB_WGPU).a
-$(LIB_WGPU).a: $(LIB_WGPU_SOURCE)/libwgpu_native.a
+wgpu: lib/libwgpu_native.a
+lib/libwgpu_native.a: $(LIB_WGPU_SOURCE)/libwgpu_native.a
 	@mkdir -p lib
 	@cp $(LIB_WGPU_SOURCE)/libwgpu_native.a lib/.
 endif
