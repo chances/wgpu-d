@@ -413,7 +413,7 @@ enum SType : WGPUSType {
   ///
   surfaceDescriptorFromMetalLayer,
   ///
-  surfaceDescriptorFromWindowsHWND,
+  surfaceDescriptorFromWindowsHwnd,
   ///
   surfaceDescriptorFromXlib,
   ///

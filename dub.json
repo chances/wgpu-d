@@ -24,8 +24,8 @@
 	},
   "systemDependencies-linux": "vulkan >= 1.1.0, patchelf",
   "systemDependencies-osx": "metal >= 2",
-  "systemDependencies-windows": "DirectX >= 11",
-  "preGenerateCommands-posix": [
+  "systemDependencies-windows": "vulkan >= 1.1.0 or DirectX >= 11",
+  "preGenerateCommands": [
     "make wgpu"
   ],
   "dflags": [
@@ -34,16 +34,10 @@
   ],
   "configurations": [
     {
-      "name": "library",
-      "lflags-posix": [
-        "-L$PACKAGE_DIR/lib"
-      ]
+      "name": "library"
     },
     {
       "name": "unittest",
-      "lflags-posix": [
-        "-Llib"
-      ],
       "postBuildCommands-linux": [
         "echo Fixing up libwgpu so path...",
         "patchelf --set-rpath '$$ORIGIN' bin/wgpu-d-test-unittest"
@@ -54,13 +48,25 @@
       ]
     }
   ],
-  "libs": [
-    "wgpu_native"
+  "lflags-posix": ["-L$WGPU_D_PACKAGE_DIR/lib"],
+  "lflags-windows": ["/LIBPATH:$WGPU_D_PACKAGE_DIR/subprojects/wgpu"],
+  "libs": ["wgpu_native"],
+  "libs-windows": [
+    "d3dcompiler",
+    "ws2_32",
+    "advapi32",
+    "user32",
+    "userenv",
+    "bcrypt",
+    "ntdll"
   ],
   "copyFiles-linux": [
     "lib/libwgpu_native.so"
   ],
   "copyFiles-osx": [
     "lib/libwgpu_native.dylib"
+  ],
+  "copyFiles-windows": [
+    "lib/wgpu_native.dll"
   ]
 }

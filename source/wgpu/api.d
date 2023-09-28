@@ -148,13 +148,13 @@ alias SurfaceDescriptor = WGPUSurfaceDescriptor;
 ///
 alias SurfaceDescriptorFromAndroidNativeWindow = WGPUSurfaceDescriptorFromAndroidNativeWindow;
 ///
-alias SurfaceDescriptorFromCanvasHTMLSelector = WGPUSurfaceDescriptorFromCanvasHTMLSelector;
+alias SurfaceDescriptorFromCanvasHtmlSelector = WGPUSurfaceDescriptorFromCanvasHTMLSelector;
 ///
 alias SurfaceDescriptorFromMetalLayer = WGPUSurfaceDescriptorFromMetalLayer;
 ///
 alias SurfaceDescriptorFromWaylandSurface = WGPUSurfaceDescriptorFromWaylandSurface;
 ///
-alias SurfaceDescriptorFromWindowsHWND = WGPUSurfaceDescriptorFromWindowsHWND;
+alias SurfaceDescriptorFromWindowsHwnd = WGPUSurfaceDescriptorFromWindowsHWND;
 ///
 alias SurfaceDescriptorFromXcbWindow = WGPUSurfaceDescriptorFromXcbWindow;
 ///
