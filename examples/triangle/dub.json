@@ -33,6 +33,7 @@
   "libs-linux": [
     "X11"
   ],
+  "libs-windows": ["gdi32"],
   "lflags-posix": ["-L$PACKAGE_DIR/subprojects/glfw/src"],
   "lflags-osx": [
     "-framework", "AppKit",

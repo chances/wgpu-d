@@ -63,6 +63,8 @@ void main() {
   import std.string : toStringz;
   import std.typecons : Yes;
 
+  // Create GLFW window
+
   const title = "Triangle Example";
   title.writeln;
 
@@ -82,6 +84,11 @@ void main() {
   assert(window !is null, "Could not create window:\n\t" ~ lastError);
   glfwSetWindowSizeLimits(window, 640, 480, GLFW_DONT_CARE, GLFW_DONT_CARE);
 
+  // Create WebGPU resources
+
+  auto instance = Instance.create();
+  assert(instance.id, "Could not create WebGPU instance.");
+
   Surface surface;
   version (OSX) {
     import std.exception : enforce;
@@ -90,20 +97,24 @@ void main() {
     auto metalLayer = CAMetalLayer.classOf.layer;
     nativeWindow.contentView.wantsLayer = true;
     nativeWindow.contentView.layer = metalLayer;
-    surface = Surface.fromMetalLayer(metalLayer.asId);
+    surface = Surface.fromMetalLayer(instance, metalLayer.asId);
+  } else {
+    version (Linux) surface = Surface.fromXlib(instance, glfwGetX11Display().enforce, glfwGetX11Window(window).enforce);
+    else {
+      version (Windows) {
+        import core.sys.windows.windows : GetModuleHandleA;
+        surface = Surface.fromWindowsHwnd(instance, GetModuleHandleA(null), glfwGetWin32Window(window));
+      }
+      else static assert(0, "Unsupported target platform");
+    }
   }
-  else version (Linux) surface = Surface.fromXlib(assert(glfwGetX11Display()), assert(glfwGetX11Window(window)));
-  // TODO: Integrate with Windows platform, i.e. Surface.fromWindowsHwnd
-  else static assert(0, "Unsupported target platform");
   assert(surface.id !is null, "Could not create native surface");
 
-  auto adapter = Instance.requestAdapter(surface, PowerPreference.lowPower);
+  auto adapter = instance.requestAdapter(surface, PowerPreference.lowPower);
   assert(adapter.ready, "Adapter instance was not initialized");
-  writefln("Adapter properties: %s", adapter.properties);
 
   auto device = adapter.requestDevice(adapter.limits);
   assert(device.ready, "Device is not ready");
-  writefln("Device limits: %s", device.limits);
 
   auto swapChainFormat = surface.preferredFormat(adapter);
   auto swapChain = device.createSwapChain(

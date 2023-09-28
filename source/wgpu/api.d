@@ -1023,15 +1023,6 @@ struct Surface {
 
   version (OSX) {
     /// Create a new `Surface` from a Metal layer.
-    static Surface fromMetalLayer(void* layer, string label = null) {
-      auto metalLayer = SurfaceDescriptorFromMetalLayer(
-        ChainedStruct(null, cast(WGPUSType) SType.surfaceDescriptorFromMetalLayer.asOriginalType),
-        layer
-      );
-      auto desc = SurfaceDescriptor(cast(ChainedStruct*) &metalLayer, label is null ? null : label.toStringz);
-      return Surface(wgpuInstanceCreateSurface(null, &desc));
-    }
-    /// ditto
     static Surface fromMetalLayer(Instance instance, void* layer, string label = null) {
       auto metalLayer = SurfaceDescriptorFromMetalLayer(
         ChainedStruct(null, cast(WGPUSType) SType.surfaceDescriptorFromMetalLayer.asOriginalType),
@@ -1042,21 +1033,10 @@ struct Surface {
     }
   } else version (D_Ddoc) {
     /// Create a new `Surface` from a Metal layer.
-    static Surface fromMetalLayer(void* layer, string label = null);
-    /// ditto
     static Surface fromMetalLayer(Instance instance, void* layer, string label = null);
   }
   version (Windows) {
     /// Create a new `Surface` from a Windows window handle.
-    static Surface fromWindowsHwnd(void* _hinstance, void* hwnd, string label = null) {
-      auto windowsHwnd = SurfaceDescriptorFromWindowsHwnd(
-        ChainedStruct(null, cast(WGPUSType) SType.surfaceDescriptorFromWindowsHwnd.asOriginalType),
-        _hinstance, hwnd
-      );
-      auto desc = SurfaceDescriptor(cast(ChainedStruct*) &windowsHwnd, label is null ? null : label.toStringz);
-      return Surface(wgpuInstanceCreateSurface(null, &desc));
-    }
-    /// ditto
     static Surface fromWindowsHwnd(Instance instance, void* _hinstance, void* hwnd, string label = null) {
       auto windowsHwnd = SurfaceDescriptorFromWindowsHwnd(
         ChainedStruct(null, cast(WGPUSType) SType.surfaceDescriptorFromWindowsHwnd.asOriginalType),
@@ -1067,21 +1047,10 @@ struct Surface {
     }
   } else version (D_Ddoc) {
     /// Create a new `Surface` from a Windows window handle.
-    static Surface fromWindowsHwnd(void* _hinstance, void* hwnd, string label = null);
-    /// ditto
     static Surface fromWindowsHwnd(Instance instance, void* _hinstance, void* hwnd, string label = null);
   }
   version (linux) {
     /// Create a new `Surface` from a Xlib window handle.
-    static Surface fromXlib(void* display, uint window, string label = null) {
-      auto xlib = SurfaceDescriptorFromXlib(
-        ChainedStruct(null, cast(WGPUSType) SType.surfaceDescriptorFromXlib.asOriginalType),
-        display, window
-      );
-      auto desc = SurfaceDescriptor(cast(ChainedStruct*) &xlib, label is null ? null : label.toStringz);
-      return Surface(wgpuInstanceCreateSurface(null, &desc));
-    }
-    /// ditto
     static Surface fromXlib(Instance instance, void* display, uint window, string label = null) {
       auto xlib = SurfaceDescriptorFromXlib(
         ChainedStruct(null, cast(WGPUSType) SType.surfaceDescriptorFromXlib.asOriginalType),
@@ -1091,9 +1060,6 @@ struct Surface {
       return Surface(wgpuInstanceCreateSurface(instance.id, &desc));
     }
   } else version (D_Ddoc) {
-    /// Create a new `Surface` from a Xlib window handle.
-    static Surface fromXlib(void* display, uint window, string label = null);
-    /// ditto
     static Surface fromXlib(Instance instance, void* display, uint window, string label = null);
   }
   // TODO: Support Wayland with a `linux-wayland` version config once upstream wgpu-native supports it
