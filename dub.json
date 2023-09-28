@@ -60,14 +60,5 @@
     "userenv",
     "bcrypt",
     "ntdll"
-  ],
-  "copyFiles-linux": [
-    "lib/libwgpu_native.so"
-  ],
-  "copyFiles-osx": [
-    "lib/libwgpu_native.dylib"
-  ],
-  "copyFiles-windows": [
-    "lib/wgpu_native.dll"
   ]
 }

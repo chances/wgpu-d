@@ -18,20 +18,21 @@ ifeq ($(OS),Windows_NT)
 endif
 ARCH ?= $(shell uname -m)
 
+# wgpu-native binaries ships with static libraries 🎉
 ifeq ($(OS),Darwin)
-	RELEASE := macos
-	LIB_WGPU := libwgpu_native.dylib
+  RELEASE := macos
+  LIB_WGPU := libwgpu_native.a
 endif
 ifeq ($(OS),Linux)
-	RELEASE := linux
-	LIB_WGPU := libwgpu_native.so
+  RELEASE := linux
+  LIB_WGPU := libwgpu_native.a
 endif
 ifeq ($(OS),Windows_NT)
-	RELEASE := windows
-	LIB_WGPU := wgpu_native.dll
+  RELEASE := windows
+  LIB_WGPU := wgpu_native.lib
 endif
 ifndef RELEASE
-	$(error Unsupported WebGPU target OS: $(OS))
+  $(error Unsupported WebGPU target OS: $(OS))
 endif
 
 CONFIG ?= debug

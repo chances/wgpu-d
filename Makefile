@@ -25,14 +25,15 @@ all: docs
 #################################################
 # Subprojects
 #################################################
+# wgpu-native binaries ships with static libraries 🎉
 ifeq ($(OS),Darwin)
-  LIB_WGPU := libwgpu_native.dylib
+  LIB_WGPU := libwgpu_native.a
 endif
 ifeq ($(OS),Linux)
-  LIB_WGPU := libwgpu_native.so
+  LIB_WGPU := libwgpu_native.a
 endif
 ifeq ($(OS),Windows_NT)
-  LIB_WGPU := wgpu_native.dll
+  LIB_WGPU := wgpu_native.lib
 endif
 ifndef LIB_WGPU
   $(error Unsupported target OS '$(OS)')
@@ -40,15 +41,9 @@ endif
 LIB_WGPU_SOURCE := subprojects/wgpu
 wgpu: lib/$(LIB_WGPU)
 .PHONY: wgpu
-$(LIB_WGPU_SOURCE)/$(LIB_WGPU): subprojects/wgpu.Makefile
+$(LIB_WGPU_SOURCE): subprojects/wgpu.Makefile
 	@make -C subprojects -f wgpu.Makefile
-ifneq ($(OS),Windows_NT)
-wgpu: lib/libwgpu_native.a
-lib/libwgpu_native.a: $(LIB_WGPU_SOURCE)/libwgpu_native.a
-	@mkdir -p lib
-	@cp $(LIB_WGPU_SOURCE)/libwgpu_native.a lib/.
-endif
-lib/$(LIB_WGPU): $(LIB_WGPU_SOURCE)/$(LIB_WGPU)
+lib/$(LIB_WGPU): $(LIB_WGPU_SOURCE)
 ifeq ($(OS),Windows_NT)
 	@if not exist lib mkdir lib
 	@xcopy $(subst /,\\,$(LIB_WGPU_SOURCE))\\$(LIB_WGPU) lib /y >NUL
