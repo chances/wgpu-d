@@ -31,6 +31,31 @@ enum AddressMode : WGPUAddressMode {
   force32 = cast(WGPUAddressMode) 0x7FFFFFFF
 }
 
+///
+enum InstanceBackend : WGPUInstanceBackend {
+  ///
+  vulkan = WGPUInstanceBackend_Vulkan,
+  ///
+  gl = WGPUInstanceBackend_GL,
+  ///
+  metal = WGPUInstanceBackend_Metal,
+  ///
+  dx12 = WGPUInstanceBackend_DX12,
+  ///
+  dx11 = WGPUInstanceBackend_DX11,
+  ///
+  browserWebGPU = WGPUInstanceBackend_BrowserWebGPU,
+  ///
+  primary = WGPUInstanceBackend_Primary,
+  ///
+  secondary = WGPUInstanceBackend_Secondary,
+  ///
+  all = WGPUInstanceBackend_Force32,
+  ///
+  none = WGPUInstanceBackend_None,
+  force32 = cast(WGPUInstanceBackend) 0x7FFFFFFF
+}
+
 /// Represents the graphics backends that wgpu can use.
 /// See_Also: <a href="https://docs.rs/wgpu/0.10.2/wgpu/struct.Backends.html">wgpu::Backends</a>
 enum BackendType : WGPUBackendType {
@@ -303,6 +328,8 @@ enum IndexFormat : WGPUIndexFormat {
 ///
 enum LoadOp : WGPULoadOp {
   ///
+  undefined,
+  ///
   clear,
   ///
   load,
@@ -485,6 +512,8 @@ enum StorageTextureAccess : WGPUStorageTextureAccess {
 
 ///
 enum StoreOp : WGPUStoreOp {
+  ///
+  undefined,
   ///
   store,
   ///

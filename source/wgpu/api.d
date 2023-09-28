@@ -448,9 +448,16 @@ struct Instance {
 
   /// Create a new instance of wgpu.
   /// Params:
-  /// backands = Controls from which backends wgpu will choose during instantiation.
-  static Instance create(BackendType backends = BackendType.primary) {
-    auto desc = InstanceDescriptor();
+  /// backends = Controls from which backends wgpu will choose during instantiation.
+  static Instance create(InstanceBackend backends = InstanceBackend.primary) {
+    const WGPUInstanceExtras extras = {
+      chain: WGPUChainedStruct(null, cast(WGPUSType) WGPUNativeSType.WGPUSType_InstanceExtras),
+      backends: backends,
+      // TODO: WGPUDx12Compiler dx12ShaderCompiler,
+      // TODO: const char * dxilPath,
+      // TODO: const char * dxcPath,
+    };
+    auto desc = InstanceDescriptor(cast(ChainedStruct*) &extras);
     return Instance(wgpuCreateInstance(&desc));
   }
 
@@ -479,7 +486,7 @@ struct Instance {
   /// Use `Adapter.ready` to determine whether an Adapter was successfully requested.
   Adapter requestAdapter(
     PowerPreference powerPreference = PowerPreference.undefined,
-    BackendType backendType = BackendType.primary,
+    BackendType backendType = BackendType.undefined,
     Flag!"forceFallbackAdapter" forceFallbackAdapter = No.forceFallbackAdapter
   ) {
     return requestAdapter(
@@ -489,7 +496,7 @@ struct Instance {
   /// ditto
   Adapter requestAdapter(
     const Surface compatibleSurface, PowerPreference powerPreference = PowerPreference.undefined,
-    BackendType backendType = BackendType.primary,
+    BackendType backendType = BackendType.undefined,
     Flag!"forceFallbackAdapter" forceFallbackAdapter = No.forceFallbackAdapter
   ) @trusted {
     assert(compatibleSurface.id !is null, "Given compatible surface is not valid");
@@ -1493,7 +1500,8 @@ class Texture {
       null,
       0, // Offset
       paddedBytesPerRow,
-      size.depthOrArrayLayers == 1 ? 0 : rowsPerImage,
+      // FIXME: Make sure this is corect
+      size.depthOrArrayLayers * rowsPerImage,
     );
   }
 
@@ -1521,6 +1529,10 @@ class Texture {
     TextureViewDescriptor desc = {
       label: descriptor.label,
       format: descriptor.format,
+      baseMipLevel: 0,
+      mipLevelCount: descriptor.mipLevelCount,
+      baseArrayLayer: 0,
+      arrayLayerCount: size.depthOrArrayLayers,
       dimension: dimension.viewDimension(size.depthOrArrayLayers),
       aspect: TextureAspect.all,
     };
