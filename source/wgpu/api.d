@@ -1060,6 +1060,7 @@ struct Surface {
       return Surface(wgpuInstanceCreateSurface(instance.id, &desc));
     }
   } else version (D_Ddoc) {
+    /// Create a new `Surface` from a Xlib window handle.
     static Surface fromXlib(Instance instance, void* display, uint window, string label = null);
   }
   // TODO: Support Wayland with a `linux-wayland` version config once upstream wgpu-native supports it
