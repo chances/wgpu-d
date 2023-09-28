@@ -19,7 +19,7 @@
   "subConfigurations": {
     "bindbc-glfw": "static"
   },
-  "preGenerateCommands-posix": [
+  "preGenerateCommands": [
     "make -C subprojects -f glfw.Makefile"
   ],
   "preBuildCommands-osx": [
@@ -38,5 +38,6 @@
     "-framework", "AppKit",
     "-framework", "Metal",
     "-framework", "QuartzCore"
-  ]
+  ],
+  "lflags-windows": ["/LIBPATH:$PACKAGE_DIR/subprojects/glfw/src"]
 }
