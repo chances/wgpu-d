@@ -21,39 +21,36 @@ extern(C) void wgpu_glfw_error_callback(int error, const char* description) noth
 }
 
 enum string triangleShader = `@vertex
-fn vs_main(@builtin(vertex_index) in_vertex_index: u32) -> @builtin(position) vec4<f32> {
+fn vs_main(@builtin(vertex_index) in_vertex_index: u32) -> @builtin(position) vec4f {
   let x = f32(i32(in_vertex_index) - 1);
   let y = f32(i32(in_vertex_index & 1u) * 2 - 1);
-  return vec4<f32>(x, y, 0.0, 1.0);
+  return vec4f(x, y, 0.0, 1.0);
 }
 
 @fragment
-fn fs_main() -> @location(0) vec4<f32> {
-  return vec4<f32>(1.0, 0.0, 0.0, 1.0);
+fn fs_main() -> @location(0) vec4f {
+  return vec4f(1.0, 0.0, 0.0, 1.0);
 }`;
 enum string fullScreenQuadShader = `struct VertexOutput {
-  @builtin(position) clip_position: vec4<f32>;
-  @location(0) tex_coords: vec2<f32>;
+  @builtin(position) clip_position: vec4f;
+  @location(0) tex_coords: vec2f;
 };
 
 @vertex
 fn vs_main(@builtin(vertex_index) in_vertex_index: u32) -> VertexOutput {
-  var out: VertexOutput;
   let x = f32(i32(in_vertex_index) - 1);
   let y = f32(i32(in_vertex_index & 1u) * 2 - 1);
-  out.clip_position = vec4<f32>(x, y, 0.0, 1.0);
-  out.tex_coords = vec2<f32>(x, y);
-  return out;
+  return VertexOutput(vec4f(x, y, 0.0, 1.0), vec2f(x, y));
 }
 
 @group(0) @binding(0)
-var t_diffuse: texture_2d<f32>;
+var diffuse: texture_2d<f32>;
 @group(0) @binding(1)
-var s_diffuse: sampler;
+var diffuseSampler: sampler;
 
 @fragment
-fn fs_main(in: VertexOutput) -> @location(0) vec4<f32> {
-  return textureSample(t_diffuse, s_diffuse, in.tex_coords);
+fn fs_main(in: VertexOutput) -> @location(0) vec4f {
+  return textureSample(diffuse, diffuseSampler, in.tex_coords);
 }`;
 
 // Adapted from https://github.com/gfx-rs/wgpu-native/blob/v0.10.4.1/examples/triangle/main.c
