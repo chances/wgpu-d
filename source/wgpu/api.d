@@ -621,6 +621,15 @@ class Device {
 
   /// Check for resource cleanups and mapping callbacks.
   /// Params:
+  /// forceWait = Whether or not the call should block.
+  /// Returns: `true` if the queue is empty, or `false` if there are more queue submissions still in flight.
+  bool poll(Flag!"forceWait" forceWait = No.forceWait) @trusted const {
+    assert(id !is null);
+    return wgpuDevicePoll(cast(WGPUDevice) id, forceWait, null);
+  }
+
+  /// Check for resource cleanups and mapping callbacks.
+  /// Params:
   /// queue = The `Queue` to poll.
   /// submissionIndex
   /// forceWait = Whether or not the call should block.
