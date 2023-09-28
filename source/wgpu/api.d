@@ -458,10 +458,17 @@ struct Instance {
   ///
   /// Params:
   /// backends = Backends from which to enumerate adapters.
-  static @property Adapter[] adapters(BackendType backends = BackendType._null) {
+  /// See_Also: <a href="https://docs.rs/wgpu/latest/wgpu/struct.Instance.html#method.enumerate_adapters">wgpu::Instance.enumerate_adapters</a>
+  @property Adapter[] adapters(BackendType backends = BackendType.primary) {
+    import std.algorithm : map;
+    import std.array : array;
+
     assert(backends >= 0);
-    assert(0, "Unimplemented!");
-    // TODO: Implement adapter enumerator as a custom range
+    auto options = WGPUInstanceEnumerateAdapterOptions(null, backends);
+    WGPUAdapter* adaptersPtr = null;
+    size_t count = wgpuInstanceEnumerateAdapters(this.id, &options, adaptersPtr);
+    if (adaptersPtr == null) return [];
+    return adaptersPtr[0 .. count].map!(x => (cast(Adapter) x)).array;
   }
 
   /// Retrieves a new Adapter, asynchronously.
