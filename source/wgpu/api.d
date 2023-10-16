@@ -1146,7 +1146,7 @@ class Buffer {
   BufferMapAsyncStatus status = BufferMapAsyncStatus.unknown;
 
   package this(const Device device, const BufferDescriptor descriptor) @trusted {
-    assert(device !is null && device.id !is null);
+    assert(device !is null && device.id !is null, "Adapter device is not initialized!");
     id = wgpuDeviceCreateBuffer(cast(WGPUDevice) device.id, cast(BufferDescriptor*) &descriptor);
     if (id !is null && descriptor.mappedAtCreation) status = BufferMapAsyncStatus.success;
     this.descriptor = descriptor;
@@ -1250,7 +1250,7 @@ class Texture {
   const string label;
 
   package this(const Device device, const TextureDescriptor descriptor) @trusted {
-    assert(device !is null && device.id !is null);
+    assert(device !is null && device.id !is null, "Adapter device is not initialized!");
     id = wgpuDeviceCreateTexture(cast(WGPUDevice) device.id, cast(TextureDescriptor*) &descriptor);
     this.descriptor = descriptor;
     this.label = descriptor.label is null ? null : descriptor.label.fromStringz.to!string;
