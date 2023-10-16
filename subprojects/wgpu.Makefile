@@ -51,7 +51,6 @@ $(ARCHIVE_ZIP):
 	@curl -L $(BINARY_ARCHIVE) --output $(ARCHIVE_ZIP)
 
 wgpu/$(LIB_WGPU): $(ARCHIVE_ZIP)
-wgpu/wgpu.h:
 	@echo Unzipping WebGPU Native binaries...
 ifeq ($(OS),Windows_NT)
 	@if not exist wgpu mkdir wgpu

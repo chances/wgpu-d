@@ -37,6 +37,7 @@
   "lflags-posix": ["-L$PACKAGE_DIR/subprojects/glfw/src"],
   "lflags-osx": [
     "-framework", "AppKit",
+    "-framework", "IOKit",
     "-framework", "Metal",
     "-framework", "QuartzCore"
   ],
