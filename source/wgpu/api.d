@@ -675,13 +675,12 @@ class Device {
   // https://microsoft.github.io/Win2D/WinUI3/html/HandlingDeviceLost.htm
   // TODO: void wgpuDeviceSetDeviceLostCallback(WGPUDevice device, WGPUDeviceLostCallback callback, void * userdata);
 
-  // TODO: setUncapturedErrorCallback
-  // alias ErrorCallback = extern (C) void function(ErrorType type, const(char*) message, void* userdata);
-  // ///
-  // void setUncapturedErrorCallback(ErrorCallback callback, void* userData = null) const {
-  //   assert(id !is null);
-  //   wgpuDeviceSetUncapturedErrorCallback(cast(WGPUDevice) id, cast(WGPUErrorCallback) callback, userData);
-  // }
+  alias ErrorCallback = extern (C) void function(ErrorType type, const(char*) message, void* userData);
+  ///
+  void setUncapturedErrorCallback(ErrorCallback callback, void* userData = null) const {
+    assert(id !is null);
+    wgpuDeviceSetUncapturedErrorCallback(cast(WGPUDevice) id, cast(WGPUErrorCallback) callback, userData);
+  }
 
   /// List all limits that were requested of this device.
   ///

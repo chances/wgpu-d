@@ -84,7 +84,7 @@ fn fs_main() -> [[location(0)]] vec4<f32> {
 
 extern (C) void wgpu_error_callback(ErrorType type, const char* message, void* userdata) {
   import std.string : fromStringz;
-  writefln("%s: %s", type, message.fromStringz);
+  writefln("WebGPU Error: %s: %s", type, message.fromStringz);
 }
 
 class Cube : Window {
@@ -106,7 +106,7 @@ class Cube : Window {
     static import wgpu.utils;
     assert(swapChain !is null);
 
-    // TODO: device.setUncapturedErrorCallback(&wgpu_error_callback);
+    device.setUncapturedErrorCallback(&wgpu_error_callback);
 
     vertexBuffer = wgpu.utils.createBuffer(
       device, BufferUsage.vertex,
