@@ -104,10 +104,11 @@ class Cube : Window {
 
   override void initialize(const Device device) {
     static import wgpu.utils;
-    assert(swapChain !is null);
+    assert(swapChain !is null, "GPU device swap chain is not ready!");
 
     device.setUncapturedErrorCallback(&wgpu_error_callback);
 
+    "Creating geometry buffers...".writeln;
     vertexBuffer = wgpu.utils.createBuffer(
       device, BufferUsage.vertex,
       cast(ubyte[]) cube.vertices.ptr[0..(Vertex.sizeof * cube.vertices.length)],
@@ -189,15 +190,17 @@ void main() {
   const title = "Cube Example";
   title.writeln;
 
-  auto window = new Cube(title);
-
+  "Requesting GPU adapter...".writeln;
   auto adapter = Instance.requestAdapter(window.surface, PowerPreference.lowPower);
   assert(adapter.ready, "Adapter instance was not initialized");
   writefln("Adapter properties: %s", adapter.properties);
 
+  "Requesting GPU adapter device...".writeln;
   auto device = adapter.requestDevice(adapter.limits);
   assert(device.ready, "Device is not ready");
   writefln("Device limits: %s", device.limits);
+
+  auto window = new Cube(title);
 
   // The render pipeline renders data into this swap chain
   auto swapChainFormat = window.surface.preferredFormat(adapter);
