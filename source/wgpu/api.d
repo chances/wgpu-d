@@ -711,7 +711,7 @@ class Device {
   /// Check for resource cleanups and mapping callbacks.
   /// Params:
   /// queue = The `Queue` to poll.
-  /// submissionIndex
+  /// submissionIndex =
   /// forceWait = Whether or not the call should block.
   /// Returns: `true` if the queue is empty, or `false` if there are more queue submissions still in flight.
   bool poll(Queue queue, ulong submissionIndex, Flag!"forceWait" forceWait = No.forceWait) @trusted const {
