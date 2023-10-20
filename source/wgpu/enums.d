@@ -463,7 +463,15 @@ enum SType : WGPUSType {
   ///
   shaderModuleWgslDescriptor,
   ///
-  primitiveDepthClampingState,
+  primitiveDepthClipControl,
+  ///
+  surfaceDescriptorFromWaylandSurface,
+  ///
+  surfaceDescriptorFromAndroidNativeWindow,
+  ///
+  surfaceDescriptorFromXcbWindow,
+  ///
+  renderPassDescriptorMaxDrawCount,
   force32 = cast(WGPUSType) 0x7FFFFFFF
 }
 
