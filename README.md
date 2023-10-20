@@ -12,7 +12,7 @@ Targets wgpu-native [`v0.17.0.2`](https://github.com/gfx-rs/wgpu-native/releases
 
 ```json
 "dependencies": {
-    "wgpu-d": "0.1.4"
+    "wgpu-d": "0.2.0"
 }
 ```
 

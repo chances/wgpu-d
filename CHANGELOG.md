@@ -1,13 +1,31 @@
 <!-- https://keepachangelog.com/en/1.0.0/ -->
 # Changelog
 
+## v0.2.0
+
+Upgrade `wgpu-native` to [v0.17.0.2](https://github.com/gfx-rs/wgpu-native/releases/tag/v0.17.0.2).
+
+### Added
+
+- Add `Device.poll` overload for generic device queues
+- Implement `Instance.adapters` to enumerate available GPU adapters
+- Integrate `Device.setUncapturedErrorCallback` into triangle example
+
+### Changed
+
+- Link against `wgpu-native`'s static libraries by default
+
+### Fixed
+
+- Fix compilation on macOS 10.14
+
 ## v0.1.4
 
 - Fixed bit-flag enumerations, e.g. [`BufferUsage`](https://chances.github.io/wgpu-d/wgpu/enums/BufferUsage.html), [`ShaderStage`](https://chances.github.io/wgpu-d/wgpu/enums/ShaderStage.html), and [`TextureUsage`](https://chances.github.io/wgpu-d/wgpu/enums/TextureUsage.html).
 
 ## v0.1.3
 
-- Fixed compilation on mac OS 10.14
+- Fixed compilation on macOS 10.14
 - Refactored enumerations
 - Added documentation for more aliases
 
