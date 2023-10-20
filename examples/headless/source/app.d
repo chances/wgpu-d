@@ -1,3 +1,4 @@
+import std.conv : text;
 import std.stdio;
 
 import wgpu.api;
@@ -6,14 +7,14 @@ import wgpu.api;
 void main() {
   writeln("Headless (windowless) Example");
 
-  auto adapter = Instance.requestAdapter(PowerPreference.lowPower);
-  assert(adapter.ready, "Adapter instance was not initialized");
-  writefln("Adapter properties: %s", adapter.properties);
-  writefln("Adapter limits: %s", adapter.limits);
+  auto instance = Instance.create();
+  assert(instance.id, "Could not create WebGPU instance.");
+
+  auto adapter = instance.requestAdapter(PowerPreference.lowPower);
+  assert(adapter.ready, "Adapter instance was not initialized: Adapter status: " ~ adapter.status.text);
 
   auto device = adapter.requestDevice(adapter.limits);
-  assert(device.ready, "Device is not ready");
-  writefln("Device limits: %s", device.limits);
+  assert(device.ready, "Device is not ready: Device status: " ~ device.status.text);
 
   const width = 400;
   const height = 300;

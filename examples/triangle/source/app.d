@@ -20,40 +20,37 @@ extern(C) void wgpu_glfw_error_callback(int error, const char* description) noth
   }
 }
 
-enum string triangleShader = `[[stage(vertex)]]
-fn vs_main([[builtin(vertex_index)]] in_vertex_index: u32) -> [[builtin(position)]] vec4<f32> {
+enum string triangleShader = `@vertex
+fn vs_main(@builtin(vertex_index) in_vertex_index: u32) -> @builtin(position) vec4f {
   let x = f32(i32(in_vertex_index) - 1);
   let y = f32(i32(in_vertex_index & 1u) * 2 - 1);
-  return vec4<f32>(x, y, 0.0, 1.0);
+  return vec4f(x, y, 0.0, 1.0);
 }
 
-[[stage(fragment)]]
-fn fs_main() -> [[location(0)]] vec4<f32> {
-    return vec4<f32>(1.0, 0.0, 1.0, 1.0);
+@fragment
+fn fs_main() -> @location(0) vec4f {
+  return vec4f(1.0, 0.0, 0.0, 1.0);
 }`;
 enum string fullScreenQuadShader = `struct VertexOutput {
-  [[builtin(position)]] clip_position: vec4<f32>;
-  [[location(0)]] tex_coords: vec2<f32>;
+  @builtin(position) clip_position: vec4f;
+  @location(0) tex_coords: vec2f;
 };
 
-[[stage(vertex)]]
-fn vs_main([[builtin(vertex_index)]] in_vertex_index: u32) -> VertexOutput {
-  var out: VertexOutput;
+@vertex
+fn vs_main(@builtin(vertex_index) in_vertex_index: u32) -> VertexOutput {
   let x = f32(i32(in_vertex_index) - 1);
   let y = f32(i32(in_vertex_index & 1u) * 2 - 1);
-  out.clip_position = vec4<f32>(x, y, 0.0, 1.0);
-  out.tex_coords = vec2<f32>(x, y);
-  return out;
+  return VertexOutput(vec4f(x, y, 0.0, 1.0), vec2f(x, y));
 }
 
-[[group(0), binding(0)]]
-var t_diffuse: texture_2d<f32>;
-[[group(0), binding(1)]]
-var s_diffuse: sampler;
+@group(0) @binding(0)
+var diffuse: texture_2d<f32>;
+@group(0) @binding(1)
+var diffuseSampler: sampler;
 
-[[stage(fragment)]]
-fn fs_main(in: VertexOutput) -> [[location(0)]] vec4<f32> {
-  return textureSample(t_diffuse, s_diffuse, in.tex_coords);
+@fragment
+fn fs_main(in: VertexOutput) -> @location(0) vec4f {
+  return textureSample(diffuse, diffuseSampler, in.tex_coords);
 }`;
 
 // Adapted from https://github.com/gfx-rs/wgpu-native/blob/v0.10.4.1/examples/triangle/main.c
@@ -62,6 +59,8 @@ void main() {
   import std.functional : toDelegate;
   import std.string : toStringz;
   import std.typecons : Yes;
+
+  // Create GLFW window
 
   const title = "Triangle Example";
   title.writeln;
@@ -82,6 +81,11 @@ void main() {
   assert(window !is null, "Could not create window:\n\t" ~ lastError);
   glfwSetWindowSizeLimits(window, 640, 480, GLFW_DONT_CARE, GLFW_DONT_CARE);
 
+  // Create WebGPU resources
+
+  auto instance = Instance.create();
+  assert(instance.id, "Could not create WebGPU instance.");
+
   Surface surface;
   version (OSX) {
     import std.exception : enforce;
@@ -90,20 +94,24 @@ void main() {
     auto metalLayer = CAMetalLayer.classOf.layer;
     nativeWindow.contentView.wantsLayer = true;
     nativeWindow.contentView.layer = metalLayer;
-    surface = Surface.fromMetalLayer(metalLayer.asId);
+    surface = Surface.fromMetalLayer(instance, metalLayer.asId);
+  } else {
+    version (Linux) surface = Surface.fromXlib(instance, glfwGetX11Display().enforce, glfwGetX11Window(window).enforce);
+    else {
+      version (Windows) {
+        import core.sys.windows.windows : GetModuleHandleA;
+        surface = Surface.fromWindowsHwnd(instance, GetModuleHandleA(null), glfwGetWin32Window(window));
+      }
+      else static assert(0, "Unsupported target platform");
+    }
   }
-  else version (Linux) surface = Surface.fromXlib(assert(glfwGetX11Display()), assert(glfwGetX11Window(window)));
-  // TODO: Integrate with Windows platform, i.e. Surface.fromWindowsHwnd
-  else static assert(0, "Unsupported target platform");
   assert(surface.id !is null, "Could not create native surface");
 
-  auto adapter = Instance.requestAdapter(surface, PowerPreference.lowPower);
+  auto adapter = instance.requestAdapter(surface, PowerPreference.lowPower);
   assert(adapter.ready, "Adapter instance was not initialized");
-  writefln("Adapter properties: %s", adapter.properties);
 
   auto device = adapter.requestDevice(adapter.limits);
   assert(device.ready, "Device is not ready");
-  writefln("Device limits: %s", device.limits);
 
   auto swapChainFormat = surface.preferredFormat(adapter);
   auto swapChain = device.createSwapChain(
@@ -294,6 +302,12 @@ auto bindDelegate(Func, string file = __FILE__, size_t line = __LINE__)(Func f) 
   }
 
   return &func;
+}
+
+version (Windows) {
+  import core.sys.windows.windows : HWND;
+  // FIXME: What's wrong with https://github.com/BindBC/bindbc-glfw/blob/6529ce4f67f69839a93de5e0bbe1150fab30d633/source/bindbc/glfw/bindstatic.d#L172
+  extern(C) @nogc nothrow HWND glfwGetWin32Window(GLFWwindow* window);
 }
 
 // mac OS interop with the Objective-C Runtime

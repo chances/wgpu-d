@@ -24,6 +24,13 @@
   ],
   "postBuildCommands-osx": [
     "echo Fixing up libwgpu dylib path...",
-    "install_name_tool -change /Users/runner/work/wgpu-native/wgpu-native/target/x86_64-apple-darwin/debug/deps/libwgpu_native.dylib @executable_path/../lib/libwgpu.dylib `find $PACKAGE_DIR/../../bin -name '*cube'`"
-  ]
+    "install_name_tool -change /Users/runner/work/wgpu-native/wgpu-native/target/x86_64-apple-darwin/debug/deps/libwgpu_native.dylib @executable_path/../lib/libwgpu_native.dylib `find $PACKAGE_DIR/../../bin -name '*cube'`"
+  ],
+  "libs": ["glfw3"],
+  "libs-linux": [
+    "X11"
+  ],
+  "libs-windows": ["gdi32"],
+  "lflags-posix": ["-L$PACKAGE_DIR/subprojects/glfw/src"],
+  "lflags-windows": ["/LIBPATH:$PACKAGE_DIR/subprojects/glfw/src"]
 }

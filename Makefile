@@ -1,4 +1,5 @@
-OS := $(shell uname -s)
+OS ?= $(shell uname -s)
+rwildcard=$(wildcard $1$2) $(foreach d,$(wildcard $1*),$(call rwildcard,$d/,$2))
 ifeq ($(OS),Darwin)
 CC := clang
 SED := gsed
@@ -6,13 +7,16 @@ endif
 ifeq ($(OS),Linux)
 CC := gcc
 endif
+ifeq ($(OS),Windows_NT)
+CC := cl
+endif
 ifndef CC
 $(error Unsupported target OS '$(OS)')
 endif
 ifndef SED
 SED := sed
 endif
-SOURCES := $(shell find source -name '*.d')
+SOURCES := $(call rwildcard,source/,*.d)
 LIBS_PATH := lib
 
 .DEFAULT_GOAL := docs
@@ -21,45 +25,36 @@ all: docs
 #################################################
 # Subprojects
 #################################################
+# wgpu-native binaries ships with static libraries 🎉
 ifeq ($(OS),Darwin)
-LIB_WGPU_EXT := dylib
+  LIB_WGPU := libwgpu_native.a
 endif
 ifeq ($(OS),Linux)
-LIB_WGPU_EXT := so
+  LIB_WGPU := libwgpu_native.a
 endif
-ifndef LIB_WGPU_EXT
-$(error Unsupported target OS '$(OS)')
+ifeq ($(OS),Windows_NT)
+  LIB_WGPU := wgpu_native.lib
 endif
-LIB_WGPU_SOURCE := subprojects/wgpu/libwgpu.$(LIB_WGPU_EXT)
-LIB_WGPU := lib/libwgpu.$(LIB_WGPU_EXT)
-wgpu: $(LIB_WGPU)
+ifndef LIB_WGPU
+  $(error Unsupported target OS '$(OS)')
+endif
+LIB_WGPU_SOURCE := subprojects/wgpu
+wgpu: lib/$(LIB_WGPU)
 .PHONY: wgpu
 $(LIB_WGPU_SOURCE): subprojects/wgpu.Makefile
 	@make -C subprojects -f wgpu.Makefile
-$(LIB_WGPU): $(LIB_WGPU_SOURCE)
+lib/$(LIB_WGPU): $(LIB_WGPU_SOURCE)
+ifeq ($(OS),Windows_NT)
+	@if not exist lib mkdir lib
+	@xcopy $(subst /,\\,$(LIB_WGPU_SOURCE))\\$(LIB_WGPU) lib /y >NUL
+else
 	@mkdir -p lib
-	@cp $(LIB_WGPU_SOURCE) lib/.
+	@cp $(LIB_WGPU_SOURCE)/$(LIB_WGPU) lib/.
+endif
 
 #################################################
-# Examples
+# Test Coverage
 #################################################
-example_utils_SOURCES := $(shell find examples/utils/source -name '*.d')
-EXAMPLES := bin/cube bin/headless bin/triangle
-examples: $(EXAMPLES)
-.PHONY: examples
-
-cube_SOURCES := $(example_utils_SOURCES) $(shell find examples/cube/source -name '*.d')
-bin/cube: $(SOURCES) $(cube_SOURCES) examples/cube/dub.json
-	cd examples/cube && dub build
-
-headless_SOURCES := $(shell find examples/headless/source -name '*.d')
-bin/headless: $(SOURCES) $(headless_SOURCES) examples/headless/dub.json
-	cd examples/headless && dub build
-
-triangle_SOURCES := $(shell find examples/triangle/source -name '*.d')
-bin/triangle: $(SOURCES) $(triangle_SOURCES) examples/triangle/dub.json
-	cd examples/triangle && dub build
-
 cover: $(SOURCES)
 	dub test --build=unittest-cov
 
@@ -88,18 +83,30 @@ docs/sitemap.xml: $(SOURCES)
 	@echo Done
 
 docs: docs/sitemap.xml
+ifeq ($(OS),Windows_NT)
+	$(error Build documentation on *nix!)
+endif
 .PHONY: docs
 
+clean:
+ifneq ($(OS),Windows_NT)
 clean: clean-docs
-	rm -rf bin lib
+else
+	$(error Build documentation on *nix!)
+endif
 	dub clean
+	@rm -rf bin lib
 	@echo "Cleaning code coverage reports..."
-	rm -f -- *.lst
+	@rm -f -- *.lst
 .PHONY: clean
 
+DOCS_HTML := $(call rwildcard,docs/,*.html)
 clean-docs:
+ifeq ($(OS),Windows_NT)
+	$(error Build documentation on *nix!)
+endif
 	@echo "Cleaning generated documentation..."
 	@rm -f docs.json
 	@rm -f docs/sitemap.xml docs/file_hashes.json
-	@rm -rf `find docs -name '*.html'`
+	@rm -rf $(DOCS_HTML)
 .PHONY: clean-docs

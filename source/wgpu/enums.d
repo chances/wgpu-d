@@ -32,23 +32,59 @@ enum AddressMode : WGPUAddressMode {
 }
 
 ///
+enum InstanceBackend : WGPUInstanceBackend {
+  ///
+  vulkan = WGPUInstanceBackend_Vulkan,
+  ///
+  gl = WGPUInstanceBackend_GL,
+  ///
+  metal = WGPUInstanceBackend_Metal,
+  ///
+  dx12 = WGPUInstanceBackend_DX12,
+  ///
+  dx11 = WGPUInstanceBackend_DX11,
+  ///
+  browserWebGPU = WGPUInstanceBackend_BrowserWebGPU,
+  ///
+  primary = WGPUInstanceBackend_Primary,
+  ///
+  secondary = WGPUInstanceBackend_Secondary,
+  ///
+  all = WGPUInstanceBackend_Force32,
+  ///
+  none = WGPUInstanceBackend_None,
+  force32 = cast(WGPUInstanceBackend) 0x7FFFFFFF
+}
+
+/// Represents the graphics backends that wgpu can use.
+/// See_Also: <a href="https://docs.rs/wgpu/0.10.2/wgpu/struct.Backends.html">wgpu::Backends</a>
 enum BackendType : WGPUBackendType {
   ///
-  _null,
+  undefined = WGPUBackendType_Undefined,
   ///
-  webGPU,
+  _null = WGPUBackendType_Null,
   ///
-  d3d11,
+  webGPU = WGPUBackendType_WebGPU,
   ///
-  d3d12,
+  d3d11 = WGPUBackendType_D3D11,
   ///
-  metal,
+  d3d12 = WGPUBackendType_D3D12,
   ///
-  vulkan,
+  metal = WGPUBackendType_Metal,
   ///
-  openGL,
+  vulkan = WGPUBackendType_Vulkan,
   ///
-  openGLES,
+  openGL = WGPUBackendType_OpenGL,
+  ///
+  openGLES = WGPUBackendType_OpenGLES,
+  /// All the graphics APIs that for which wgpu offers first tier support.
+  ///
+  /// Vulkan, Metal, DirectX 12, and Browser WebGPU
+  primary = cast(WGPUBackendType) (BackendType.vulkan | BackendType.metal | BackendType.d3d12 | BackendType.webGPU),
+  /// All the graphics APIs that for which wgpu offers second tier support.
+  ///
+  /// That is, OpenGL and DirectX 11. These may be unsupported or are still experimental.
+  secondary = cast(WGPUBackendType) (BackendType.openGL | BackendType.openGLES | BackendType.d3d11),
   force32 = cast(WGPUBackendType) 0x7FFFFFFF
 }
 
@@ -258,6 +294,15 @@ enum FilterMode : WGPUFilterMode {
   force32 = cast(WGPUFilterMode) 0x7FFFFFFF
 }
 
+///
+enum MipmapFilterMode : WGPUMipmapFilterMode {
+  ///
+  nearest,
+  ///
+  linear,
+  force32 = cast(WGPUMipmapFilterMode) 0x7FFFFFFF
+}
+
 /// Specifies the vertex order for faces to be considered front-facing.
 enum FrontFace : WGPUFrontFace {
   /// Clockwise ordered faces will be considered front-facing.
@@ -283,6 +328,8 @@ enum IndexFormat : WGPUIndexFormat {
 ///
 enum LoadOp : WGPULoadOp {
   ///
+  undefined,
+  ///
   clear,
   ///
   load,
@@ -306,6 +353,8 @@ enum PipelineStatisticName : WGPUPipelineStatisticName {
 
 ///
 enum PowerPreference : WGPUPowerPreference {
+  ///
+  undefined,
   ///
   lowPower,
   ///
@@ -404,9 +453,9 @@ enum SType : WGPUSType {
   ///
   surfaceDescriptorFromMetalLayer,
   ///
-  surfaceDescriptorFromWindowsHWND,
+  surfaceDescriptorFromWindowsHwnd,
   ///
-  surfaceDescriptorFromXlib,
+  surfaceDescriptorFromXlibWindow,
   ///
   surfaceDescriptorFromCanvasHtmlSelector,
   ///
@@ -414,7 +463,15 @@ enum SType : WGPUSType {
   ///
   shaderModuleWgslDescriptor,
   ///
-  primitiveDepthClampingState,
+  primitiveDepthClipControl,
+  ///
+  surfaceDescriptorFromWaylandSurface,
+  ///
+  surfaceDescriptorFromAndroidNativeWindow,
+  ///
+  surfaceDescriptorFromXcbWindow,
+  ///
+  renderPassDescriptorMaxDrawCount,
   force32 = cast(WGPUSType) 0x7FFFFFFF
 }
 
@@ -464,6 +521,8 @@ enum StorageTextureAccess : WGPUStorageTextureAccess {
 ///
 enum StoreOp : WGPUStoreOp {
   ///
+  undefined,
+  ///
   store,
   ///
   discard,
@@ -479,19 +538,6 @@ enum TextureAspect : WGPUTextureAspect {
   ///
   depthOnly,
   force32 = cast(WGPUTextureAspect) 0x7FFFFFFF
-}
-
-///
-enum TextureComponentType : WGPUTextureComponentType {
-  ///
-  _float,
-  ///
-  sint,
-  ///
-  _uint,
-  ///
-  depthComparison,
-  force32 = cast(WGPUTextureComponentType) 0x7FFFFFFF
 }
 
 ///
@@ -592,6 +638,8 @@ enum TextureFormat : WGPUTextureFormat {
   ///
   depth32Float,
   ///
+  depth32FloatStencil8,
+  ///
   bc1rgbaUnorm,
   ///
   bc1rgbaUnormSrgb,
@@ -619,6 +667,82 @@ enum TextureFormat : WGPUTextureFormat {
   bc7rgbaUnorm,
   ///
   bc7rgbaUnormSrgb,
+  ///
+  etc2Rgb8Unorm,
+  ///
+  etc2Rgb8UnormSrgb,
+  ///
+  etc2Rgb8A1Unorm,
+  ///
+  etc2Rgb8A1UnormSrgb,
+  ///
+  etc2Rgba8Unorm,
+  ///
+  etc2Rgba8UnormSrgb,
+  ///
+  eacR11Unorm,
+  ///
+  eacR11Snorm,
+  ///
+  eacRg11Unorm,
+  ///
+  eacRg11Snorm,
+  ///
+  astc4x4Unorm,
+  ///
+  astc4x4UnormSrgb,
+  ///
+  astc5x4Unorm,
+  ///
+  astc5x4UnormSrgb,
+  ///
+  astc5x5Unorm,
+  ///
+  astc5x5UnormSrgb,
+  ///
+  astc6x5Unorm,
+  ///
+  astc6x5UnormSrgb,
+  ///
+  astc6x6Unorm,
+  ///
+  astc6x6UnormSrgb,
+  ///
+  astc8x5Unorm,
+  ///
+  astc8x5UnormSrgb,
+  ///
+  astc8x6Unorm,
+  ///
+  astc8x6UnormSrgb,
+  ///
+  astc8x8Unorm,
+  ///
+  astc8x8UnormSrgb,
+  ///
+  astc10x5Unorm,
+  ///
+  astc10x5UnormSrgb,
+  ///
+  astc10x6Unorm,
+  ///
+  astc10x6UnormSrgb,
+  ///
+  astc10x8Unorm,
+  ///
+  astc10x8UnormSrgb,
+  ///
+  astc10x10Unorm,
+  ///
+  astc10x10UnormSrgb,
+  ///
+  astc12x10Unorm,
+  ///
+  astc12x10UnormSrgb,
+  ///
+  astc12x12Unorm,
+  ///
+  astc12x12UnormSrgb,
   force32 = cast(WGPUTextureFormat) 0x7FFFFFFF
 }
 

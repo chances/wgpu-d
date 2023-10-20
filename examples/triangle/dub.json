@@ -19,7 +19,7 @@
   "subConfigurations": {
     "bindbc-glfw": "static"
   },
-  "preGenerateCommands-posix": [
+  "preGenerateCommands": [
     "make -C subprojects -f glfw.Makefile"
   ],
   "preBuildCommands-osx": [
@@ -27,16 +27,13 @@
   ],
   "postBuildCommands-osx": [
     "echo Fixing up libwgpu dylib path...",
-    "install_name_tool -change /Users/runner/work/wgpu-native/wgpu-native/target/x86_64-apple-darwin/debug/deps/libwgpu_native.dylib @executable_path/lib/libwgpu.dylib `find $PACKAGE_DIR/../../bin -name '*triangle'`"
+    "install_name_tool -change /Users/runner/work/wgpu-native/wgpu-native/target/x86_64-apple-darwin/debug/deps/libwgpu_native.dylib @executable_path/lib/libwgpu_native.dylib `find $PACKAGE_DIR/../../bin -name '*triangle'`"
   ],
   "libs": ["glfw3"],
   "libs-linux": [
     "X11"
   ],
+  "libs-windows": ["gdi32"],
   "lflags-posix": ["-L$PACKAGE_DIR/subprojects/glfw/src"],
-  "lflags-osx": [
-    "-framework", "AppKit",
-    "-framework", "Metal",
-    "-framework", "QuartzCore"
-  ]
+  "lflags-windows": ["/LIBPATH:$PACKAGE_DIR/subprojects/glfw/src"]
 }
