@@ -1,9 +1,7 @@
 {
   "name": "wgpu-d",
-	"description": "D bindings to wgpu-native",
-	"authors": [
-		"Chance Snow"
-  ],
+  "description": "D bindings to wgpu-native",
+  "authors": ["Chance Snow"],
   "license": "MIT",
   "copyright": "Copyright © 2020-2023, Chance Snow",
   "subPackages": [
@@ -12,23 +10,19 @@
     "examples/triangle",
     "examples/cube"
   ],
-  "excludedSourceFiles": [
-    "examples/triangle/subprojects/glfw/**/*.d"
-  ],
+  "excludedSourceFiles": ["examples/triangle/subprojects/glfw/**/*.d"],
   "targetType": "sourceLibrary",
   "targetPath": "bin",
   "toolchainRequirements": {
-    "frontend": ">=2.105.0",
-		"dmd": ">=2.105.0",
-		"gdc": "no",
-		"ldc": ">=1.35.0-beta1"
-	},
+    "frontend": ">=2.105",
+    "dmd": "no",
+    "gdc": "no",
+    "ldc": ">=1.35.0-beta1"
+  },
   "systemDependencies-linux": "vulkan >= 1.1.0, patchelf",
   "systemDependencies-osx": "metal >= 2",
   "systemDependencies-windows": "vulkan >= 1.1.0 or DirectX >= 11",
-  "preGenerateCommands": [
-    "make wgpu"
-  ],
+  "preGenerateCommands": ["make wgpu"],
   "dflags": [
     "-P-Isource/wgpu",
     "-P-Isubprojects/wgpu"
@@ -51,6 +45,12 @@
   ],
   "lflags-posix": ["-L$WGPU_D_PACKAGE_DIR/lib"],
   "lflags-windows": ["/LIBPATH:$WGPU_D_PACKAGE_DIR/subprojects/wgpu"],
+  "lflags-osx": [
+    "-framework", "AppKit",
+    "-framework", "IOKit",
+    "-framework", "Metal",
+    "-framework", "QuartzCore"
+  ],
   "libs": ["wgpu_native"],
   "libs-windows": [
     "d3dcompiler",
