@@ -123,6 +123,12 @@ $('#symbolSearchPane').show();</script>
 						<td class="typecol"><code class="prettyprint lang-d"><a href="../../wgpu/api/Adapter.html"><span class="typ">Adapter</span></a><span class="pun">[]</span></code></td><td>Retrieves all available <code class="lang-d"><a href="../../wgpu/api/Adapter.html"><span class="typ">Adapter</span></a></code>s that match the given <code class="lang-d"><span class="typ">Backends</span></code>.
 </td>
 					</tr>
+					<tr>
+						<td>
+							<a href="../../wgpu/api/Instance.report.html" class="public property"><code>report</code></a><span class="tableEntryAnnotation">[get]</span>
+						</td>
+						<td class="typecol"><code class="prettyprint lang-d"><span class="pln">__C<wbr/></span><span class="pun">.</span><span class="typ">WGPUGlobalReport</span></code></td><td></td>
+					</tr>
 				</table>
 			</section>
 			<section><h2>Methods</h2>
@@ -136,9 +142,19 @@ $('#symbolSearchPane').show();</script>
 							<a href="../../wgpu/api/Instance.create.html" class="public">
 								<code>create</code>
 							</a>
-							<span class="tableEntryAnnotation">()</span>
+							<span class="tableEntryAnnotation">(backends)</span>
 						</td>
 						<td>Create a new instance of wgpu.
+</td>
+					</tr>
+					<tr>
+						<td>
+							<a href="../../wgpu/api/Instance.destroy.html" class="public">
+								<code>destroy</code>
+							</a>
+							<span class="tableEntryAnnotation">()</span>
+						</td>
+						<td>Release the given handle.
 </td>
 					</tr>
 					<tr>
@@ -146,7 +162,7 @@ $('#symbolSearchPane').show();</script>
 							<a href="../../wgpu/api/Instance.requestAdapter.html" class="public">
 								<code>requestAdapter</code>
 							</a>
-							<span class="tableEntryAnnotation">(powerPreference, forceFallbackAdapter)</span>
+							<span class="tableEntryAnnotation">(powerPreference, backendType, forceFallbackAdapter)</span>
 						</td>
 						<td>Retrieves a new Adapter, asynchronously.
 </td>

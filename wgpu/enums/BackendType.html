@@ -78,7 +78,8 @@ $('#symbolSearchPane').show();</script>
 			</ul>
 		</nav>
 		<div id="main-contents">
-			<h1>Enum BackendType</h1><p></p>
+			<h1>Enum BackendType</h1><p>Represents the graphics backends that wgpu can use.
+</p>
 			<div class="prototype">
 				<code class="lang-d">
 					<div class="single-prototype">
@@ -131,6 +132,32 @@ $('#symbolSearchPane').show();</script>
 						<td></td>
 					</tr>
 					<tr>
+						<td id="primary">
+							<code>primary</code>
+						</td>
+						<td>All the graphics APIs that for which wgpu offers first tier support.
+<section><p>Vulkan, Metal, DirectX 12, and Browser WebGPU
+</p>
+</section>
+</td>
+					</tr>
+					<tr>
+						<td id="secondary">
+							<code>secondary</code>
+						</td>
+						<td>All the graphics APIs that for which wgpu offers second tier support.
+<section><p>That is, OpenGL and DirectX 11. These may be unsupported or are still experimental.
+</p>
+</section>
+</td>
+					</tr>
+					<tr>
+						<td id="undefined">
+							<code>undefined</code>
+						</td>
+						<td></td>
+					</tr>
+					<tr>
 						<td id="vulkan">
 							<code>vulkan</code>
 						</td>
@@ -144,7 +171,11 @@ $('#symbolSearchPane').show();</script>
 					</tr>
 				</table>
 			</section>
-			
+			<section><h2>See Also</h2>
+<p><a href="https://docs.rs/wgpu/0.10.2/wgpu/struct.Backends.html">wgpu::Backends</a>
+</p>
+</section>
+
 			<footer>
 				<table class="license-info">
 					<tr>

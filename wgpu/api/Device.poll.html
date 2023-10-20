@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8"/>
-		<title>Function Device.poll - wgpu-d</title>
+		<title>Device.poll - multiple declarations - wgpu-d</title>
 		<link rel="stylesheet" type="text/css" href="../../styles/ddox.css"/>
 		<link rel="stylesheet" href="../../prettify/prettify.css" type="text/css"/>
 		<script type="text/javascript" src="../../scripts/jquery.js">/**/</script><script type="text/javascript" src="../../scripts/ddox.js">/**/</script>
@@ -78,12 +78,26 @@ $('#symbolSearchPane').show();</script>
 			</ul>
 		</nav>
 		<div id="main-contents">
-			<h1>Function Device.poll</h1><p>Check for resource cleanups and mapping callbacks.
+			<h1>Device.poll - multiple declarations</h1>
+			<nav class="page-nav">
+				<ul>
+					<li>
+						<a href="#0">
+							Function <code>Device.poll</code>
+						</a>
+					</li>
+					<li>
+						<a href="#1">
+							Function <code>Device.poll</code>
+						</a>
+					</li>
+				</ul>
+			</nav><h2 id="0">Function Device.poll</h2><p>Check for resource cleanups and mapping callbacks.
 </p>
 			<div class="prototype">
 				<code class="lang-d">
 					<div class="single-prototype">
-			<span class="typ">void</span> <span class="pln">poll</span>
+			<span class="typ">bool</span> <span class="pln">poll</span>
 			<span class="pun">(</span>
 			<br/>
 			&nbsp;&nbsp;<span class="pln">std<wbr/></span><span class="pun">.</span><span class="pln">typecons<wbr/></span><span class="pun">.</span><span class="typ">Flag</span>!("forceWait") <span class="pln">forceWait</span> <span class="pun">=</span> <span class="typ">Flag<wbr/></span><span class="pun">.</span><span class="pln">no</span>
@@ -93,10 +107,44 @@ $('#symbolSearchPane').show();</script>
 				</code>
 			</div>
 			
-			<section><h2>Parameters</h2>
+			<section><h3>Parameters</h3>
 <table><col class="caption"><tr><th>Name</th><th>Description</th></tr>
 <tr><td id="forceWait">forceWait</td><td> Whether or not the call should block.</td></tr>
 </table>
+</section>
+<section><h3>Returns</h3>
+<p><code class="lang-d"><span class="kwd">true</span></code> if the queue is empty, or <code class="lang-d"><span class="kwd">false</span></code> if there are more queue submissions still in flight.
+</p>
+</section>
+<h2 id="1">Function Device.poll</h2><p>Check for resource cleanups and mapping callbacks.
+</p>
+			<div class="prototype">
+				<code class="lang-d">
+					<div class="single-prototype">
+			<span class="typ">bool</span> <span class="pln">poll</span>
+			<span class="pun">(</span>
+			<br/>
+			&nbsp;&nbsp;<a href="../../wgpu/api/Queue.html"><span class="typ">Queue</span></a> <span class="pln">queue</span><span class="pun">,</span>
+			<br/>
+			&nbsp;&nbsp;<span class="typ">ulong</span> <span class="pln">submissionIndex</span><span class="pun">,</span>
+			<br/>
+			&nbsp;&nbsp;<span class="pln">std<wbr/></span><span class="pun">.</span><span class="pln">typecons<wbr/></span><span class="pun">.</span><span class="typ">Flag</span>!("forceWait") <span class="pln">forceWait</span> <span class="pun">=</span> <span class="typ">Flag<wbr/></span><span class="pun">.</span><span class="pln">no</span>
+			<br/>
+			<span class="pun">)</span><span class="pln"> </span><span class="kwd">@trusted const</span><span class="pun">;</span>
+					</div>
+				</code>
+			</div>
+			
+			<section><h3>Parameters</h3>
+<table><col class="caption"><tr><th>Name</th><th>Description</th></tr>
+<tr><td id="queue">queue</td><td> The <code class="lang-d"><a href="../../wgpu/api/Queue.html"><span class="typ">Queue</span></a></code> to poll.</td></tr>
+<tr><td id="submissionIndex">submissionIndex</td><td></td></tr>
+<tr><td id="forceWait">forceWait</td><td> Whether or not the call should block.</td></tr>
+</table>
+</section>
+<section><h3>Returns</h3>
+<p><code class="lang-d"><span class="kwd">true</span></code> if the queue is empty, or <code class="lang-d"><span class="kwd">false</span></code> if there are more queue submissions still in flight.
+</p>
 </section>
 
 			<footer>

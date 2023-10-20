@@ -83,10 +83,10 @@ $('#symbolSearchPane').show();</script>
 			<div class="prototype">
 				<code class="lang-d">
 					<div class="single-prototype">
-			<span class="kwd">static </span><a href="../../wgpu/api/Adapter.html"><span class="typ">Adapter</span></a><span class="pun">[]</span> <span class="pln">adapters</span>
+			<a href="../../wgpu/api/Adapter.html"><span class="typ">Adapter</span></a><span class="pun">[]</span> <span class="pln">adapters</span>
 			<span class="pun">(</span>
 			<br/>
-			&nbsp;&nbsp;<a href="../../wgpu/enums/BackendType.html"><span class="typ">BackendType</span></a> <span class="pln">backends</span> <span class="pun">=</span> <span class="typ">BackendType<wbr/></span><span class="pun">.</span><span class="pln">_null</span>
+			&nbsp;&nbsp;<a href="../../wgpu/enums/InstanceBackend.html"><span class="typ">InstanceBackend</span></a> <span class="pln">backends</span> <span class="pun">=</span> <span class="typ">InstanceBackend<wbr/></span><span class="pun">.</span><span class="pln">all</span>
 			<br/>
 			<span class="pun">)</span><span class="pln"> </span><span class="kwd">@property</span><span class="pun">;</span>
 					</div>
@@ -98,6 +98,10 @@ $('#symbolSearchPane').show();</script>
 <table><col class="caption"><tr><th>Name</th><th>Description</th></tr>
 <tr><td id="backends">backends</td><td> Backends from which to enumerate adapters.</td></tr>
 </table>
+</section>
+<section><h2>See Also</h2>
+<p><a href="https://docs.rs/wgpu/latest/wgpu/struct.Instance.html#method.enumerate_adapters">wgpu::Instance.enumerate_adapters</a>
+</p>
 </section>
 
 			<footer>

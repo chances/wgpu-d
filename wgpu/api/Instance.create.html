@@ -83,12 +83,22 @@ $('#symbolSearchPane').show();</script>
 			<div class="prototype">
 				<code class="lang-d">
 					<div class="single-prototype">
-			<span class="kwd">static </span><a href="../../wgpu/api/Instance.html"><span class="typ">Instance</span></a> <span class="pln">create</span><span class="pun">(</span><span class="pun">)</span><span class="pun">;</span>
+			<span class="kwd">static </span><a href="../../wgpu/api/Instance.html"><span class="typ">Instance</span></a> <span class="pln">create</span>
+			<span class="pun">(</span>
+			<br/>
+			&nbsp;&nbsp;<a href="../../wgpu/enums/InstanceBackend.html"><span class="typ">InstanceBackend</span></a> <span class="pln">backends</span> <span class="pun">=</span> <span class="typ">InstanceBackend<wbr/></span><span class="pun">.</span><span class="pln">primary</span>
+			<br/>
+			<span class="pun">)</span><span class="pun">;</span>
 					</div>
 				</code>
 			</div>
 			
-			
+			<section><h2>Parameters</h2>
+<table><col class="caption"><tr><th>Name</th><th>Description</th></tr>
+<tr><td id="backends">backends</td><td> Controls from which backends wgpu will choose during instantiation.</td></tr>
+</table>
+</section>
+
 			<footer>
 				<table class="license-info">
 					<tr>
