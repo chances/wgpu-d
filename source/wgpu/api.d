@@ -1050,17 +1050,28 @@ struct Surface {
   }
   version (linux) {
     /// Create a new `Surface` from a Xlib window handle.
-    static Surface fromXlib(Instance instance, void* display, uint window, string label = null) {
-      auto xlib = SurfaceDescriptorFromXlib(
-        ChainedStruct(null, cast(WGPUSType) SType.surfaceDescriptorFromXlib.asOriginalType),
+    static Surface fromXlib(Instance instance, void* display = null, uint window = 0, string label = null) {
+      auto xlibWindow = SurfaceDescriptorFromXlibWindow(
+        ChainedStruct(null, cast(WGPUSType) SType.surfaceDescriptorFromXlibWindow.asOriginalType),
         display, window
       );
-      auto desc = SurfaceDescriptor(cast(ChainedStruct*) &xlib, label is null ? null : label.toStringz);
+      auto desc = SurfaceDescriptor(cast(ChainedStruct*) &xlibWindow, label is null ? null : label.toStringz);
       return Surface(wgpuInstanceCreateSurface(instance.id, &desc));
     }
+    /// Create a new `Surface` from a Xcb window handle.
+    // TODO: static Surface fromXcb(Instance instance, void* connection = null, uint window = 0, string label = null) {
+    //   auto xcbWindow = SurfaceDescriptorFromXcbWindow(
+    //     ChainedStruct(null, cast(WGPUSType) SType.surfaceDescriptorFromXcbWindow.asOriginalType),
+    //     connection, window
+    //   );
+    //   auto desc = SurfaceDescriptor(cast(ChainedStruct*) &xcbWindow, label is null ? null : label.toStringz);
+    //   return Surface(wgpuInstanceCreateSurface(instance.id, &desc));
+    // }
   } else version (D_Ddoc) {
     /// Create a new `Surface` from a Xlib window handle.
-    static Surface fromXlib(Instance instance, void* display, uint window, string label = null);
+    static Surface fromXlib(Instance instance, void* display = null, uint window = 0, string label = null);
+    /// Create a new `Surface` from a Xcb window handle.
+    // TODO: static Surface fromXcb(Instance instance, void* connection = null, uint window = 0, string label = null);
   }
   // TODO: Support Wayland with a `linux-wayland` version config once upstream wgpu-native supports it
 

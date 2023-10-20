@@ -455,7 +455,7 @@ enum SType : WGPUSType {
   ///
   surfaceDescriptorFromWindowsHwnd,
   ///
-  surfaceDescriptorFromXlib,
+  surfaceDescriptorFromXlibWindow,
   ///
   surfaceDescriptorFromCanvasHtmlSelector,
   ///
