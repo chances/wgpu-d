@@ -9,7 +9,7 @@ import std.conv : asOriginalType, to;
 import std.string : fromStringz, toStringz;
 import std.typecons : Flag, No, Tuple, Yes;
 
-import wgpu.bindings;
+import wgpu_bindings;
 public import wgpu.enums;
 public import wgpu.limits;
 

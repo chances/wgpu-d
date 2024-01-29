@@ -5,7 +5,7 @@ module wgpu.enums;
 
 import std.typecons : BitFlags, Yes;
 
-import wgpu.bindings;
+import wgpu_bindings;
 
 ///
 enum AdapterType : WGPUAdapterType {
