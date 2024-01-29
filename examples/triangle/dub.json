@@ -17,23 +17,14 @@
   },
   "versions": ["GLFW_32"],
   "subConfigurations": {
-    "bindbc-glfw": "static"
+    "bindbc-glfw": "static",
+    "wgpu-d": "static"
   },
   "preGenerateCommands": [
     "make -C subprojects -f glfw.Makefile"
   ],
-  "preBuildCommands-osx": [
-    "rm -f `find $PACKAGE_DIR/../../bin -name '*triangle'`"
-  ],
-  "postBuildCommands-osx": [
-    "echo Fixing up libwgpu dylib path...",
-    "install_name_tool -change /Users/runner/work/wgpu-native/wgpu-native/target/x86_64-apple-darwin/debug/deps/libwgpu_native.dylib @executable_path/lib/libwgpu_native.dylib `find $PACKAGE_DIR/../../bin -name '*triangle'`"
-  ],
-  "libs": ["glfw3"],
-  "libs-linux": [
-    "X11"
-  ],
-  "libs-windows": ["gdi32"],
-  "lflags-posix": ["-L$PACKAGE_DIR/subprojects/glfw/src"],
-  "lflags-windows": ["/LIBPATH:$PACKAGE_DIR/subprojects/glfw/src"]
+  "lflags-posix": ["$PACKAGE_DIR/subprojects/glfw/src/libglfw3.a"],
+  "lflags-windows": ["/LIBPATH:$PACKAGE_DIR/subprojects/glfw/src"],
+  "libs-linux": ["X11"],
+  "libs-windows": ["glfw3", "gdi32"]
 }

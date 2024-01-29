@@ -56,5 +56,5 @@ ifeq ($(OS),Windows_NT)
 	@if not exist wgpu mkdir wgpu
 	@tar -xf $(ARCHIVE_ZIP) -C wgpu
 else
-	@unzip -q $(ARCHIVE_ZIP) -d wgpu
+	@unzip -q -o $(ARCHIVE_ZIP) -d wgpu
 endif

@@ -1,20 +1,18 @@
 OS ?= $(shell uname -s)
 rwildcard=$(wildcard $1$2) $(foreach d,$(wildcard $1*),$(call rwildcard,$d/,$2))
 ifeq ($(OS),Darwin)
-CC := clang
-SED := gsed
-endif
-ifeq ($(OS),Linux)
-CC := gcc
-endif
-ifeq ($(OS),Windows_NT)
-CC := cl
+  CC := clang
+  SED := gsed
+else ifeq ($(OS),Linux)
+  CC := gcc
+else ifeq ($(OS),Windows_NT)
+  CC := cl
 endif
 ifndef CC
-$(error Unsupported target OS '$(OS)')
+  $(error Unsupported target OS '$(OS)')
 endif
 ifndef SED
-SED := sed
+  SED := sed
 endif
 SOURCES := $(call rwildcard,source/,*.d)
 LIBS_PATH := lib
@@ -28,29 +26,20 @@ all: docs
 # wgpu-native binaries ships with static libraries 🎉
 ifeq ($(OS),Darwin)
   LIB_WGPU := libwgpu_native.a
-endif
-ifeq ($(OS),Linux)
+else ifeq ($(OS),Linux)
   LIB_WGPU := libwgpu_native.a
-endif
-ifeq ($(OS),Windows_NT)
+else ifeq ($(OS),Windows_NT)
   LIB_WGPU := wgpu_native.lib
 endif
 ifndef LIB_WGPU
   $(error Unsupported target OS '$(OS)')
 endif
 LIB_WGPU_SOURCE := subprojects/wgpu
-wgpu: lib/$(LIB_WGPU)
-.PHONY: wgpu
 $(LIB_WGPU_SOURCE): subprojects/wgpu.Makefile
 	@make -C subprojects -f wgpu.Makefile
-lib/$(LIB_WGPU): $(LIB_WGPU_SOURCE)
-ifeq ($(OS),Windows_NT)
-	@if not exist lib mkdir lib
-	@xcopy $(subst /,\\,$(LIB_WGPU_SOURCE))\\$(LIB_WGPU) lib /y >NUL
-else
-	@mkdir -p lib
-	@cp $(LIB_WGPU_SOURCE)/$(LIB_WGPU) lib/.
-endif
+$(LIB_WGPU_SOURCE)/$(LIB_WGPU): $(LIB_WGPU_SOURCE)
+wgpu: $(LIB_WGPU_SOURCE)/$(LIB_WGPU)
+.PHONY: wgpu
 
 #################################################
 # Test Coverage
