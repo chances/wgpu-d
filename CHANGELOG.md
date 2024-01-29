@@ -1,6 +1,20 @@
 <!-- https://keepachangelog.com/en/1.0.0/ -->
 # Changelog
 
+## v0.3.0
+
+### Added
+
+- Add `static` build configuration to force linking to `wgpu-native`'s static libraries
+
+### Changed
+
+- Link against `wgpu-native`'s dynamic libraries by default
+
+### Fixed
+
+- Fix [`enumerate`](https://github.com/chances/wgpu-d/blob/v0.3.0/examples/enumerate/source/app.d) and [`cube`](https://github.com/chances/wgpu-d/blob/v0.3.0/examples/cube/source/app.d) examples
+
 ## v0.2.0
 
 Upgrade `wgpu-native` to [v0.17.0.2](https://github.com/gfx-rs/wgpu-native/releases/tag/v0.17.0.2).

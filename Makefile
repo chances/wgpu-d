@@ -51,7 +51,7 @@ cover: $(SOURCES)
 # Documentation
 #################################################
 
-PACKAGE_VERSION := 0.2.0
+PACKAGE_VERSION := 0.3.0
 docs/sitemap.xml: $(SOURCES)
 	dub build -b ddox
 	@echo "Performing cosmetic changes..."
