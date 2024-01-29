@@ -472,7 +472,7 @@ extern (C) private void wgpu_request_device_callback(
 ///
 /// Does not have to be kept alive.
 /// See_Also: <a href="https://docs.rs/wgpu/0.10.2/wgpu/struct.Instance.html">wgpu::Instance</a>
-struct Instance {
+class Instance {
   /// Handle identifier.
   WGPUInstance id;
 
@@ -499,7 +499,7 @@ struct Instance {
       // TODO: const char * dxcPath,
     };
     auto desc = InstanceDescriptor(cast(ChainedStruct*) &extras);
-    return Instance(wgpuCreateInstance(&desc));
+    return new Instance(wgpuCreateInstance(&desc));
   }
 
   ///

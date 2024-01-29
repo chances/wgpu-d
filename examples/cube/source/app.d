@@ -65,21 +65,20 @@ Mesh unitCube() {
   return Mesh(vertices, indices);
 }
 
-enum string cubeShader = `[[block]]
-struct CameraUniform {
-    view_proj: mat4x4<f32>;
+enum string cubeShader = `struct CameraUniform {
+  view_proj: mat4x4f,
 };
-[[group(0), binding(0)]]
+@group(0) @binding(0)
 var<uniform> camera: CameraUniform;
 
-[[stage(vertex)]]
-fn vs_main([[location(0)]] position: vec3<f32>) -> [[builtin(position)]] vec4<f32> {
-  return camera.view_proj * vec4<f32>(position, 1.0);
+@vertex
+fn vs_main(@location(0) position: vec3f) -> @builtin(position) vec4f {
+  return camera.view_proj * vec4f(position, 1.0);
 }
 
-[[stage(fragment)]]
-fn fs_main() -> [[location(0)]] vec4<f32> {
-    return vec4<f32>(0.5, 0.25, 1.0, 1.0);
+@fragment
+fn fs_main() -> @location(0) vec4f {
+  return vec4f(0.5, 0.25, 1.0, 1.0);
 }`;
 
 extern (C) void wgpu_error_callback(ErrorType type, const char* message, void* userdata) {
@@ -137,9 +136,9 @@ class Cube : Window {
       ]),
       PrimitiveState(PrimitiveTopology.triangleStrip, IndexFormat.uint16, FrontFace.ccw, CullMode.back),
       MultisampleState.singleSample,
-      new FragmentState(
-        shader, "fs_main", [new ColorTargetState(swapChain.format, BlendMode.alphaBlending.to!BlendState)]
-      ),
+      new FragmentState(shader, "fs_main", [
+        new ColorTargetState(swapChain.format, BlendMode.alphaBlending.to!BlendState)
+      ]),
     );
   }
 
@@ -189,9 +188,10 @@ class Cube : Window {
 void main() {
   const title = "Cube Example";
   title.writeln;
+  auto window = new Cube(title);
 
   "Requesting GPU adapter...".writeln;
-  auto adapter = Instance.requestAdapter(window.surface, PowerPreference.lowPower);
+  auto adapter = window.gpu.requestAdapter(window.surface, PowerPreference.lowPower);
   assert(adapter.ready, "Adapter instance was not initialized");
   writefln("Adapter properties: %s", adapter.properties);
 
@@ -199,8 +199,6 @@ void main() {
   auto device = adapter.requestDevice(adapter.limits);
   assert(device.ready, "Device is not ready");
   writefln("Device limits: %s", device.limits);
-
-  auto window = new Cube(title);
 
   // The render pipeline renders data into this swap chain
   auto swapChainFormat = window.surface.preferredFormat(adapter);

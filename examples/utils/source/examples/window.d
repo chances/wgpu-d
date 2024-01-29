@@ -42,6 +42,7 @@ abstract class Window {
   import std.typecons : Yes;
 
   private GLFWwindow* _window = null;
+  private Instance _gpu;
   private string _title;
   private Size _size;
   private string _controls = "Press ESC to quit";
@@ -50,13 +51,16 @@ abstract class Window {
   private FutureTask[] futureTasks;
   private bool paused = false;
 
+  /// GPU instance used to render to this window.
+  Instance gpu() { return _gpu; }
   /// GPU surface backed by this window.
   const Surface surface;
   ///
   SwapChain swapChain;
 
   ///
-  this(string title, uint width = 640, uint height = 480) {
+  this(string title, uint width = 640, uint height = 480, Instance gpu = null) {
+    _gpu = gpu is null ? Instance.create() : gpu;
     _title = title;
 
     glfwSetErrorCallback(&wgpu_glfw_error_callback);
@@ -82,9 +86,11 @@ abstract class Window {
       auto metalLayer = CAMetalLayer.classOf.layer;
       nativeWindow.contentView.wantsLayer = true;
       nativeWindow.contentView.layer = metalLayer;
-      surface = Surface.fromMetalLayer(metalLayer.asId);
+      surface = Surface.fromMetalLayer(this.gpu, metalLayer.asId);
     }
-    else version (Linux) surface = Surface.fromXlib(assert(glfwGetX11Display()), assert(glfwGetX11Window(_window)));
+    else version (Linux) surface = Surface.fromXlib(
+      this.gpu, assert(glfwGetX11Display()), assert(glfwGetX11Window(_window))
+    );
     // TODO: Integrate with Windows platform, i.e. Surface.fromWindowsHwnd
     else static assert(0, "Unsupported target platform");
     assert(surface.id !is null, "Could not create native surface");
