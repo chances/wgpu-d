@@ -1,20 +1,18 @@
 OS ?= $(shell uname -s)
 rwildcard=$(wildcard $1$2) $(foreach d,$(wildcard $1*),$(call rwildcard,$d/,$2))
 ifeq ($(OS),Darwin)
-CC := clang
-SED := gsed
-endif
-ifeq ($(OS),Linux)
-CC := gcc
-endif
-ifeq ($(OS),Windows_NT)
-CC := cl
+  CC := clang
+  SED := gsed
+else ifeq ($(OS),Linux)
+  CC := gcc
+else ifeq ($(OS),Windows_NT)
+  CC := cl
 endif
 ifndef CC
-$(error Unsupported target OS '$(OS)')
+  $(error Unsupported target OS '$(OS)')
 endif
 ifndef SED
-SED := sed
+  SED := sed
 endif
 SOURCES := $(call rwildcard,source/,*.d)
 LIBS_PATH := lib
