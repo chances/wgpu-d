@@ -19,40 +19,34 @@
     "gdc": "no",
     "ldc": ">=1.35.0-beta1"
   },
-  "systemDependencies-linux": "vulkan >= 1.1.0, patchelf",
+  "systemDependencies-linux": "vulkan >= 1.1.0",
   "systemDependencies-osx": "metal >= 2",
   "systemDependencies-windows": "vulkan >= 1.1.0 or DirectX >= 11",
   "preGenerateCommands": ["make wgpu"],
-  "dflags": [
-    "-P-Isource/wgpu",
-    "-P-Isubprojects/wgpu"
-  ],
   "configurations": [
     {
-      "name": "library"
+      "name": "library",
+      "lflags-posix": ["$WGPU_D_PACKAGE_DIR/subprojects/wgpu"],
+      "libs-posix": ["wgpu_native"]
+    },
+    {
+      "name": "static",
+      "lflags-posix": ["$WGPU_D_PACKAGE_DIR/subprojects/wgpu/libwgpu_native.a"]
     },
     {
       "name": "unittest",
-      "postBuildCommands-linux": [
-        "echo Fixing up libwgpu so path...",
-        "patchelf --set-rpath '$$ORIGIN' bin/wgpu-d-test-unittest"
-      ],
-      "postBuildCommands-osx": [
-        "echo Fixing up libwgpu dylib path...",
-        "install_name_tool -change /Users/runner/work/wgpu-native/wgpu-native/target/x86_64-apple-darwin/debug/deps/libwgpu_native.dylib @executable_path/libwgpu_native.dylib bin/wgpu-d-test-unittest"
-      ]
+      "lflags-posix": ["$WGPU_D_PACKAGE_DIR/subprojects/wgpu/libwgpu_native.a"]
     }
   ],
-  "lflags-posix": ["-L$WGPU_D_PACKAGE_DIR/lib"],
-  "lflags-windows": ["/LIBPATH:$WGPU_D_PACKAGE_DIR/subprojects/wgpu"],
   "lflags-osx": [
     "-framework", "AppKit",
     "-framework", "IOKit",
     "-framework", "Metal",
     "-framework", "QuartzCore"
   ],
-  "libs": ["wgpu_native"],
+  "lflags-windows": ["/LIBPATH:$WGPU_D_PACKAGE_DIR/subprojects/wgpu"],
   "libs-windows": [
+    "wgpu_native",
     "d3dcompiler",
     "ws2_32",
     "advapi32",
