@@ -20,7 +20,7 @@ jobs:
     #   if: runner.os == 'Linux'
     #   run: sudo apt-get install --quiet -y libglfw3 libglfw3-dev
     - name: Lint
-      run: dub lint
+      run: dub run dscanner -- lint -f github source
     # - name: Integration Test
     #   run: make headless
     - name: Test
