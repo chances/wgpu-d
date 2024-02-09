@@ -8,14 +8,20 @@ jobs:
   test:
     name: Tests
 
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-12]
+        # TODO: os: [ubuntu-latest, macos-12, windows-latest]
+        compiler: [ldc-1.36.0, dmd-2.107.0]
+
+    runs-on: ${{ matrix.os }}
 
     steps:
     - uses: actions/checkout@v1
     - name: Install D compiler
       uses: dlang-community/setup-dlang@v1
       with:
-        compiler: ldc-1.36.0
+        compiler: ${{ matrix.compiler }}
     # - name: Install *nix Dependencies
     #   if: runner.os == 'Linux'
     #   run: sudo apt-get install --quiet -y libglfw3 libglfw3-dev
