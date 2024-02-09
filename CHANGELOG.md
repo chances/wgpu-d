@@ -1,6 +1,13 @@
 <!-- https://keepachangelog.com/en/1.0.0/ -->
 # Changelog
 
+## v0.3.1
+
+### Fixed
+
+- Prevent module conflicts, add namespace to C bindings
+- Fix reference to wgpu-native in documentation
+
 ## v0.3.0
 
 ### Added
