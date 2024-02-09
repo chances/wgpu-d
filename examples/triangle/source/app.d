@@ -7,6 +7,12 @@ import wgpu.api;
 
 package:
 
+version (OSX) enum SUPPORTED_TARGET = true;
+version (Linux) enum SUPPORTED_TARGET = true;
+version (Windows) enum SUPPORTED_TARGET = true;
+static if (!__traits(compiles, SUPPORTED_TARGET)) enum SUPPORTED_TARGET = false;
+static assert(SUPPORTED_TARGET, "Unsupported target platform");
+
 string lastError = null;
 extern(C) void wgpu_glfw_error_callback(int error, const char* description) nothrow {
   import std.conv : ConvException;
@@ -56,6 +62,7 @@ fn fs_main(in: VertexOutput) -> @location(0) vec4f {
 // Adapted from https://github.com/gfx-rs/wgpu-native/blob/v0.10.4.1/examples/triangle/main.c
 // See also https://sotrh.github.io/learn-wgpu/beginner/tutorial5-textures
 void main() {
+  import std.exception : enforce;
   import std.functional : toDelegate;
   import std.string : toStringz;
   import std.typecons : Yes;
@@ -88,22 +95,18 @@ void main() {
 
   Surface surface;
   version (OSX) {
-    import std.exception : enforce;
-
-    auto nativeWindow = NSWindow.from(enforce(glfwGetCocoaWindow(window), lastError));
+    auto nativeWindow = NSWindow.from(glfwGetCocoaWindow(window).enforce, lastError);
     auto metalLayer = CAMetalLayer.classOf.layer;
     nativeWindow.contentView.wantsLayer = true;
     nativeWindow.contentView.layer = metalLayer;
     surface = Surface.fromMetalLayer(instance, metalLayer.asId);
-  } else {
-    version (Linux) surface = Surface.fromXlib(instance, glfwGetX11Display().enforce, glfwGetX11Window(window).enforce);
-    else {
-      version (Windows) {
-        import core.sys.windows.windows : GetModuleHandleA;
-        surface = Surface.fromWindowsHwnd(instance, GetModuleHandleA(null), glfwGetWin32Window(window));
-      }
-      else static assert(0, "Unsupported target platform");
-    }
+  }
+  version (Linux) {
+    surface = Surface.fromXlib(instance, glfwGetX11Display().enforce, glfwGetX11Window(window).enforce.to!uint);
+  }
+  version (Windows) {
+    import core.sys.windows.windows : GetModuleHandleA;
+    surface = Surface.fromWindowsHwnd(instance, GetModuleHandleA(null), glfwGetWin32Window(window));
   }
   assert(surface.id !is null, "Could not create native surface");
 
@@ -306,8 +309,22 @@ auto bindDelegate(Func, string file = __FILE__, size_t line = __LINE__)(Func f) 
 
 version (Windows) {
   import core.sys.windows.windows : HWND;
-  // FIXME: What's wrong with https://github.com/BindBC/bindbc-glfw/blob/6529ce4f67f69839a93de5e0bbe1150fab30d633/source/bindbc/glfw/bindstatic.d#L172
+  // FIXME: Undefined return types: https://github.com/BindBC/bindbc-glfw/blob/6529ce4f67f69839a93de5e0bbe1150fab30d633/source/bindbc/glfw/bindstatic.d#L172
   extern(C) @nogc nothrow HWND glfwGetWin32Window(GLFWwindow* window);
+	extern(C) @nogc nothrow const(char)* glfwGetWin32Adapter(GLFWmonitor* monitor);
+	extern(C) @nogc nothrow const(char)* glfwGetWin32Monitor(GLFWmonitor* monitor);
+}
+
+version (Linux) {
+  // FIXME: Undefined return types: https://github.com/BindBC/bindbc-glfw/blob/6529ce4f67f69839a93de5e0bbe1150fab30d633/source/bindbc/glfw/bindstatic.d#L223
+  extern(C) @nogc nothrow {
+    void* glfwGetX11Display();
+    ulong glfwGetX11Window(GLFWwindow* window);
+    ulong glfwGetX11Adapter(GLFWmonitor* monitor);
+    ulong glfwGetX11Monitor(GLFWmonitor* monitor);
+    void glfwSetX11SelectionString(const(char)* string_);
+    const(char)* glfwGetX11SelectionString();
+  }
 }
 
 // mac OS interop with the Objective-C Runtime

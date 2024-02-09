@@ -13,6 +13,17 @@ import std.typecons : Tuple;
 import bindbc.glfw;
 import wgpu.api;
 
+version (D_Ddoc) {
+  /// Whether the current target OS is supported.
+  enum SUPPORTED_TARGET = true;
+} else {
+  version (OSX) enum SUPPORTED_TARGET = true;
+  version (Linux) enum SUPPORTED_TARGET = true;
+  version (Windows) enum SUPPORTED_TARGET = true;
+  static if (!__traits(compiles, SUPPORTED_TARGET)) enum SUPPORTED_TARGET = false;
+  static assert(SUPPORTED_TARGET, "Unsupported target platform");
+}
+
 /// Last observed GLFW error.
 static string lastError = null;
 
@@ -60,6 +71,8 @@ abstract class Window {
 
   ///
   this(string title, uint width = 640, uint height = 480, Instance gpu = null) {
+    import std.exception : enforce;
+
     _gpu = gpu is null ? Instance.create() : gpu;
     _title = title;
 
@@ -80,19 +93,19 @@ abstract class Window {
 
     // Create GPU surface backed by this window
     version (OSX) {
-      import std.exception : enforce;
-
       auto nativeWindow = NSWindow.from(enforce(glfwGetCocoaWindow(_window), lastError));
       auto metalLayer = CAMetalLayer.classOf.layer;
       nativeWindow.contentView.wantsLayer = true;
       nativeWindow.contentView.layer = metalLayer;
       surface = Surface.fromMetalLayer(this.gpu, metalLayer.asId);
     }
-    else version (Linux) surface = Surface.fromXlib(
-      this.gpu, assert(glfwGetX11Display()), assert(glfwGetX11Window(_window))
+    version (Linux) surface = Surface.fromXlib(
+      this.gpu, glfwGetX11Display().enforce, glfwGetX11Window(_window).enforce.to!uint
     );
-    // TODO: Integrate with Windows platform, i.e. Surface.fromWindowsHwnd
-    else static assert(0, "Unsupported target platform");
+    version (Windows) {
+      import core.sys.windows.windows : GetModuleHandleA;
+      surface = Surface.fromWindowsHwnd(instance, GetModuleHandleA(null), glfwGetWin32Window(window));
+    }
     assert(surface.id !is null, "Could not create native surface");
 
     glfwSetWindowIconifyCallback(_window, ((GLFWwindow*, int iconified) nothrow {
@@ -223,6 +236,26 @@ auto bindDelegate(Func, string file = __FILE__, size_t line = __LINE__)(Func f) 
   }
 
   return &func;
+}
+
+version (Windows) {
+  import core.sys.windows.windows : HWND;
+  // FIXME: Undefined return types: https://github.com/BindBC/bindbc-glfw/blob/6529ce4f67f69839a93de5e0bbe1150fab30d633/source/bindbc/glfw/bindstatic.d#L172
+  extern(C) @nogc nothrow HWND glfwGetWin32Window(GLFWwindow* window);
+	extern(C) @nogc nothrow const(char)* glfwGetWin32Adapter(GLFWmonitor* monitor);
+	extern(C) @nogc nothrow const(char)* glfwGetWin32Monitor(GLFWmonitor* monitor);
+}
+
+version (Linux) {
+  // FIXME: Undefined return types: https://github.com/BindBC/bindbc-glfw/blob/6529ce4f67f69839a93de5e0bbe1150fab30d633/source/bindbc/glfw/bindstatic.d#L223
+  extern(C) @nogc nothrow {
+    void* glfwGetX11Display();
+    ulong glfwGetX11Window(GLFWwindow* window);
+    ulong glfwGetX11Adapter(GLFWmonitor* monitor);
+    ulong glfwGetX11Monitor(GLFWmonitor* monitor);
+    void glfwSetX11SelectionString(const(char)* string_);
+    const(char)* glfwGetX11SelectionString();
+  }
 }
 
 // mac OS interop with the Objective-C Runtime

@@ -16,6 +16,7 @@
     }
   },
   "versions": ["GLFW_32"],
+  "versions-linux": ["Linux"],
   "subConfigurations": {
     "bindbc-glfw": "static",
     "wgpu-d": "static"
