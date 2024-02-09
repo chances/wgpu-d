@@ -50,6 +50,7 @@ wgpu: subprojects/wgpu/$(LIB_WGPU)
 #################################################
 cover: $(SOURCES)
 	dub test --build=unittest-cov
+.PHONY: cover
 
 #################################################
 # Documentation

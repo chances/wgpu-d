@@ -22,15 +22,9 @@ jobs:
     - name: Lint
       run: dub run dscanner -- lint -f github source
     # - name: Integration Test
-    #   run: make headless
+    #   run: dub build wgpu-d:headless
     - name: Test
-      run: env LD_LIBRARY_PATH=lib make cover
+      run: make cover
     - name: Upload Coverage to Codecov
       if: success()
       run: bash <(curl -s https://codecov.io/bash)
-    # - name: Upload Test Log Artifact on Failure
-    #   uses: actions/upload-artifact@v1
-    #   if: failure()
-    #   with:
-    #     name: Linux_Meson_Testlog
-    #     path: build/meson-logs/testlog.txt
