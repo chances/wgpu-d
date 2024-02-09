@@ -119,6 +119,7 @@ bool valid(T)(T resource) if (isResource!T) {
 
 unittest {
   import wgpu.api : ShaderModule;
+  assert(!valid!SwapChain(null));
   assert(!valid(ShaderModule(null)));
 }
 
