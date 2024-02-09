@@ -21,7 +21,7 @@
     "wgpu-d": "static"
   },
   "preGenerateCommands": [
-    "make -C subprojects -f glfw.Makefile"
+    "make --no-print-directory -C subprojects -f glfw.Makefile"
   ],
   "lflags-posix": ["$PACKAGE_DIR/subprojects/glfw/src/libglfw3.a"],
   "lflags-windows": ["/LIBPATH:$PACKAGE_DIR/subprojects/glfw/src"],
