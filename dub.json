@@ -15,7 +15,7 @@
   "targetPath": "bin",
   "toolchainRequirements": {
     "frontend": ">=2.105",
-    "dmd": ">=2.106.1",
+    "dmd": ">=2.107.0",
     "gdc": "no",
     "ldc": ">=1.35.0-beta1"
   },
