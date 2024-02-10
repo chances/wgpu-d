@@ -13,6 +13,13 @@ jobs:
         os: [ubuntu-latest, macos-12]
         # TODO: os: [ubuntu-latest, macos-12, windows-latest]
         compiler: [ldc-1.36.0, dmd-2.107.0]
+        # FIXME: ImportC doesn't emit `struct` constructors?
+        # Undefined symbols for architecture x86_64:
+        #  "__C.WGPURenderPassDescriptor.__initwgpu_bindings", referenced from:
+        #      @trusted wgpu.api.RenderPass wgpu.api.CommandEncoder.beginRenderPass(const(__C.WGPURenderPassDescriptor)) in wgpu-d-test-unittest.o
+        exclude:
+        - os: macos-12
+          compiler: dmd-2.107.0
 
     runs-on: ${{ matrix.os }}
 
