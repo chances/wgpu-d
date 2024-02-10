@@ -15,6 +15,8 @@ void main() {
   writefln("Preferred backend type: %s", preferredBackend);
   auto adapters = instance.adapters;
   writefln("Found %d suitable adapter(s):", adapters.length);
+  if (adapters.length == 0) assert(0, "WebGPU is not supported on this device. Try updating your graphics drivers.");
+
   for (int i = 0; i < adapters.length; i++) {
     auto adapter = adapters[i];
     auto props = adapter.properties;
@@ -30,8 +32,6 @@ void main() {
     write('\n');
     if (adapter.ready) adapter.destroy();
   }
-
-  if (adapters.length == 0) assert(0, "WebGPU is not supported on this device. Try updating your graphics drivers.");
 
   auto adapter = instance.requestAdapter(PowerPreference.lowPower, preferredBackend);
   assert(adapter.ready, "Adapter instance was not initialized: Adapter status: " ~ adapter.status.text);
