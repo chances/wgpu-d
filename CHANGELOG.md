@@ -3,6 +3,10 @@
 
 ## v0.3.1
 
+### Changed
+
+- Allow DMD >= v2.107.0 in Dub toolchain requirements
+
 ### Fixed
 
 - Prevent module conflicts, add namespace to C bindings
