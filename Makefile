@@ -34,11 +34,15 @@ endif
 ifndef LIB_WGPU
   $(error Unsupported target OS '$(OS)')
 endif
-LIB_WGPU_SOURCE := subprojects/wgpu
-$(LIB_WGPU_SOURCE): subprojects/wgpu.Makefile
-	@make -C subprojects -f wgpu.Makefile
-$(LIB_WGPU_SOURCE)/$(LIB_WGPU): $(LIB_WGPU_SOURCE)
-wgpu: $(LIB_WGPU_SOURCE)/$(LIB_WGPU)
+subprojects/wgpu: subprojects/wgpu.Makefile
+	@make --no-print-directory -C subprojects -f wgpu.Makefile
+ifneq ($(OS),Windows_NT)
+	file subprojects/wgpu/$(LIB_WGPU)
+else
+	IF EXIST subprojects/wgpu/$(LIB_WGPU) ECHO subprojects/wgpu/$(LIB_WGPU) exists.
+endif
+subprojects/wgpu/$(LIB_WGPU): subprojects/wgpu
+wgpu: subprojects/wgpu/$(LIB_WGPU)
 .PHONY: wgpu
 
 #################################################
@@ -46,6 +50,7 @@ wgpu: $(LIB_WGPU_SOURCE)/$(LIB_WGPU)
 #################################################
 cover: $(SOURCES)
 	dub test --build=unittest-cov
+.PHONY: cover
 
 #################################################
 # Documentation
@@ -67,7 +72,7 @@ docs/sitemap.xml: $(SOURCES)
 	# Footer
 	@$(SED) -i -e "/<p class=\"faint\">Generated using the DDOX documentation generator<\/p>/r views/footer.html" -e "/<p class=\"faint\">Generated using the DDOX documentation generator<\/p>/d" `find docs -name '*.html'`
 	# Dub Package Version
-	@echo `git describe --tags --abbrev=0`
+	@echo Latest tag: `git describe --tags --abbrev=0`
 	@$(SED) -i "s/DUB_VERSION/$(PACKAGE_VERSION)/g" `find docs -name '*.html'`
 	@echo Done
 

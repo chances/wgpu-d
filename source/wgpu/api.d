@@ -1762,14 +1762,12 @@ struct CommandEncoder {
     string label = null
   ) {
     assert(colorAttachments.length);
-    return beginRenderPass(RenderPassDescriptor(
-      null,
-      label is null ? null : label.toStringz,
-      colorAttachments.length.to!uint,
-      colorAttachments.ptr,
-      depthStencilAttachment,
-      null, // occlusion query set
-    ));
+    auto descriptor = RenderPassDescriptor.init;
+    descriptor.label = label is null ? null : label.toStringz;
+    descriptor.colorAttachmentCount = colorAttachments.length.to!uint;
+    descriptor.colorAttachments = colorAttachments.ptr;
+    descriptor.depthStencilAttachment = depthStencilAttachment;
+    return beginRenderPass(descriptor);
   }
   /// Begins recording of a render pass.
   ///
