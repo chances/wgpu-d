@@ -1,6 +1,10 @@
 <!-- https://keepachangelog.com/en/1.0.0/ -->
 # Changelog
 
+## v0.4.0
+
+Upgrade `wgpu-native` to [v0.19.1.1](https://github.com/gfx-rs/wgpu-native/releases/tag/v0.19.1.1).
+
 ## v0.3.1
 
 ### Changed

@@ -1,5 +1,5 @@
-# See https://github.com/gfx-rs/wgpu-native/tree/v0.17.0.2
-VERSION := v0.17.0.2
+# See https://github.com/gfx-rs/wgpu-native/tree/v0.19.1.1
+VERSION := v0.19.1.1
 OS ?= $(shell uname -s)
 ifeq ($(OS),Windows_NT)
   ifeq ($(PROCESSOR_ARCHITEW6432),AMD64)
