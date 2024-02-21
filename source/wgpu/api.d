@@ -75,7 +75,7 @@ alias CommandEncoderDescriptor = WGPUCommandEncoderDescriptor;
 ///
 alias CompilationMessage = WGPUCompilationMessage;
 ///
-alias ComputePassTimestampWrite = WGPUComputePassTimestampWrite;
+alias ComputePassTimestampWrites = WGPUComputePassTimestampWrites;
 ///
 alias ConstantEntry = WGPUConstantEntry;
 /// Extent of a texture related operation.
@@ -164,7 +164,7 @@ alias RenderPassDepthStencilAttachment = WGPURenderPassDepthStencilAttachment;
 ///
 alias RenderPassDescriptorMaxDrawCount = WGPURenderPassDescriptorMaxDrawCount;
 ///
-alias RenderPassTimestampWrite = WGPURenderPassTimestampWrite;
+alias RenderPassTimestampWrites = WGPURenderPassTimestampWrites;
 /// Additional information required when requesting an adapter.
 /// See_Also: <a href="https://docs.rs/wgpu/0.10.2/wgpu/type.RequestAdapterOptions.html">wgpu::RequestAdapterOptions</a>
 alias RequestAdapterOptions = WGPURequestAdapterOptions;
@@ -187,6 +187,15 @@ alias StorageTextureBindingLayout = WGPUStorageTextureBindingLayout;
 ///
 alias SurfaceDescriptor = WGPUSurfaceDescriptor;
 ///
+struct SurfaceCapabilities {
+  WGPUSurfaceCapabilities state;
+  alias state this;
+
+  ~this() {
+    wgpuSurfaceCapabilitiesFreeMembers(state);
+  }
+}
+///
 alias SurfaceDescriptorFromAndroidNativeWindow = WGPUSurfaceDescriptorFromAndroidNativeWindow;
 ///
 alias SurfaceDescriptorFromCanvasHtmlSelector = WGPUSurfaceDescriptorFromCanvasHTMLSelector;
@@ -200,8 +209,6 @@ alias SurfaceDescriptorFromWindowsHwnd = WGPUSurfaceDescriptorFromWindowsHWND;
 alias SurfaceDescriptorFromXcbWindow = WGPUSurfaceDescriptorFromXcbWindow;
 ///
 alias SurfaceDescriptorFromXlibWindow = WGPUSurfaceDescriptorFromXlibWindow;
-/// Describes a `SwapChain`.
-alias SwapChainDescriptor = WGPUSwapChainDescriptor;
 ///
 alias TextureBindingLayout = WGPUTextureBindingLayout;
 /// Layout of a texture in a buffer's memory.
@@ -490,7 +497,7 @@ class Instance {
   /// Create a new instance of wgpu.
   /// Params:
   /// backends = Controls from which backends wgpu will choose during instantiation.
-  static Instance create(InstanceBackend backends = InstanceBackend.primary) {
+  static Instance create(BackendType backends = BackendType.primary) {
     const WGPUInstanceExtras extras = {
       chain: WGPUChainedStruct(null, cast(WGPUSType) WGPUNativeSType.WGPUSType_InstanceExtras),
       backends: backends,
@@ -514,7 +521,7 @@ class Instance {
   /// Params:
   /// backends = Backends from which to enumerate adapters.
   /// See_Also: <a href="https://docs.rs/wgpu/latest/wgpu/struct.Instance.html#method.enumerate_adapters">wgpu::Instance.enumerate_adapters</a>
-  @property Adapter[] adapters(InstanceBackend backends = InstanceBackend.all) {
+  @property Adapter[] adapters(BackendType backends = BackendType.undefined) {
     import std.algorithm : map;
     import std.array : array;
 
@@ -705,7 +712,7 @@ class Device {
   /// Returns: `true` if the queue is empty, or `false` if there are more queue submissions still in flight.
   bool poll(Flag!"forceWait" forceWait = No.forceWait) @trusted const {
     assert(id !is null);
-    return wgpuDevicePoll(cast(WGPUDevice) id, forceWait, null);
+    return wgpuDevicePoll(cast(WGPUDevice) id, forceWait, null).to!bool;
   }
 
   /// Check for resource cleanups and mapping callbacks.
@@ -717,7 +724,7 @@ class Device {
   bool poll(Queue queue, ulong submissionIndex, Flag!"forceWait" forceWait = No.forceWait) @trusted const {
     assert(id !is null);
     auto wrappedSubmissionIndex = WGPUWrappedSubmissionIndex(queue.id, submissionIndex);
-    return wgpuDevicePoll(cast(WGPUDevice) id, forceWait, &wrappedSubmissionIndex);
+    return wgpuDevicePoll(cast(WGPUDevice) id, forceWait, &wrappedSubmissionIndex).to!bool;
   }
 
   /// Creates a shader module from SPIR-V source code.
@@ -992,22 +999,6 @@ class Device {
   Sampler createSampler(const SamplerDescriptor descriptor) @trusted {
     return Sampler(wgpuDeviceCreateSampler(id, cast(SamplerDescriptor*) &descriptor), descriptor);
   }
-
-  /// Create a new `SwapChain` which targets `surface`.
-  SwapChain createSwapChain(
-    const Surface surface, uint width, uint height,
-    const TextureFormat format, const TextureUsage usage,
-    const PresentMode presentMode, const string label = null
-  ) const {
-    return createSwapChain(surface, SwapChainDescriptor(
-      null, label is null ? null : label.toStringz,
-      usage, format, width, height, presentMode
-    ));
-  }
-  /// ditto
-  SwapChain createSwapChain(const Surface surface, const SwapChainDescriptor descriptor) const {
-    return new SwapChain(this, surface, descriptor);
-  }
 }
 
 /// A handle to a presentable surface.
@@ -1081,58 +1072,41 @@ struct Surface {
     assert(adapter.ready);
     return wgpuSurfaceGetPreferredFormat(cast(WGPUSurface) id, adapter.id).asOriginalType.to!TextureFormat;
   }
-}
-
-/// A handle to a swap chain.
-///
-/// A `SwapChain` represents the image or series of images that will be presented to a `Surface`.
-/// A `SwapChain` may be created with `Device.createSwapChain`.
-/// See_Also: <a href="https://docs.rs/wgpu/0.9.0/wgpu/struct.SwapChain.html">wgpu::SwapChain</a>
-class SwapChain {
-  package WGPUSwapChain id;
-  /// `Surface` this swap chain renders to.
-  const Surface surface;
-  /// Describes this `SwapChain.`
-  const SwapChainDescriptor descriptor;
-  /// Optional, human-readable debug label for this swap chain.
-  const string label;
-
-  package this(const Device device, const Surface surface, const SwapChainDescriptor descriptor) @trusted {
-    id = wgpuDeviceCreateSwapChain(
-      cast(WGPUDevice) device.id, cast(WGPUSurface) surface.id, cast(SwapChainDescriptor*) &descriptor
-    );
-    this.surface = surface;
-    this.descriptor = descriptor;
-    this.label = descriptor.label is null ? null : descriptor.label.fromStringz.to!string;
-  }
-
-  /// Texture format of this swap chain.
-  /// Remarks: The only guaranteed formats are `TextureFormat.bgra8Unorm` and `TextureFormat.bgra8UnormSrgb`;
-  TextureFormat format() @property inout {
-    return descriptor.format.asOriginalType.to!(inout TextureFormat);
-  }
-
-  /// Returns the next texture to be presented by the swapchain for drawing.
-  const(TextureView) getNextTexture() @trusted const {
-    import std.exception : enforce;
-
-    TextureViewDescriptor viewDesc = {
-      label: descriptor.label,
-      format: descriptor.format,
-      dimension: TextureViewDimension.undefined,
-      aspect: TextureAspect.all,
-    };
-    assert(id !is null);
-    const view = TextureView(wgpuSwapChainGetCurrentTextureView(cast(WGPUSwapChain) id), viewDesc, No.multisampled);
-    enforce(view.id !is null, "Cannot acquire next swap chain texture");
-    return view;
-  }
 
   ///
-  void present() @trusted inout {
+  SurfaceCapabilities capabilities(Adapter adapter) @trusted const {
     assert(id !is null);
-    wgpuSwapChainPresent(cast(WGPUSwapChain) id);
+    SurfaceCapabilities capabilities;
+    wgpuSurfaceGetCapabilities(cast(WGPUSurface) id, adapter.id, &capabilities.state);
+    return capabilities;
   }
+
+  /// Create a new `SwapChain` which targets `surface`.
+  void configure(
+    Device device,
+    uint width, uint height, const TextureFormat format, const TextureUsage usage,
+    const PresentMode presentMode, const CompositeAlphaMode alphaMode,
+    const TextureFormat[] viewFormats = [],
+  ) @trusted const {
+    assert(viewFormats !is null && viewFormats.length);
+    auto config = WGPUSurfaceConfiguration.init;
+    config.device = device.id;
+    config.usage = usage;
+    config.format = format;
+    config.viewFormatCount = viewFormats.length;
+    config.viewFormats = cast(WGPUTextureFormat*) viewFormats.ptr;
+    config.width = width;
+    config.height = height;
+    config.presentMode = presentMode;
+    config.alphaMode = alphaMode;
+    wgpuSurfaceConfigure(cast(WGPUSurfaceImpl*) id, &config);
+  }
+
+  // TODO: void wgpuSurfaceGetCurrentTexture(WGPUSurface surface, WGPUSurfaceTexture * surfaceTexture) WGPU_FUNCTION_ATTRIBUTE;
+  // TODO: void wgpuSurfacePresent(WGPUSurface surface) WGPU_FUNCTION_ATTRIBUTE;
+  // TODO: void wgpuSurfaceUnconfigure(WGPUSurface surface) WGPU_FUNCTION_ATTRIBUTE;
+  // TODO: void wgpuSurfaceReference(WGPUSurface surface) WGPU_FUNCTION_ATTRIBUTE;
+  // TODO: void wgpuSurfaceRelease(WGPUSurface surface) WGPU_FUNCTION_ATTRIBUTE;
 }
 
 extern (C) private void wgpuBufferMapCallback(WGPUBufferMapAsyncStatus status, void* data) {
@@ -1344,6 +1318,7 @@ class Texture {
       case TextureFormat.bc3rgbaUnorm:
       case TextureFormat.bc3rgbaUnormSrgb:
         return 16;
+      case TextureFormat.rgb10a2Uint:
       case TextureFormat.rgb10a2Unorm:
       case TextureFormat.rg11b10Ufloat:
       case TextureFormat.rgb9e5Ufloat:
@@ -1360,7 +1335,7 @@ class Texture {
       case TextureFormat.bc7rgbaUnorm:
       case TextureFormat.bc7rgbaUnormSrgb:
         // FIXME: Supply block sizes for these texture formats
-        assert(0, "Unknown block size in bytes of " ~ descriptor.format.stringof);
+        assert(0, "Unknown block size, in bytes, of " ~ descriptor.format.stringof);
       // QUESTION: Depth formats of _at least_ 24 bits, therefore there's no guarenteed block size?
       case TextureFormat.depth24Plus:
       case TextureFormat.depth24PlusStencil8:
@@ -1411,6 +1386,7 @@ class Texture {
       case TextureFormat.rgba32Float:
       case TextureFormat.rgba32Uint:
       case TextureFormat.rgba32Sint:
+      case TextureFormat.rgb10a2Uint:
       case TextureFormat.rgb10a2Unorm:
       case TextureFormat.rg11b10Ufloat:
       case TextureFormat.rgb9e5Ufloat:
@@ -1956,6 +1932,7 @@ struct RenderPass {
   ) @trusted {
     assert(view.id !is null);
     return RenderPassColorAttachment(
+      null, // nextInChain
       cast(WGPUTextureView) view.id,
       resolveTarget is null ? null : resolveTarget.id,
       loadOp,

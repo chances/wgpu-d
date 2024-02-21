@@ -8,7 +8,7 @@
 /// License: MIT License
 module wgpu.utils;
 
-import wgpu.api : Buffer, BufferUsage, Device, SwapChain, Texture, TextureDimension, TextureViewDimension;
+import wgpu.api : Buffer, BufferUsage, Device, Texture, TextureDimension, TextureViewDimension;
 
 /// Integral type used for buffer offsets.
 /// See_Also: <a href="https://docs.rs/wgpu/0.10.2/wgpu/type.BufferAddress.html">wgpu::BufferAddress</a>
@@ -119,22 +119,7 @@ bool valid(T)(T resource) if (isResource!T) {
 
 unittest {
   import wgpu.api : ShaderModule;
-  assert(!valid!SwapChain(null));
   assert(!valid(ShaderModule(null)));
-}
-
-/// Recreates a new swap chain given an `extant` swap chain and a new size.
-///
-/// Usually called as the result of a swap chain's underlying `wgpu.api.Surface` having been resized, e.g. the user resized your app's window.
-SwapChain resize(const SwapChain extant, const Device device, uint width, uint height) @trusted {
-  import wgpu.api : PresentMode, TextureFormat, TextureUsage;
-
-  assert(extant.valid, "Extant swap chain is invalid");
-  return device.createSwapChain(
-    extant.surface, width, height,
-    cast(const TextureFormat) extant.descriptor.format, cast(const TextureUsage) extant.descriptor.usage,
-    cast(const PresentMode) extant.descriptor.presentMode, extant.label
-  );
 }
 
 /// Recreates a new texture given an `extant` texture and a new size.
