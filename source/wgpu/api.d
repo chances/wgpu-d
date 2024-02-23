@@ -194,6 +194,36 @@ struct SurfaceCapabilities {
   ~this() {
     wgpuSurfaceCapabilitiesFreeMembers(state);
   }
+
+  ///
+  TextureFormat[] formats() const @property {
+    import std.algorithm : copy, map;
+    auto formats = new TextureFormat[state.formatCount];
+    assert(state.alphaModes[0..state.formatCount].map!(
+      mode => mode.asOriginalType.to!TextureFormat
+    ).copy(formats).length == 0);
+    return formats;
+  }
+
+  ///
+  PresentMode[] presentModes() const @property {
+    import std.algorithm : copy, map;
+    auto modes = new PresentMode[state.presentModeCount];
+    assert(state.alphaModes[0..state.presentModeCount].map!(
+      mode => mode.asOriginalType.to!PresentMode
+    ).copy(modes).length == 0);
+    return modes;
+  }
+
+  ///
+  CompositeAlphaMode[] alphaModes() const @property {
+    import std.algorithm : copy, map;
+    auto modes = new CompositeAlphaMode[state.alphaModeCount];
+    assert(state.alphaModes[0..state.alphaModeCount].map!(
+      mode => mode.asOriginalType.to!CompositeAlphaMode
+    ).copy(modes).length == 0);
+    return modes;
+  }
 }
 ///
 alias SurfaceDescriptorFromAndroidNativeWindow = WGPUSurfaceDescriptorFromAndroidNativeWindow;
