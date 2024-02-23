@@ -119,7 +119,7 @@ class Triangle : Window {
 
     auto swapChain = this.surface.getCurrentTexture();
     // TODO: Validate the texture descriptor is correct
-    auto swapChainTexture = swapChain.texture.wrap(this.texture.descriptor);
+    auto swapChainTexture = swapChain.texture.wrap(this.surface.descriptor);
     final switch (swapChain.status) {
       case SurfaceTextureStatus.success:
         // All good, could check for `swapChain.suboptimal` here.

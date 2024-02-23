@@ -1122,6 +1122,23 @@ class Surface {
     return capabilities;
   }
 
+  /// Create a texture descriptor
+  TextureDescriptor descriptor(string label = null) @trusted const @property {
+    assert(config !is null, "Cannot create texture descriptor: This surface is not configured.");
+    if (config is null) throw new Exception("Cannot create texture descriptor: This surface is not configured.");
+    return TextureDescriptor(
+      null,
+      label is null ? null : label.toStringz,
+      config.usage, TextureDimension._2d,
+      Extent3d(config.width, config.height, 1),
+      config.format,
+      1 /* mipLevelCount */,
+      1 /* sampleCount */,
+      config.viewFormatCount,
+      cast(WGPUTextureFormat*) config.viewFormats
+    );
+  }
+
   /// The current configuration state of this surface.
   SurfaceConfiguration* config;
 
