@@ -114,6 +114,7 @@ class Triangle : Window {
 
   override void render(const Device device) {
     import wgpu.utils : wrap;
+    import std.conv : text;
     import std.typecons : Yes;
 
     auto swapChain = this.surface.getCurrentTexture();
@@ -127,10 +128,11 @@ class Triangle : Window {
         throw new Error("GPU device is out of memory!");
       case SurfaceTextureStatus.deviceLost:
         throw new Error("GPU device was lost!");
+      case SurfaceTextureStatus.force32:
+        throw new Error("Could not get swap chain texture: " ~ swapChain.status.text);
       case SurfaceTextureStatus.timeout:
       case SurfaceTextureStatus.outdated:
       case SurfaceTextureStatus.lost:
-      case SurfaceTextureStatus.force32:
         // Skip this frame, and re-configure surface.
         if (swapChain.texture !is null) swapChainTexture.destroy();
         auto size = this.size;
