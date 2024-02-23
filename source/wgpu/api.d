@@ -187,6 +187,8 @@ alias StorageTextureBindingLayout = WGPUStorageTextureBindingLayout;
 ///
 alias SurfaceDescriptor = WGPUSurfaceDescriptor;
 ///
+alias SurfaceConfiguration = WGPUSurfaceConfiguration;
+///
 struct SurfaceCapabilities {
   package WGPUSurfaceCapabilities state;
   alias state this;
@@ -1040,9 +1042,13 @@ class Device {
 ///
 /// A Surface may be created with `Surface.fromMetalLayer`, `Surface.fromWindowsHwnd`, or `Surface.fromXlib`.
 /// See_Also: <a href="https://docs.rs/wgpu/0.10.2/wgpu/struct.Surface.html">wgpu::Surface</a>
-struct Surface {
+class Surface {
   /// Handle identifier.
-  WGPUSurface id;
+  package WGPUSurface id;
+
+  package this(WGPUSurface id) {
+    this.id = id;
+  }
 
   version (OSX) {
     /// Create a new `Surface` from a Metal layer.
@@ -1052,7 +1058,7 @@ struct Surface {
         layer
       );
       auto desc = SurfaceDescriptor(cast(ChainedStruct*) &metalLayer, label is null ? null : label.toStringz);
-      return Surface(wgpuInstanceCreateSurface(instance.id, &desc));
+      return new Surface(wgpuInstanceCreateSurface(instance.id, &desc));
     }
   } else version (D_Ddoc) {
     /// Create a new `Surface` from a Metal layer.
@@ -1066,7 +1072,7 @@ struct Surface {
         _hinstance, hwnd
       );
       auto desc = SurfaceDescriptor(cast(ChainedStruct*) &windowsHwnd, label is null ? null : label.toStringz);
-      return Surface(wgpuInstanceCreateSurface(instance.id, &desc));
+      return new Surface(wgpuInstanceCreateSurface(instance.id, &desc));
     }
   } else version (D_Ddoc) {
     /// Create a new `Surface` from a Windows window handle.
@@ -1080,7 +1086,7 @@ struct Surface {
         display, window
       );
       auto desc = SurfaceDescriptor(cast(ChainedStruct*) &xlibWindow, label is null ? null : label.toStringz);
-      return Surface(wgpuInstanceCreateSurface(instance.id, &desc));
+      return new Surface(wgpuInstanceCreateSurface(instance.id, &desc));
     }
     /// Create a new `Surface` from a Xcb window handle.
     // TODO: static Surface fromXcb(Instance instance, void* connection = null, uint window = 0, string label = null) {
@@ -1117,17 +1123,17 @@ struct Surface {
   }
 
   /// The current configuration state of this surface.
-  WGPUSurfaceConfiguration* config;
+  SurfaceConfiguration* config;
 
   /// Configure this surface.
   /// See_Also: `Surface.config`
-  WGPUSurfaceConfiguration* configure(
+  SurfaceConfiguration configure(
     const Device device,
     uint width, uint height, const TextureFormat format, const TextureUsage usage,
     const PresentMode presentMode, const CompositeAlphaMode alphaMode,
     const TextureFormat[] viewFormats = [],
-  ) @trusted const {
-    auto config = new WGPUSurfaceConfiguration();
+  ) @trusted {
+    this.config = new WGPUSurfaceConfiguration();
     config.device = cast(WGPUDevice) device.id;
     config.usage = usage;
     config.format = format;
@@ -1138,7 +1144,7 @@ struct Surface {
     config.presentMode = presentMode;
     config.alphaMode = alphaMode;
     wgpuSurfaceConfigure(cast(WGPUSurface) id, config);
-    return config;
+    return *config;
   }
 
   ///
