@@ -19,9 +19,7 @@
     "gdc": "no",
     "ldc": ">=1.35.0-beta1"
   },
-  "systemDependencies-linux": "vulkan >= 1.1.0",
-  "systemDependencies-osx": "metal >= 2",
-  "systemDependencies-windows": "vulkan >= 1.1.0 or DirectX >= 11",
+  "systemDependencies": "vulkan >= 1.1.0 or DirectX >= 11 or metal >= 2 or OpenGL >= 3.3",
   "preGenerateCommands": ["make wgpu"],
   "configurations": [
     {
