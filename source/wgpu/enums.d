@@ -217,6 +217,23 @@ enum CullMode : WGPUCullMode {
 }
 
 ///
+enum SurfaceTextureStatus : WGPUSurfaceGetCurrentTextureStatus {
+  ///
+  success = WGPUSurfaceGetCurrentTextureStatus_Success,
+  ///
+  timeout = WGPUSurfaceGetCurrentTextureStatus_Timeout,
+  ///
+  outdated = WGPUSurfaceGetCurrentTextureStatus_Outdated,
+  ///
+  lost = WGPUSurfaceGetCurrentTextureStatus_Lost,
+  ///
+  outOfMemory = WGPUSurfaceGetCurrentTextureStatus_OutOfMemory,
+  ///
+  deviceLost = WGPUSurfaceGetCurrentTextureStatus_DeviceLost,
+  force32 = cast(WGPUSurfaceGetCurrentTextureStatus) 0x7FFFFFFF
+}
+
+///
 enum DeviceLostReason : WGPUDeviceLostReason {
   ///
   undefined,

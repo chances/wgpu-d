@@ -8,7 +8,8 @@
 /// License: MIT License
 module wgpu.utils;
 
-import wgpu.api : Buffer, BufferUsage, Device, Texture, TextureDimension, TextureViewDimension;
+import wgpu.api;
+import wgpu_bindings;
 
 /// Integral type used for buffer offsets.
 /// See_Also: <a href="https://docs.rs/wgpu/0.10.2/wgpu/type.BufferAddress.html">wgpu::BufferAddress</a>
@@ -120,6 +121,11 @@ bool valid(T)(T resource) if (isResource!T) {
 unittest {
   import wgpu.api : ShaderModule;
   assert(!valid(ShaderModule(null)));
+}
+
+///
+Texture wrap(WGPUTexture id, const TextureDescriptor descriptor) {
+  return new Texture(id, descriptor);
 }
 
 /// Recreates a new texture given an `extant` texture and a new size.

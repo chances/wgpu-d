@@ -1084,30 +1084,53 @@ struct Surface {
     return capabilities;
   }
 
+  WGPUSurfaceConfiguration* config;
+
   /// Create a new `SwapChain` which targets `surface`.
-  void configure(
-    Device device,
+  WGPUSurfaceConfiguration* configure(
+    const Device device,
     uint width, uint height, const TextureFormat format, const TextureUsage usage,
     const PresentMode presentMode, const CompositeAlphaMode alphaMode,
     const TextureFormat[] viewFormats = [],
   ) @trusted const {
-    assert(viewFormats !is null && viewFormats.length);
-    auto config = WGPUSurfaceConfiguration.init;
-    config.device = device.id;
+    auto config = new WGPUSurfaceConfiguration();
+    config.device = cast(WGPUDevice) device.id;
     config.usage = usage;
     config.format = format;
     config.viewFormatCount = viewFormats.length;
-    config.viewFormats = cast(WGPUTextureFormat*) viewFormats.ptr;
+    config.viewFormats = viewFormats.length == 0 ? null : cast(WGPUTextureFormat*) viewFormats.ptr;
     config.width = width;
     config.height = height;
     config.presentMode = presentMode;
     config.alphaMode = alphaMode;
-    wgpuSurfaceConfigure(cast(WGPUSurfaceImpl*) id, &config);
+    wgpuSurfaceConfigure(cast(WGPUSurface) id, config);
+    return config;
   }
 
-  // TODO: void wgpuSurfaceGetCurrentTexture(WGPUSurface surface, WGPUSurfaceTexture * surfaceTexture) WGPU_FUNCTION_ATTRIBUTE;
-  // TODO: void wgpuSurfacePresent(WGPUSurface surface) WGPU_FUNCTION_ATTRIBUTE;
-  // TODO: void wgpuSurfaceUnconfigure(WGPUSurface surface) WGPU_FUNCTION_ATTRIBUTE;
+  void resize(uint width, uint height) {
+    config.width = width;
+    config.height = height;
+    wgpuSurfaceConfigure(cast(WGPUSurface) id, config);
+  }
+
+  ///
+  void unconfigure() {
+    wgpuSurfaceUnconfigure(cast(WGPUSurface) id);
+  }
+
+  ///
+  WGPUSurfaceTexture getCurrentTexture() {
+    WGPUSurfaceTexture texture;
+    wgpuSurfaceGetCurrentTexture(cast(WGPUSurface) id, &texture);
+    // TODO: Wrap this in a `Texture`?
+    return texture;
+  }
+
+  ///
+  void present() {
+    wgpuSurfacePresent(cast(WGPUSurface) id);
+  }
+
   // TODO: void wgpuSurfaceReference(WGPUSurface surface) WGPU_FUNCTION_ATTRIBUTE;
   // TODO: void wgpuSurfaceRelease(WGPUSurface surface) WGPU_FUNCTION_ATTRIBUTE;
 }
@@ -1237,6 +1260,11 @@ class Texture {
   /// Optional, human-readable debug label for this texture.
   const string label;
 
+  package this(WGPUTexture id, const TextureDescriptor descriptor) {
+    this.id = id;
+    this.descriptor = descriptor;
+    this.label = null;
+  }
   package this(const Device device, const TextureDescriptor descriptor) @trusted {
     assert(device !is null && device.id !is null, "Adapter device is not initialized!");
     id = wgpuDeviceCreateTexture(cast(WGPUDevice) device.id, cast(TextureDescriptor*) &descriptor);
