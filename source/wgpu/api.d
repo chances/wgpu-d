@@ -3,6 +3,7 @@
 /// Authors: Chance Snow
 /// Copyright: Copyright © 2020-2023 Chance Snow. All rights reserved.
 /// License: MIT License
+/// See_Also: <a href=https://gpuweb.github.io/types/index.html">WebGPU API Reference</a> (gpuweb.github.io)
 module wgpu.api;
 
 import std.conv : asOriginalType, to;
