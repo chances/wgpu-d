@@ -209,4 +209,5 @@ public void main() {
   assert(device.ready, "Device is not ready");
 
   app.runEventLoop(device);
+  app.destroy();
 }
