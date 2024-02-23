@@ -874,7 +874,7 @@ class Device {
 
   /// Creates a compute pipeline.
   ComputePipeline createComputePipeline(ComputePipelineDescriptor descriptor) {
-    return ComputePipeline(
+    return new ComputePipeline(
       wgpuDeviceCreateComputePipeline(id, cast(ComputePipelineDescriptor*) &descriptor), descriptor
     );
   }
@@ -1847,13 +1847,21 @@ struct PipelineLayout {
   PipelineLayoutDescriptor descriptor;
 }
 
+/// A handle to a GPU pipeline.
+/// See_Also: $(UL
+///   $(LI `RenderPipeline`)
+///   $(LI `ComputePipeline`)
+/// )
+interface Pipeline {}
+
 /// A handle to a rendering (graphics) pipeline.
 ///
 /// A `RenderPipeline` object represents a graphics pipeline and its stages, bindings, vertex buffers and targets.
 /// A `RenderPipeline` may be created with `Device.createRenderPipeline`.
 /// See_Also: <a href="https://docs.rs/wgpu/0.10.2/wgpu/struct.RenderPipeline.html">wgpu::RenderPipeline</a>
-class RenderPipeline {
-  package WGPURenderPipeline id;
+class RenderPipeline : Pipeline {
+  /// Handle identifier.
+  WGPURenderPipeline id;
   /// Describes this render pipeline.
   RenderPipelineDescriptor descriptor;
   /// Describes the fragment process in this render pipeline.
@@ -2077,11 +2085,16 @@ struct RenderPass {
 
 /// A handle to a compute pipeline.
 /// See_Also: <a href="https://docs.rs/wgpu/0.10.2/wgpu/struct.ComputePipeline.html">wgpu::ComputePipeline</a>
-struct ComputePipeline {
+class ComputePipeline : Pipeline {
   /// Handle identifier.
   WGPUComputePipeline id;
   /// Describes this `ComputePipeline`.
   ComputePipelineDescriptor descriptor;
+
+  package this(WGPUComputePipeline id, ComputePipelineDescriptor descriptor) {
+    this.id = id;
+    this.descriptor = descriptor;
+  }
 
   /// Release the given handle.
   void destroy() {
@@ -2090,7 +2103,10 @@ struct ComputePipeline {
   }
 
   /// Get the bind group layout at the given `index`.
-  // TODO: BindGroupLayout bindGroupLayout(uint index) {}
+  BindGroupLayout bindGroupLayout(uint index) {
+    // TODO: Compute the layout given the descriptor.
+    return BindGroupLayout.init;
+  }
 }
 
 /// An in-progress recording of a compute pass.
