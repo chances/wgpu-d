@@ -11,21 +11,13 @@
   "dependencies": {
     "bindbc-glfw": "~>1.0.0",
     "imageformats": "~>7.0.2",
-    "wgpu-d": {
-      "path": "../.."
-    }
+    "wgpu-d": { "path": "../.." },
+    "utils": { "path": "../utils" }
   },
   "versions": ["GLFW_32"],
   "versions-linux": ["Linux"],
   "subConfigurations": {
     "bindbc-glfw": "static",
     "wgpu-d": "static"
-  },
-  "preGenerateCommands": [
-    "make --no-print-directory -C subprojects -f glfw.Makefile"
-  ],
-  "lflags-posix": ["$PACKAGE_DIR/subprojects/glfw/src/libglfw3.a"],
-  "lflags-windows": ["/LIBPATH:$PACKAGE_DIR/subprojects/glfw/src"],
-  "libs-linux": ["X11"],
-  "libs-windows": ["glfw3", "gdi32"]
+  }
 }

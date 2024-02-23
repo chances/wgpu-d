@@ -6,8 +6,8 @@
 	],
 	"license": "MIT",
   "copyright": "Copyright © 2022, Chance Snow",
-  "targetType": "sourceLibrary",
-  "targetPath": "bin",
+  "targetType": "staticLibrary",
+  "targetPath": "../../bin",
   "dependencies": {
     "bindbc-glfw": "~>1.0.0",
     "gfm:math": "~>8.0",
@@ -23,11 +23,10 @@
   "preGenerateCommands": [
     "make -C subprojects -f glfw.Makefile"
   ],
-  "libs": ["glfw3"],
   "libs-linux": [
     "X11"
   ],
-  "libs-windows": ["gdi32"],
-  "lflags-posix": ["-L$PACKAGE_DIR/subprojects/glfw/src"],
-  "lflags-windows": ["/LIBPATH:$PACKAGE_DIR/subprojects/glfw/src"]
+  "libs-windows": ["glfw3", "gdi32"],
+  "lflags-posix": ["$UTILS_PACKAGE_DIR/subprojects/glfw/src/libglfw3.a"],
+  "lflags-windows": ["/LIBPATH:$UTILS_PACKAGE_DIR/subprojects/glfw/src"]
 }

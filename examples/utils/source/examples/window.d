@@ -65,18 +65,16 @@ abstract class Window {
   /// GPU instance used to render to this window.
   Instance gpu() { return _gpu; }
   /// GPU surface backed by this window.
-  const Surface surface;
-  ///
-  SwapChain swapChain;
+  Surface surface;
 
   ///
-  this(string title, uint width = 640, uint height = 480, Instance gpu = null) {
+  this(const string title, const uint width = 640, const uint height = 480, Instance gpu = null) {
     import std.exception : enforce;
 
     _gpu = gpu is null ? Instance.create() : gpu;
     _title = title;
 
-    glfwSetErrorCallback(&wgpu_glfw_error_callback);
+    debug glfwSetErrorCallback(&wgpu_glfw_error_callback);
     assert(glfwInit(), "GLFW was not initialized");
 
     // https://www.glfw.org/docs/3.3/window_guide.html#window_hints
@@ -137,38 +135,34 @@ abstract class Window {
     int w, h;
     glfwGetFramebufferSize(cast(GLFWwindow*) _window, &w, &h);
     assert((w != 0 && h != 0) || paused, lastError);
-    if (paused) return _size;
 
     _size.width = w.to!uint;
     _size.height = h.to!uint;
     return _size;
   }
 
-  /// Creates a swap chain given this window's GPU surface and size.
-  SwapChain createSwapChain(const Device device, TextureFormat format) {
-    // The render pipeline renders data into this swap chain
-    return swapChain = device.createSwapChain(
-      surface, _size.width, _size.height, format,
-      // TODO: Remove this redundant texture usage parameter
-      TextureUsage.renderAttachment,
-      PresentMode.fifo,
-      title
-    );
-  }
-
   ///
   abstract void initialize(const Device device);
   ///
-  abstract void resizeRenderTarget(const Device device);
+  abstract void resizeRenderTarget(const Device device, const int width, const int height);
   ///
   abstract void render(const Device device);
 
   ///
   void runEventLoop(const Device device) {
+    import std.conv : asOriginalType;
+
+    auto alphaMode = surface.capabilities(device.adapter).alphaModes[0].asOriginalType.to!CompositeAlphaMode;
+    surface.configure(
+      device, size.width, size.height, surface.preferredFormat(device.adapter),
+      TextureUsage.renderAttachment | TextureUsage.copyDst,
+      PresentMode.fifo, alphaMode
+    );
+
     initialize(device);
 
-    glfwSetFramebufferSizeCallback(_window, bindDelegate((GLFWwindow*, int, int) nothrow {
-      futureTasks ~= () => resizeRenderTarget(device);
+    glfwSetFramebufferSizeCallback(_window, bindDelegate((GLFWwindow*, int width, int height) nothrow {
+      futureTasks ~= () => resizeRenderTarget(device, width, height);
     }.toDelegate));
 
     double elapsedTime = 0;
