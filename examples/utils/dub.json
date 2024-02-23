@@ -6,7 +6,7 @@
 	],
 	"license": "MIT",
   "copyright": "Copyright © 2022, Chance Snow",
-  "targetType": "staticLibrary",
+  "targetType": "sourceLibrary",
   "targetPath": "../../bin",
   "dependencies": {
     "bindbc-glfw": "~>1.0.0",

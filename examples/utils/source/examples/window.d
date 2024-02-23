@@ -70,6 +70,7 @@ abstract class Window {
   ///
   this(const string title, const uint width = 640, const uint height = 480, Instance gpu = null) {
     import std.exception : enforce;
+    import wgpu.utils : valid;
 
     _gpu = gpu is null ? Instance.create() : gpu;
     _title = title;
@@ -104,7 +105,7 @@ abstract class Window {
       import core.sys.windows.windows : GetModuleHandleA;
       surface = Surface.fromWindowsHwnd(instance, GetModuleHandleA(null), glfwGetWin32Window(window));
     }
-    assert(surface.id !is null, "Could not create native surface");
+    assert(surface.valid, "Could not create native surface");
 
     glfwSetWindowIconifyCallback(_window, ((GLFWwindow*, int iconified) nothrow {
       paused = iconified != 0;

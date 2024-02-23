@@ -102,8 +102,13 @@ class Cube : Window {
   }
 
   override void initialize(const Device device) {
+    import std.process : environment;
     static import wgpu.utils;
-    assert(swapChain !is null, "GPU device swap chain is not ready!");
+
+    // Enable stack traces from Rust-land
+    debug environment["RUST_BACKTRACE"] = "1";
+
+    auto swapChainFormat = this.surface.preferredFormat(device.adapter);
 
     device.setUncapturedErrorCallback(&wgpu_error_callback);
 
@@ -137,19 +142,17 @@ class Cube : Window {
       PrimitiveState(PrimitiveTopology.triangleStrip, IndexFormat.uint16, FrontFace.ccw, CullMode.back),
       MultisampleState.singleSample,
       new FragmentState(shader, "fs_main", [
-        new ColorTargetState(swapChain.format, BlendMode.alphaBlending.to!BlendState)
+        new ColorTargetState(swapChainFormat, BlendMode.alphaBlending.to!BlendState)
       ]),
     );
   }
 
-  override void resizeRenderTarget(const Device device) {
+  override void resizeRenderTarget(const Device device, const int width, const int height) {
     import wgpu.utils : resize;
-    assert(device.ready && swapChain !is null);
+    assert(device.ready);
+    if (width == 0 && height == 0) return;
 
-    // Resize the swap chain and then destroy the old one
-    auto extantSwapChain = swapChain;
-    swapChain = swapChain.resize(device, size.width, size.height);
-    extantSwapChain.destroy();
+    this.surface.resize(width, height);
 
     // Adjust the camera's perspective
     const projection = mat4f.perspective(45f.rad, size.width / size.height, 1, 10);
@@ -159,15 +162,37 @@ class Cube : Window {
   }
 
   override void render(const Device device) {
+    import wgpu.utils : wrap;
+    import std.conv : text;
     import std.typecons : Yes;
 
-    assert(swapChain !is null);
-    auto swapChainTexture = swapChain.getNextTexture();
+    auto swapChain = this.surface.getCurrentTexture();
+    // TODO: Validate the texture descriptor is correct
+    auto swapChainTexture = swapChain.texture.wrap(this.surface.descriptor);
+    final switch (swapChain.status) {
+      case SurfaceTextureStatus.success:
+        // All good, could check for `swapChain.suboptimal` here.
+        break;
+      case SurfaceTextureStatus.outOfMemory:
+        throw new Error("GPU device is out of memory!");
+      case SurfaceTextureStatus.deviceLost:
+        throw new Error("GPU device was lost!");
+      case SurfaceTextureStatus.force32:
+        throw new Error("Could not get swap chain texture: " ~ swapChain.status.text);
+      case SurfaceTextureStatus.timeout:
+      case SurfaceTextureStatus.outdated:
+      case SurfaceTextureStatus.lost:
+        // Skip this frame, and re-configure surface.
+        if (swapChain.texture !is null) swapChainTexture.destroy();
+        auto size = this.size;
+        this.resizeRenderTarget(device, size.width, size.height);
+        return;
+    }
 
     // Render a cube
     auto encoder = device.createCommandEncoder();
     auto renderPass = encoder.beginRenderPass(
-      RenderPass.colorAttachment(swapChainTexture, /* Black */ Color(0, 0, 0, 1))
+      RenderPass.colorAttachment(swapChainTexture.defaultView, /* Black */ Color(0, 0, 0, 1))
     );
     renderPass.setPipeline(pipeline);
     renderPass.setBindGroup(0, bindings);
@@ -178,7 +203,7 @@ class Cube : Window {
 
     auto commandBuffer = encoder.finish();
     device.queue.submit(commandBuffer);
-    swapChain.present();
+    surface.present();
 
     // Force wait for a frame to render and pump callbacks
     device.poll(Yes.forceWait);
@@ -199,10 +224,6 @@ void main() {
   auto device = adapter.requestDevice(adapter.limits);
   assert(device.ready, "Device is not ready");
   writefln("Device limits: %s", device.limits);
-
-  // The render pipeline renders data into this swap chain
-  auto swapChainFormat = window.surface.preferredFormat(adapter);
-  window.createSwapChain(device, swapChainFormat);
 
   window.runEventLoop(device);
   window.destroy();

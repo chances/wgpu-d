@@ -125,6 +125,7 @@ unittest {
 
 ///
 Texture wrap(WGPUTexture id, const TextureDescriptor descriptor) {
+  assert(id !is null);
   return new Texture(id, descriptor);
 }
 

@@ -106,7 +106,6 @@ class Triangle : Window {
 
   override void resizeRenderTarget(const Device device, const int width, const int height) {
     import wgpu.utils : resize;
-
     assert(device.ready);
     if (width == 0 && height == 0) return;
 
