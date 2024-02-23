@@ -634,7 +634,7 @@ struct Adapter {
   /// label = Optional debug label for the `Device`.
   Device requestDevice(const Limits limits, string tracePath = null, string label = fullyQualifiedName!Device) {
     assert(ready);
-    auto device = new Device(label);
+    auto device = new Device(this, label);
     const WGPUDeviceExtras extras = {
       chain: WGPUChainedStruct(null, cast(WGPUSType) WGPUNativeSType.WGPUSType_DeviceExtras),
       tracePath: tracePath is null ? null : tracePath.toStringz
@@ -657,11 +657,14 @@ struct Adapter {
 class Device {
   package WGPUDevice id;
   ///
+  const Adapter adapter;
+  ///
   RequestDeviceStatus status = RequestDeviceStatus.unknown;
   /// Label for this Device.
   string label;
 
-  package this(string label) {
+  package this(const Adapter adapter, string label) {
+    this.adapter = adapter;
     this.label = label;
     // TODO: Set the device label once the device has been retreived.
   }
@@ -1067,17 +1070,17 @@ struct Surface {
   // TODO: Support Wayland with a `linux-wayland` version config once upstream wgpu-native supports it
 
   /// Retreive an optimal texture format for this `Surface`.
-  TextureFormat preferredFormat(Adapter adapter) @trusted const {
+  TextureFormat preferredFormat(const Adapter adapter) @trusted const {
     assert(id !is null);
     assert(adapter.ready);
-    return wgpuSurfaceGetPreferredFormat(cast(WGPUSurface) id, adapter.id).asOriginalType.to!TextureFormat;
+    return wgpuSurfaceGetPreferredFormat(cast(WGPUSurface) id, cast(WGPUAdapter) adapter.id).asOriginalType.to!TextureFormat;
   }
 
   ///
-  SurfaceCapabilities capabilities(Adapter adapter) @trusted const {
+  SurfaceCapabilities capabilities(const Adapter adapter) @trusted const {
     assert(id !is null);
     SurfaceCapabilities capabilities;
-    wgpuSurfaceGetCapabilities(cast(WGPUSurface) id, adapter.id, &capabilities.state);
+    wgpuSurfaceGetCapabilities(cast(WGPUSurface) id, cast(WGPUAdapter) adapter.id, &capabilities.state);
     return capabilities;
   }
 
