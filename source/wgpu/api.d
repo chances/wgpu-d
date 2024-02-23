@@ -188,7 +188,7 @@ alias StorageTextureBindingLayout = WGPUStorageTextureBindingLayout;
 alias SurfaceDescriptor = WGPUSurfaceDescriptor;
 ///
 struct SurfaceCapabilities {
-  WGPUSurfaceCapabilities state;
+  package WGPUSurfaceCapabilities state;
   alias state this;
 
   ~this() {
@@ -1073,7 +1073,9 @@ struct Surface {
   TextureFormat preferredFormat(const Adapter adapter) @trusted const {
     assert(id !is null);
     assert(adapter.ready);
-    return wgpuSurfaceGetPreferredFormat(cast(WGPUSurface) id, cast(WGPUAdapter) adapter.id).asOriginalType.to!TextureFormat;
+    return wgpuSurfaceGetPreferredFormat(
+      cast(WGPUSurface) id, cast(WGPUAdapter) adapter.id
+    ).asOriginalType.to!TextureFormat;
   }
 
   ///
@@ -1084,9 +1086,11 @@ struct Surface {
     return capabilities;
   }
 
+  /// The current configuration state of this surface.
   WGPUSurfaceConfiguration* config;
 
-  /// Create a new `SwapChain` which targets `surface`.
+  /// Configure this surface.
+  /// See_Also: `Surface.config`
   WGPUSurfaceConfiguration* configure(
     const Device device,
     uint width, uint height, const TextureFormat format, const TextureUsage usage,
@@ -1107,6 +1111,7 @@ struct Surface {
     return config;
   }
 
+  ///
   void resize(uint width, uint height) {
     config.width = width;
     config.height = height;
@@ -2132,6 +2137,7 @@ class ComputePipeline : Pipeline {
 
   /// Get the bind group layout at the given `index`.
   BindGroupLayout bindGroupLayout(uint index) {
+    assert(index >= 0);
     // TODO: Compute the layout given the descriptor.
     return BindGroupLayout.init;
   }
