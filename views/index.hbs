@@ -43,44 +43,48 @@
         {{/each}}</ul>
       </nav>
     </aside>
-
-    <h1>WebGPU D Bindings Reference</h1>
-    <p>
-      <a href="https://code.dlang.org/packages/wgpu-d">
-        <img src="https://img.shields.io/dub/v/wgpu-d.svg" alt="DUB Package">
-      </a>
-      <a target="_blank" href="https://opensource.org/licenses/MIT">
-        <img src="https://img.shields.io/badge/license-MIT-blue" alt="MIT License">
-      </a>
-      <a target="_blank" rel="noopener noreferrer" href="https://github.com/chances/wgpu-d/workflows/wgpu-d%20CI/badge.svg?branch=master">
-        <img src="https://github.com/chances/wgpu-d/workflows/wgpu-d%20CI/badge.svg?branch=master" alt="wgpu-d CI">
-      </a>
-      <a href="https://codecov.io/gh/chances/wgpu-d">
-        <img src="https://codecov.io/gh/chances/wgpu-d/branch/master/graph/badge.svg" alt="codecov">
-      </a>
-    </p>
-    <p>D bindings to <a href="https://github.com/gfx-rs/wgpu-native">wgpu-native</a> as an idiomatic D wrapper around the library.</p>
-    <p>Targets wgpu-native <code><a href="https://github.com/gfx-rs/wgpu-native/releases/tag/v0.19.1.1">v0.19.1.1</a></code>.</p>
-    <h2 id="Usage">Usage</h2>
-    <pre class="json">
-    "dependencies": {
-      "wgpu-d": "{{ DUB_VERSION }}"
-    }
-    </pre>
-    <h2>Examples</h2>
-    <p>You can try the examples before installing:</p>
-    <h3>Headless</h3>
-    <pre>dub run wgpu-d:headless</pre>
-    <h3>Triangle</h3>
-    <pre>dub run wgpu-d:triangle</pre>
-    <h3>Cube</h3>
-    <pre>dub run wgpu-d:cube</pre>
-    <h2>Modules</h2>
+    <article>
+      <h1>WebGPU D Bindings Reference</h1>
+      <p>
+        <a href="https://code.dlang.org/packages/wgpu-d">
+          <img src="https://img.shields.io/dub/v/wgpu-d.svg" alt="DUB Package">
+        </a>
+        <a target="_blank" href="https://opensource.org/licenses/MIT">
+          <img src="https://img.shields.io/badge/license-MIT-blue" alt="MIT License">
+        </a>
+        <a target="_blank" rel="noopener noreferrer" href="https://github.com/chances/wgpu-d/workflows/wgpu-d%20CI/badge.svg?branch=master">
+          <img src="https://github.com/chances/wgpu-d/workflows/wgpu-d%20CI/badge.svg?branch=master" alt="wgpu-d CI">
+        </a>
+        <a href="https://codecov.io/gh/chances/wgpu-d">
+          <img src="https://codecov.io/gh/chances/wgpu-d/branch/master/graph/badge.svg" alt="codecov">
+        </a>
+      </p>
+      <p>D bindings to <a href="https://github.com/gfx-rs/wgpu-native">wgpu-native</a> as an idiomatic D wrapper around the library.</p>
+      <p>Targets wgpu-native <code><a href="https://github.com/gfx-rs/wgpu-native/releases/tag/v0.19.1.1">v0.19.1.1</a></code>.</p>
+      <h2 id="Usage">Usage</h2>
+      <pre class="json">
+      "dependencies": {
+        "wgpu-d": "{{ DUB_VERSION }}"
+      }
+      </pre>
+      <h2>Examples</h2>
+      <p>You can try the examples before installing:</p>
+      <h3>Headless</h3>
+      <pre>dub run wgpu-d:headless</pre>
+      <h3>Triangle</h3>
+      <pre>dub run wgpu-d:triangle</pre>
+      <h3>Cube</h3>
+      <pre>dub run wgpu-d:cube</pre>
+      <h2>Modules</h2>
+      <ul>
+        {{#each MODULES}}<li>{{ this }}</li>{{/each}}
+      </ul>
+      <footer>
+        <a href="https://github.com/chances/wgpu-d#readme">GitHub</a>
+        <span class="faint" style="float: right;">Generated using <a href="https://dlang.org/spec/ddoc.html">Ddoc</a></span>
+      </footer>
+    </article>
   </main>
-  <footer>
-    <a href="https://github.com/chances/wgpu-d#readme">GitHub</a>
-    <span class="faint" style="float: right;">Generated using <a href="https://dlang.org/spec/ddoc.html">Ddoc</a></span>
-  </footer>
   <script type="application/javascript">const symbols = [{{#each SYMBOLS}}{{ this }},{{/each}}]</script>
   <script type="application/javascript" src="scripts/symbols.js"></script>
 </body>

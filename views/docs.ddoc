@@ -57,9 +57,9 @@ DDOC=<!DOCTYPE html>
           <p><a href="https://github.com/chances/wgpu-d/blob/main/$(SRCFILENAME)">$(SRCFILENAME)</a></p>
         </section>
         $(BODY)
+        $(FOOTER)
       </article>
     </main>
-    $(FOOTER)
   </body>
 </html>
 

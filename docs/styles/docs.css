@@ -127,6 +127,7 @@ main > aside:first-of-type nav h1 > span.faint {
 }
 
 main > article {
+  flex: 1;
   margin: 2em;
 }
 
