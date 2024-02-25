@@ -5,12 +5,14 @@
 /// License: MIT License
 module wgpu.docs.process;
 
-import handlebars.tpl;
 static import std.file;
 import std.process;
 import std.stdio;
 
 void main(string[] args) {
+  import std.array : replace;
+  import std.string : strip;
+
   string template_ = std.file.readText("views/index.hbs");
 
   struct Constants {
@@ -21,7 +23,11 @@ void main(string[] args) {
 
   auto gitTagCmd = execute(["git", "describe", "--tags", "--abbrev=0"]);
   assert(gitTagCmd.status == 0);
-  gitTagCmd.output.writeln;
-  auto result = render(template_, Constants(gitTagCmd.output));
-  result.writeln;
+  gitTagCmd.output.write;
+
+  const constants = Constants(gitTagCmd.output.strip);
+  const result = template_.replace("{{ DUB_VERSION }}", constants.DUB_VERSION);
+
+  if (std.file.exists("docs/index.html")) std.file.remove("docs/index.html");
+  std.file.write("docs/index.html", result);
 }
