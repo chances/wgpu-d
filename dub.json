@@ -21,6 +21,22 @@
   },
   "systemDependencies": "vulkan >= 1.1.0 or DirectX >= 11 or metal >= 2 or OpenGL >= 3.3",
   "preGenerateCommands": ["make wgpu"],
+  "buildTypes": {
+    "docs": {
+      "sourceFiles": [
+        "views/docs.ddoc"
+      ],
+      "buildOptions": ["syntaxOnly"],
+      "dependencies": {
+        "handlebars": "~>0.3.1"
+      },
+      "dflags": ["-Dddocs"],
+      "postBuildCommands-posix": [
+        "dub fetch handlebars",
+        "rdmd -I~/.dub/packages/handlebars/0.3.1/handlebars/source docs/process.d"
+      ]
+    }
+  },
   "configurations": [
     {
       "name": "library",

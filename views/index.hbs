@@ -1,0 +1,86 @@
+<html>
+<head>
+  <title></title>
+  <meta charset="UTF-8">
+  <title>WebGPU D Bindings API Reference</title>
+  <link rel="stylesheet" href="styles/docs.css" />
+  <link rel="stylesheet" href="styles/dub.css" />
+</head>
+<body>
+  <main>
+    <a id="downloadButton" href="https://code.dlang.org/packages/wgpu-d">
+      <div class="bs-hbtn right black">
+        <div class="content">get <strong>wgpu-d</strong><br><large>{{ DUB_VERSION }}</large></div>
+      </div><div class="bs-hbtn left red">
+        <div class="dub-logo"></div>
+      </div>
+    </a>
+    <aside class="flex row">
+      <nav>
+        <header class="flex row">
+          <img id="logo" src="https://chances.github.io/wgpu-d/images/logo.png" alt="WebGPU Logo">
+          <h1>
+            <span>D Bindings</span>
+          </h1>
+        </header>
+        <ul style="list-style: none; padding: 0;">
+          <li>
+            <a href="https://chances.github.io/wgpu-d">API Reference</a>
+          </li>
+          <li>
+            <a href="https://code.dlang.org/packages/wgpu-d">Download</a>
+          </li>
+          <li>
+            <a href="https://github.com/chances/wgpu-d#readme">Open Source on GitHub</a>
+          </li>
+        </ul>
+        <h2>API Reference</h2>
+        <form id="symbolSearchForm" action="#" method="GET">
+          <input id="symbolSearch" type="text" name="q" placeholder="Search for symbols" autocomplete="off" onchange="performSymbolSearch(40);" onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();" tabindex="1000">
+        </form>
+        <ul id="symbols">{{#each SYMBOLS}}
+          <li>{{ this }}</li>
+        {{/each}}</ul>
+      </nav>
+    </aside>
+
+    <h1>WebGPU D Bindings Reference</h1>
+    <p>
+      <a href="https://code.dlang.org/packages/wgpu-d">
+        <img src="https://img.shields.io/dub/v/wgpu-d.svg" alt="DUB Package">
+      </a>
+      <a target="_blank" href="https://opensource.org/licenses/MIT">
+        <img src="https://img.shields.io/badge/license-MIT-blue" alt="MIT License">
+      </a>
+      <a target="_blank" rel="noopener noreferrer" href="https://github.com/chances/wgpu-d/workflows/wgpu-d%20CI/badge.svg?branch=master">
+        <img src="https://github.com/chances/wgpu-d/workflows/wgpu-d%20CI/badge.svg?branch=master" alt="wgpu-d CI">
+      </a>
+      <a href="https://codecov.io/gh/chances/wgpu-d">
+        <img src="https://codecov.io/gh/chances/wgpu-d/branch/master/graph/badge.svg" alt="codecov">
+      </a>
+    </p>
+    <p>D bindings to <a href="https://github.com/gfx-rs/wgpu-native">wgpu-native</a> as an idiomatic D wrapper around the library.</p>
+    <p>Targets wgpu-native <code><a href="https://github.com/gfx-rs/wgpu-native/releases/tag/v0.19.1.1">v0.19.1.1</a></code>.</p>
+    <h2 id="Usage">Usage</h2>
+    <pre class="json">
+    "dependencies": {
+      "wgpu-d": "{{ DUB_VERSION }}"
+    }
+    </pre>
+    <h2>Examples</h2>
+    <p>You can try the examples before installing:</p>
+    <h3>Headless</h3>
+    <pre>dub run wgpu-d:headless</pre>
+    <h3>Triangle</h3>
+    <pre>dub run wgpu-d:triangle</pre>
+    <h3>Cube</h3>
+    <pre>dub run wgpu-d:cube</pre>
+    <h2>Modules</h2>
+  </main>
+  <footer>
+    <a href="https://github.com/chances/wgpu-d#readme">GitHub</a>
+    <span class="faint" style="float: right;">Generated using <a href="https://dlang.org/spec/ddoc.html">Ddoc</a></span>
+  </footer>
+  <script type="application/javascript">const symbols = [{{#each SYMBOLS}}{{ this }},{{/each}}]</script>
+  <script type="application/javascript" src="scripts/symbols.js"></script>
+</body>

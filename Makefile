@@ -56,29 +56,11 @@ cover: $(SOURCES)
 # Documentation
 #################################################
 
-PACKAGE_VERSION := 0.4.0
-docs/sitemap.xml: $(SOURCES)
-	dub build -b ddox
-	@echo "Performing cosmetic changes..."
-	# Navigation Sidebar
-	@$(SED) -i -e "/<nav id=\"main-nav\">/r views/nav.html" -e "/<nav id=\"main-nav\">/d" `find docs -name '*.html'`
-	# Page Titles
-	@$(SED) -i "s/<\/title>/ - wgpu-d<\/title>/" `find docs -name '*.html'`
-	# Index
-	@$(SED) -i "s/API documentation/API Reference/g" docs/index.html
-	@$(SED) -i -e "/<h1>API Reference<\/h1>/r views/index.html" -e "/<h1>API Reference<\/h1>/d" docs/index.html
-	# License Link
-	@$(SED) -i "s/3-Clause BSD License/<a href=\"https:\/\/opensource.org\/licenses\/BSD-3-Clause\">3-Clause BSD License<\/a>/" `find docs -name '*.html'`
-	# Footer
-	@$(SED) -i -e "/<p class=\"faint\">Generated using the DDOX documentation generator<\/p>/r views/footer.html" -e "/<p class=\"faint\">Generated using the DDOX documentation generator<\/p>/d" `find docs -name '*.html'`
-	# Dub Package Version
-	@echo Latest tag: `git describe --tags --abbrev=0`
-	@$(SED) -i "s/DUB_VERSION/$(PACKAGE_VERSION)/g" `find docs -name '*.html'`
-	@echo Done
-
 docs: docs/sitemap.xml
 ifeq ($(OS),Windows_NT)
 	$(error Build documentation on *nix!)
+else
+	@dub build -b docs
 endif
 .PHONY: docs
 
