@@ -103,7 +103,7 @@ abstract class Window {
     );
     version (Windows) {
       import core.sys.windows.windows : GetModuleHandleA;
-      surface = Surface.fromWindowsHwnd(instance, GetModuleHandleA(null), glfwGetWin32Window(window));
+      surface = Surface.fromWindowsHwnd(this.gpu, GetModuleHandleA(null), glfwGetWin32Window(_window));
     }
     assert(surface.valid, "Could not create native surface");
 
