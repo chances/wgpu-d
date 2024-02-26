@@ -39,7 +39,7 @@ subprojects/wgpu: subprojects/wgpu.Makefile
 ifneq ($(OS),Windows_NT)
 	file subprojects/wgpu/$(LIB_WGPU)
 else
-	IF EXIST subprojects/wgpu/$(LIB_WGPU) ECHO subprojects/wgpu/$(LIB_WGPU) exists.
+	@IF EXIST subprojects/wgpu/$(LIB_WGPU) ECHO subprojects/wgpu/$(LIB_WGPU) exists.
 endif
 subprojects/wgpu/$(LIB_WGPU): subprojects/wgpu
 wgpu: subprojects/wgpu/$(LIB_WGPU)
