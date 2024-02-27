@@ -26,7 +26,7 @@
   "libs-linux": [
     "X11"
   ],
-  "libs-windows": ["glfw3", "gdi32"],
+  "libs-windows": ["glfw3", "gdi32", "opengl32", "msvcrt"],
   "lflags-posix": ["$UTILS_PACKAGE_DIR/subprojects/glfw/src/libglfw3.a"],
   "lflags-windows": ["/LIBPATH:$UTILS_PACKAGE_DIR/subprojects/glfw/src"]
 }
