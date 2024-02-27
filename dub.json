@@ -47,6 +47,8 @@
   "lflags-windows": ["/LIBPATH:$WGPU_D_PACKAGE_DIR/subprojects/wgpu"],
   "libs-windows": [
     "wgpu_native",
+    "opengl32",
+    "gdi32",
     "d3dcompiler",
     "ws2_32",
     "advapi32",
