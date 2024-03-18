@@ -1,6 +1,16 @@
 # See https://github.com/gfx-rs/wgpu-native/tree/v0.19.1.1
 VERSION := v0.19.1.1
 OS ?= $(shell uname -s)
+ifeq ($(findstring cmd.exe,$(SHELL)),cmd.exe)
+  UNIX := false
+endif
+ifeq ($(findstring sh.exe,$(SHELL)),sh.exe)
+  UNIX := true
+endif
+# Else, assume a unix system
+UNIX ?= true
+
+# Detect current system's CPU architecture
 ifeq ($(OS),Windows_NT)
   ifeq ($(PROCESSOR_ARCHITEW6432),AMD64)
     ARCH := x86_64
@@ -40,21 +50,36 @@ CONFIG ?= debug
 .DEFAULT_GOAL := wgpu/$(LIB_WGPU)
 
 BINARY_ARCHIVE := https://github.com/gfx-rs/wgpu-native/releases/download/$(VERSION)/wgpu-$(RELEASE)-$(ARCH)-$(CONFIG).zip
-$(info Using $(CONFIG) wgpu-native@$(VERSION) from: $(BINARY_ARCHIVE))
+$(info Using $(CONFIG) wgpu-native $(VERSION) from: $(BINARY_ARCHIVE))
 ifeq ($(OS),Windows_NT)
-  ARCHIVE_ZIP := $(shell echo %USERPROFILE%/AppData/Local/Temp/wgpu.zip)
+ifeq ($(UNIX),true)
+  ARCHIVE_DIR := $(shell echo $(USERPROFILE)/AppData/Local/WebGPU)
+  ARCHIVE_ZIP := $(shell echo $(USERPROFILE)/AppData/Local/WebGPU/wgpu.zip)
+else
+  ARCHIVE_DIR := $(shell echo %USERPROFILE%/AppData/Local/WebGPU)
+  ARCHIVE_ZIP := $(shell echo %USERPROFILE%/AppData/Local/WebGPU/wgpu.zip)
+endif
 else
   ARCHIVE_ZIP := /tmp/wgpu.zip
 endif
 $(ARCHIVE_ZIP):
 	@echo Downloading WebGPU Native binaries...
+ifeq ($(OS),Windows_NT)
+	@echo Creating binary cache: $(ARCHIVE_DIR)
+ifeq ($(UNIX),true)
+	@mkdir -p $(ARCHIVE_DIR)
+else
+	@if not exist $(ARCHIVE_DIR) mkdir $(ARCHIVE_DIR)
+endif
+endif
 	@curl -L $(BINARY_ARCHIVE) --output $(ARCHIVE_ZIP)
 
 wgpu/$(LIB_WGPU): $(ARCHIVE_ZIP)
 	@echo Unzipping WebGPU Native binaries...
-ifeq ($(OS),Windows_NT)
+ifeq ($(UNIX),true)
+	@mkdir -p wgpu
+	@unzip -q -o $(ARCHIVE_ZIP) -d wgpu
+else
 	@if not exist wgpu mkdir wgpu
 	@tar -xf $(ARCHIVE_ZIP) -C wgpu
-else
-	@unzip -q -o $(ARCHIVE_ZIP) -d wgpu
 endif

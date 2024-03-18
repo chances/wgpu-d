@@ -1,5 +1,12 @@
 OS ?= $(shell uname -s)
-rwildcard=$(wildcard $1$2) $(foreach d,$(wildcard $1*),$(call rwildcard,$d/,$2))
+ifeq ($(findstring cmd.exe,$(SHELL)),cmd.exe)
+  UNIX := false
+endif
+ifeq ($(findstring sh.exe,$(SHELL)),sh.exe)
+  UNIX := true
+endif
+# Else, assume a unix system
+UNIX ?= true
 ifeq ($(OS),Darwin)
   CC := clang
   SED := gsed
@@ -14,6 +21,8 @@ endif
 ifndef SED
   SED := sed
 endif
+rwildcard=$(wildcard $1$2) $(foreach d,$(wildcard $1*),$(call rwildcard,$d/,$2))
+
 SOURCES := $(call rwildcard,source/,*.d)
 LIBS_PATH := lib
 
@@ -36,8 +45,8 @@ ifndef LIB_WGPU
 endif
 subprojects/wgpu: subprojects/wgpu.Makefile
 	@make --no-print-directory -C subprojects -f wgpu.Makefile
-ifneq ($(OS),Windows_NT)
-	file subprojects/wgpu/$(LIB_WGPU)
+ifeq ($(UNIX),true)
+	@echo "Configured $(shell file subprojects/wgpu/$(LIB_WGPU))"
 else
 	@IF EXIST subprojects/wgpu/$(LIB_WGPU) ECHO subprojects/wgpu/$(LIB_WGPU) exists.
 endif
